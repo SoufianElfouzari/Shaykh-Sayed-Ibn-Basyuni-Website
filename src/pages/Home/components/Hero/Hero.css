@@ -1,0 +1,243 @@
+.sib-home-hero {
+  position: relative;
+  width: 100%;
+  padding: 70px 5% 135px;
+  overflow: hidden;
+  background: var(--sib-color-background, #f5f4ef);
+  color: var(--sib-color-text, #151b19);
+  isolation: isolate;
+}
+
+.sib-home-hero-decoration {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sib-home-hero-decoration-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 610px;
+  height: 610px;
+  border: 1px solid rgba(23, 58, 51, 0.08);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sib-home-hero-decoration-circle::before {
+  content: "";
+  position: absolute;
+  inset: 85px;
+  border: 1px solid rgba(170, 151, 103, 0.1);
+  border-radius: 50%;
+}
+
+.sib-home-hero-decoration-line {
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  background: rgba(23, 58, 51, 0.09);
+}
+
+.sib-home-hero-decoration-line-left {
+  left: 0;
+  width: calc(50% - 305px);
+}
+
+.sib-home-hero-decoration-line-right {
+  right: 0;
+  width: calc(50% - 305px);
+}
+
+.sib-home-hero-decoration-dot {
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--sib-color-background, #f5f4ef);
+  border-radius: 50%;
+  background: var(--sib-color-accent, #aa9767);
+  box-shadow: 0 3px 10px rgba(15, 41, 36, 0.12);
+  transform: translateY(-50%);
+}
+
+.sib-home-hero-decoration-dot-left {
+  left: calc(50% - 309px);
+}
+
+.sib-home-hero-decoration-dot-right {
+  right: calc(50% - 309px);
+}
+
+.sib-home-hero-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sib-home-hero-label {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 9px 15px;
+  border: 1px solid var(--sib-color-border, #ddd9cf);
+  border-radius: 999px;
+  background: rgba(255, 254, 250, 0.76);
+  color: var(--sib-color-text-soft, #656d69);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(15, 41, 36, 0.04);
+}
+
+.sib-home-hero-title {
+  max-width: 1000px;
+  margin: 29px auto 0;
+  color: var(--sib-color-text, #151b19);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: clamp(52px, 6vw, 88px);
+  line-height: 1.02;
+  font-weight: 650;
+  letter-spacing: clamp(
+    -4.5px,
+    -0.32vw,
+    -2.5px
+  );
+}
+
+.sib-home-hero-title span {
+  display: block;
+  color: var(--sib-color-primary, #173a33);
+}
+
+.sib-home-hero-description {
+  max-width: 680px;
+  margin: 28px auto 0;
+  color: var(--sib-color-text-soft, #656d69);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+}
+
+@media (max-width: 1100px) {
+  .sib-home-hero-decoration-circle {
+    width: 540px;
+    height: 540px;
+  }
+
+  .sib-home-hero-decoration-line-left,
+  .sib-home-hero-decoration-line-right {
+    width: calc(50% - 270px);
+  }
+
+  .sib-home-hero-decoration-dot-left {
+    left: calc(50% - 274px);
+  }
+
+  .sib-home-hero-decoration-dot-right {
+    right: calc(50% - 274px);
+  }
+}
+
+@media (max-width: 900px) {
+  .sib-home-hero {
+    padding: 105px 5% 115px;
+  }
+
+  .sib-home-hero-title {
+    font-size: clamp(48px, 8vw, 70px);
+    letter-spacing: -3px;
+  }
+
+  .sib-home-hero-decoration-circle {
+    width: 470px;
+    height: 470px;
+  }
+
+  .sib-home-hero-decoration-line-left,
+  .sib-home-hero-decoration-line-right,
+  .sib-home-hero-decoration-dot {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .sib-home-hero {
+    padding: 80px 20px 90px;
+  }
+
+  .sib-home-hero-decoration-circle {
+    top: 48%;
+    width: 390px;
+    height: 390px;
+  }
+
+  .sib-home-hero-decoration-circle::before {
+    inset: 56px;
+  }
+
+  .sib-home-hero-label {
+    max-width: 310px;
+    padding: 8px 13px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .sib-home-hero-title {
+    margin-top: 23px;
+    font-size: clamp(40px, 12vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -2.3px;
+  }
+
+  .sib-home-hero-description {
+    margin-top: 22px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}
+
+@media (max-width: 400px) {
+  .sib-home-hero {
+    padding: 70px 18px 80px;
+  }
+
+  .sib-home-hero-decoration-circle {
+    width: 330px;
+    height: 330px;
+  }
+
+  .sib-home-hero-title {
+    font-size: 39px;
+    letter-spacing: -2px;
+  }
+}
