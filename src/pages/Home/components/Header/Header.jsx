@@ -24,10 +24,6 @@ const navigationItems = [
     path: "/veroeffentlichungen",
   },
   {
-    label: "Termine",
-    path: "/termine",
-  },
-  {
     label: "Kontakt",
     path: "/kontakt",
   },
