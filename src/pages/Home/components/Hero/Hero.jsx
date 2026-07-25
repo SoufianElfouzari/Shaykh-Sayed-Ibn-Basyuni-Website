@@ -8,10 +8,13 @@ function Hero() {
         aria-hidden="true"
       >
         <span className="sib-home-hero-decoration-circle"></span>
+
         <span className="sib-home-hero-decoration-line sib-home-hero-decoration-line-left"></span>
+
         <span className="sib-home-hero-decoration-line sib-home-hero-decoration-line-right"></span>
 
         <span className="sib-home-hero-decoration-dot sib-home-hero-decoration-dot-left"></span>
+
         <span className="sib-home-hero-decoration-dot sib-home-hero-decoration-dot-right"></span>
       </div>
 
@@ -21,14 +24,13 @@ function Hero() {
         </p>
 
         <h1 className="sib-home-hero-title">
-          Duruus, Schriften und Termine
+          Duruus, Artikel und Termine
           <span>geordnet an einem Ort.</span>
         </h1>
 
         <p className="sib-home-hero-description">
           Diese Website bietet eine übersichtliche Sammlung der
-          Unterrichte, Veröffentlichungen und aktuellen Hinweise
-          des Shaykh.
+          Unterrichte, Artikel und aktuellen Hinweise des Shaykh.
         </p>
       </div>
     </section>
