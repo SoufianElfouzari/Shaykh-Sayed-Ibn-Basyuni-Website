@@ -7,6 +7,7 @@ import DuruusHero from "./components/DuruusHero/DuruusHero";
 import LatestRecordings from "./components/DuruusArchive/DuruusArchive";
 import NoticesBanner from "./components/NoticesBanner/NoticesBanner";
 import DuruusArchive from "./components/DuruusArchive/DuruusArchive";
+import ContactForm from "../common/ContactForm/ContactForm";
 
 function Duruus() {
   return (
@@ -20,6 +21,7 @@ function Duruus() {
             <ArchiveIntroduction />
             <DuruusArchive />
             <OfficialChannels />
+            <ContactForm />
         </main>
 
         <Footer />
