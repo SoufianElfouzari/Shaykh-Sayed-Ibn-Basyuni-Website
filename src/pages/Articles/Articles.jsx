@@ -1,5 +1,6 @@
 import Footer from "../common/Footer/Footer";
 import Header from "../common/Header/Header";
+import ArticlesHero from "./components/ArticlesHero/ArticlesHero";
 
 function Articles() {
   return (
@@ -7,6 +8,7 @@ function Articles() {
         <Header />
 
         <main>
+          <ArticlesHero />
         </main>
 
         <Footer />

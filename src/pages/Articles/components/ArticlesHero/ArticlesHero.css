@@ -1,0 +1,425 @@
+@keyframes sibArticlesHeroLabelReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sibArticlesHeroTitleReveal {
+  from {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sibArticlesHeroDescriptionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sibArticlesHeroCircleMove {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate(-50%, calc(-50% - 9px))
+      scale(1.025);
+  }
+}
+
+@keyframes sibArticlesHeroDotLeftMove {
+  0%,
+  100% {
+    transform:
+      translateY(-50%)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(calc(-50% - 8px))
+      scale(1.16);
+  }
+}
+
+@keyframes sibArticlesHeroDotRightMove {
+  0%,
+  100% {
+    transform:
+      translateY(-50%)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(calc(-50% + 8px))
+      scale(0.9);
+  }
+}
+
+.sib-articles-page-hero {
+  position: relative;
+  width: 100%;
+  padding: 70px 5% 125px;
+  overflow: hidden;
+  background: var(--sib-color-background, #f5f4ef);
+  color: var(--sib-color-text, #151b19);
+  isolation: isolate;
+}
+
+.sib-articles-page-hero-decoration {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sib-articles-page-hero-decoration-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 610px;
+  height: 610px;
+  border: 1px solid rgba(13, 106, 82, 0.16);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation:
+    sibArticlesHeroCircleMove
+    9s
+    ease-in-out
+    infinite;
+}
+
+.sib-articles-page-hero-decoration-circle::before {
+  content: "";
+  position: absolute;
+  inset: 85px;
+  border: 1px solid rgba(170, 151, 103, 0.19);
+  border-radius: 50%;
+}
+
+.sib-articles-page-hero-decoration-circle::after {
+  content: "";
+  position: absolute;
+  inset: 172px;
+  border: 1px solid rgba(13, 106, 82, 0.08);
+  border-radius: 50%;
+}
+
+.sib-articles-page-hero-decoration-line {
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  background: rgba(13, 106, 82, 0.16);
+}
+
+.sib-articles-page-hero-decoration-line-left {
+  left: 0;
+  width: calc(50% - 305px);
+}
+
+.sib-articles-page-hero-decoration-line-right {
+  right: 0;
+  width: calc(50% - 305px);
+}
+
+.sib-articles-page-hero-decoration-dot {
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--sib-color-background, #f5f4ef);
+  border-radius: 50%;
+  background: var(--sib-color-accent, #aa9767);
+  box-shadow:
+    0 0 0 5px rgba(170, 151, 103, 0.1),
+    0 4px 12px rgba(15, 41, 36, 0.15);
+  transform: translateY(-50%);
+}
+
+.sib-articles-page-hero-decoration-dot-left {
+  left: calc(50% - 309px);
+  animation:
+    sibArticlesHeroDotLeftMove
+    5.2s
+    ease-in-out
+    infinite;
+}
+
+.sib-articles-page-hero-decoration-dot-right {
+  right: calc(50% - 309px);
+  animation:
+    sibArticlesHeroDotRightMove
+    6s
+    ease-in-out
+    infinite;
+}
+
+.sib-articles-page-hero-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sib-articles-page-hero-label {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 9px 15px;
+  border: 1px solid rgba(13, 106, 82, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 254, 250, 0.9);
+  color: #0d5f4b;
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 650;
+  box-shadow:
+    0 8px 22px rgba(15, 41, 36, 0.05),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+  opacity: 0;
+  transform: translateY(18px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation:
+    sibArticlesHeroLabelReveal
+    0.7s
+    0.08s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.sib-articles-page-hero-title {
+  max-width: 1000px;
+  margin: 29px auto 0;
+  color: var(--sib-color-text, #151b19);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: clamp(52px, 6vw, 88px);
+  line-height: 1.02;
+  font-weight: 650;
+  letter-spacing: clamp(
+    -4.5px,
+    -0.32vw,
+    -2.5px
+  );
+  opacity: 0;
+  transform: translateY(34px);
+  animation:
+    sibArticlesHeroTitleReveal
+    0.9s
+    0.18s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.sib-articles-page-hero-title span {
+  display: block;
+  color: var(--sib-color-primary, #0d6a52);
+  font-weight: 700;
+  text-shadow:
+    0 12px 32px rgba(13, 106, 82, 0.11);
+}
+
+.sib-articles-page-hero-description {
+  max-width: 720px;
+  margin: 28px auto 0;
+  color: var(--sib-color-text-soft, #656d69);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  opacity: 0;
+  transform: translateY(24px);
+  animation:
+    sibArticlesHeroDescriptionReveal
+    0.8s
+    0.33s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+@media (max-width: 1100px) {
+  .sib-articles-page-hero-decoration-circle {
+    width: 540px;
+    height: 540px;
+  }
+
+  .sib-articles-page-hero-decoration-circle::before {
+    inset: 75px;
+  }
+
+  .sib-articles-page-hero-decoration-circle::after {
+    inset: 152px;
+  }
+
+  .sib-articles-page-hero-decoration-line-left,
+  .sib-articles-page-hero-decoration-line-right {
+    width: calc(50% - 270px);
+  }
+
+  .sib-articles-page-hero-decoration-dot-left {
+    left: calc(50% - 274px);
+  }
+
+  .sib-articles-page-hero-decoration-dot-right {
+    right: calc(50% - 274px);
+  }
+}
+
+@media (max-width: 900px) {
+  .sib-articles-page-hero {
+    padding: 105px 5% 115px;
+  }
+
+  .sib-articles-page-hero-title {
+    font-size: clamp(48px, 8vw, 70px);
+    letter-spacing: -3px;
+  }
+
+  .sib-articles-page-hero-decoration-circle {
+    width: 470px;
+    height: 470px;
+  }
+
+  .sib-articles-page-hero-decoration-circle::before {
+    inset: 65px;
+  }
+
+  .sib-articles-page-hero-decoration-circle::after {
+    inset: 132px;
+  }
+
+  .sib-articles-page-hero-decoration-line-left,
+  .sib-articles-page-hero-decoration-line-right,
+  .sib-articles-page-hero-decoration-dot {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .sib-articles-page-hero {
+    padding: 80px 20px 90px;
+  }
+
+  .sib-articles-page-hero-decoration-circle {
+    top: 48%;
+    width: 390px;
+    height: 390px;
+  }
+
+  .sib-articles-page-hero-decoration-circle::before {
+    inset: 56px;
+  }
+
+  .sib-articles-page-hero-decoration-circle::after {
+    inset: 112px;
+  }
+
+  .sib-articles-page-hero-label {
+    max-width: 320px;
+    padding: 9px 14px;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .sib-articles-page-hero-title {
+    margin-top: 23px;
+    font-size: clamp(40px, 12vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -2.3px;
+  }
+
+  .sib-articles-page-hero-description {
+    margin-top: 22px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}
+
+@media (max-width: 400px) {
+  .sib-articles-page-hero {
+    padding: 70px 18px 80px;
+  }
+
+  .sib-articles-page-hero-decoration-circle {
+    width: 330px;
+    height: 330px;
+  }
+
+  .sib-articles-page-hero-decoration-circle::before {
+    inset: 47px;
+  }
+
+  .sib-articles-page-hero-decoration-circle::after {
+    inset: 95px;
+  }
+
+  .sib-articles-page-hero-title {
+    font-size: 39px;
+    letter-spacing: -2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sib-articles-page-hero,
+  .sib-articles-page-hero *,
+  .sib-articles-page-hero *::before,
+  .sib-articles-page-hero *::after {
+    animation: none;
+    transition: none;
+  }
+
+  .sib-articles-page-hero-label,
+  .sib-articles-page-hero-title,
+  .sib-articles-page-hero-description {
+    opacity: 1;
+    transform: none;
+  }
+}
