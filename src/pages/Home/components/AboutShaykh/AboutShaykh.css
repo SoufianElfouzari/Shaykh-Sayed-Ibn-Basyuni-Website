@@ -1,0 +1,254 @@
+.sib-about {
+  width: 100%;
+  padding: 110px 5%;
+  background: var(--sib-color-surface, #fffefa);
+  color: var(--sib-color-text, #151b19);
+}
+
+.sib-about-container {
+  width: 100%;
+  max-width: var(--sib-container-width, 1460px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1.1fr);
+  gap: clamp(70px, 9vw, 150px);
+  align-items: start;
+}
+
+.sib-about-heading {
+  max-width: 580px;
+}
+
+.sib-about-label {
+  margin: 0 0 24px;
+  color: var(--sib-color-accent, #aa9767);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.sib-about-title {
+  margin: 0;
+  color: var(--sib-color-primary-dark, #0f2924);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: clamp(36px, 4vw, 58px);
+  line-height: 1.08;
+  font-weight: 650;
+  letter-spacing: clamp(
+    -2.8px,
+    -0.2vw,
+    -1.5px
+  );
+}
+
+.sib-about-content {
+  min-width: 0;
+}
+
+.sib-about-description {
+  max-width: 700px;
+}
+
+.sib-about-description p {
+  margin: 0;
+  color: var(--sib-color-text-soft, #656d69);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 17px;
+  line-height: 1.75;
+  font-weight: 400;
+  letter-spacing: -0.15px;
+}
+
+.sib-about-description p + p {
+  margin-top: 18px;
+}
+
+.sib-about-overview {
+  margin-top: 42px;
+  border-top: 1px solid var(--sib-color-border, #ddd9cf);
+}
+
+.sib-about-overview-item {
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: 135px minmax(0, 1fr);
+  gap: 28px;
+  border-bottom: 1px solid var(--sib-color-border, #ddd9cf);
+}
+
+.sib-about-overview-label {
+  padding-top: 3px;
+  color: var(--sib-color-text-muted, #878d89);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.sib-about-overview-value {
+  margin: 0;
+  color: var(--sib-color-text, #151b19);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 550;
+  letter-spacing: -0.15px;
+}
+
+.sib-about-link {
+  width: fit-content;
+  min-height: 42px;
+  margin-top: 35px;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  border-bottom: 1px solid var(--sib-color-primary, #173a33);
+  color: var(--sib-color-primary, #173a33);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    color var(--sib-transition-fast, 180ms ease),
+    border-color var(--sib-transition-fast, 180ms ease);
+}
+
+.sib-about-link svg {
+  width: 18px;
+  height: 18px;
+  transition:
+    transform var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-about-link:hover {
+  border-color: var(--sib-color-accent, #aa9767);
+  color: var(--sib-color-accent, #aa9767);
+}
+
+.sib-about-link:hover svg {
+  transform: translateX(4px);
+}
+
+.sib-about-link:focus-visible {
+  outline: 3px solid rgba(170, 151, 103, 0.4);
+  outline-offset: 5px;
+}
+
+@media (max-width: 980px) {
+  .sib-about {
+    padding: 90px 5%;
+  }
+
+  .sib-about-container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .sib-about-heading {
+    max-width: 720px;
+  }
+
+  .sib-about-content {
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 620px) {
+  .sib-about {
+    padding: 75px 20px;
+  }
+
+  .sib-about-container {
+    gap: 38px;
+  }
+
+  .sib-about-label {
+    margin-bottom: 18px;
+    font-size: 10px;
+  }
+
+  .sib-about-title {
+    font-size: clamp(34px, 10vw, 46px);
+    line-height: 1.1;
+    letter-spacing: -1.8px;
+  }
+
+  .sib-about-description p {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .sib-about-overview {
+    margin-top: 34px;
+  }
+
+  .sib-about-overview-item {
+    padding: 18px 0;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .sib-about-link {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 400px) {
+  .sib-about {
+    padding: 65px 18px;
+  }
+
+  .sib-about-title {
+    font-size: 34px;
+  }
+}
