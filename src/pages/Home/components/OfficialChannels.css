@@ -366,9 +366,9 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns:
-    minmax(320px, 0.78fr)
-    minmax(500px, 1.22fr);
-  gap: clamp(60px, 8vw, 130px);
+    minmax(300px, 0.75fr)
+    minmax(0, 1.25fr);
+  gap: clamp(55px, 7vw, 115px);
   align-items: center;
 }
 
@@ -472,22 +472,23 @@
 .sib-channels-banner-links {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 12px;
   perspective: 1000px;
 }
 
 .sib-channels-banner-link {
   position: relative;
   min-width: 0;
-  min-height: 185px;
-  padding: 25px;
+  min-height: 174px;
+  padding: 22px;
   overflow: hidden;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 19px;
+  border-radius: 18px;
   background:
     linear-gradient(
       145deg,
@@ -521,7 +522,7 @@
   animation-delay:
     calc(
       0.32s +
-        (var(--sib-channel-index) * 0.15s)
+        (var(--sib-channel-index) * 0.14s)
     );
 }
 
@@ -607,14 +608,14 @@
 .sib-channels-banner-link-icon {
   position: relative;
   z-index: 1;
-  width: 46px;
-  height: 46px;
-  flex: 0 0 46px;
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 13px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.07);
   color: var(--sib-color-accent-soft, #d8ceb2);
   animation:
@@ -632,8 +633,8 @@
 }
 
 .sib-channels-banner-link-icon svg {
-  width: 23px;
-  height: 23px;
+  width: 22px;
+  height: 22px;
   transition:
     transform var(--sib-transition-normal, 280ms ease);
 }
@@ -649,19 +650,14 @@
     scale(1.1);
 }
 
-.sib-channels-banner-link:hover
-  .sib-channels-banner-link-icon svg {
-  transform: scale(1.08);
-}
-
 .sib-channels-banner-link-content {
   position: relative;
   z-index: 1;
   min-width: 0;
-  margin-top: 25px;
+  margin-top: 23px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
   transition:
     transform var(--sib-transition-normal, 280ms ease);
 }
@@ -681,14 +677,14 @@
       Arial,
       sans-serif
     );
-  font-size: 19px;
+  font-size: 17px;
   line-height: 1.2;
   font-weight: 680;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.35px;
 }
 
 .sib-channels-banner-link-content small {
-  max-width: 210px;
+  max-width: 190px;
   color: rgba(255, 255, 255, 0.5);
   font-family:
     var(
@@ -698,7 +694,7 @@
       Arial,
       sans-serif
     );
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.55;
   font-weight: 400;
   transition:
@@ -712,11 +708,11 @@
 
 .sib-channels-banner-link-arrow {
   position: absolute;
-  right: 21px;
-  bottom: 21px;
+  right: 18px;
+  bottom: 18px;
   z-index: 1;
-  width: 34px;
-  height: 34px;
+  width: 31px;
+  height: 31px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -738,8 +734,8 @@
 }
 
 .sib-channels-banner-link-arrow svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
 }
 
 .sib-channels-banner-link:hover
@@ -758,7 +754,7 @@
   outline-offset: 5px;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1120px) {
   .sib-channels-banner {
     padding: 66px 5%;
   }
@@ -781,7 +777,7 @@
   }
 
   .sib-channels-banner-links {
-    max-width: 780px;
+    max-width: 900px;
   }
 }
 
@@ -816,9 +812,9 @@
     padding: 18px;
     display: grid;
     grid-template-columns:
-      44px
+      43px
       minmax(0, 1fr)
-      34px;
+      32px;
     gap: 15px;
     align-items: center;
   }
@@ -863,14 +859,14 @@
   .sib-channels-banner-link {
     padding: 16px;
     grid-template-columns:
-      41px
+      40px
       minmax(0, 1fr);
   }
 
   .sib-channels-banner-link-icon {
-    width: 41px;
-    height: 41px;
-    flex-basis: 41px;
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
   }
 
   .sib-channels-banner-link-arrow {
@@ -878,7 +874,7 @@
   }
 
   .sib-channels-banner-link-content strong {
-    font-size: 17px;
+    font-size: 16px;
   }
 }
 

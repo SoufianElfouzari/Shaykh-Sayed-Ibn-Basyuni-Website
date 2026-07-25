@@ -17,6 +17,13 @@ const officialChannels = [
     href: "#",
     type: "youtube",
   },
+  {
+    id: 3,
+    platform: "WhatsApp",
+    description: "Aktuelle Mitteilungen und wichtige Hinweise",
+    href: "#",
+    type: "whatsapp",
+  },
 ];
 
 function TelegramIcon() {
@@ -51,6 +58,30 @@ function YouTubeIcon() {
 
       <path
         d="M10 9L15 12L10 15V9Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function WhatsAppIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M20 11.7C20 16.1 16.4 19.7 12 19.7C10.6 19.7 9.3 19.3 8.2 18.7L4 20L5.3 15.9C4.6 14.7 4.2 13.2 4.2 11.7C4.2 7.3 7.7 3.8 12.1 3.8C16.5 3.8 20 7.3 20 11.7Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      <path
+        d="M9.1 8.1C9.3 7.8 9.5 7.8 9.8 7.8H10.2C10.4 7.8 10.6 7.9 10.7 8.2L11.3 9.7C11.4 10 11.4 10.2 11.2 10.4L10.7 11C10.5 11.2 10.6 11.4 10.7 11.6C11.4 12.8 12.3 13.7 13.6 14.3C13.8 14.4 14 14.5 14.2 14.2L14.9 13.4C15.1 13.2 15.3 13.2 15.6 13.3L17 14C17.3 14.1 17.4 14.3 17.4 14.5C17.4 15.1 17.1 15.8 16.6 16.2C16.1 16.6 15.4 16.8 14.7 16.6C13.4 16.3 11.8 15.5 10.4 14.2C9.2 13.1 8.3 11.7 7.9 10.5C7.7 9.8 8.3 8.7 9.1 8.1Z"
         fill="currentColor"
       />
     </svg>
@@ -114,7 +145,11 @@ function ChannelIcon({ type }) {
     return <TelegramIcon />;
   }
 
-  return <YouTubeIcon />;
+  if (type === "youtube") {
+    return <YouTubeIcon />;
+  }
+
+  return <WhatsAppIcon />;
 }
 
 function OfficialChannels() {
@@ -188,7 +223,8 @@ function OfficialChannels() {
 
           <p className="sib-channels-banner-description">
             Neue Duruus, Artikel, Hinweise und Ankündigungen
-            werden über Telegram und YouTube veröffentlicht.
+            werden über Telegram, YouTube und WhatsApp
+            veröffentlicht.
           </p>
         </div>
 
