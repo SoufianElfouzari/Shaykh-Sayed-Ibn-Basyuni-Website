@@ -1,3 +1,4 @@
+import ContactForm from "../common/ContactForm/ContactForm";
 import Footer from "../common/Footer/Footer";
 import Header from "../common/Header/Header";
 
@@ -7,6 +8,7 @@ function Contact() {
         <Header />
 
         <main>
+           <ContactForm /> 
         </main>
 
         <Footer />
