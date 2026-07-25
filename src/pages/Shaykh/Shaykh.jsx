@@ -1,6 +1,8 @@
-import Footer from "../Home/components/Footer/Footer";
-import Header from "../Home/components/Header/Header";
+import Footer from "../Home/common/Footer/Footer";
+import Header from "../Home/common/Header/Header";
+import LessonSchedule from "../Home/common/LessonSchedule/LessonSchedule";
 import ShaykhHero from "./components/ShaykhHero/ShaykhHero";
+import ShortBiography from "./components/ShortBiography/ShortBiography";
 
 function Shaykh() {
   return (
@@ -9,6 +11,8 @@ function Shaykh() {
 
         <main>
             <ShaykhHero />
+            <ShortBiography />
+            <LessonSchedule />
         </main>
 
         <Footer />
