@@ -2,11 +2,11 @@ import Footer from "../common/Footer/Footer";
 import Header from "../common/Header/Header";
 import LessonSchedule from "../common/LessonSchedule/LessonSchedule";
 import OfficialChannels from "../common/OfficialChannels/OfficialChannels";
-import ArchiveIntroduction from "./ArchiveIntroduction/ArchiveIntroduction";
-import DuruusHero from "./DuruusHero/DuruusHero";
-import LatestRecordings from "./DuruusArchive/DuruusArchive";
-import NoticesBanner from "./NoticesBanner/NoticesBanner";
-import DuruusArchive from "./DuruusArchive/DuruusArchive";
+import ArchiveIntroduction from "./components/ArchiveIntroduction/ArchiveIntroduction";
+import DuruusHero from "./components/DuruusHero/DuruusHero";
+import LatestRecordings from "./components/DuruusArchive/DuruusArchive";
+import NoticesBanner from "./components/NoticesBanner/NoticesBanner";
+import DuruusArchive from "./components/DuruusArchive/DuruusArchive";
 
 function Duruus() {
   return (
