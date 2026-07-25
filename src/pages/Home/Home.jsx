@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import LatestArticles from "./components/LatestArticles/LatestArticles";
 import LessonSchedule from "./components/LessonSchedule/LessonSchedule";
+import OfficialChannels from "./components/OfficialChannels";
 
 function Home() {
   return (
@@ -14,6 +15,7 @@ function Home() {
             <AboutShaykh />
             <LatestArticles />
             <LessonSchedule />
+            <OfficialChannels />
         </main>
     </div>
   );
