@@ -9,6 +9,7 @@ import Shaykh from "./pages/Shaykh/Shaykh";
 import Duruus from "./pages/Duruus/Duruus";
 import Articles from "./pages/Articles/Articles";
 import ArticleDetails from "./pages/Articles/components/ArticleDetails/ArticleDetails";
+import Contact from "./pages/Contact/Contact";
 
 
 function App() {
@@ -36,6 +37,11 @@ function App() {
           <Route
             path="/artikel/:slug"
             element={<ArticleDetails />}
+          />
+
+          <Route
+            path="/kontakt"
+            element={<Contact />}
           />
         </Routes>
       </div>
