@@ -1,3 +1,4 @@
+import AboutShaykh from "./components/AboutShaykh/AboutShaykh";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 
@@ -8,6 +9,7 @@ function Home() {
 
         <main>
             <Hero />
+            <AboutShaykh />
         </main>
     </div>
   );
