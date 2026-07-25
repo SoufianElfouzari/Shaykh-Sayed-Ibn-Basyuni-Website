@@ -4,6 +4,7 @@ import LessonSchedule from "../Home/common/LessonSchedule/LessonSchedule";
 import OfficialChannels from "../Home/common/OfficialChannels/OfficialChannels";
 import ArchiveIntroduction from "./ArchiveIntroduction/ArchiveIntroduction";
 import DuruusHero from "./DuruusHero/DuruusHero";
+import LatestRecordings from "./DuruusArchive/DuruusArchive";
 import NoticesBanner from "./NoticesBanner/NoticesBanner";
 
 function Duruus() {
@@ -16,6 +17,7 @@ function Duruus() {
             <NoticesBanner />
             <LessonSchedule />
             <ArchiveIntroduction />
+            <LatestRecordings />
             <OfficialChannels />
         </main>
 
