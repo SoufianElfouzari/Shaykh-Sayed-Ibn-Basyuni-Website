@@ -1,9 +1,9 @@
 import AboutShaykh from "./components/AboutShaykh/AboutShaykh";
-import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header";
+import Footer from "./common/Footer/Footer";
+import Header from "./common/Header/Header";
 import Hero from "./components/Hero/Hero";
 import LatestArticles from "./components/LatestArticles/LatestArticles";
-import LessonSchedule from "./components/LessonSchedule/LessonSchedule";
+import LessonSchedule from "./common/LessonSchedule/LessonSchedule";
 import OfficialChannels from "./components/OfficialChannels/OfficialChannels";
 
 function Home() {
