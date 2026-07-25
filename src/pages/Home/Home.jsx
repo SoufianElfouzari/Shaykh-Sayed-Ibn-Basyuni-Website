@@ -17,8 +17,9 @@ function Home() {
             <LatestArticles />
             <OfficialChannels />
             <LessonSchedule />
-            <Footer />
         </main>
+
+        <Footer />
     </div>
   );
 }
