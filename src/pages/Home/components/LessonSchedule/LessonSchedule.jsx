@@ -4,21 +4,33 @@ import "./LessonSchedule.css";
 const weeklyLessons = [
   {
     id: 1,
-    day: "Sonntag",
-    time: "[Uhrzeit]",
-    subject: "Fiqh",
+    day: "Dienstag",
+    time: "19:00",
+    subject: "Mustalah al-Hadith",
+  },
+  {
+    id: 1,
+    day: "Mittwoch",
+    time: "18:30",
+    subject: "Mustalah al-Hadith",
+  },
+  {
+    id: 1,
+    day: "Donnerstag",
+    time: "18:30",
+    subject: "Mustalah al-Hadith",
   },
   {
     id: 2,
-    day: "Sonntag",
+    day: "Samstag",
     time: "16:00 Uhr",
     subject: "Tajwid",
   },
   {
     id: 3,
-    day: "Dienstag bis Donnerstag",
-    time: "[Uhrzeit]",
-    subject: "Mustalah al-Hadith",
+    day: "Sonntag",
+    time: "Nach 'Asr",
+    subject: "Fiqh",
   },
 ];
 
