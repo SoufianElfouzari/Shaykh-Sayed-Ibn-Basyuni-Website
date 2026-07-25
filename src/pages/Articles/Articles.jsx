@@ -1,6 +1,7 @@
 import Footer from "../common/Footer/Footer";
 import Header from "../common/Header/Header";
 import ArticlesHero from "./components/ArticlesHero/ArticlesHero";
+import ArticlesOverview from "./components/ArticlesOverview/ArticlesOverview";
 
 function Articles() {
   return (
@@ -9,6 +10,7 @@ function Articles() {
 
         <main>
           <ArticlesHero />
+          <ArticlesOverview />
         </main>
 
         <Footer />
