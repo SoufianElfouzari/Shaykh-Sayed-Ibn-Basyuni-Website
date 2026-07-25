@@ -1,0 +1,1060 @@
+@keyframes sibContactHeaderReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sibContactPanelReveal {
+  from {
+    opacity: 0;
+    transform:
+      translateY(48px)
+      scale(0.975);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes sibContactFieldReveal {
+  from {
+    opacity: 0;
+    transform: translateY(23px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sibContactFooterReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sibContactCircleOneMove {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(28px, 20px, 0)
+      scale(1.04);
+  }
+}
+
+@keyframes sibContactCircleTwoMove {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(-24px, -17px, 0)
+      scale(0.96);
+  }
+}
+
+@keyframes sibContactDotOneMove {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(-12px)
+      scale(1.16);
+  }
+}
+
+@keyframes sibContactDotTwoMove {
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(11px)
+      scale(0.9);
+  }
+}
+
+@keyframes sibContactSubmitIconMove {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes sibContactStatusPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(13, 106, 82, 0.14);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(13, 106, 82, 0.04);
+  }
+}
+
+.sib-contact-form {
+  position: relative;
+  width: 100%;
+  padding: 120px 5% 125px;
+  overflow: hidden;
+  background: var(--sib-color-background, #f5f4ef);
+  color: var(--sib-color-text, #151b19);
+  isolation: isolate;
+}
+
+.sib-contact-form-decoration {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sib-contact-form-decoration::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      rgba(13, 106, 82, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(13, 106, 82, 0.025) 1px,
+      transparent 1px
+    );
+  background-size: 110px 110px;
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent,
+      #000 20%,
+      #000 80%,
+      transparent
+    );
+  -webkit-mask-image:
+    linear-gradient(
+      to right,
+      transparent,
+      #000 20%,
+      #000 80%,
+      transparent
+    );
+}
+
+.sib-contact-form-decoration-circle {
+  position: absolute;
+  border: 1px solid rgba(13, 106, 82, 0.08);
+  border-radius: 50%;
+}
+
+.sib-contact-form-decoration-circle::before {
+  content: "";
+  position: absolute;
+  inset: 17%;
+  border: 1px solid rgba(170, 151, 103, 0.1);
+  border-radius: inherit;
+}
+
+.sib-contact-form-decoration-circle-one {
+  top: -330px;
+  left: -290px;
+  width: 720px;
+  height: 720px;
+  animation:
+    sibContactCircleOneMove
+    15s
+    ease-in-out
+    infinite;
+}
+
+.sib-contact-form-decoration-circle-two {
+  right: -330px;
+  bottom: -410px;
+  width: 790px;
+  height: 790px;
+  animation:
+    sibContactCircleTwoMove
+    18s
+    ease-in-out
+    infinite;
+}
+
+.sib-contact-form-decoration-line {
+  position: absolute;
+  top: 500px;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(13, 106, 82, 0.09),
+      transparent
+    );
+}
+
+.sib-contact-form-decoration-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--sib-color-background, #f5f4ef);
+  border-radius: 50%;
+  background: var(--sib-color-accent, #aa9767);
+  box-shadow:
+    0 0 0 6px rgba(170, 151, 103, 0.08),
+    0 5px 18px rgba(15, 41, 36, 0.13);
+}
+
+.sib-contact-form-decoration-dot-one {
+  top: 220px;
+  left: 8%;
+  animation:
+    sibContactDotOneMove
+    5.5s
+    ease-in-out
+    infinite;
+}
+
+.sib-contact-form-decoration-dot-two {
+  right: 8%;
+  bottom: 19%;
+  animation:
+    sibContactDotTwoMove
+    6.5s
+    ease-in-out
+    infinite;
+}
+
+.sib-contact-form-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.sib-contact-form-header {
+  max-width: 950px;
+  padding-bottom: 65px;
+  border-bottom: 1px solid var(--sib-color-border, #ddd9cf);
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.sib-contact-form-visible
+  .sib-contact-form-header {
+  animation:
+    sibContactHeaderReveal
+    0.9s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.sib-contact-form-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.sib-contact-form-label-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sib-contact-form-label-line {
+  width: 43px;
+  height: 2px;
+  flex: 0 0 43px;
+  background: var(--sib-color-accent, #aa9767);
+}
+
+.sib-contact-form-label {
+  margin: 0;
+  color: var(--sib-color-primary, #0d6a52);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: 1.45px;
+  text-transform: uppercase;
+}
+
+.sib-contact-form-section-number {
+  color: rgba(13, 106, 82, 0.32);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: 1.2px;
+}
+
+.sib-contact-form-title {
+  max-width: 900px;
+  margin: 28px 0 0;
+  color: var(--sib-color-text, #151b19);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: clamp(50px, 5.5vw, 78px);
+  line-height: 1.02;
+  font-weight: 650;
+  letter-spacing: clamp(
+    -4.2px,
+    -0.29vw,
+    -2.4px
+  );
+}
+
+.sib-contact-form-title span {
+  display: block;
+  color: var(--sib-color-primary, #0d6a52);
+  font-weight: 700;
+}
+
+.sib-contact-form-description {
+  max-width: 720px;
+  margin: 27px 0 0;
+  color: var(--sib-color-text-soft, #656d69);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 17px;
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+.sib-contact-form-panel {
+  width: 100%;
+  margin-top: 65px;
+  padding: 46px 50px 40px;
+  border: 1px solid rgba(13, 106, 82, 0.13);
+  border-radius: 26px;
+  background: rgba(255, 254, 250, 0.94);
+  opacity: 0;
+  transform:
+    translateY(48px)
+    scale(0.975);
+  box-shadow:
+    0 30px 75px rgba(15, 41, 36, 0.1),
+    0 8px 24px rgba(15, 41, 36, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.sib-contact-form-visible
+  .sib-contact-form-panel {
+  animation:
+    sibContactPanelReveal
+    0.95s
+    0.16s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.sib-contact-form-panel-header {
+  padding-bottom: 34px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  border-bottom: 1px solid var(--sib-color-border, #ddd9cf);
+}
+
+.sib-contact-form-panel-label {
+  margin: 0 0 10px;
+  color: var(--sib-color-accent, #aa9767);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: 1.35px;
+  text-transform: uppercase;
+}
+
+.sib-contact-form-panel-header h2 {
+  margin: 0;
+  color: var(--sib-color-primary-dark, #084c3c);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: clamp(27px, 2.6vw, 37px);
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -1px;
+}
+
+.sib-contact-form-required-note {
+  max-width: 240px;
+  margin: 0 0 3px;
+  color: var(--sib-color-text-muted, #878d89);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 10px;
+  line-height: 1.6;
+  font-weight: 500;
+  text-align: right;
+}
+
+.sib-contact-form-required-note span,
+.sib-contact-field label > span {
+  color: var(--sib-color-primary, #0d6a52);
+}
+
+.sib-contact-form-fields {
+  padding: 42px 0;
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 30px 26px;
+}
+
+.sib-contact-field {
+  min-width: 0;
+  opacity: 0;
+  transform: translateY(23px);
+}
+
+.sib-contact-form-visible
+  .sib-contact-field {
+  animation:
+    sibContactFieldReveal
+    0.72s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+  animation-delay:
+    calc(
+      0.35s +
+        (
+          var(--sib-contact-field-index) *
+            0.1s
+        )
+    );
+}
+
+.sib-contact-field-full {
+  grid-column: 1 / -1;
+}
+
+.sib-contact-field label,
+.sib-contact-textarea-heading label {
+  display: block;
+  margin: 0 0 11px;
+  color: var(--sib-color-text, #151b19);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 680;
+}
+
+.sib-contact-field input,
+.sib-contact-field select,
+.sib-contact-field textarea {
+  width: 100%;
+  border: 1px solid var(--sib-color-border, #ddd9cf);
+  border-radius: 13px;
+  outline: none;
+  background: var(--sib-color-background, #f5f4ef);
+  color: var(--sib-color-text, #151b19);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 14px;
+  font-weight: 450;
+  transition:
+    border-color var(--sib-transition-fast, 180ms ease),
+    background-color var(--sib-transition-fast, 180ms ease),
+    box-shadow var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-contact-field input,
+.sib-contact-field select {
+  height: 56px;
+  padding: 0 17px;
+}
+
+.sib-contact-field textarea {
+  min-height: 210px;
+  padding: 17px;
+  line-height: 1.75;
+  resize: vertical;
+}
+
+.sib-contact-field input::placeholder,
+.sib-contact-field textarea::placeholder {
+  color: var(--sib-color-text-muted, #878d89);
+  opacity: 0.82;
+}
+
+.sib-contact-field input:hover,
+.sib-contact-field select:hover,
+.sib-contact-field textarea:hover {
+  border-color: rgba(13, 106, 82, 0.28);
+}
+
+.sib-contact-field input:focus,
+.sib-contact-field select:focus,
+.sib-contact-field textarea:focus {
+  border-color: var(--sib-color-primary, #0d6a52);
+  background: var(--sib-color-surface, #fffefa);
+  box-shadow:
+    0 0 0 4px rgba(13, 106, 82, 0.08);
+}
+
+.sib-contact-select-wrapper {
+  position: relative;
+}
+
+.sib-contact-select-wrapper select {
+  padding-right: 48px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.sib-contact-select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 19px;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid
+    var(--sib-color-primary, #0d6a52);
+  border-bottom: 1.5px solid
+    var(--sib-color-primary, #0d6a52);
+  pointer-events: none;
+  transform:
+    translateY(-70%)
+    rotate(45deg);
+}
+
+.sib-contact-textarea-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.sib-contact-textarea-heading > span {
+  color: var(--sib-color-text-muted, #878d89);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 650;
+  letter-spacing: 0.5px;
+}
+
+.sib-contact-form-bottom {
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 45px;
+  align-items: center;
+  border-top: 1px solid var(--sib-color-border, #ddd9cf);
+}
+
+.sib-contact-privacy {
+  position: relative;
+  max-width: 730px;
+  display: grid;
+  grid-template-columns: 23px minmax(0, 1fr);
+  gap: 13px;
+  align-items: start;
+  cursor: pointer;
+}
+
+.sib-contact-privacy input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sib-contact-privacy-box {
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--sib-color-border, #ddd9cf);
+  border-radius: 6px;
+  background: var(--sib-color-background, #f5f4ef);
+  color: transparent;
+  transition:
+    color var(--sib-transition-fast, 180ms ease),
+    border-color var(--sib-transition-fast, 180ms ease),
+    background-color var(--sib-transition-fast, 180ms ease),
+    box-shadow var(--sib-transition-fast, 180ms ease);
+}
+
+.sib-contact-privacy-box svg {
+  width: 16px;
+  height: 16px;
+}
+
+.sib-contact-privacy
+  input:checked
+  + .sib-contact-privacy-box {
+  border-color: var(--sib-color-primary, #0d6a52);
+  background: var(--sib-color-primary, #0d6a52);
+  color: #ffffff;
+}
+
+.sib-contact-privacy
+  input:focus-visible
+  + .sib-contact-privacy-box {
+  box-shadow:
+    0 0 0 4px rgba(13, 106, 82, 0.1);
+}
+
+.sib-contact-privacy-text {
+  color: var(--sib-color-text-soft, #656d69);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 11px;
+  line-height: 1.7;
+  font-weight: 450;
+}
+
+.sib-contact-privacy-text a {
+  color: var(--sib-color-primary, #0d6a52);
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-color: rgba(13, 106, 82, 0.3);
+  text-underline-offset: 3px;
+}
+
+.sib-contact-submit {
+  min-width: 190px;
+  min-height: 56px;
+  padding: 8px 9px 8px 21px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--sib-color-primary, #0d6a52);
+  color: #ffffff;
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 680;
+  cursor: pointer;
+  box-shadow:
+    0 15px 35px rgba(13, 106, 82, 0.18);
+  transition:
+    background-color var(--sib-transition-fast, 180ms ease),
+    box-shadow var(--sib-transition-normal, 280ms ease),
+    transform var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-contact-submit:hover:not(:disabled) {
+  background: var(--sib-color-primary-dark, #084c3c);
+  box-shadow:
+    0 20px 42px rgba(13, 106, 82, 0.24);
+  transform: translateY(-3px);
+}
+
+.sib-contact-submit:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.sib-contact-submit-icon {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.12);
+  animation:
+    sibContactSubmitIconMove
+    2.5s
+    ease-in-out
+    infinite;
+  transition:
+    color var(--sib-transition-fast, 180ms ease),
+    background-color var(--sib-transition-fast, 180ms ease),
+    transform var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-contact-submit-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sib-contact-submit:hover:not(:disabled)
+  .sib-contact-submit-icon {
+  background: #ffffff;
+  color: var(--sib-color-primary, #0d6a52);
+  transform: translateX(3px);
+}
+
+.sib-contact-form-status {
+  min-height: 25px;
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.sib-contact-form-status p {
+  margin: 0;
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 11px;
+  line-height: 1.6;
+  font-weight: 550;
+}
+
+.sib-contact-form-status-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  animation:
+    sibContactStatusPulse
+    2.4s
+    ease-in-out
+    infinite;
+}
+
+.sib-contact-form-status-success {
+  color: var(--sib-color-primary, #0d6a52);
+}
+
+.sib-contact-form-status-success
+  .sib-contact-form-status-dot {
+  background: var(--sib-color-primary, #0d6a52);
+}
+
+.sib-contact-form-status-error {
+  color: #9b3028;
+}
+
+.sib-contact-form-status-error
+  .sib-contact-form-status-dot {
+  background: #9b3028;
+}
+
+.sib-contact-form-footer {
+  margin-top: 37px;
+  display: flex;
+  align-items: flex-start;
+  gap: 17px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.sib-contact-form-visible
+  .sib-contact-form-footer {
+  animation:
+    sibContactFooterReveal
+    0.75s
+    0.65s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.sib-contact-form-footer-line {
+  width: 45px;
+  height: 2px;
+  margin-top: 8px;
+  flex: 0 0 45px;
+  background: var(--sib-color-accent, #aa9767);
+}
+
+.sib-contact-form-footer p {
+  max-width: 650px;
+  margin: 0;
+  color: var(--sib-color-text-muted, #878d89);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 11px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.sib-contact-form a:focus-visible,
+.sib-contact-form button:focus-visible {
+  outline: 3px solid rgba(13, 106, 82, 0.22);
+  outline-offset: 4px;
+}
+
+@media (max-width: 900px) {
+  .sib-contact-form {
+    padding: 100px 5% 105px;
+  }
+
+  .sib-contact-form-panel {
+    padding: 40px;
+  }
+
+  .sib-contact-form-bottom {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .sib-contact-submit {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 650px) {
+  .sib-contact-form {
+    padding: 82px 20px 88px;
+  }
+
+  .sib-contact-form-header {
+    padding-bottom: 46px;
+  }
+
+  .sib-contact-form-label-line {
+    width: 30px;
+    flex-basis: 30px;
+  }
+
+  .sib-contact-form-title {
+    margin-top: 23px;
+    font-size: clamp(40px, 11vw, 55px);
+    line-height: 1.05;
+    letter-spacing: -2.5px;
+  }
+
+  .sib-contact-form-description {
+    margin-top: 22px;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .sib-contact-form-panel {
+    margin-top: 48px;
+    padding: 28px 24px;
+    border-radius: 21px;
+  }
+
+  .sib-contact-form-panel-header {
+    padding-bottom: 27px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sib-contact-form-required-note {
+    max-width: none;
+    text-align: left;
+  }
+
+  .sib-contact-form-fields {
+    padding: 32px 0;
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .sib-contact-field-full {
+    grid-column: auto;
+  }
+
+  .sib-contact-field textarea {
+    min-height: 190px;
+  }
+
+  .sib-contact-form-bottom {
+    padding-top: 25px;
+  }
+
+  .sib-contact-submit {
+    width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .sib-contact-form {
+    padding: 72px 16px 76px;
+  }
+
+  .sib-contact-form-section-number {
+    display: none;
+  }
+
+  .sib-contact-form-title {
+    font-size: 39px;
+    letter-spacing: -2px;
+  }
+
+  .sib-contact-form-panel {
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
+
+  .sib-contact-form-panel-header h2 {
+    font-size: 26px;
+  }
+
+  .sib-contact-textarea-heading {
+    align-items: flex-start;
+  }
+
+  .sib-contact-form-footer {
+    gap: 12px;
+  }
+
+  .sib-contact-form-footer-line {
+    width: 30px;
+    flex-basis: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sib-contact-form,
+  .sib-contact-form *,
+  .sib-contact-form *::before,
+  .sib-contact-form *::after {
+    animation: none;
+    transition: none;
+  }
+
+  .sib-contact-form-header,
+  .sib-contact-form-panel,
+  .sib-contact-field,
+  .sib-contact-form-footer {
+    opacity: 1;
+    transform: none;
+  }
+}
