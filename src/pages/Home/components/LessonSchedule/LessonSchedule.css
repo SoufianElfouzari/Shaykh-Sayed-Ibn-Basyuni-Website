@@ -1,0 +1,471 @@
+.sib-schedule {
+  width: 100%;
+  padding: 90px 5%;
+  background: var(--sib-color-surface, #fffefa);
+  color: var(--sib-color-text, #151b19);
+}
+
+.sib-schedule-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.sib-schedule-header {
+  margin-bottom: 38px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.sib-schedule-label {
+  margin: 0 0 15px;
+  color: var(--sib-color-accent, #aa9767);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: 1.35px;
+  text-transform: uppercase;
+}
+
+.sib-schedule-title {
+  margin: 0;
+  color: var(--sib-color-primary-dark, #0f2924);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: clamp(34px, 3.5vw, 50px);
+  line-height: 1.08;
+  font-weight: 650;
+  letter-spacing: -2px;
+}
+
+.sib-schedule-intro {
+  max-width: 390px;
+  margin: 0 0 4px;
+  color: var(--sib-color-text-soft, #656d69);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 14px;
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.sib-schedule-panel {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--sib-color-border, #ddd9cf);
+  border-radius: 22px;
+  background: var(--sib-color-background, #f5f4ef);
+  box-shadow:
+    0 22px 55px rgba(15, 41, 36, 0.07),
+    0 3px 10px rgba(15, 41, 36, 0.03);
+}
+
+.sib-schedule-panel-header {
+  min-height: 94px;
+  padding: 24px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  background: var(--sib-color-primary-dark, #0f2924);
+}
+
+.sib-schedule-panel-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--sib-color-accent-soft, #d8ceb2);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.sib-schedule-panel-header h3 {
+  margin: 0;
+  color: #ffffff;
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 23px;
+  line-height: 1.2;
+  font-weight: 620;
+  letter-spacing: -0.5px;
+}
+
+.sib-schedule-status {
+  padding: 9px 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 650;
+}
+
+.sib-schedule-status-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #54c796;
+  box-shadow: 0 0 0 4px rgba(84, 199, 150, 0.13);
+}
+
+.sib-schedule-table {
+  margin: 16px;
+  overflow: hidden;
+  border: 1px solid var(--sib-color-border, #ddd9cf);
+  border-radius: 15px;
+  background: var(--sib-color-surface, #fffefa);
+}
+
+.sib-schedule-table-head,
+.sib-schedule-row {
+  display: grid;
+  grid-template-columns:
+    minmax(220px, 1fr)
+    minmax(140px, 0.65fr)
+    minmax(260px, 1.3fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.sib-schedule-table-head {
+  min-height: 48px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--sib-color-border, #ddd9cf);
+  background: rgba(23, 58, 51, 0.04);
+}
+
+.sib-schedule-table-head span {
+  color: var(--sib-color-text-muted, #878d89);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.sib-schedule-row {
+  min-height: 82px;
+  padding: 17px 24px;
+  border-bottom: 1px solid var(--sib-color-border, #ddd9cf);
+  transition:
+    background-color var(--sib-transition-fast, 180ms ease);
+}
+
+.sib-schedule-row:nth-child(even) {
+  background: rgba(245, 244, 239, 0.55);
+}
+
+.sib-schedule-row:last-child {
+  border-bottom: 0;
+}
+
+.sib-schedule-row:hover {
+  background: rgba(23, 58, 51, 0.045);
+}
+
+.sib-schedule-day {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--sib-color-primary-dark, #0f2924);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 650;
+}
+
+.sib-schedule-row-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: #38b984;
+}
+
+.sib-schedule-time {
+  color: var(--sib-color-text-soft, #656d69);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 550;
+}
+
+.sib-schedule-subject {
+  color: var(--sib-color-primary-dark, #0f2924);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.sib-schedule-subject strong {
+  font-weight: 680;
+}
+
+.sib-schedule-mobile-label {
+  display: none;
+}
+
+.sib-schedule-footer {
+  min-height: 84px;
+  padding: 20px 30px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+}
+
+.sib-schedule-footer p {
+  max-width: 570px;
+  margin: 0;
+  color: var(--sib-color-text-muted, #878d89);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 11px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.sib-schedule-link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--sib-color-primary, #173a33);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.sib-schedule-link svg {
+  width: 17px;
+  height: 17px;
+  transition:
+    transform var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-schedule-link:hover svg {
+  transform: translateX(4px);
+}
+
+.sib-schedule-link:focus-visible {
+  outline: 3px solid rgba(170, 151, 103, 0.4);
+  outline-offset: 5px;
+}
+
+@media (max-width: 760px) {
+  .sib-schedule {
+    padding: 75px 20px;
+  }
+
+  .sib-schedule-header {
+    margin-bottom: 32px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .sib-schedule-title {
+    font-size: clamp(33px, 9vw, 43px);
+    letter-spacing: -1.7px;
+  }
+
+  .sib-schedule-intro {
+    max-width: 520px;
+  }
+
+  .sib-schedule-panel {
+    border-radius: 18px;
+  }
+
+  .sib-schedule-panel-header {
+    min-height: 84px;
+    padding: 21px 22px;
+  }
+
+  .sib-schedule-panel-header h3 {
+    font-size: 21px;
+  }
+
+  .sib-schedule-table {
+    margin: 10px;
+    border-radius: 13px;
+  }
+
+  .sib-schedule-table-head {
+    display: none;
+  }
+
+  .sib-schedule-row {
+    min-height: auto;
+    padding: 20px;
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+    gap: 11px 20px;
+    align-items: start;
+  }
+
+  .sib-schedule-day {
+    grid-column: 1;
+    font-size: 14px;
+  }
+
+  .sib-schedule-time {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+  }
+
+  .sib-schedule-subject {
+    grid-column: 1 / -1;
+    padding-left: 20px;
+    font-size: 15px;
+  }
+
+  .sib-schedule-mobile-label {
+    display: none;
+  }
+
+  .sib-schedule-footer {
+    min-height: auto;
+    padding: 22px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 17px;
+  }
+}
+
+@media (max-width: 430px) {
+  .sib-schedule {
+    padding: 65px 14px;
+  }
+
+  .sib-schedule-title {
+    font-size: 33px;
+  }
+
+  .sib-schedule-status {
+    display: none;
+  }
+
+  .sib-schedule-row {
+    grid-template-columns: 1fr;
+  }
+
+  .sib-schedule-time {
+    grid-column: 1;
+    grid-row: auto;
+    padding-left: 20px;
+    text-align: left;
+  }
+
+  .sib-schedule-subject {
+    grid-column: 1;
+  }
+
+  .sib-schedule-link {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sib-schedule,
+  .sib-schedule * {
+    transition: none;
+  }
+}
