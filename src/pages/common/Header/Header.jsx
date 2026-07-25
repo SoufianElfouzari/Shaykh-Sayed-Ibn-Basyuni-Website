@@ -21,7 +21,7 @@ const navigationItems = [
   },
   {
     label: "Veröffentlichungen",
-    path: "/veroeffentlichungen",
+    path: "/artikel",
   },
   {
     label: "Kontakt",
