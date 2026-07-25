@@ -6,6 +6,7 @@ import ArchiveIntroduction from "./ArchiveIntroduction/ArchiveIntroduction";
 import DuruusHero from "./DuruusHero/DuruusHero";
 import LatestRecordings from "./DuruusArchive/DuruusArchive";
 import NoticesBanner from "./NoticesBanner/NoticesBanner";
+import DuruusArchive from "./DuruusArchive/DuruusArchive";
 
 function Duruus() {
   return (
@@ -17,7 +18,7 @@ function Duruus() {
             <NoticesBanner />
             <LessonSchedule />
             <ArchiveIntroduction />
-            <LatestRecordings />
+            <DuruusArchive />
             <OfficialChannels />
         </main>
 
