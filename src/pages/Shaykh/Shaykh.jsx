@@ -1,3 +1,4 @@
+import ContactForm from "../Home/common/ContactForm/ContactForm";
 import Footer from "../Home/common/Footer/Footer";
 import Header from "../Home/common/Header/Header";
 import LessonSchedule from "../Home/common/LessonSchedule/LessonSchedule";
@@ -13,6 +14,7 @@ function Shaykh() {
             <ShaykhHero />
             <ShortBiography />
             <LessonSchedule />
+            <ContactForm />
         </main>
 
         <Footer />
