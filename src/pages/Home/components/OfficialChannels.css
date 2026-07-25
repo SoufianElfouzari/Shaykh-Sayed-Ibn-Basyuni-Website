@@ -1,0 +1,904 @@
+@keyframes sibChannelsBannerReveal {
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sibChannelsIntroductionReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-45px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes sibChannelsCardReveal {
+  from {
+    opacity: 0;
+    transform:
+      translateY(38px)
+      scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes sibChannelsVerifiedPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(216, 206, 178, 0.1),
+      0 0 0 0 rgba(216, 206, 178, 0.06);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 7px rgba(216, 206, 178, 0.08),
+      0 0 0 14px rgba(216, 206, 178, 0.02);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes sibChannelsCircleFloatOne {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(0deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(32px, 20px, 0)
+      rotate(10deg)
+      scale(1.05);
+  }
+}
+
+@keyframes sibChannelsCircleFloatTwo {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(0deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(-28px, -18px, 0)
+      rotate(-12deg)
+      scale(1.07);
+  }
+}
+
+@keyframes sibChannelsCircleFloatThree {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(18px, -16px, 0)
+      scale(0.92);
+  }
+}
+
+@keyframes sibChannelsOrbitOne {
+  0% {
+    transform:
+      rotate(0deg)
+      translateX(116px)
+      rotate(0deg);
+  }
+
+  100% {
+    transform:
+      rotate(360deg)
+      translateX(116px)
+      rotate(-360deg);
+  }
+}
+
+@keyframes sibChannelsOrbitTwo {
+  0% {
+    transform:
+      rotate(360deg)
+      translateX(92px)
+      rotate(-360deg);
+  }
+
+  100% {
+    transform:
+      rotate(0deg)
+      translateX(92px)
+      rotate(0deg);
+  }
+}
+
+@keyframes sibChannelsBackgroundShine {
+  0% {
+    transform:
+      translateX(-160%)
+      skewX(-18deg);
+  }
+
+  55%,
+  100% {
+    transform:
+      translateX(220%)
+      skewX(-18deg);
+  }
+}
+
+@keyframes sibChannelsPrimaryShine {
+  0% {
+    transform:
+      translateX(-180%)
+      rotate(18deg);
+  }
+
+  55%,
+  100% {
+    transform:
+      translateX(240%)
+      rotate(18deg);
+  }
+}
+
+@keyframes sibChannelsIconFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes sibChannelsArrowNudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(3px);
+  }
+}
+
+.sib-channels-banner {
+  position: relative;
+  width: 100%;
+  padding: 72px 5%;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 16% 20%,
+      rgba(47, 138, 112, 0.32),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 86% 82%,
+      rgba(170, 151, 103, 0.18),
+      transparent 31%
+    ),
+    var(--sib-color-primary-dark, #084c3c);
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(48px);
+  isolation: isolate;
+}
+
+.sib-channels-banner-visible {
+  animation:
+    sibChannelsBannerReveal
+    0.9s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.sib-channels-banner-decoration {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sib-channels-banner-decoration::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+  background-size: 92px 92px;
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent,
+      #000 25%,
+      #000 75%,
+      transparent
+    );
+}
+
+.sib-channels-banner-shine {
+  position: absolute;
+  top: -40%;
+  bottom: -40%;
+  left: 0;
+  width: 170px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.055),
+      transparent
+    );
+  animation:
+    sibChannelsBackgroundShine
+    8s
+    ease-in-out
+    infinite;
+}
+
+.sib-channels-banner-circle {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.sib-channels-banner-circle::before {
+  content: "";
+  position: absolute;
+  inset: 17%;
+  border: 1px solid rgba(255, 255, 255, 0.045);
+  border-radius: inherit;
+}
+
+.sib-channels-banner-circle-one {
+  top: -250px;
+  left: -160px;
+  width: 520px;
+  height: 520px;
+  animation:
+    sibChannelsCircleFloatOne
+    12s
+    ease-in-out
+    infinite;
+}
+
+.sib-channels-banner-circle-two {
+  right: -180px;
+  bottom: -290px;
+  width: 590px;
+  height: 590px;
+  border-color: rgba(216, 206, 178, 0.12);
+  animation:
+    sibChannelsCircleFloatTwo
+    15s
+    ease-in-out
+    infinite;
+}
+
+.sib-channels-banner-circle-three {
+  top: 18%;
+  left: 46%;
+  width: 180px;
+  height: 180px;
+  border-color: rgba(255, 255, 255, 0.05);
+  animation:
+    sibChannelsCircleFloatThree
+    9s
+    ease-in-out
+    infinite;
+}
+
+.sib-channels-banner-orbit-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sib-color-accent-soft, #d8ceb2);
+  box-shadow:
+    0 0 0 5px rgba(216, 206, 178, 0.07),
+    0 0 24px rgba(216, 206, 178, 0.28);
+}
+
+.sib-channels-banner-orbit-dot-one {
+  top: 30%;
+  left: 8%;
+  animation:
+    sibChannelsOrbitOne
+    16s
+    linear
+    infinite;
+}
+
+.sib-channels-banner-orbit-dot-two {
+  right: 9%;
+  bottom: 31%;
+  width: 5px;
+  height: 5px;
+  animation:
+    sibChannelsOrbitTwo
+    13s
+    linear
+    infinite;
+}
+
+.sib-channels-banner-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--sib-container-width, 1460px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns:
+    minmax(320px, 0.78fr)
+    minmax(500px, 1.22fr);
+  gap: clamp(60px, 8vw, 130px);
+  align-items: center;
+}
+
+.sib-channels-banner-introduction {
+  max-width: 570px;
+  opacity: 0;
+  transform: translateX(-45px);
+}
+
+.sib-channels-banner-visible
+  .sib-channels-banner-introduction {
+  animation:
+    sibChannelsIntroductionReveal
+    0.85s
+    0.18s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.sib-channels-banner-label {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--sib-color-accent-soft, #d8ceb2);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.sib-channels-banner-verified {
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(216, 206, 178, 0.22);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.055);
+  animation:
+    sibChannelsVerifiedPulse
+    2.8s
+    ease-in-out
+    infinite;
+}
+
+.sib-channels-banner-verified svg {
+  width: 15px;
+  height: 15px;
+}
+
+.sib-channels-banner-title {
+  max-width: 580px;
+  margin: 21px 0 0;
+  color: #ffffff;
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: clamp(31px, 3.2vw, 48px);
+  line-height: 1.08;
+  font-weight: 650;
+  letter-spacing: clamp(
+    -2.4px,
+    -0.18vw,
+    -1.3px
+  );
+}
+
+.sib-channels-banner-description {
+  max-width: 520px;
+  margin: 20px 0 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.sib-channels-banner-links {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  perspective: 1000px;
+}
+
+.sib-channels-banner-link {
+  position: relative;
+  min-width: 0;
+  min-height: 185px;
+  padding: 25px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 19px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    );
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0;
+  transform:
+    translateY(38px)
+    scale(0.95);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 12px 34px rgba(4, 29, 23, 0.08);
+  transform-style: preserve-3d;
+  transition:
+    border-color var(--sib-transition-fast, 180ms ease),
+    background-color var(--sib-transition-fast, 180ms ease),
+    box-shadow var(--sib-transition-normal, 280ms ease),
+    transform var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-channels-banner-visible
+  .sib-channels-banner-link {
+  animation:
+    sibChannelsCardReveal
+    0.75s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+  animation-delay:
+    calc(
+      0.32s +
+        (var(--sib-channel-index) * 0.15s)
+    );
+}
+
+.sib-channels-banner-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      circle at 20% 15%,
+      rgba(255, 255, 255, 0.11),
+      transparent 42%
+    );
+  opacity: 0;
+  transition:
+    opacity var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-channels-banner-link-primary {
+  border-color: rgba(216, 206, 178, 0.34);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(216, 206, 178, 0.16),
+      rgba(255, 255, 255, 0.045)
+    );
+}
+
+.sib-channels-banner-primary-shine {
+  position: absolute;
+  top: -50%;
+  bottom: -50%;
+  left: -40px;
+  width: 55px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.19),
+      transparent
+    );
+  animation:
+    sibChannelsPrimaryShine
+    4.8s
+    ease-in-out
+    infinite;
+}
+
+.sib-channels-banner-link:hover {
+  z-index: 3;
+  border-color: rgba(255, 255, 255, 0.34);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 24px 55px rgba(4, 29, 23, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  transform:
+    translateY(-9px)
+    rotateX(2deg)
+    scale(1.025);
+}
+
+.sib-channels-banner-link:first-child:hover {
+  transform:
+    translateY(-9px)
+    rotateX(2deg)
+    rotateY(-2deg)
+    scale(1.025);
+}
+
+.sib-channels-banner-link:last-child:hover {
+  transform:
+    translateY(-9px)
+    rotateX(2deg)
+    rotateY(2deg)
+    scale(1.025);
+}
+
+.sib-channels-banner-link:hover::before {
+  opacity: 1;
+}
+
+.sib-channels-banner-link-icon {
+  position: relative;
+  z-index: 1;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--sib-color-accent-soft, #d8ceb2);
+  animation:
+    sibChannelsIconFloat
+    3.4s
+    ease-in-out
+    infinite;
+  animation-delay:
+    calc(var(--sib-channel-index) * 0.45s);
+  transition:
+    color var(--sib-transition-fast, 180ms ease),
+    background-color var(--sib-transition-fast, 180ms ease),
+    border-radius var(--sib-transition-normal, 280ms ease),
+    transform var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-channels-banner-link-icon svg {
+  width: 23px;
+  height: 23px;
+  transition:
+    transform var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-channels-banner-link:hover
+  .sib-channels-banner-link-icon {
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--sib-color-primary, #0d6a52);
+  transform:
+    translateY(-3px)
+    rotate(-5deg)
+    scale(1.1);
+}
+
+.sib-channels-banner-link:hover
+  .sib-channels-banner-link-icon svg {
+  transform: scale(1.08);
+}
+
+.sib-channels-banner-link-content {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition:
+    transform var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-channels-banner-link:hover
+  .sib-channels-banner-link-content {
+  transform: translateY(-2px);
+}
+
+.sib-channels-banner-link-content strong {
+  color: #ffffff;
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 19px;
+  line-height: 1.2;
+  font-weight: 680;
+  letter-spacing: -0.4px;
+}
+
+.sib-channels-banner-link-content small {
+  max-width: 210px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family:
+    var(
+      --sib-font-main,
+      Inter,
+      "Segoe UI",
+      Arial,
+      sans-serif
+    );
+  font-size: 11px;
+  line-height: 1.55;
+  font-weight: 400;
+  transition:
+    color var(--sib-transition-fast, 180ms ease);
+}
+
+.sib-channels-banner-link:hover
+  .sib-channels-banner-link-content small {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sib-channels-banner-link-arrow {
+  position: absolute;
+  right: 21px;
+  bottom: 21px;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.55);
+  animation:
+    sibChannelsArrowNudge
+    2.5s
+    ease-in-out
+    infinite;
+  animation-delay:
+    calc(var(--sib-channel-index) * 0.35s);
+  transition:
+    color var(--sib-transition-fast, 180ms ease),
+    background-color var(--sib-transition-fast, 180ms ease),
+    border-color var(--sib-transition-fast, 180ms ease),
+    transform var(--sib-transition-normal, 280ms ease);
+}
+
+.sib-channels-banner-link-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.sib-channels-banner-link:hover
+  .sib-channels-banner-link-arrow {
+  border-color: #ffffff;
+  background: #ffffff;
+  color: var(--sib-color-primary, #0d6a52);
+  transform:
+    translateX(5px)
+    rotate(-8deg)
+    scale(1.08);
+}
+
+.sib-channels-banner-link:focus-visible {
+  outline: 3px solid rgba(216, 206, 178, 0.55);
+  outline-offset: 5px;
+}
+
+@media (max-width: 1050px) {
+  .sib-channels-banner {
+    padding: 66px 5%;
+  }
+
+  .sib-channels-banner-container {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .sib-channels-banner-introduction {
+    max-width: 760px;
+  }
+
+  .sib-channels-banner-title {
+    max-width: 760px;
+  }
+
+  .sib-channels-banner-description {
+    max-width: 650px;
+  }
+
+  .sib-channels-banner-links {
+    max-width: 780px;
+  }
+}
+
+@media (max-width: 720px) {
+  .sib-channels-banner {
+    padding: 58px 20px;
+  }
+
+  .sib-channels-banner-container {
+    gap: 34px;
+  }
+
+  .sib-channels-banner-title {
+    margin-top: 18px;
+    font-size: clamp(30px, 8.5vw, 41px);
+    line-height: 1.1;
+    letter-spacing: -1.7px;
+  }
+
+  .sib-channels-banner-description {
+    margin-top: 17px;
+    font-size: 13px;
+  }
+
+  .sib-channels-banner-links {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .sib-channels-banner-link {
+    min-height: 104px;
+    padding: 18px;
+    display: grid;
+    grid-template-columns:
+      44px
+      minmax(0, 1fr)
+      34px;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .sib-channels-banner-link-content {
+    margin-top: 0;
+  }
+
+  .sib-channels-banner-link-content small {
+    max-width: none;
+  }
+
+  .sib-channels-banner-link-arrow {
+    position: static;
+  }
+
+  .sib-channels-banner-link:hover,
+  .sib-channels-banner-link:first-child:hover,
+  .sib-channels-banner-link:last-child:hover {
+    transform: translateX(5px);
+  }
+
+  .sib-channels-banner-circle-three,
+  .sib-channels-banner-orbit-dot {
+    display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .sib-channels-banner {
+    padding: 52px 16px;
+  }
+
+  .sib-channels-banner-title {
+    font-size: 31px;
+  }
+
+  .sib-channels-banner-description {
+    font-size: 12px;
+  }
+
+  .sib-channels-banner-link {
+    padding: 16px;
+    grid-template-columns:
+      41px
+      minmax(0, 1fr);
+  }
+
+  .sib-channels-banner-link-icon {
+    width: 41px;
+    height: 41px;
+    flex-basis: 41px;
+  }
+
+  .sib-channels-banner-link-arrow {
+    display: none;
+  }
+
+  .sib-channels-banner-link-content strong {
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sib-channels-banner {
+    opacity: 1;
+    transform: none;
+  }
+
+  .sib-channels-banner,
+  .sib-channels-banner *,
+  .sib-channels-banner *::before,
+  .sib-channels-banner *::after {
+    animation: none;
+    transition: none;
+  }
+
+  .sib-channels-banner-introduction,
+  .sib-channels-banner-link {
+    opacity: 1;
+    transform: none;
+  }
+}
