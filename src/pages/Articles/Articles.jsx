@@ -1,5 +1,5 @@
-import Footer from "../Home/common/Footer/Footer";
-import Header from "../Home/common/Header/Header";
+import Footer from "../common/Footer/Footer";
+import Header from "../common/Header/Header";
 
 function Articles() {
   return (
