@@ -1,6 +1,7 @@
 import AboutShaykh from "./components/AboutShaykh/AboutShaykh";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
+import LatestArticles from "./components/LatestArticles/LatestArticles";
 
 function Home() {
   return (
@@ -10,6 +11,7 @@ function Home() {
         <main>
             <Hero />
             <AboutShaykh />
+            <LatestArticles />
         </main>
     </div>
   );
