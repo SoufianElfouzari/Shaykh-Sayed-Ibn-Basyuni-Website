@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ContactForm.css";
 
-const CONTACT_ENDPOINT = "/api/contact";
+const CONTACT_ENDPOINT = "http://127.0.0.1:5000/api/contact";
 
 const initialFormData = {
   name: "",
@@ -143,7 +143,7 @@ function ContactForm() {
 
       setSubmitStatus("success");
       setSubmitMessage(
-        "Die Nachricht wurde erfolgreich übermittelt.",
+        "Deine Nachricht wurde erfolgreich übermittelt.",
       );
       setFormData(initialFormData);
     } catch (error) {
@@ -154,6 +154,11 @@ function ContactForm() {
         "Die Nachricht konnte nicht versendet werden. Bitte versuche es später erneut.",
       );
     }
+  };
+
+  const handleSendAnother = () => {
+    setSubmitStatus("idle");
+    setSubmitMessage("");
   };
 
   return (
@@ -206,215 +211,251 @@ function ContactForm() {
           </p>
         </header>
 
-        <form
-          className="sib-contact-form-panel"
-          onSubmit={handleSubmit}
-        >
-          <div className="sib-contact-form-panel-header">
-            <div>
-              <p className="sib-contact-form-panel-label">
-                Kontaktformular
-              </p>
-
-              <h2>Nachricht verfassen</h2>
-            </div>
-
-            <p className="sib-contact-form-required-note">
-              Mit <span>*</span> markierte Felder sind
-              erforderlich.
-            </p>
-          </div>
-
-          <div className="sib-contact-form-fields">
-            <div
-              className="sib-contact-field"
-              style={{ "--sib-contact-field-index": 0 }}
-            >
-              <label htmlFor="contact-name">
-                Name <span>*</span>
-              </label>
-
-              <input
-                id="contact-name"
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Vor- und Nachname"
-                autoComplete="name"
-                required
-              />
-            </div>
-
-            <div
-              className="sib-contact-field"
-              style={{ "--sib-contact-field-index": 1 }}
-            >
-              <label htmlFor="contact-email">
-                E-Mail-Adresse <span>*</span>
-              </label>
-
-              <input
-                id="contact-email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="name@beispiel.de"
-                autoComplete="email"
-                required
-              />
-            </div>
-
-            <div
-              className="sib-contact-field sib-contact-field-full"
-              style={{ "--sib-contact-field-index": 2 }}
-            >
-              <label htmlFor="contact-subject">
-                Anliegen <span>*</span>
-              </label>
-
-              <div className="sib-contact-select-wrapper">
-                <select
-                  id="contact-subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="" disabled>
-                    Bitte ein Anliegen auswählen
-                  </option>
-
-                  <option value="allgemeine-anfrage">
-                    Allgemeine Frage
-                  </option>
-
-                  <option value="unterricht">
-                    Frage zum Unterricht
-                  </option>
-
-                  <option value="website">
-                    Hinweis zur Website
-                  </option>
-
-                  <option value="organisatorisches">
-                    Organisatorisches Anliegen
-                  </option>
-
-                  <option value="nikah">
-                    Termin für Heirat vereinbaren
-                  </option>
-
-                  <option value="sonstiges">
-                    Sonstiges
-                  </option>
-                </select>
-
-                <span
-                  className="sib-contact-select-arrow"
-                  aria-hidden="true"
-                ></span>
-              </div>
-            </div>
-
-            <div
-              className="sib-contact-field sib-contact-field-full"
-              style={{ "--sib-contact-field-index": 3 }}
-            >
-              <div className="sib-contact-textarea-heading">
-                <label htmlFor="contact-message">
-                  Nachricht <span>*</span>
-                </label>
-
-                <span>
-                  {formData.message.length} / 2000
-                </span>
-              </div>
-
-              <textarea
-                id="contact-message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Bitte formuliere dein Anliegen möglichst klar und vollständig."
-                rows="9"
-                maxLength="2000"
-                required
-              ></textarea>
-            </div>
-          </div>
-
-          <div className="sib-contact-form-bottom">
-            <label className="sib-contact-privacy">
-              <input
-                name="privacyAccepted"
-                type="checkbox"
-                checked={formData.privacyAccepted}
-                onChange={handleChange}
-              />
-
-              <span
-                className="sib-contact-privacy-box"
-                aria-hidden="true"
-              >
-                <CheckIcon />
-              </span>
-
-              <span className="sib-contact-privacy-text">
-                Ich habe die{" "}
-                <Link to="/datenschutz">
-                  Datenschutzhinweise
-                </Link>{" "}
-                gelesen und stimme der Verarbeitung meiner
-                Angaben zur Bearbeitung der Anfrage zu.
-              </span>
-            </label>
-
-            <button
-              type="submit"
-              className="sib-contact-submit"
-              disabled={submitStatus === "sending"}
-            >
-              <span>
-                {submitStatus === "sending"
-                  ? "Wird versendet"
-                  : "Nachricht senden"}
-              </span>
-
-              <span
-                className="sib-contact-submit-icon"
-                aria-hidden="true"
-              >
-                <SendIcon />
-              </span>
-            </button>
-          </div>
-
+        {submitStatus === "success" ? (
           <div
-            className={`sib-contact-form-status ${
-              submitStatus === "success"
-                ? "sib-contact-form-status-success"
-                : ""
-            } ${
-              submitStatus === "error"
-                ? "sib-contact-form-status-error"
-                : ""
-            }`}
+            className="sib-contact-form-panel sib-contact-success"
+            role="status"
             aria-live="polite"
           >
-            {submitMessage && (
-              <>
-                <span
-                  className="sib-contact-form-status-dot"
-                  aria-hidden="true"
-                ></span>
+            <span
+              className="sib-contact-success-icon"
+              aria-hidden="true"
+            >
+              <CheckIcon />
+            </span>
 
-                <p>{submitMessage}</p>
-              </>
-            )}
+            <h2>Nachricht gesendet</h2>
+
+            <p className="sib-contact-success-message">
+              {submitMessage}
+            </p>
+
+            <p className="sib-contact-success-note">
+              Die Kommunikation erfolgt ausschließlich per
+              E-Mail. Du erhältst deine Antwort an die von dir
+              angegebene E-Mail-Adresse.
+            </p>
+
+            <button
+              type="button"
+              className="sib-contact-submit sib-contact-success-reset"
+              onClick={handleSendAnother}
+            >
+              <span>Weitere Nachricht senden</span>
+            </button>
           </div>
-        </form>
+        ) : (
+          <form
+            className="sib-contact-form-panel"
+            onSubmit={handleSubmit}
+          >
+            <div className="sib-contact-form-panel-header">
+              <div>
+                <p className="sib-contact-form-panel-label">
+                  Kontaktformular
+                </p>
+
+                <h2>Nachricht verfassen</h2>
+
+                <p className="sib-contact-form-panel-subtitle">
+                  Wir antworten ausschließlich per E-Mail an
+                  die von dir angegebene Adresse.
+                </p>
+              </div>
+
+              <p className="sib-contact-form-required-note">
+                Mit <span>*</span> markierte Felder sind
+                erforderlich.
+              </p>
+            </div>
+
+            <div className="sib-contact-form-fields">
+              <div
+                className="sib-contact-field"
+                style={{ "--sib-contact-field-index": 0 }}
+              >
+                <label htmlFor="contact-name">
+                  Name <span>*</span>
+                </label>
+
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Vor- und Nachname"
+                  autoComplete="name"
+                  required
+                />
+              </div>
+
+              <div
+                className="sib-contact-field"
+                style={{ "--sib-contact-field-index": 1 }}
+              >
+                <label htmlFor="contact-email">
+                  E-Mail-Adresse <span>*</span>
+                </label>
+
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="name@beispiel.de"
+                  autoComplete="email"
+                  required
+                />
+              </div>
+
+              <div
+                className="sib-contact-field sib-contact-field-full"
+                style={{ "--sib-contact-field-index": 2 }}
+              >
+                <label htmlFor="contact-subject">
+                  Anliegen <span>*</span>
+                </label>
+
+                <div className="sib-contact-select-wrapper">
+                  <select
+                    id="contact-subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="" disabled>
+                      Bitte ein Anliegen auswählen
+                    </option>
+
+                    <option value="allgemeine-anfrage">
+                      Allgemeine Frage
+                    </option>
+
+                    <option value="unterricht">
+                      Frage zum Unterricht
+                    </option>
+
+                    <option value="website">
+                      Hinweis zur Website
+                    </option>
+
+                    <option value="organisatorisches">
+                      Organisatorisches Anliegen
+                    </option>
+
+                    <option value="nikah">
+                      Termin für Heirat vereinbaren
+                    </option>
+
+                    <option value="sonstiges">
+                      Sonstiges
+                    </option>
+                  </select>
+
+                  <span
+                    className="sib-contact-select-arrow"
+                    aria-hidden="true"
+                  ></span>
+                </div>
+              </div>
+
+              <div
+                className="sib-contact-field sib-contact-field-full"
+                style={{ "--sib-contact-field-index": 3 }}
+              >
+                <div className="sib-contact-textarea-heading">
+                  <label htmlFor="contact-message">
+                    Nachricht <span>*</span>
+                  </label>
+
+                  <span>
+                    {formData.message.length} / 2000
+                  </span>
+                </div>
+
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Bitte formuliere dein Anliegen möglichst klar und vollständig."
+                  rows="9"
+                  maxLength="2000"
+                  required
+                ></textarea>
+              </div>
+            </div>
+
+            <div className="sib-contact-form-bottom">
+              <label className="sib-contact-privacy">
+                <input
+                  name="privacyAccepted"
+                  type="checkbox"
+                  checked={formData.privacyAccepted}
+                  onChange={handleChange}
+                />
+
+                <span
+                  className="sib-contact-privacy-box"
+                  aria-hidden="true"
+                >
+                  <CheckIcon />
+                </span>
+
+                <span className="sib-contact-privacy-text">
+                  Ich habe die{" "}
+                  <Link to="/datenschutz">
+                    Datenschutzhinweise
+                  </Link>{" "}
+                  gelesen und stimme der Verarbeitung meiner
+                  Angaben zur Bearbeitung der Anfrage zu.
+                </span>
+              </label>
+
+              <button
+                type="submit"
+                className="sib-contact-submit"
+                disabled={submitStatus === "sending"}
+              >
+                <span>
+                  {submitStatus === "sending"
+                    ? "Wird versendet"
+                    : "Nachricht senden"}
+                </span>
+
+                <span
+                  className="sib-contact-submit-icon"
+                  aria-hidden="true"
+                >
+                  <SendIcon />
+                </span>
+              </button>
+            </div>
+
+            <div
+              className={`sib-contact-form-status ${
+                submitStatus === "error"
+                  ? "sib-contact-form-status-error"
+                  : ""
+              }`}
+              aria-live="polite"
+            >
+              {submitStatus === "error" && submitMessage && (
+                <>
+                  <span
+                    className="sib-contact-form-status-dot"
+                    aria-hidden="true"
+                  ></span>
+
+                  <p>{submitMessage}</p>
+                </>
+              )}
+            </div>
+          </form>
+        )}
 
         <footer className="sib-contact-form-footer">
           <span
