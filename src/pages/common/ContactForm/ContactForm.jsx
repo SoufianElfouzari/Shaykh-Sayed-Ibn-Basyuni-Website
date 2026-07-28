@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ContactForm.css";
 
-const CONTACT_ENDPOINT = "http://127.0.0.1:5000/api/contact";
+const CONTACT_ENDPOINT = "https://shaykhsayeddev.pythonanywhere.com/api/contact";
 
 const initialFormData = {
   name: "",
