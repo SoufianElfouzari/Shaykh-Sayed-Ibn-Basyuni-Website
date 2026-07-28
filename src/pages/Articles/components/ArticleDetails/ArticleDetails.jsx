@@ -7,7 +7,12 @@ import {
   Link,
   useParams,
 } from "react-router-dom";
-import { articleEntries } from "../ArticlesOverview/ArticlesOverview";
+import DOMPurify from "dompurify";
+
+import {
+  getPublishedArticles,
+} from "../../../../appwrite/articleService";
+
 import "./ArticleDetails.css";
 
 function ArrowLeftIcon() {
@@ -72,18 +77,6 @@ function LinkIcon() {
         stroke="currentColor"
         strokeWidth="1.8"
         strokeLinecap="round"
-      />
-
-      <path
-        d="M7.5 16.5L5.8 18.2C4.3 19.7 1.9 19.7 0.4 18.2"
-        stroke="currentColor"
-        strokeWidth="0"
-      />
-
-      <path
-        d="M8.5 15.5L7 17C5.3 18.7 5.3 21.3 7 23"
-        stroke="currentColor"
-        strokeWidth="0"
       />
 
       <path
@@ -160,58 +153,369 @@ function CheckIcon() {
   );
 }
 
+function createSectionId(
+  title,
+  index,
+  usedIds,
+) {
+  const normalizedTitle = String(title || "")
+    .trim()
+    .toLocaleLowerCase("de-DE")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ä/g, "ae")
+    .replace(/ö/g, "oe")
+    .replace(/ü/g, "ue")
+    .replace(/ß/g, "ss")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  const baseId =
+    normalizedTitle ||
+    `abschnitt-${index + 1}`;
+
+  let sectionId = baseId;
+  let duplicateNumber = 2;
+
+  while (usedIds.has(sectionId)) {
+    sectionId =
+      `${baseId}-${duplicateNumber}`;
+
+    duplicateNumber += 1;
+  }
+
+  usedIds.add(sectionId);
+
+  return sectionId;
+}
+
+function parseArticleContent(contentHtml) {
+  const sanitizedHtml = DOMPurify.sanitize(
+    String(contentHtml || ""),
+    {
+      USE_PROFILES: {
+        html: true,
+      },
+      ADD_ATTR: [
+        "target",
+        "rel",
+      ],
+    },
+  );
+
+  if (!sanitizedHtml.trim()) {
+    return {
+      introductionHtml: "",
+      sections: [],
+    };
+  }
+
+  const htmlDocument =
+    new DOMParser().parseFromString(
+      sanitizedHtml,
+      "text/html",
+    );
+
+  const introductionParts = [];
+  const sections = [];
+  const usedIds = new Set();
+
+  let currentSection = null;
+
+  Array.from(
+    htmlDocument.body.childNodes,
+  ).forEach((node) => {
+    const isElementNode =
+      node.nodeType === Node.ELEMENT_NODE;
+
+    const tagName = isElementNode
+      ? node.tagName.toLowerCase()
+      : "";
+
+    const isHeading = [
+      "h1",
+      "h2",
+      "h3",
+    ].includes(tagName);
+
+    if (isHeading) {
+      const title =
+        node.textContent?.trim() ||
+        `Abschnitt ${sections.length + 1}`;
+
+      const existingId =
+        node.getAttribute("id")?.trim();
+
+      const sectionId = createSectionId(
+        existingId || title,
+        sections.length,
+        usedIds,
+      );
+
+      currentSection = {
+        id: sectionId,
+        title,
+        html: "",
+      };
+
+      sections.push(currentSection);
+
+      return;
+    }
+
+    const nodeHtml =
+      node.nodeType === Node.TEXT_NODE
+        ? node.textContent
+        : node.outerHTML;
+
+    if (!nodeHtml?.trim()) {
+      return;
+    }
+
+    if (currentSection) {
+      currentSection.html += nodeHtml;
+    } else {
+      introductionParts.push(nodeHtml);
+    }
+  });
+
+  if (sections.length === 0) {
+    return {
+      introductionHtml: "",
+      sections: [
+        {
+          id: "artikelinhalt",
+          title: "Artikelinhalt",
+          html: sanitizedHtml,
+        },
+      ],
+    };
+  }
+
+  return {
+    introductionHtml:
+      introductionParts.join("").trim(),
+
+    sections: sections.filter(
+      (section) =>
+        section.title.trim() ||
+        section.html.trim(),
+    ),
+  };
+}
+
 function formatDate(value) {
-  return new Intl.DateTimeFormat("de-DE", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(`${value}T12:00:00`));
+  if (!value) {
+    return "Datum nicht angegeben";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Datum nicht angegeben";
+  }
+
+  return new Intl.DateTimeFormat(
+    "de-DE",
+    {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    },
+  ).format(date);
+}
+
+function ArticleStatePage({
+  code,
+  title,
+  description,
+  showBackLink = true,
+}) {
+  return (
+    <main className="sib-article-details-not-found">
+      <div>
+        <span>{code}</span>
+
+        <h1>{title}</h1>
+
+        <p>{description}</p>
+
+        {showBackLink && (
+          <Link to="/artikel">
+            <ArrowLeftIcon />
+            <span>
+              Zur Artikelübersicht
+            </span>
+          </Link>
+        )}
+      </div>
+    </main>
+  );
 }
 
 function ArticleDetails() {
   const { slug } = useParams();
 
-  const [readingProgress, setReadingProgress] =
-    useState(0);
-  const [activeSection, setActiveSection] =
-    useState("");
+  const [articles, setArticles] =
+    useState([]);
+
+  const [isLoading, setIsLoading] =
+    useState(true);
+
+  const [
+    errorMessage,
+    setErrorMessage,
+  ] = useState("");
+
+  const [
+    readingProgress,
+    setReadingProgress,
+  ] = useState(0);
+
+  const [
+    activeSection,
+    setActiveSection,
+  ] = useState("");
+
   const [copyStatus, setCopyStatus] =
     useState("idle");
 
-  const article = useMemo(() => {
-    return articleEntries.find(
-      (entry) => entry.slug === slug,
-    );
+  useEffect(() => {
+    let isCurrentRequest = true;
+
+    const loadArticleData = async () => {
+      setIsLoading(true);
+      setErrorMessage("");
+      setArticles([]);
+
+      try {
+        const loadedArticles =
+          await getPublishedArticles();
+
+        if (!isCurrentRequest) {
+          return;
+        }
+
+        setArticles(loadedArticles);
+      } catch (error) {
+        console.error(
+          "Der Artikel konnte nicht geladen werden:",
+          error,
+        );
+
+        if (!isCurrentRequest) {
+          return;
+        }
+
+        setErrorMessage(
+          "Der Artikel konnte nicht aus Appwrite geladen werden.",
+        );
+      } finally {
+        if (isCurrentRequest) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadArticleData();
+
+    return () => {
+      isCurrentRequest = false;
+    };
   }, [slug]);
 
-  const currentArticleIndex =
-    articleEntries.findIndex(
-      (entry) => entry.slug === slug,
+  const article = useMemo(() => {
+    return (
+      articles.find(
+        (entry) => entry.slug === slug,
+      ) || null
     );
+  }, [
+    articles,
+    slug,
+  ]);
+
+  const currentArticleIndex =
+    useMemo(() => {
+      return articles.findIndex(
+        (entry) => entry.slug === slug,
+      );
+    }, [
+      articles,
+      slug,
+    ]);
 
   const previousArticle =
     currentArticleIndex > 0
-      ? articleEntries[currentArticleIndex - 1]
+      ? articles[currentArticleIndex - 1]
       : null;
 
   const nextArticle =
     currentArticleIndex >= 0 &&
     currentArticleIndex <
-      articleEntries.length - 1
-      ? articleEntries[currentArticleIndex + 1]
+      articles.length - 1
+      ? articles[currentArticleIndex + 1]
       : null;
+
+  const articleContent = useMemo(() => {
+    return parseArticleContent(
+      article?.contentHtml,
+    );
+  }, [article?.contentHtml]);
+
+  const tableOfContents =
+    useMemo(() => {
+      const entries = [];
+
+      if (
+        articleContent.introductionHtml
+      ) {
+        entries.push({
+          id: "einleitung",
+          title: "Einleitung",
+        });
+      }
+
+      articleContent.sections.forEach(
+        (section) => {
+          entries.push({
+            id: section.id,
+            title: section.title,
+          });
+        },
+      );
+
+      return entries;
+    }, [articleContent]);
 
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "instant",
+      behavior: "auto",
     });
+
+    setReadingProgress(0);
+    setActiveSection("");
   }, [slug]);
+
+  useEffect(() => {
+    if (!article) {
+      return undefined;
+    }
+
+    document.title =
+      `${article.title} | Shaykh Sayed`;
+
+    return () => {
+      document.title = "Shaykh Sayed";
+    };
+  }, [article]);
 
   useEffect(() => {
     const updateReadingProgress = () => {
       const documentHeight =
-        document.documentElement.scrollHeight -
+        document.documentElement
+          .scrollHeight -
         window.innerHeight;
 
       if (documentHeight <= 0) {
@@ -220,10 +524,16 @@ function ArticleDetails() {
       }
 
       const progress =
-        (window.scrollY / documentHeight) * 100;
+        (
+          window.scrollY /
+          documentHeight
+        ) * 100;
 
       setReadingProgress(
-        Math.min(Math.max(progress, 0), 100),
+        Math.min(
+          Math.max(progress, 0),
+          100,
+        ),
       );
     };
 
@@ -256,14 +566,19 @@ function ArticleDetails() {
   }, []);
 
   useEffect(() => {
-    if (!article) {
+    if (
+      !article ||
+      tableOfContents.length === 0
+    ) {
       return undefined;
     }
 
     const sectionElements =
-      article.sections
-        .map((section) =>
-          document.getElementById(section.id),
+      tableOfContents
+        .map((entry) =>
+          document.getElementById(
+            entry.id,
+          ),
         )
         .filter(Boolean);
 
@@ -271,36 +586,59 @@ function ArticleDetails() {
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (firstEntry, secondEntry) =>
-              secondEntry.intersectionRatio -
-              firstEntry.intersectionRatio,
-          )[0];
-
-        if (visibleEntry) {
-          setActiveSection(
-            visibleEntry.target.id,
-          );
-        }
-      },
-      {
-        rootMargin: "-20% 0px -65% 0px",
-        threshold: [0.1, 0.3, 0.6],
-      },
+    setActiveSection(
+      sectionElements[0].id,
     );
 
-    sectionElements.forEach((element) => {
-      observer.observe(element);
-    });
+    const observer =
+      new IntersectionObserver(
+        (entries) => {
+          const visibleEntry = entries
+            .filter(
+              (entry) =>
+                entry.isIntersecting,
+            )
+            .sort(
+              (
+                firstEntry,
+                secondEntry,
+              ) =>
+                secondEntry
+                  .intersectionRatio -
+                firstEntry
+                  .intersectionRatio,
+            )[0];
+
+          if (visibleEntry) {
+            setActiveSection(
+              visibleEntry.target.id,
+            );
+          }
+        },
+        {
+          rootMargin:
+            "-20% 0px -65% 0px",
+          threshold: [
+            0.1,
+            0.3,
+            0.6,
+          ],
+        },
+      );
+
+    sectionElements.forEach(
+      (element) => {
+        observer.observe(element);
+      },
+    );
 
     return () => {
       observer.disconnect();
     };
-  }, [article]);
+  }, [
+    article,
+    tableOfContents,
+  ]);
 
   const handleCopyLink = async () => {
     try {
@@ -323,25 +661,34 @@ function ArticleDetails() {
     }, 2200);
   };
 
+  if (isLoading) {
+    return (
+      <ArticleStatePage
+        code="..."
+        title="Artikel wird geladen"
+        description="Der veröffentlichte Artikel wird gerade aus Appwrite abgerufen."
+        showBackLink={false}
+      />
+    );
+  }
+
+  if (errorMessage) {
+    return (
+      <ArticleStatePage
+        code="!"
+        title="Artikel konnte nicht geladen werden"
+        description={errorMessage}
+      />
+    );
+  }
+
   if (!article) {
     return (
-      <main className="sib-article-details-not-found">
-        <div>
-          <span>404</span>
-
-          <h1>Artikel nicht gefunden</h1>
-
-          <p>
-            Der gesuchte Artikel existiert nicht oder
-            wurde verschoben.
-          </p>
-
-          <Link to="/artikel">
-            <ArrowLeftIcon />
-            <span>Zur Artikelübersicht</span>
-          </Link>
-        </div>
-      </main>
+      <ArticleStatePage
+        code="404"
+        title="Artikel nicht gefunden"
+        description="Der gesuchte Artikel existiert nicht oder ist nicht veröffentlicht."
+      />
     );
   }
 
@@ -353,7 +700,8 @@ function ArticleDetails() {
       >
         <span
           style={{
-            width: `${readingProgress}%`,
+            width:
+              `${readingProgress}%`,
           }}
         ></span>
       </div>
@@ -380,29 +728,36 @@ function ArticleDetails() {
           </Link>
 
           <div className="sib-article-details-category-row">
-            <span>{article.category}</span>
-
-            {article.featured && (
-              <span>Hervorgehobener Beitrag</span>
-            )}
+            <span>Artikel</span>
           </div>
 
           <h1>{article.title}</h1>
 
-          <p className="sib-article-details-excerpt">
-            {article.excerpt}
-          </p>
+          {article.excerpt && (
+            <p className="sib-article-details-excerpt">
+              {article.excerpt}
+            </p>
+          )}
 
           <div className="sib-article-details-meta">
             <div>
               <span>Autor</span>
-              <strong>{article.author}</strong>
+
+              <strong>
+                {article.author}
+              </strong>
             </div>
 
             <div>
-              <span>Veröffentlicht</span>
+              <span>
+                Veröffentlicht
+              </span>
+
               <time
-                dateTime={article.publishedAt}
+                dateTime={
+                  article.publishedAt ||
+                  undefined
+                }
               >
                 {formatDate(
                   article.publishedAt,
@@ -412,14 +767,21 @@ function ArticleDetails() {
 
             <div>
               <span>Lesezeit</span>
+
               <strong>
-                {article.readingTime} Minuten
+                {article.readingTime}{" "}
+                {article.readingTime === 1
+                  ? "Minute"
+                  : "Minuten"}
               </strong>
             </div>
 
             <div>
               <span>Sprache</span>
-              <strong>{article.language}</strong>
+
+              <strong>
+                {article.language}
+              </strong>
             </div>
           </div>
         </div>
@@ -434,26 +796,14 @@ function ArticleDetails() {
               </p>
 
               <nav aria-label="Artikelinhalt">
-                <a
-                  href="#einleitung"
-                  className={
-                    activeSection === ""
-                      ? "sib-article-details-toc-active"
-                      : ""
-                  }
-                >
-                  <span>00</span>
-                  <strong>Einleitung</strong>
-                </a>
-
-                {article.sections.map(
-                  (section, index) => (
+                {tableOfContents.map(
+                  (entry, index) => (
                     <a
-                      key={section.id}
-                      href={`#${section.id}`}
+                      key={entry.id}
+                      href={`#${entry.id}`}
                       className={
                         activeSection ===
-                        section.id
+                        entry.id
                           ? "sib-article-details-toc-active"
                           : ""
                       }
@@ -461,25 +811,18 @@ function ArticleDetails() {
                       <span>
                         {String(
                           index + 1,
-                        ).padStart(2, "0")}
+                        ).padStart(
+                          2,
+                          "0",
+                        )}
                       </span>
 
                       <strong>
-                        {section.title}
+                        {entry.title}
                       </strong>
                     </a>
                   ),
                 )}
-
-                <a href="#schluss">
-                  <span>
-                    {String(
-                      article.sections.length + 1,
-                    ).padStart(2, "0")}
-                  </span>
-
-                  <strong>Schluss</strong>
-                </a>
               </nav>
 
               <div className="sib-article-details-sidebar-actions">
@@ -487,16 +830,19 @@ function ArticleDetails() {
                   type="button"
                   onClick={handleCopyLink}
                 >
-                  {copyStatus === "copied" ? (
+                  {copyStatus ===
+                  "copied" ? (
                     <CheckIcon />
                   ) : (
                     <LinkIcon />
                   )}
 
                   <span>
-                    {copyStatus === "copied"
+                    {copyStatus ===
+                    "copied"
                       ? "Link kopiert"
-                      : copyStatus === "error"
+                      : copyStatus ===
+                          "error"
                         ? "Kopieren fehlgeschlagen"
                         : "Link kopieren"}
                   </span>
@@ -504,49 +850,36 @@ function ArticleDetails() {
 
                 <button
                   type="button"
-                  onClick={() => window.print()}
+                  onClick={() =>
+                    window.print()
+                  }
                 >
                   <PrintIcon />
-                  <span>Artikel drucken</span>
+
+                  <span>
+                    Artikel drucken
+                  </span>
                 </button>
               </div>
             </div>
           </aside>
 
           <article className="sib-article-details-content">
-            <section
-              id="einleitung"
-              className="sib-article-details-introduction"
-            >
-              <p>{article.introduction}</p>
-            </section>
-
-            <aside className="sib-article-details-key-points">
-              <div className="sib-article-details-key-points-header">
-                <span aria-hidden="true"></span>
-
-                <h2>
-                  Zentrale Punkte des Artikels
-                </h2>
-              </div>
-
-              <ul>
-                {article.keyPoints.map(
-                  (point) => (
-                    <li key={point}>
-                      <span aria-hidden="true">
-                        <CheckIcon />
-                      </span>
-
-                      <p>{point}</p>
-                    </li>
-                  ),
-                )}
-              </ul>
-            </aside>
+            {articleContent
+              .introductionHtml && (
+              <section
+                id="einleitung"
+                className="sib-article-details-introduction"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    articleContent
+                      .introductionHtml,
+                }}
+              />
+            )}
 
             <div className="sib-article-details-sections">
-              {article.sections.map(
+              {articleContent.sections.map(
                 (section, index) => (
                   <section
                     key={section.id}
@@ -557,67 +890,43 @@ function ArticleDetails() {
                       <span>
                         {String(
                           index + 1,
-                        ).padStart(2, "0")}
+                        ).padStart(
+                          2,
+                          "0",
+                        )}
                       </span>
 
-                      <h2>{section.title}</h2>
+                      <h2>
+                        {section.title}
+                      </h2>
                     </header>
 
-                    <div>
-                      {section.paragraphs.map(
-                        (
-                          paragraph,
-                          paragraphIndex,
-                        ) => (
-                          <p
-                            key={
-                              paragraphIndex
-                            }
-                          >
-                            {paragraph}
-                          </p>
-                        ),
-                      )}
-                    </div>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          section.html,
+                      }}
+                    />
                   </section>
                 ),
               )}
             </div>
 
-            <section
-              id="schluss"
-              className="sib-article-details-conclusion"
-            >
-              <div>
-                <span aria-hidden="true"></span>
-                <p>Schluss</p>
-              </div>
-
-              <h2>
-                Zusammenfassende Betrachtung
-              </h2>
-
-              <p>{article.conclusion}</p>
-            </section>
-
             <footer className="sib-article-details-footer">
-              <div className="sib-article-details-tags">
-                <p>Themen dieses Artikels</p>
-
-                <div>
-                  {article.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              </div>
-
               <div className="sib-article-details-updated">
-                <span>Zuletzt aktualisiert</span>
+                <span>
+                  Zuletzt aktualisiert
+                </span>
 
                 <time
-                  dateTime={article.updatedAt}
+                  dateTime={
+                    article.updatedAt ||
+                    undefined
+                  }
                 >
-                  {formatDate(article.updatedAt)}
+                  {formatDate(
+                    article.updatedAt,
+                  )}
                 </time>
               </div>
             </footer>
@@ -641,7 +950,10 @@ function ArticleDetails() {
               </span>
 
               <div>
-                <span>Vorheriger Artikel</span>
+                <span>
+                  Vorheriger Artikel
+                </span>
+
                 <strong>
                   {previousArticle.title}
                 </strong>
@@ -657,7 +969,10 @@ function ArticleDetails() {
               className="sib-article-details-navigation-item sib-article-details-navigation-next"
             >
               <div>
-                <span>Nächster Artikel</span>
+                <span>
+                  Nächster Artikel
+                </span>
+
                 <strong>
                   {nextArticle.title}
                 </strong>
@@ -676,7 +991,10 @@ function ArticleDetails() {
               className="sib-article-details-navigation-item sib-article-details-navigation-next"
             >
               <div>
-                <span>Zurück zur Übersicht</span>
+                <span>
+                  Zurück zur Übersicht
+                </span>
+
                 <strong>
                   Alle Artikel anzeigen
                 </strong>

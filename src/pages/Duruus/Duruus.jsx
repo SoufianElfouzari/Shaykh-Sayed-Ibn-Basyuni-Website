@@ -17,9 +17,9 @@ function Duruus() {
         <main>
             <DuruusHero />
             <NoticesBanner />
-            <LessonSchedule />
-            <ArchiveIntroduction />
             <DuruusArchive />
+            <ArchiveIntroduction />
+            <LessonSchedule />
             <OfficialChannels />
             <ContactForm />
         </main>
