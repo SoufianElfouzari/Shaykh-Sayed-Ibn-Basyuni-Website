@@ -1,42 +1,16 @@
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
-import "./LatestArticles.css";
 
-const articles = [
-  {
-    id: 1,
-    category: "Hadithwissenschaft",
-    title:
-      "Die Bedeutung von Mustalah al-Hadith für das Verständnis der Sunnah",
-    excerpt:
-      "Eine Einführung in die Aufgabe der Hadithterminologie und ihre Bedeutung für die Unterscheidung und Beurteilung von Überlieferungen.",
-    date: "18. Juli 2026",
-    readingTime: "8 Min. Lesezeit",
-    href: "/artikel/mustalah-al-hadith",
-    featured: true,
-  },
-  {
-    id: 2,
-    category: "Fiqh",
-    title:
-      "Warum das Erlernen des Fiqh mit den Grundlagen beginnt",
-    excerpt:
-      "Über einen geordneten und schrittweisen Zugang zum Verständnis der islamischen Rechtswissenschaft.",
-    date: "12. Juli 2026",
-    readingTime: "6 Min. Lesezeit",
-    href: "/artikel/grundlagen-des-fiqh",
-  },
-  {
-    id: 3,
-    category: "Wissen",
-    title:
-      "Der richtige Umgang mit Meinungsverschiedenheiten",
-    excerpt:
-      "Grundsätze für einen respektvollen und wissensbasierten Umgang mit unterschiedlichen Ansichten.",
-    date: "5. Juli 2026",
-    readingTime: "5 Min. Lesezeit",
-    href: "/artikel/meinungsverschiedenheiten",
-  },
-];
+import {
+  getPublishedArticles,
+} from "../../../../appwrite/articleService";
+
+import "./LatestArticles.css";
 
 function ArrowIcon() {
   return (
@@ -103,17 +77,182 @@ function DocumentIcon() {
   );
 }
 
-function LatestArticles() {
-  const featuredArticle = articles.find(
-    (article) => article.featured,
-  );
+function EmptyIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <rect
+        x="5"
+        y="4"
+        width="14"
+        height="16"
+        rx="3"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
 
-  const secondaryArticles = articles.filter(
-    (article) => !article.featured,
+      <path
+        d="M9 9H15"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M9 13H15"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M9 17H13"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+    </svg>
   );
+}
+
+function getDateTimestamp(value) {
+  if (!value) {
+    return 0;
+  }
+
+  const timestamp = new Date(value).getTime();
+
+  if (Number.isNaN(timestamp)) {
+    return 0;
+  }
+
+  return timestamp;
+}
+
+function formatDate(value) {
+  if (!value) {
+    return "Datum offen";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Datum offen";
+  }
+
+  return new Intl.DateTimeFormat("de-DE", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(date);
+}
+
+function formatReadingTime(value) {
+  const readingTime = Number(value);
+
+  if (
+    !Number.isFinite(readingTime) ||
+    readingTime <= 0
+  ) {
+    return "Lesezeit offen";
+  }
+
+  return `${readingTime} Min. Lesezeit`;
+}
+
+function getArticlePath(article) {
+  if (!article?.slug) {
+    return "/artikel";
+  }
+
+  return `/artikel/${article.slug}`;
+}
+
+function LatestArticles() {
+  const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] =
+    useState(true);
+  const [errorMessage, setErrorMessage] =
+    useState("");
+
+  const loadArticles = useCallback(async () => {
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      const loadedArticles =
+        await getPublishedArticles();
+
+      setArticles(
+        Array.isArray(loadedArticles)
+          ? loadedArticles
+          : [],
+      );
+    } catch (error) {
+      console.error(
+        "Neueste Artikel konnten nicht geladen werden:",
+        error,
+      );
+
+      setArticles([]);
+      setErrorMessage(
+        "Die neuesten Artikel konnten nicht geladen werden.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadArticles();
+  }, [loadArticles]);
+
+  const latestArticles = useMemo(() => {
+    return [...articles].sort(
+      (firstArticle, secondArticle) =>
+        getDateTimestamp(
+          secondArticle.publishedAt,
+        ) -
+        getDateTimestamp(
+          firstArticle.publishedAt,
+        ),
+    );
+  }, [articles]);
+
+  const featuredArticle = useMemo(() => {
+    if (latestArticles.length === 0) {
+      return null;
+    }
+
+    return (
+      latestArticles.find(
+        (article) => article.featured,
+      ) || latestArticles[0]
+    );
+  }, [latestArticles]);
+
+  const secondaryArticles = useMemo(() => {
+    if (!featuredArticle) {
+      return [];
+    }
+
+    return latestArticles
+      .filter(
+        (article) =>
+          article.id !== featuredArticle.id,
+      )
+      .slice(0, 2);
+  }, [latestArticles, featuredArticle]);
 
   return (
-    <section className="sib-articles">
+    <section
+      className="sib-articles"
+      aria-labelledby="sib-latest-articles-title"
+    >
       <div className="sib-articles-container">
         <header className="sib-articles-header">
           <div className="sib-articles-heading">
@@ -121,15 +260,19 @@ function LatestArticles() {
               Neueste Artikel
             </p>
 
-            <h2 className="sib-articles-title">
-              Die Neusten Artikel des Shaykh.
+            <h2
+              id="sib-latest-articles-title"
+              className="sib-articles-title"
+            >
+              Die neuesten Artikel des Shaykh.
             </h2>
           </div>
 
           <div className="sib-articles-header-side">
             <p>
-              Ausgewählte Artikel, wissenschaftliche Beiträge und
-              schriftliche Hinweise des Shaykh.
+              Ausgewählte Artikel, wissenschaftliche
+              Beiträge und schriftliche Hinweise des
+              Shaykh.
             </p>
 
             <Link
@@ -142,10 +285,11 @@ function LatestArticles() {
           </div>
         </header>
 
-        <div className="sib-articles-layout">
-          <Link
-            to={featuredArticle.href}
+        {isLoading && (
+          <div
             className="sib-articles-featured"
+            aria-live="polite"
+            aria-busy="true"
           >
             <div className="sib-articles-featured-top">
               <span className="sib-articles-icon">
@@ -153,65 +297,203 @@ function LatestArticles() {
               </span>
 
               <span className="sib-articles-category">
-                {featuredArticle.category}
+                Artikel
               </span>
             </div>
 
             <div className="sib-articles-featured-content">
-              <div className="sib-articles-meta">
-                <span>{featuredArticle.date}</span>
-                <span aria-hidden="true">·</span>
-                <span>{featuredArticle.readingTime}</span>
-              </div>
+              <h3>Artikel werden geladen</h3>
 
-              <h3>{featuredArticle.title}</h3>
+              <p>
+                Die neuesten veröffentlichten Artikel
+                werden gerade abgerufen.
+              </p>
+            </div>
+          </div>
+        )}
 
-              <p>{featuredArticle.excerpt}</p>
+        {!isLoading && errorMessage && (
+          <div
+            className="sib-articles-featured"
+            role="alert"
+          >
+            <div className="sib-articles-featured-top">
+              <span className="sib-articles-icon">
+                <EmptyIcon />
+              </span>
+
+              <span className="sib-articles-category">
+                Fehler
+              </span>
+            </div>
+
+            <div className="sib-articles-featured-content">
+              <h3>
+                Artikel konnten nicht geladen werden
+              </h3>
+
+              <p>{errorMessage}</p>
             </div>
 
             <div className="sib-articles-featured-footer">
-              <span>Artikel lesen</span>
-
-              <span className="sib-articles-arrow">
-                <ArrowIcon />
-              </span>
-            </div>
-          </Link>
-
-          <div className="sib-articles-secondary-list">
-            {secondaryArticles.map((article) => (
-              <Link
-                key={article.id}
-                to={article.href}
-                className="sib-articles-secondary"
+              <button
+                type="button"
+                onClick={loadArticles}
               >
-                <div className="sib-articles-secondary-content">
-                  <div className="sib-articles-secondary-top">
-                    <span className="sib-articles-category">
-                      {article.category}
-                    </span>
+                Erneut versuchen
+              </button>
+            </div>
+          </div>
+        )}
 
-                    <span className="sib-articles-date">
-                      {article.date}
-                    </span>
-                  </div>
+        {!isLoading &&
+          !errorMessage &&
+          !featuredArticle && (
+            <div className="sib-articles-featured">
+              <div className="sib-articles-featured-top">
+                <span className="sib-articles-icon">
+                  <EmptyIcon />
+                </span>
 
-                  <h3>{article.title}</h3>
+                <span className="sib-articles-category">
+                  Artikel
+                </span>
+              </div>
 
-                  <p>{article.excerpt}</p>
+              <div className="sib-articles-featured-content">
+                <h3>
+                  Aktuell gibt es keine Artikel.
+                </h3>
 
-                  <span className="sib-articles-reading-time">
-                    {article.readingTime}
+                <p>
+                  Derzeit wurden noch keine Artikel
+                  veröffentlicht.
+                </p>
+              </div>
+            </div>
+          )}
+
+        {!isLoading &&
+          !errorMessage &&
+          featuredArticle && (
+            <div className="sib-articles-layout">
+              <Link
+                to={getArticlePath(
+                  featuredArticle,
+                )}
+                className="sib-articles-featured"
+                aria-label={`${featuredArticle.title} lesen`}
+              >
+                <div className="sib-articles-featured-top">
+                  <span className="sib-articles-icon">
+                    <DocumentIcon />
+                  </span>
+
+                  <span className="sib-articles-category">
+                    {featuredArticle.category ||
+                      "Artikel"}
                   </span>
                 </div>
 
-                <span className="sib-articles-secondary-arrow">
-                  <ArrowIcon />
-                </span>
+                <div className="sib-articles-featured-content">
+                  <div className="sib-articles-meta">
+                    <time
+                      dateTime={
+                        featuredArticle.publishedAt ||
+                        undefined
+                      }
+                    >
+                      {formatDate(
+                        featuredArticle.publishedAt,
+                      )}
+                    </time>
+
+                    <span aria-hidden="true">
+                      ·
+                    </span>
+
+                    <span>
+                      {formatReadingTime(
+                        featuredArticle.readingTime,
+                      )}
+                    </span>
+                  </div>
+
+                  <h3>
+                    {featuredArticle.title}
+                  </h3>
+
+                  {featuredArticle.excerpt && (
+                    <p>
+                      {featuredArticle.excerpt}
+                    </p>
+                  )}
+                </div>
+
+                <div className="sib-articles-featured-footer">
+                  <span>Artikel lesen</span>
+
+                  <span className="sib-articles-arrow">
+                    <ArrowIcon />
+                  </span>
+                </div>
               </Link>
-            ))}
-          </div>
-        </div>
+
+              {secondaryArticles.length > 0 && (
+                <div className="sib-articles-secondary-list">
+                  {secondaryArticles.map(
+                    (article) => (
+                      <Link
+                        key={article.id}
+                        to={getArticlePath(article)}
+                        className="sib-articles-secondary"
+                        aria-label={`${article.title} lesen`}
+                      >
+                        <div className="sib-articles-secondary-content">
+                          <div className="sib-articles-secondary-top">
+                            <span className="sib-articles-category">
+                              {article.category ||
+                                "Artikel"}
+                            </span>
+
+                            <time
+                              className="sib-articles-date"
+                              dateTime={
+                                article.publishedAt ||
+                                undefined
+                              }
+                            >
+                              {formatDate(
+                                article.publishedAt,
+                              )}
+                            </time>
+                          </div>
+
+                          <h3>{article.title}</h3>
+
+                          {article.excerpt && (
+                            <p>
+                              {article.excerpt}
+                            </p>
+                          )}
+
+                          <span className="sib-articles-reading-time">
+                            {formatReadingTime(
+                              article.readingTime,
+                            )}
+                          </span>
+                        </div>
+
+                        <span className="sib-articles-secondary-arrow">
+                          <ArrowIcon />
+                        </span>
+                      </Link>
+                    ),
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
         <Link
           to="/artikel"
