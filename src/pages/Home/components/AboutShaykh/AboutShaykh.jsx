@@ -1,21 +1,20 @@
 import { Link } from "react-router-dom";
 import "./AboutShaykh.css";
-
 const overviewItems = [
   {
     label: "Sprachen",
     value:
-      "Der Shaykh spricht und arbeitet sowohl in deutscher als auch in arabischer Sprache.",
+      "Arabisch (Muttersprache) und Deutsch.",
   },
   {
-    label: "Aufgaben",
+    label: "Tätigkeiten",
     value:
-      "Er ist als Imam und Khatib tätig und widmet sich hauptsächlich der wissenschaftlichen Forschung.",
+      "Imam, Khatib, Lehrer, Forscher und Autor wissenschaftlicher Arbeiten.",
   },
   {
     label: "Wirkungsort",
     value:
-      "Der Shaykh ist derzeit am Islamischen Zentrum Kassel, der Al-Huda Moschee, tätig. Aufgrund von Bauarbeiten finden seine Unterrichte und seine Anwesenheit derzeit jedoch in der ad-Da'wah Moschee in Kassel statt.",
+      "Imam der Al Huda Moschee des Islamischen Zentrums Kassel. Aufgrund von Bauarbeiten finden die Unterrichte derzeit in der ad Da'wah Moschee in Kassel statt.",
   },
 ];
 
@@ -62,24 +61,28 @@ function AboutShaykh() {
 
         <div className="sib-about-content">
           <div className="sib-about-description">
-            <p>
-              Unser ehrenwerter Shaykh Sayed Ibn Basyuni stammt
-              aus Ägypten und studierte an der
-              Al-Azhar-Universität. Während seines
-              wissenschaftlichen Werdegangs lernte er bei
-              zahlreichen Gelehrten, darunter Shaykh Mustafa
-              al-Adawi und Shaykh Abu Ishaq al-Huwayni sowie
-              [weitere Lehrer].
-            </p>
+  <p>
+    Shaykh Sayed Ibn Basyuni stammt aus dem Gouvernement
+    Gharbeyya in Ägypten. Bereits im Alter von fünf Jahren
+    begann er den Besuch eines Kuttab und vollendete im Alter
+    von elf Jahren das vollständige Auswendiglernen des edlen
+    Quran. Anschließend durchlief er die schulische Ausbildung
+    an den Schulen der Al-Azhar sowie das Studium an der
+    Al-Azhar-Universität.
+  </p>
 
-            <p>
-              Sein wissenschaftlicher Schwerpunkt liegt im
-              Bereich [Spezialisierung]. Seine Arbeit ist durch
-              das Studium der islamischen Quellen, die
-              wissenschaftliche Forschung und die Vermittlung
-              fundierten Wissens geprägt.
-            </p>
-          </div>
+  <p>
+    Während seines Talab al Ilm studierte er bei zahlreichen
+    Gelehrten der Ahl as Sunnah wal Jamaah, darunter Shaykh
+    Mustafa al Adawi und Shaykh Abu Ishaq al Huwayni. Seine
+    wissenschaftlichen Schwerpunkte liegen insbesondere im
+    Fiqh nach den vier Rechtsschulen, der Aqidah sowie der
+    wissenschaftlichen Untersuchung islamischer gedanklicher
+    Strömungen. Neben seiner Tätigkeit als Imam und Khatib
+    widmet er sich der Lehre, der wissenschaftlichen Forschung
+    und der Ausbildung von Studenten des islamischen Wissens.
+  </p>
+</div>
 
           <div className="sib-about-overview">
             {overviewItems.map((item) => (
