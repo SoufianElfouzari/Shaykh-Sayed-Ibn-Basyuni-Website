@@ -54,6 +54,11 @@ function App() {
           />
 
           <Route
+            path="/duruus"
+            element={<Duruus />}
+          />
+
+          <Route
             path="/artikel"
             element={<Articles />}
           />

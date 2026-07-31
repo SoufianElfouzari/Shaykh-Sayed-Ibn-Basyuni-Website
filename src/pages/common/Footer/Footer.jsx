@@ -12,8 +12,8 @@ const footerNavigation = [
     to: "/der-shaykh",
   },
   {
-    label: "Duruus",
-    to: "/duruus",
+    label: "Durous",
+    to: "/durous",
   },
   {
     label: "Artikel",
@@ -27,12 +27,12 @@ const footerNavigation = [
 
 const footerContentLinks = [
   {
-    label: "Neueste Duruus",
-    to: "/duruus",
+    label: "Neueste Durous",
+    to: "/durous",
   },
   {
     label: "Unterrichtsreihen",
-    to: "/duruus",
+    to: "/durous",
   },
   {
     label: "Aktuelle Artikel",
@@ -145,7 +145,7 @@ function Footer() {
             </Link>
 
             <p className="sib-footer-description">
-              Eine geordnete Sammlung der Duruus, Artikel und
+              Eine geordnete Sammlung der Durous, Artikel und
               aktuellen Hinweise von Shaykh Sayed Ibn Basyuni.
             </p>
 
