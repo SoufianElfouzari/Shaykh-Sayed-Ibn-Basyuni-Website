@@ -180,37 +180,7 @@ function Header() {
           </nav>
 
           <div className="sib-header-actions">
-            <NavLink
-              to="/suche"
-              className={({ isActive }) =>
-                isActive
-                  ? "sib-header-search sib-header-search-active"
-                  : "sib-header-search"
-              }
-              aria-label="Website durchsuchen"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <circle
-                  cx="10.8"
-                  cy="10.8"
-                  r="6.3"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                />
-
-                <path
-                  d="M15.5 15.5L20 20"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </NavLink>
+            
 
             <button
               type="button"
