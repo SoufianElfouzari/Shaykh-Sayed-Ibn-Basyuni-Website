@@ -24,13 +24,13 @@ function DuruusHero() {
         </p>
 
         <h1 className="sib-duruus-page-hero-title">
-          Duruus und Unterricht
+          Durous und Unterricht
           <span>übersichtlich gesammelt.</span>
         </h1>
 
         <p className="sib-duruus-page-hero-description">
           Hier finden sich aktuelle und kommende Unterrichte,
-          aufgezeichnete Duruus sowie geordnete Unterrichtsreihen
+          aufgezeichnete Durous sowie geordnete Unterrichtsreihen
           von Shaykh Sayed Ibn Basyuni.
         </p>
       </div>

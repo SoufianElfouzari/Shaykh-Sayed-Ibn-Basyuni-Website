@@ -16,8 +16,8 @@ const navigationItems = [
     path: "/shaykh",
   },
   {
-    label: "Duruus",
-    path: "/duruus",
+    label: "Durous",
+    path: "/durous",
   },
   {
     label: "Veröffentlichungen",
@@ -366,7 +366,7 @@ function Header() {
           </NavLink>
 
           <p>
-            Duruus, Veröffentlichungen und
+            Durous, Veröffentlichungen und
             Informationen von Shaykh Sayed Ibn
             Basyuni.
           </p>

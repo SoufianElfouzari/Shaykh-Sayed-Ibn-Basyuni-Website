@@ -88,7 +88,7 @@ function LessonSchedule() {
                 Wochenplan
               </span>
 
-              <h3>Aktuelle Duruus</h3>
+              <h3>Aktuelle Durous</h3>
             </div>
 
             <span className="sib-schedule-status">
@@ -149,14 +149,14 @@ function LessonSchedule() {
           <footer className="sib-schedule-footer">
             <p>
               Änderungen und weitere Hinweise werden auf der
-              Duruus-Seite veröffentlicht.
+              Durous-Seite veröffentlicht.
             </p>
 
             <Link
-              to="/duruus"
+              to="/durous"
               className="sib-schedule-link"
             >
-              <span>Alle Duruus ansehen</span>
+              <span>Alle Durous ansehen</span>
               <ArrowIcon />
             </Link>
           </footer>

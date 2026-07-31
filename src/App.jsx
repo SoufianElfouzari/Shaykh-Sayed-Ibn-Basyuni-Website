@@ -26,7 +26,7 @@ function ScrollToTop() {
     });
   }, [pathname]);
 
-  return null;
+  return null; 
 }
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
           />
 
           <Route
-            path="/duruus"
+            path="/durous"
             element={<Duruus />}
           />
 

@@ -100,7 +100,7 @@ function ArchiveIntroduction() {
             id="sib-archive-introduction-title"
             className="sib-archive-introduction-title"
           >
-            Duruus geordnet
+            Durous geordnet
             <span>und dauerhaft zugänglich.</span>
           </h2>
         </header>
@@ -108,7 +108,7 @@ function ArchiveIntroduction() {
         <div className="sib-archive-introduction-content">
           <p className="sib-archive-introduction-lead">
             Das Unterrichtsarchiv bietet einen geordneten Zugang
-            zu vergangenen Duruus, einzelnen Unterrichtseinheiten
+            zu vergangenen Durous, einzelnen Unterrichtseinheiten
             und zusammenhängenden Unterrichtsreihen.
           </p>
 
@@ -122,7 +122,7 @@ function ArchiveIntroduction() {
 
             <p>
               Neben abgeschlossenen Reihen können auch einzelne
-              Duruus und fortlaufende Unterrichte im Archiv
+              Durous und fortlaufende Unterrichte im Archiv
               aufgerufen werden. Neue Aufnahmen werden an der
               entsprechenden Stelle ergänzt.
             </p>

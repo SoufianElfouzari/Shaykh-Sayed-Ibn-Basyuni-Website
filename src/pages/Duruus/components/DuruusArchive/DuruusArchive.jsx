@@ -310,7 +310,7 @@ function DuruusArchive() {
         );
       } catch (error) {
         console.error(
-          "Duruus konnten nicht geladen werden:",
+          "Durous konnten nicht geladen werden:",
           error,
         );
 
@@ -323,7 +323,7 @@ function DuruusArchive() {
         setErrorMessage(
           error instanceof Error
             ? error.message
-            : "Die Duruus konnten nicht geladen werden.",
+            : "Die Durous konnten nicht geladen werden.",
         );
       } finally {
         if (isCurrentRequest) {
@@ -763,7 +763,7 @@ function DuruusArchive() {
             ></span>
 
             <p className="sib-duruus-archive-label">
-              Alle verfügbaren Duruus
+              Alle verfügbaren Durous
             </p>
           </div>
 
@@ -780,7 +780,7 @@ function DuruusArchive() {
 
             <p className="sib-duruus-archive-description">
               Durchsuche alle veröffentlichten
-              Duruus und Unterrichtsreihen nach
+              Durous und Unterrichtsreihen nach
               Thema, Sprache oder Titel.
             </p>
           </div>
@@ -796,7 +796,7 @@ function DuruusArchive() {
             </span>
 
             <h3>
-              Duruus werden geladen
+              Durous werden geladen
             </h3>
 
             <p>
@@ -817,7 +817,7 @@ function DuruusArchive() {
               </span>
 
               <h3>
-                Duruus konnten nicht geladen
+                Durous konnten nicht geladen
                 werden
               </h3>
 
@@ -1239,7 +1239,7 @@ function DuruusArchive() {
                   <p>
                     Für diese Suche oder
                     Filterauswahl sind aktuell
-                    keine passenden Duruus
+                    keine passenden Durous
                     vorhanden.
                   </p>
 

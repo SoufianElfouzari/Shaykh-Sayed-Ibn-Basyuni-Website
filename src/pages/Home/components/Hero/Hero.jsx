@@ -24,7 +24,7 @@ function Hero() {
         </p>
 
         <h1 className="sib-home-hero-title">
-          Duruus, Artikel und Termine
+          Durous, Artikel und Termine
           <span>geordnet an einem Ort.</span>
         </h1>
 
