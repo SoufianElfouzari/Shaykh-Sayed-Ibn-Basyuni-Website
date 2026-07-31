@@ -14,6 +14,8 @@ import Duruus from "./pages/Duruus/Duruus";
 import Articles from "./pages/Articles/Articles";
 import ArticleDetails from "./pages/Articles/components/ArticleDetails/ArticleDetails";
 import Contact from "./pages/Contact/Contact";
+import Datenschutz from "./pages/Datenschutz/Datenschutz";
+import Impressum from "./pages/Impressum/Impressum";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -64,6 +66,16 @@ function App() {
           <Route
             path="/kontakt"
             element={<Contact />}
+          />
+
+          <Route
+            path="/datenschutz"
+            element={<Datenschutz />}
+          />
+
+          <Route
+            path="/impressum"
+            element={<Impressum />}
           />
         </Routes>
       </div>
