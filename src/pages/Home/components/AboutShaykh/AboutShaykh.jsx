@@ -62,7 +62,7 @@ function AboutShaykh() {
         <div className="sib-about-content">
           <div className="sib-about-description">
   <p>
-    Shaykh Sayed Ibn Basyuni stammt aus dem Gouvernement
+    Dr. Shaykh Sayed Ibn Basyuni stammt aus dem Gouvernement
     Gharbeyya in Ägypten. Bereits im Alter von fünf Jahren
     begann er den Besuch eines Kuttab und vollendete im Alter
     von elf Jahren das vollständige Auswendiglernen des edlen

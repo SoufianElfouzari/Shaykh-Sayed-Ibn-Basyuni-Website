@@ -25,13 +25,13 @@ function ShaykhHero() {
 
         <h1 className="sib-shaykh-page-hero-title">
           Der Shaykh
-          <span>Sayed Ibn Basyuni</span>
+          <span>Dr. Sayed Ibn Basyuni</span>
         </h1>
 
         <p className="sib-shaykh-page-hero-description">
           Diese Seite bietet einen geordneten Einblick in den
           wissenschaftlichen Werdegang, die Lehrer und die
-          Tätigkeiten von Shaykh Sayed Ibn Basyuni.
+          Tätigkeiten von Dr. Shaykh Sayed Ibn Basyuni.
         </p>
       </div>
     </section>

@@ -37,7 +37,7 @@ function ArticlesHero() {
         <p className="sib-articles-page-hero-description">
           Hier finden sich veröffentlichte Artikel, kurze
           Abhandlungen und weitere schriftliche Beiträge von
-          Shaykh Sayed Ibn Basyuni.
+          Dr. Shaykh Sayed Ibn Basyuni.
         </p>
       </div>
     </section>

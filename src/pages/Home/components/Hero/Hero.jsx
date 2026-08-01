@@ -20,7 +20,7 @@ function Hero() {
 
       <div className="sib-home-hero-container">
         <p className="sib-home-hero-label">
-          Offizielle Website von Shaykh Sayed Ibn Basyuni
+          Offizielle Website von Dr. Shaykh Sayed Ibn Basyuni
         </p>
 
         <h1 className="sib-home-hero-title">

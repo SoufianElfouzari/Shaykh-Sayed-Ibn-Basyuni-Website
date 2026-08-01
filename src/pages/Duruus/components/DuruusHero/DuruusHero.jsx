@@ -31,7 +31,7 @@ function DuruusHero() {
         <p className="sib-duruus-page-hero-description">
           Hier finden sich aktuelle und kommende Unterrichte,
           aufgezeichnete Durous sowie geordnete Unterrichtsreihen
-          von Shaykh Sayed Ibn Basyuni.
+          von Dr. Shaykh Sayed Ibn Basyuni.
         </p>
       </div>
     </section>

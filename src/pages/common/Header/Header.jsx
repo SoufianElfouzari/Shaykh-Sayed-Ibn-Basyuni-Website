@@ -138,7 +138,7 @@ function Header() {
           <Link
             to="/"
             className="sib-header-brand"
-            aria-label="Zur Startseite von Shaykh Sayed Ibn Basyuni"
+            aria-label="Zur Startseite von Dr. Shaykh Sayed Ibn Basyuni"
             onClick={closeMenu}
           >
             <span
@@ -149,7 +149,7 @@ function Header() {
             <span className="sib-header-brand-copy">
               <span className="sib-header-brand-name">
                 <span className="sib-header-brand-title">
-                  Shaykh
+                  Dr. Shaykh
                 </span>
 
                 <span className="sib-header-brand-person">
@@ -238,7 +238,7 @@ function Header() {
             <span className="sib-mobile-brand-copy">
               <span className="sib-mobile-brand-name">
                 <span className="sib-mobile-brand-title">
-                  Shaykh
+                  Dr. Shaykh
                 </span>
 
                 <span className="sib-mobile-brand-person">
@@ -337,7 +337,7 @@ function Header() {
 
           <p>
             Durous, Veröffentlichungen und
-            Informationen von Shaykh Sayed Ibn
+            Informationen von Dr. Shaykh Sayed Ibn
             Basyuni.
           </p>
         </div>

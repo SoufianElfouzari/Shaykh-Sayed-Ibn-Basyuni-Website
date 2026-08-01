@@ -178,7 +178,7 @@ function OfficialChannels() {
           </h2>
 
           <p className="sib-official-channels-description">
-            Sobald die offiziellen Kanäle von Shaykh Sayed Ibn
+            Sobald die offiziellen Kanäle von Dr. Shaykh Sayed Ibn
             Basyuni eingerichtet wurden, werden sie an dieser
             Stelle veröffentlicht und über diese Website
             bestätigt.

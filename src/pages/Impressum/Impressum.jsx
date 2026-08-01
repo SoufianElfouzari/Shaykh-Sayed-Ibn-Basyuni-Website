@@ -338,7 +338,7 @@ function Impressum() {
                     </span>
 
                     <strong>
-                      Shaykh Sayed Ibn Basyuni
+                      Dr. Shaykh Sayed Ibn Basyuni
                     </strong>
 
                     <a href="mailto:elsayed.barakaat@gmail.com">

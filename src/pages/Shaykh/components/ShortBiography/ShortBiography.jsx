@@ -6,7 +6,7 @@ const biographySections = [
   number: "01",
   title: "Herkunft und frühe Jahre",
   paragraphs: [
-    `Shaykh Sayed Ibn Basyuni wurde im Gouvernement Gharbeyya in Ägypten geboren und wuchs dort auf. Bereits im Alter von fünf Jahren begann er den Besuch eines Kuttab (Quran-Schule) in seinem Dorf, wo er das Lesen des Quran, die arabische Sprache sowie den Tadjweed erlernte und mit dem Auswendiglernen des Quran begann.`,
+    `Dr. Shaykh Sayed Ibn Basyuni wurde im Gouvernement Gharbeyya in Ägypten geboren und wuchs dort auf. Bereits im Alter von fünf Jahren begann er den Besuch eines Kuttab (Quran-Schule) in seinem Dorf, wo er das Lesen des Quran, die arabische Sprache sowie den Tadjweed erlernte und mit dem Auswendiglernen des Quran begann.`,
 
     `Anschließend setzte er seinen Bildungsweg an den Schulen der Al-Azhar fort. Bereits in jungen Jahren erhielt er dort eine fundierte Ausbildung im Quran, in der arabischen Sprache und in den islamischen Wissenschaften, welche den Grundstein für seinen späteren wissenschaftlichen Werdegang legte.`,
   ],
@@ -15,19 +15,19 @@ const biographySections = [
   number: "02",
   title: "Studium und wissenschaftliche Ausbildung",
   paragraphs: [
-    `Im Alter von sieben Jahren begann Shaykh Sayed Ibn Basyuni seine Ausbildung an den Schulen der Al-Azhar mit dem Besuch der Grundschule, die er bis zum Alter von dreizehn Jahren absolvierte. Während dieser Zeit studierte er den Quran, die arabische Sprache, die Biographie des Propheten sowie die islamische Ethik. Bereits im Alter von elf Jahren vollendete er das vollständige Auswendiglernen des edlen Quran (Hifdh al Quran) und erhielt den Titel Hafidh al Quran.`,
+    `Im Alter von sieben Jahren begann Dr. Shaykh Sayed Ibn Basyuni seine Ausbildung an den Schulen der Al-Azhar mit dem Besuch der Grundschule, die er bis zum Alter von dreizehn Jahren absolvierte. Während dieser Zeit studierte er den Quran, die arabische Sprache, die Biographie des Propheten sowie die islamische Ethik. Bereits im Alter von elf Jahren vollendete er das vollständige Auswendiglernen des edlen Quran (Hifdh al Quran) und erhielt den Titel Hafidh al Quran.`,
 
     `Im Alter von dreizehn Jahren wechselte er an die Mittelschule der Al-Azhar, die er bis zum Alter von sechzehn Jahren besuchte. Dort vertiefte er seine Kenntnisse im Quran, im Tadjweed, im Fiqh, im Hadith, im Tafsir sowie in der islamischen Geschichte.`,
 
     `Im Alter von sechzehn Jahren begann er die Oberschule der Al-Azhar (Thanawiyyah Al-Azhariyyah), die er nach vier Jahren im Alter von zwanzig Jahren erfolgreich abschloss. In dieser Ausbildungsphase widmete er sich intensiv dem Quran, dem Fiqh nach den vier Rechtsschulen, dem Hadith, dem Tafsir sowie der islamischen Geschichte. Darüber hinaus studierte er die klassischen Disziplinen der arabischen Sprache, darunter Nahw (Grammatik), Sarf (Morphologie), Balaghah (Rhetorik), arabische Literatur, Arud (Metrik) sowie Mantiq (Logik).`,
 
-    `Im Alter von zwanzig Jahren begann Shaykh Sayed Ibn Basyuni sein vierjähriges Bachelorstudium an der Hochschule für Sprachen und Übersetzung der Al-Azhar-Universität im Fachbereich Germanistik und Islamwissenschaft. Während seines Studiums beschäftigte er sich unter anderem mit den Bedeutungen des Quran, den Quran-Wissenschaften, den Hadith-Wissenschaften, den Tafsir-Wissenschaften, der Aqidah, dem vergleichenden Fiqh, Usul al Fiqh nach den vier Rechtsschulen, der Geschichte der islamischen Gesetzgebung, der islamischen Geschichte, der islamischen Kultur, islamischen Gruppierungen und gedanklichen Strömungen, der Widerlegung der Scheinargumente der Orientalisten, dem Fiqh muslimischer Minderheiten in nichtislamischen Ländern, den Quran-Lesarten (Qiraat), den Methoden der Dawah, der Predigtwissenschaft sowie dem islamischen Strafrecht. Parallel dazu vertiefte er seine Kenntnisse der deutschen Sprache und der Übersetzungswissenschaft.`,
+    `Im Alter von zwanzig Jahren begann Dr. Shaykh Sayed Ibn Basyuni sein vierjähriges Bachelorstudium an der Hochschule für Sprachen und Übersetzung der Al-Azhar-Universität im Fachbereich Germanistik und Islamwissenschaft. Während seines Studiums beschäftigte er sich unter anderem mit den Bedeutungen des Quran, den Quran-Wissenschaften, den Hadith-Wissenschaften, den Tafsir-Wissenschaften, der Aqidah, dem vergleichenden Fiqh, Usul al Fiqh nach den vier Rechtsschulen, der Geschichte der islamischen Gesetzgebung, der islamischen Geschichte, der islamischen Kultur, islamischen Gruppierungen und gedanklichen Strömungen, der Widerlegung der Scheinargumente der Orientalisten, dem Fiqh muslimischer Minderheiten in nichtislamischen Ländern, den Quran-Lesarten (Qiraat), den Methoden der Dawah, der Predigtwissenschaft sowie dem islamischen Strafrecht. Parallel dazu vertiefte er seine Kenntnisse der deutschen Sprache und der Übersetzungswissenschaft.`,
 
     `Nach dem erfolgreichen Abschluss des Bachelorstudiums setzte er seine wissenschaftliche Laufbahn mit einem zweijährigen postgradualen Masterstudium fort, das der Vertiefung seiner wissenschaftlichen Kenntnisse sowie der Vorbereitung auf seine erste Promotion diente. Während dieser Zeit spezialisierte er sich insbesondere auf die wissenschaftliche Forschungsmethodik, die analytische Arbeit mit klassischen islamischen Quellen sowie die vertiefte Auseinandersetzung mit den islamischen Wissenschaften.`,
 
-    `Im Anschluss daran begann Shaykh Sayed Ibn Basyuni seine erste Promotion, die er nach sechs Jahren erfolgreich abschloss. Seine Dissertation trug den Titel „Die Jihad-Verse des Quran und die Jihad-Hadithe sowie ihre historische Einordnung anhand der Aussagen der Gelehrten. Eine analytisch-kritische Studie.“ Mit dem erfolgreichen Abschluss dieser Forschungsarbeit erlangte er den Doktorgrad.`,
+    `Im Anschluss daran begann Dr. Shaykh Sayed Ibn Basyuni seine erste Promotion, die er nach sechs Jahren erfolgreich abschloss. Seine Dissertation trug den Titel „Die Jihad-Verse des Quran und die Jihad-Hadithe sowie ihre historische Einordnung anhand der Aussagen der Gelehrten. Eine analytisch-kritische Studie.“ Mit dem erfolgreichen Abschluss dieser Forschungsarbeit erlangte er den Doktorgrad.`,
 
-    `Nach dem Erwerb seines Doktortitels nahm Shaykh Sayed Ibn Basyuni eine zweite Promotion auf. Derzeit arbeitet er an seiner zweiten Dissertation mit dem Titel „Die Werke von Shaykh al Islam Ibn Taymiyyah und ihre Rezeption bei den verschiedenen islamischen Gruppierungen. Eine analytisch-kritische Studie.“ Die Schwerpunkte seiner wissenschaftlichen Forschung liegen insbesondere im Fiqh nach den vier Rechtsschulen, in der Aqidah sowie in der wissenschaftlichen Untersuchung islamischer gedanklicher Strömungen.`,
+    `Nach dem Erwerb seines Doktortitels nahm Dr. Shaykh Sayed Ibn Basyuni eine zweite Promotion auf. Derzeit arbeitet er an seiner zweiten Dissertation mit dem Titel „Die Werke von Shaykh al Islam Ibn Taymiyyah und ihre Rezeption bei den verschiedenen islamischen Gruppierungen. Eine analytisch-kritische Studie.“ Die Schwerpunkte seiner wissenschaftlichen Forschung liegen insbesondere im Fiqh nach den vier Rechtsschulen, in der Aqidah sowie in der wissenschaftlichen Untersuchung islamischer gedanklicher Strömungen.`,
   ],
 },
  {
@@ -43,9 +43,9 @@ const biographySections = [
   number: "04",
   title: "Unterricht, Forschung und heutiges Wirken",
   paragraphs: [
-    `Shaykh Sayed Ibn Basyuni widmet sich dem Unterrichten, der wissenschaftlichen Forschung sowie der Vermittlung der islamischen Wissenschaften. Zu seinen Unterrichtsschwerpunkten gehören unter anderem Aqidah, Fiqh nach den vier Rechtsschulen, Quran und seine Wissenschaften, Hadith und Hadith-Wissenschaften, Tafsir, Usul al Fiqh, Mustalah al Hadith, Nahw, Sarf, Balaghah, Tadjweed sowie weitere Disziplinen der islamischen und arabischen Wissenschaften.`,
+    `Dr. Shaykh Sayed Ibn Basyuni widmet sich dem Unterrichten, der wissenschaftlichen Forschung sowie der Vermittlung der islamischen Wissenschaften. Zu seinen Unterrichtsschwerpunkten gehören unter anderem Aqidah, Fiqh nach den vier Rechtsschulen, Quran und seine Wissenschaften, Hadith und Hadith-Wissenschaften, Tafsir, Usul al Fiqh, Mustalah al Hadith, Nahw, Sarf, Balaghah, Tadjweed sowie weitere Disziplinen der islamischen und arabischen Wissenschaften.`,
 
-    `Shaykh Sayed Ibn Basyuni ist Imam und Khatib der Al Huda Moschee in Kassel. Neben seiner Tätigkeit als Imam unterrichtet er regelmäßig Studenten des islamischen Wissens, hält Vorträge, leitet Unterrichtsreihen und beantwortet Fragen in verschiedenen Bereichen der islamischen Wissenschaften. Darüber hinaus beschäftigt er sich mit der wissenschaftlichen Ausarbeitung von Unterrichtsinhalten sowie der Ausbildung von Studenten des islamischen Wissens.`,
+    `Dr. Shaykh Sayed Ibn Basyuni ist Imam und Khatib der Al Huda Moschee in Kassel. Neben seiner Tätigkeit als Imam unterrichtet er regelmäßig Studenten des islamischen Wissens, hält Vorträge, leitet Unterrichtsreihen und beantwortet Fragen in verschiedenen Bereichen der islamischen Wissenschaften. Darüber hinaus beschäftigt er sich mit der wissenschaftlichen Ausarbeitung von Unterrichtsinhalten sowie der Ausbildung von Studenten des islamischen Wissens.`,
 
     `Zu seinen wissenschaftlichen Forschungsschwerpunkten gehören insbesondere das Fiqh nach den vier Rechtsschulen, die Aqidah, die islamischen gedanklichen Strömungen, die Hadith-Wissenschaften sowie die analytische Untersuchung klassischer Werke und historischer Fragestellungen. Neben seiner Lehr- und Forschungstätigkeit veröffentlicht er regelmäßig Vorträge, Durous und wissenschaftliche Beiträge, um authentisches islamisches Wissen auf Grundlage des Quran, der authentischen Sunnah und des Verständnisses der Salaf as Salih zu vermitteln.`,
   ],
@@ -137,7 +137,7 @@ function ShortBiography() {
           <p className="sib-short-biography-header-description">
             Eine zusammenfassende Darstellung der Herkunft,
             Ausbildung, Lehrer und heutigen Tätigkeiten von
-            Shaykh Sayed Ibn Basyuni.
+            Dr. Shaykh Sayed Ibn Basyuni.
           </p>
         </header>
 
@@ -149,7 +149,7 @@ function ShortBiography() {
             ></span>
 
             <p>
-              Shaykh Sayed Ibn Basyuni stammt aus Ägypten und
+              Dr. Shaykh Sayed Ibn Basyuni stammt aus Ägypten und
               widmet sich dem Studium, dem Unterricht und der
               Vermittlung islamischer Wissenschaften.
             </p>
@@ -203,7 +203,7 @@ function ShortBiography() {
             </div>
 
             <p className="sib-short-biography-footer-text">
-             Diese Biografie wurde von einem Schüler von Shaykh Sayed Ibn Basyuni auf Grundlage seiner wissenschaftlichen Laufbahn und seines Lebensweges verfasst. Sämtliche aufgeführten Angaben wurden dem Shaykh vorgelegt und von ihm geprüft sowie bestätigt.
+             Diese Biografie wurde von einem Schüler von Dr. Shaykh Sayed Ibn Basyuni auf Grundlage seiner wissenschaftlichen Laufbahn und seines Lebensweges verfasst. Sämtliche aufgeführten Angaben wurden dem Shaykh vorgelegt und von ihm geprüft sowie bestätigt.
             </p>
           </footer>
         </article>
