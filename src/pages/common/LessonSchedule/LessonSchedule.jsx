@@ -22,7 +22,7 @@ const weeklyLessons = [
   },
   {
     id: 2,
-    day: "Samstag",
+    day: "Sonntag",
     time: "16:00 Uhr",
     subject: "Tajwid",
   },
