@@ -8,11 +8,10 @@ import {
   tablesDB,
 } from "./appwrite";
 
-const ARTICLE_AUTHOR =
-  "Shaykh Sayed Ibn Basyuni";
-
 const ARTICLE_LANGUAGE = "Deutsch";
 const ARTICLE_CATEGORY = "Artikel";
+const DEFAULT_ARTICLE_AUTHOR =
+  "Redaktion Shaykh Sayed";
 
 function getRowData(row) {
   if (
@@ -104,6 +103,17 @@ function parseDate(value) {
   return date;
 }
 
+function normalizeAuthor(author) {
+  const normalizedAuthor =
+    String(author || "").trim();
+
+  if (normalizedAuthor) {
+    return normalizedAuthor;
+  }
+
+  return DEFAULT_ARTICLE_AUTHOR;
+}
+
 function mapArticleRow(row) {
   const data = getRowData(row);
 
@@ -150,7 +160,9 @@ function mapArticleRow(row) {
       ).trim(),
 
     status:
-      String(data.status || "draft"),
+      String(
+        data.status || "draft",
+      ).trim(),
 
     publishedAt:
       publishedAt?.toISOString() || null,
@@ -161,11 +173,32 @@ function mapArticleRow(row) {
     readingTime:
       calculateReadingTime(contentText),
 
-    author: ARTICLE_AUTHOR,
-    category: ARTICLE_CATEGORY,
-    language: ARTICLE_LANGUAGE,
-    featured: false,
-    tags: [],
+    author:
+      normalizeAuthor(data.author),
+
+    category:
+      String(
+        data.category ||
+          ARTICLE_CATEGORY,
+      ).trim(),
+
+    language:
+      String(
+        data.language ||
+          ARTICLE_LANGUAGE,
+      ).trim(),
+
+    featured:
+      Boolean(data.featured),
+
+    tags:
+      Array.isArray(data.tags)
+        ? data.tags
+            .map((tag) =>
+              String(tag).trim(),
+            )
+            .filter(Boolean)
+        : [],
   };
 }
 
