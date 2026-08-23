@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/duruus",
+      "destination": "/durous",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
