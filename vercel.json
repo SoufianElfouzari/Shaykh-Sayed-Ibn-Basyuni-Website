@@ -1,15 +1,22 @@
 {
-  "redirects": [
+  "routes": [
     {
-      "source": "/duruus",
-      "destination": "/durous",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
+      "src": "/duruus",
+      "headers": {
+        "Location": "/durous"
+      },
+      "status": 308
+    },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "handle": "filesystem"
+    },
+    {
+      "src": "/.*\\.[^/]+$",
+      "status": 404
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
