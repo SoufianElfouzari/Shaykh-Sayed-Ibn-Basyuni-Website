@@ -305,35 +305,7 @@ function Header() {
         </nav>
 
         <div className="sib-mobile-menu-footer">
-          <NavLink
-            to="/suche"
-            className="sib-mobile-search-link"
-            onClick={closeMenu}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <circle
-                cx="10.8"
-                cy="10.8"
-                r="6.3"
-                stroke="currentColor"
-                strokeWidth="1.8"
-              />
 
-              <path
-                d="M15.5 15.5L20 20"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-              />
-            </svg>
-
-            <span>Website durchsuchen</span>
-          </NavLink>
 
           <p>
             Durous, Veröffentlichungen und

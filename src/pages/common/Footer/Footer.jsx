@@ -38,10 +38,6 @@ const footerContentLinks = [
     label: "Aktuelle Artikel",
     to: "/artikel",
   },
-  {
-    label: "Suche",
-    to: "/suche",
-  },
 ];
 
 function ArrowIcon() {
