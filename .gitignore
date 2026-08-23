@@ -1,3 +1,8 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
 # Logs
 logs
 *.log
@@ -7,6 +12,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies and builds
 node_modules
 dist
 dist-ssr
@@ -23,7 +29,6 @@ dist-ssr
 *.sln
 *.sw?
 
-
-# other files
+# Project files
 Structure.md
 Todos.md
