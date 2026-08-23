@@ -16,6 +16,7 @@ import ArticleDetails from "./pages/Articles/components/ArticleDetails/ArticleDe
 import Contact from "./pages/Contact/Contact";
 import Datenschutz from "./pages/Datenschutz/Datenschutz";
 import Impressum from "./pages/Impressum/Impressum";
+import NotFound from "./pages/NotFound/NotFound";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -28,7 +29,7 @@ function ScrollToTop() {
     });
   }, [pathname]);
 
-  return null; 
+  return null;
 }
 
 function App() {
@@ -81,6 +82,11 @@ function App() {
           <Route
             path="/impressum"
             element={<Impressum />}
+          />
+
+          <Route
+            path="*"
+            element={<NotFound />}
           />
         </Routes>
       </div>

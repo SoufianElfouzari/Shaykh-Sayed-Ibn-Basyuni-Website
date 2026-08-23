@@ -1,0 +1,158 @@
+.sib-not-found {
+  min-height: 78vh;
+  padding: 40px 24px 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(185, 154, 85, 0.12),
+      transparent 34%
+    ),
+    #f7f4ec;
+}
+
+.sib-not-found-container {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sib-not-found-code {
+  margin: 0;
+  color: rgba(8, 76, 60, 0.1);
+  font-size: clamp(120px, 24vw, 240px);
+  line-height: 0.78;
+  font-weight: 700;
+  letter-spacing: -12px;
+  user-select: none;
+}
+
+.sib-not-found-label {
+  margin: 48px 0 0;
+  color: #b3934d;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.sib-not-found-title {
+  max-width: 680px;
+  margin: 18px auto 0;
+  color: #084c3c;
+  font-size: clamp(38px, 7vw, 70px);
+  line-height: 1.04;
+  font-weight: 600;
+  letter-spacing: -2.5px;
+}
+
+.sib-not-found-description {
+  max-width: 580px;
+  margin: 26px auto 0;
+  color: #53645f;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.sib-not-found-actions {
+  margin-top: 38px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.sib-not-found-primary-link,
+.sib-not-found-secondary-link {
+  min-height: 52px;
+  padding: 14px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #084c3c;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 650;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.sib-not-found-primary-link {
+  background: #084c3c;
+  color: #ffffff;
+}
+
+.sib-not-found-secondary-link {
+  background: transparent;
+  color: #084c3c;
+}
+
+.sib-not-found-primary-link:hover {
+  background: #063d30;
+  border-color: #063d30;
+  transform: translateY(-2px);
+}
+
+.sib-not-found-secondary-link:hover {
+  background: rgba(8, 76, 60, 0.07);
+  transform: translateY(-2px);
+}
+
+.sib-not-found-primary-link:focus-visible,
+.sib-not-found-secondary-link:focus-visible {
+  outline: 3px solid rgba(185, 154, 85, 0.45);
+  outline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .sib-not-found {
+    min-height: 72vh;
+    padding: 140px 20px 88px;
+  }
+
+  .sib-not-found-code {
+    font-size: clamp(110px, 42vw, 170px);
+    letter-spacing: -8px;
+  }
+
+  .sib-not-found-label {
+    margin-top: 38px;
+  }
+
+  .sib-not-found-title {
+    font-size: clamp(36px, 11vw, 52px);
+    letter-spacing: -1.8px;
+  }
+
+  .sib-not-found-description {
+    font-size: 16px;
+  }
+
+  .sib-not-found-actions {
+    width: 100%;
+    margin-top: 32px;
+    flex-direction: column;
+  }
+
+  .sib-not-found-primary-link,
+  .sib-not-found-secondary-link {
+    width: 100%;
+    max-width: 360px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sib-not-found-primary-link,
+  .sib-not-found-secondary-link {
+    transition: none;
+  }
+}
