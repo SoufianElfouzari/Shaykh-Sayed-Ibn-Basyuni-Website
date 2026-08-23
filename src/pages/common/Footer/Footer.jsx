@@ -9,7 +9,7 @@ const footerNavigation = [
   },
   {
     label: "Der Shaykh",
-    to: "/der-shaykh",
+    to: "/shaykh",
   },
   {
     label: "Durous",
