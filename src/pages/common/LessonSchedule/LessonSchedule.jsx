@@ -5,32 +5,32 @@ const weeklyLessons = [
   {
     id: 1,
     day: "Dienstag",
-    time: "19:00",
-    subject: "Mustalah al-Hadith",
-  },
-  {
-    id: 1,
-    day: "Mittwoch",
-    time: "18:30",
-    subject: "Mustalah al-Hadith",
-  },
-  {
-    id: 1,
-    day: "Donnerstag",
-    time: "18:30",
+    time: "Nach Asr",
     subject: "Mustalah al-Hadith",
   },
   {
     id: 2,
-    day: "Sonntag",
-    time: "16:00 Uhr",
-    subject: "Tajwid",
+    day: "Mittwoch",
+    time: "Nach Asr",
+    subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)",
   },
   {
     id: 3,
+    day: "Donnerstag",
+    time: "Nach Asr",
+    subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)",
+  },
+  {
+    id: 4,
     day: "Sonntag",
-    time: "Nach 'Asr",
+    time: "Nach Asr",
     subject: "Fiqh",
+  },
+  {
+    id: 5,
+    day: "Sonntag",
+    time: "Nach Maghrib bis Ishaa",
+    subject: "Fiqh (Arabisch)",
   },
 ];
 
