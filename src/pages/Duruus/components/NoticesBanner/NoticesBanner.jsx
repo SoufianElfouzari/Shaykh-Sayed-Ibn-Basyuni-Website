@@ -5,7 +5,7 @@ import {
 
 import {
   getActivePublishedNotices,
-} from "../../../../appwrite/noticesService";
+} from "../../../../supabase/noticesService";
 
 import "./NoticesBanner.css";
 
@@ -301,7 +301,7 @@ function NoticesBanner() {
 
                 <p>
                   Die aktuellen Änderungen
-                  werden aus Appwrite geladen.
+                  werden aus Supabase geladen.
                 </p>
               </div>
             </article>

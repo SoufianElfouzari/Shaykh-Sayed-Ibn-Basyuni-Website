@@ -11,7 +11,7 @@ import DOMPurify from "dompurify";
 
 import {
   getPublishedArticles,
-} from "../../../../appwrite/articleService";
+} from "../../../../supabase/articleService";
 
 import "./ArticleDetails.css";
 
@@ -408,7 +408,7 @@ function ArticleDetails() {
         }
 
         setErrorMessage(
-          "Der Artikel konnte nicht aus Appwrite geladen werden.",
+          "Der Artikel konnte nicht aus Supabase geladen werden.",
         );
       } finally {
         if (isCurrentRequest) {
@@ -494,8 +494,11 @@ function ArticleDetails() {
       behavior: "auto",
     });
 
-    setReadingProgress(0);
-    setActiveSection("");
+    const frame = window.requestAnimationFrame(() => {
+      setReadingProgress(0);
+      setActiveSection("");
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [slug]);
 
   useEffect(() => {
@@ -586,9 +589,9 @@ function ArticleDetails() {
       return undefined;
     }
 
-    setActiveSection(
-      sectionElements[0].id,
-    );
+    const frame = window.requestAnimationFrame(() => {
+      setActiveSection(sectionElements[0].id);
+    });
 
     const observer =
       new IntersectionObserver(
@@ -633,6 +636,7 @@ function ArticleDetails() {
     );
 
     return () => {
+      window.cancelAnimationFrame(frame);
       observer.disconnect();
     };
   }, [
@@ -666,7 +670,7 @@ function ArticleDetails() {
       <ArticleStatePage
         code="..."
         title="Artikel wird geladen"
-        description="Der veröffentlichte Artikel wird gerade aus Appwrite abgerufen."
+        description="Der veröffentlichte Artikel wird gerade aus Supabase abgerufen."
         showBackLink={false}
       />
     );

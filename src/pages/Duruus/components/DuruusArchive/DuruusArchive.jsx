@@ -9,7 +9,7 @@ import {
   downloadDarsAudio,
   getDarsAudioUrl,
   getPublishedDuruus,
-} from "../../../../appwrite/duruusService";
+} from "../../../../supabase/duruusService";
 
 import "./DuruusArchive.css";
 
@@ -801,7 +801,7 @@ function DuruusArchive() {
 
             <p>
               Die veröffentlichten Aufnahmen
-              werden aus Appwrite geladen.
+              werden aus Supabase geladen.
             </p>
           </div>
         )}

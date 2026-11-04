@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import {
   getPublishedArticles,
-} from "../../../../appwrite/articleService";
+} from "../../../../supabase/articleService";
 
 import "./LatestArticles.css";
 
@@ -208,7 +208,8 @@ function LatestArticles() {
   }, []);
 
   useEffect(() => {
-    loadArticles();
+    const frame = window.requestAnimationFrame(() => { void loadArticles(); });
+    return () => window.cancelAnimationFrame(frame);
   }, [loadArticles]);
 
   const latestArticles = useMemo(() => {
