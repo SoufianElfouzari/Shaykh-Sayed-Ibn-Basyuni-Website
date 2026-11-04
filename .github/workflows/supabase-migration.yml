@@ -1,35 +1,29 @@
-name: Supabase migration CI
+name: Website quality checks
+
 on:
   push:
-    branches: [migration/supabase]
+    branches: [main, migration/supabase]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  build:
+  website:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install dependencies
-        run: npm install
+          cache: npm
+      - name: Install dependencies from lockfile
+        run: npm ci
       - name: Lint
         run: npm run lint
       - name: Production build
         run: npm run build
-      - name: Commit generated lockfile
-        if: github.actor != 'github-actions[bot]'
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add package-lock.json
-          if ! git diff --cached --quiet; then
-            git commit -m "Regenerate lockfile for Supabase migration"
-            git push
-          fi
