@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import {
   getPublishedArticles,
-} from "../../../../appwrite/articleService";
+} from "../../../../supabase/articleService";
 
 import "./ArticlesOverview.css";
 
@@ -443,7 +443,7 @@ function ArticlesOverview() {
 
             <p>
               Die veröffentlichten Artikel werden
-              gerade aus Appwrite abgerufen.
+              gerade aus Supabase abgerufen.
             </p>
           </div>
         )}
