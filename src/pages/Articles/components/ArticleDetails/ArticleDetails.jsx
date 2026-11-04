@@ -11,7 +11,7 @@ import DOMPurify from "dompurify";
 
 import {
   getPublishedArticles,
-} from "../../../../appwrite/articleService";
+} from "../../../../supabase/articleService";
 
 import "./ArticleDetails.css";
 
@@ -408,7 +408,7 @@ function ArticleDetails() {
         }
 
         setErrorMessage(
-          "Der Artikel konnte nicht aus Appwrite geladen werden.",
+          "Der Artikel konnte nicht aus Supabase geladen werden.",
         );
       } finally {
         if (isCurrentRequest) {
@@ -666,7 +666,7 @@ function ArticleDetails() {
       <ArticleStatePage
         code="..."
         title="Artikel wird geladen"
-        description="Der veröffentlichte Artikel wird gerade aus Appwrite abgerufen."
+        description="Der veröffentlichte Artikel wird gerade aus Supabase abgerufen."
         showBackLink={false}
       />
     );
