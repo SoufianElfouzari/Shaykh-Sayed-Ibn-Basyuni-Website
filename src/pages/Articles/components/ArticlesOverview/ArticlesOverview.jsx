@@ -245,7 +245,8 @@ function ArticlesOverview() {
   );
 
   useEffect(() => {
-    loadArticles();
+    const frame = window.requestAnimationFrame(() => { void loadArticles(); });
+    return () => window.cancelAnimationFrame(frame);
   }, [loadArticles]);
 
   const categories = useMemo(() => {
@@ -376,13 +377,9 @@ function ArticlesOverview() {
   ].filter(Boolean).length;
 
   useEffect(() => {
-    setVisibleCount(6);
-  }, [
-    searchTerm,
-    activeCategory,
-    activeLanguage,
-    sortBy,
-  ]);
+    const frame = window.requestAnimationFrame(() => setVisibleCount(6));
+    return () => window.cancelAnimationFrame(frame);
+  }, [searchTerm, activeCategory, activeLanguage, sortBy]);
 
   const resetFilters = () => {
     setSearchTerm("");
