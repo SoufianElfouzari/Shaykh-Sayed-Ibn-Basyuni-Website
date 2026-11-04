@@ -208,7 +208,8 @@ function LatestArticles() {
   }, []);
 
   useEffect(() => {
-    loadArticles();
+    const frame = window.requestAnimationFrame(() => { void loadArticles(); });
+    return () => window.cancelAnimationFrame(frame);
   }, [loadArticles]);
 
   const latestArticles = useMemo(() => {
