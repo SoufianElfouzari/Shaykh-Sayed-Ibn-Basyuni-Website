@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import {
   getPublishedArticles,
-} from "../../../../appwrite/articleService";
+} from "../../../../supabase/articleService";
 
 import "./LatestArticles.css";
 
