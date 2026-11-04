@@ -789,14 +789,15 @@ function ArticlesOverview() {
                 </span>
 
                 <h3>
-                  Keine Artikel gefunden
+                  {articles.length === 0
+                    ? "Noch keine Artikel veröffentlicht"
+                    : "Keine Artikel gefunden"}
                 </h3>
 
                 <p>
-                  Für den Suchbegriff oder
-                  die gewählte Kategorie sind
-                  aktuell keine passenden
-                  Artikel vorhanden.
+                  {articles.length === 0
+                    ? "Das Artikelarchiv wird derzeit aufgebaut. Neue veröffentlichte Beiträge erscheinen automatisch hier."
+                    : "Für die Suche oder Kategorie sind aktuell keine passenden Artikel vorhanden."}
                 </p>
 
                 {activeFilterCount > 0 ? (
