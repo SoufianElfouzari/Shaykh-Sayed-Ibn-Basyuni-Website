@@ -494,8 +494,11 @@ function ArticleDetails() {
       behavior: "auto",
     });
 
-    setReadingProgress(0);
-    setActiveSection("");
+    const frame = window.requestAnimationFrame(() => {
+      setReadingProgress(0);
+      setActiveSection("");
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [slug]);
 
   useEffect(() => {
@@ -586,9 +589,9 @@ function ArticleDetails() {
       return undefined;
     }
 
-    setActiveSection(
-      sectionElements[0].id,
-    );
+    const frame = window.requestAnimationFrame(() => {
+      setActiveSection(sectionElements[0].id);
+    });
 
     const observer =
       new IntersectionObserver(
@@ -633,6 +636,7 @@ function ArticleDetails() {
     );
 
     return () => {
+      window.cancelAnimationFrame(frame);
       observer.disconnect();
     };
   }, [
