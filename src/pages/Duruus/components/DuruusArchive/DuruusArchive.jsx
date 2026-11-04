@@ -1233,22 +1233,25 @@ function DuruusArchive() {
                   </span>
 
                   <h3>
-                    Keine Aufnahmen gefunden
+                    {recordings.length === 0
+                      ? "Noch keine Durous veröffentlicht"
+                      : "Keine Aufnahmen gefunden"}
                   </h3>
 
                   <p>
-                    Für diese Suche oder
-                    Filterauswahl sind aktuell
-                    keine passenden Durous
-                    vorhanden.
+                    {recordings.length === 0
+                      ? "Das Unterrichtsarchiv wird derzeit aufgebaut. Sobald Aufnahmen veröffentlicht werden, erscheinen sie hier."
+                      : "Für die Suche oder Filterauswahl sind derzeit keine passenden Durous vorhanden."}
                   </p>
 
-                  <button
-                    type="button"
-                    onClick={resetFilters}
-                  >
-                    Alle Aufnahmen anzeigen
-                  </button>
+                  {recordings.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={resetFilters}
+                    >
+                      Alle Aufnahmen anzeigen
+                    </button>
+                  )}
                 </div>
               )}
             </>
