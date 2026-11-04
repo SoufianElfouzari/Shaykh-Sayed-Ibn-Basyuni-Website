@@ -62,7 +62,8 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    setIsMenuOpen(false);
+    const frame = window.requestAnimationFrame(() => setIsMenuOpen(false));
+    return () => window.cancelAnimationFrame(frame);
   }, [location.pathname]);
 
   useEffect(() => {
