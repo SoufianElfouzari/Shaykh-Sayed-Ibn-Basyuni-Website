@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/render.js": {
+      "includeFiles": "dist/index.html"
+    }
+  },
   "routes": [
     {
       "src": "/duruus",
@@ -6,6 +11,10 @@
         "Location": "/durous"
       },
       "status": 308
+    },
+    {
+      "src": "^/$",
+      "dest": "/api/render?path=/"
     },
     {
       "handle": "filesystem"
@@ -16,7 +25,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/api/render?path=/$1"
     }
   ]
 }

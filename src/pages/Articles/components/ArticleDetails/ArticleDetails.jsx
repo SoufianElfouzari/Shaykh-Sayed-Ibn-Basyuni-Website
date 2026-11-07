@@ -8,6 +8,7 @@ import {
   useParams,
 } from "react-router-dom";
 import DOMPurify from "dompurify";
+import { useSsrData } from "../../../../SsrDataContext";
 
 import {
   getPublishedArticles,
@@ -190,6 +191,24 @@ function createSectionId(
 }
 
 function parseArticleContent(contentHtml) {
+  // Serve a safely escaped readable text version when no DOM is available.
+  // The browser uses the existing DOMPurify rich-text parser.
+  if (typeof document === "undefined") {
+    const text = String(contentHtml || "")
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    const escaped = text.replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return {
+      introductionHtml: "",
+      sections: [{
+        id: "artikelinhalt",
+        title: "Artikelinhalt",
+        html: "<p>" + escaped + "</p>",
+      }],
+    };
+  }
   const sanitizedHtml = DOMPurify.sanitize(
     String(contentHtml || ""),
     {
@@ -355,12 +374,13 @@ function ArticleStatePage({
 
 function ArticleDetails() {
   const { slug } = useParams();
+  const { article: initialArticle } = useSsrData();
 
   const [articles, setArticles] =
-    useState([]);
+    useState(initialArticle ? [initialArticle] : []);
 
   const [isLoading, setIsLoading] =
-    useState(true);
+    useState(!initialArticle);
 
   const [
     errorMessage,

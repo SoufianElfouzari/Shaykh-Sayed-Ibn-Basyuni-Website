@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import {
   getPublishedArticles,
 } from "../../../../supabase/articleService";
+import { useSsrData } from "../../../../SsrDataContext";
 
 import "./LatestArticles.css";
 
@@ -173,9 +174,10 @@ function getArticlePath(article) {
 }
 
 function LatestArticles() {
-  const [articles, setArticles] = useState([]);
+  const { articles: initialArticles } = useSsrData();
+  const [articles, setArticles] = useState(initialArticles || []);
   const [isLoading, setIsLoading] =
-    useState(true);
+    useState(!initialArticles);
   const [errorMessage, setErrorMessage] =
     useState("");
 

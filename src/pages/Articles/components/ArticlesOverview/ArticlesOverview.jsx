@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import {
   getPublishedArticles,
 } from "../../../../supabase/articleService";
+import { useSsrData } from "../../../../SsrDataContext";
 
 import "./ArticlesOverview.css";
 
@@ -186,7 +187,8 @@ function formatDate(value) {
 }
 
 function ArticlesOverview() {
-  const [articles, setArticles] = useState([]);
+  const { articles: initialArticles } = useSsrData();
+  const [articles, setArticles] = useState(initialArticles || []);
 
   const [searchTerm, setSearchTerm] =
     useState("");
@@ -210,7 +212,7 @@ function ArticlesOverview() {
   ] = useState(6);
 
   const [isLoading, setIsLoading] =
-    useState(true);
+    useState(!initialArticles);
 
   const [
     errorMessage,
