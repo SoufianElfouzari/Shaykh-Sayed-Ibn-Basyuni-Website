@@ -48,8 +48,8 @@ function absoluteImage(source) {
 
 const staticMetadata = {
   "/": {
-    title: "Shaykh Sayed Ibn Basyuni | Durous und islamische Artikel",
-    description: "Islamische Unterrichte, Artikel und Informationen über Shaykh Sayed Ibn Basyuni. Entdecke Wissen über Quran, Sunnah, Aqidah und Fiqh."
+    title: "Islam lernen auf Deutsch | Shaykh Sayed Ibn Basyuni",
+    description: "Islam lernen auf Deutsch: Unterrichte und Artikel von Shaykh Sayed Ibn Basyuni zu Fiqh, Aqidah und weiteren islamischen Wissenschaften."
   },
   "/shaykh": {
     title: "Biografie und Werdegang | Shaykh Sayed Ibn Basyuni",
