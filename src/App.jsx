@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import "./App.css";
 
 import {
@@ -18,6 +18,31 @@ import Datenschutz from "./pages/Datenschutz/Datenschutz";
 import Impressum from "./pages/Impressum/Impressum";
 import NotFound from "./pages/NotFound/NotFound";
 
+function RouteSeo() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\\/+$/, "");
+    const canonicalUrl = `https://shaykh-sayed.de${normalizedPath}`;
+
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", canonicalUrl);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+
+    const alternates = document.querySelectorAll('link[rel="alternate"][hreflang]');
+    alternates.forEach((alternate) => alternate.setAttribute("href", canonicalUrl));
+  }, [pathname]);
+
+  return null;
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -36,6 +61,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <RouteSeo />
 
       <div className="app">
         <Routes>
