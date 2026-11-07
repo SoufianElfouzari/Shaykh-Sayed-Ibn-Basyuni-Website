@@ -24,14 +24,15 @@ function ShaykhHero() {
         </p>
 
         <h1 className="sib-shaykh-page-hero-title">
-          Der Shaykh
-          <span>Dr. Sayed Ibn Basyuni</span>
+          Dr. Shaykh
+          <span>Sayed Ibn Basyuni</span>
         </h1>
 
         <p className="sib-shaykh-page-hero-description">
-          Diese Seite bietet einen geordneten Einblick in den
-          wissenschaftlichen Werdegang, die Lehrer und die
-          Tätigkeiten von Dr. Shaykh Sayed Ibn Basyuni.
+          Entdecke die Biografie von Dr. Shaykh Sayed Ibn
+          Basyuni: seine Ausbildung an der Al-Azhar-Universität,
+          seine Lehrer, seine Forschung und seine islamischen
+          Unterrichte in Kassel.
         </p>
       </div>
     </section>
