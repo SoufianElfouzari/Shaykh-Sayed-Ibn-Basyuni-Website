@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import handler from "../api/render.js";
 
 async function request(path) {
@@ -30,6 +31,7 @@ async function request(path) {
 const pages = [
   ["/", "Islam lernen auf Deutsch"],
   ["/shaykh", "Shaykh Sayed Ibn Basyuni | Biografie und Werdegang"],
+  ["/durous", "Islamische Unterrichte und Durous"],
   ["/kontakt", "Kontakt"],
   ["/impressum", "Impressum"],
 ];
@@ -77,6 +79,51 @@ for (const [path, title] of pages) {
     assert.equal(person?.alumniOf?.name, "Al-Azhar-Universität", "shaykh: education missing in schema");
     assert.equal(page?.mainEntity?.["@id"], "https://shaykh-sayed.de/#person", "shaykh: wrong main entity");
   }
+  if (path === "/durous") {
+    assert.ok(
+      response.body.includes('name="description" content="Islamische Unterrichte von Shaykh Sayed'),
+      "durous: incorrect SEO description",
+    );
+    assert.ok(
+      response.body.includes('property="og:title" content="Islamische Unterrichte und Durous'),
+      "durous: missing social title",
+    );
+    assert.ok(
+      response.body.includes('Islamische Unterrichte'),
+      "durous: missing learning keyword in the rendered page",
+    );
+    assert.ok(
+      response.body.includes('href="/artikel"'),
+      "durous: no contextual link to existing articles",
+    );
+    assert.ok(
+      response.body.includes('href="/shaykh"'),
+      "durous: no contextual link to existing Shaykh page",
+    );
+
+    const schedule = JSON.parse(
+      readFileSync(new URL("../public/data/durus-schedule.json", import.meta.url), "utf8"),
+    );
+    for (const lesson of schedule.lessons.filter((item) => item.enabled !== false)) {
+      assert.ok(response.body.includes(lesson.subject), "durous: missing scheduled subject " + lesson.subject);
+      assert.ok(response.body.includes(lesson.time), "durous: wrong schedule time " + lesson.time);
+    }
+
+    const schemaMatch = response.body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+    assert.ok(schemaMatch, "durous: structured data missing");
+    const schema = JSON.parse(schemaMatch[1]);
+    const page = schema["@graph"].find((item) => item["@type"] === "CollectionPage");
+    assert.ok(page, "durous: CollectionPage schema missing");
+    assert.equal(page.about?.["@id"], "https://shaykh-sayed.de/#person");
+    const itemList = schema["@graph"].find((item) => item["@type"] === "ItemList");
+    if (itemList) {
+      assert.ok(itemList.numberOfItems > 0, "durous: empty ItemList must not be emitted");
+      assert.ok(itemList.itemListElement.length > 0, "durous: missing published item entries");
+      assert.equal(page.mainEntity?.["@id"], itemList["@id"], "durous: wrong collection link");
+    } else {
+      assert.equal(page.mainEntity, undefined, "durous: no empty recording collection should be referenced");
+    }
+  }
   console.log("PASS:", path, "(200, correct metadata and SSR body)");
 }
 
@@ -89,4 +136,10 @@ for (const path of ["/unknown-route", "/artikel/unknown-article-for-test"]) {
   console.log("PASS:", path, "(404, noindex and SSR body)");
 }
 
+const robots = readFileSync(new URL("../public/robots.txt", import.meta.url), "utf8");
+const sitemap = readFileSync(new URL("../public/sitemap.xml", import.meta.url), "utf8");
+assert.ok(robots.includes("Sitemap: https://shaykh-sayed.de/sitemap.xml"));
+assert.ok(sitemap.includes("<loc>https://shaykh-sayed.de/durous</loc>"));
+assert.ok(!sitemap.includes("https://www.shaykh-sayed.de/"), "sitemap: www host contradicts canonicals");
+console.log("PASS: canonical host matches sitemap and robots.txt");
 console.log("SSR smoke tests passed.");
