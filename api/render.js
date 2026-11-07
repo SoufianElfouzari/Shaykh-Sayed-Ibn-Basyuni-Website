@@ -56,8 +56,8 @@ const staticMetadata = {
     description: "Biografie von Dr. Shaykh Sayed Ibn Basyuni: Ausbildung an der Al-Azhar-Universität, Lehrer, Forschung und islamische Unterrichte in Kassel."
   },
   "/durous": {
-    title: "Islamische Unterrichte auf Deutsch | Shaykh Sayed",
-    description: "Aktuelle Unterrichtszeiten, islamische Unterrichte und aufgezeichnete Durous von Shaykh Sayed Ibn Basyuni."
+    title: "Islamische Unterrichte und Durous | Shaykh Sayed",
+    description: "Islamische Unterrichte von Shaykh Sayed Ibn Basyuni: Fiqh-Unterrichtszeiten in Kassel, aktuelle Hinweise und veröffentlichte Durous als Audioaufnahmen."
   },
   "/artikel": {
     title: "Islamische Artikel über Quran und Sunnah | Shaykh Sayed",
@@ -95,7 +95,7 @@ function metadataFor(pathname, article, status) {
   return staticMetadata[pathname] || staticMetadata["/"];
 }
 
-function structuredData(pathname, metadata, article, status) {
+function structuredData(pathname, metadata, article, status, data) {
   if (status === 404) return "";
   const url = origin + pathname;
   const graph = [
@@ -135,6 +135,41 @@ function structuredData(pathname, metadata, article, status) {
     graph[2].about = { "@id": origin + "/#person" };
     graph[2].mainEntity = { "@id": origin + "/#person" };
   }
+  if (pathname === "/durous") {
+    Object.assign(graph[2], {
+      "@type": "CollectionPage",
+      about: { "@id": origin + "/#person" }
+    });
+
+    const recordings = Array.isArray(data?.duruus)
+      ? data.duruus.filter((recording) => recording?.title && recording?.series)
+      : [];
+
+    if (recordings.length > 0) {
+      graph[2].mainEntity = { "@id": url + "#aufnahmen" };
+      graph.push({
+        "@type": "ItemList",
+        "@id": url + "#aufnahmen",
+        name: "Veröffentlichte Durous und Unterrichtsreihen",
+        numberOfItems: recordings.length,
+        itemListElement: recordings.slice(0, 20).map((recording, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "CreativeWork",
+            name: recording.title,
+            description: recording.description || undefined,
+            inLanguage: recording.language || undefined,
+            isPartOf: {
+              "@type": "CreativeWorkSeries",
+              name: recording.series
+            },
+            author: { "@id": origin + "/#person" }
+          }
+        }))
+      });
+    }
+  }
   if (article) {
     const schema = {
       "@type": "Article",
@@ -165,7 +200,7 @@ function buildHtml(result) {
   const title = escapeHtml(meta.title);
   const description = escapeHtml(meta.description);
   const canonical = escapeHtml(url);
-  const ld = structuredData(pathname, meta, data.article, status);
+  const ld = structuredData(pathname, meta, data.article, status, data);
 
   return [
     "<!doctype html>",
