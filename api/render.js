@@ -52,8 +52,8 @@ const staticMetadata = {
     description: "Islam lernen auf Deutsch: Unterrichte und Artikel von Shaykh Sayed Ibn Basyuni zu Fiqh, Aqidah und weiteren islamischen Wissenschaften."
   },
   "/shaykh": {
-    title: "Biografie und Werdegang | Shaykh Sayed Ibn Basyuni",
-    description: "Erfahre mehr über Shaykh Sayed Ibn Basyuni, seinen wissenschaftlichen Werdegang und seine Tätigkeit als Imam und Lehrer."
+    title: "Shaykh Sayed Ibn Basyuni | Biografie und Werdegang",
+    description: "Biografie von Dr. Shaykh Sayed Ibn Basyuni: Ausbildung an der Al-Azhar-Universität, Lehrer, Forschung und islamische Unterrichte in Kassel."
   },
   "/durous": {
     title: "Islamische Unterrichte auf Deutsch | Shaykh Sayed",
@@ -122,6 +122,19 @@ function structuredData(pathname, metadata, article, status) {
       isPartOf: { "@id": origin + "/#website" }
     }
   ];
+  if (pathname === "/shaykh") {
+    Object.assign(graph[1], {
+      description: "Dr. Shaykh Sayed Ibn Basyuni ist Imam, Khatib und Lehrer islamischer Wissenschaften in Kassel.",
+      jobTitle: ["Imam", "Khatib", "Lehrer für islamische Wissenschaften"],
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Al-Azhar-Universität"
+      },
+      knowsAbout: ["Fiqh", "Aqidah", "Hadith", "Tafsir", "islamische Wissenschaften"]
+    });
+    graph[2].about = { "@id": origin + "/#person" };
+    graph[2].mainEntity = { "@id": origin + "/#person" };
+  }
   if (article) {
     const schema = {
       "@type": "Article",
