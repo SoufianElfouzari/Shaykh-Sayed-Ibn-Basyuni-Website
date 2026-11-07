@@ -269,7 +269,7 @@ function NoticesBanner() {
     return () => {
       isCurrentRequest = false;
     };
-  }, []);
+  }, [initialNotices]);
 
   if (isLoading) {
     return (
