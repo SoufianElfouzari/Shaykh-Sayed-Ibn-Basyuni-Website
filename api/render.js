@@ -1,6 +1,5 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { renderPage } from "../dist-ssr/entry-server.js";
 
 const origin = "https://shaykh-sayed.de";
 const siteName = "Shaykh Sayed Ibn Basyuni";
@@ -204,6 +203,7 @@ export default async function handler(request, response) {
     return response.status(400).end("Invalid path");
   }
   try {
+    const { renderPage } = await import("../dist-ssr/entry-server.js");
     const result = await renderPage(pathname);
     const html = buildHtml(result);
     response.setHeader("Content-Type", "text/html; charset=utf-8");
