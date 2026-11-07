@@ -32,3 +32,5 @@ dist-ssr
 # Project files
 Structure.md
 Todos.md
+.vercel
+.env*
