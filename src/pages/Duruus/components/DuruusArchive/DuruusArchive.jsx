@@ -11,6 +11,8 @@ import {
   getPublishedDuruus,
 } from "../../../../supabase/duruusService";
 
+import { useSsrData } from "../../../../SsrDataContext";
+
 import "./DuruusArchive.css";
 
 const sortOptions = [
@@ -233,10 +235,11 @@ function getDateTimestamp(value) {
 }
 
 function DuruusArchive() {
+  const { duruus: initialDuruus } = useSsrData();
   const audioRef = useRef(null);
 
   const [recordings, setRecordings] =
-    useState([]);
+    useState(initialDuruus || []);
 
   const [searchTerm, setSearchTerm] =
     useState("");
@@ -268,7 +271,7 @@ function DuruusArchive() {
   const [
     isLoadingRecordings,
     setIsLoadingRecordings,
-  ] = useState(true);
+  ] = useState(!initialDuruus);
 
   const [
     isLoadingAudio,
