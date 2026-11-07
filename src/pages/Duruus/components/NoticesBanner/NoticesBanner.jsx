@@ -251,13 +251,12 @@ function NoticesBanner() {
 
         if (!Array.isArray(initialNotices)) {
           setNotices([]);
+          setErrorMessage(
+            error instanceof Error
+              ? error.message
+              : "Die Hinweise konnten nicht geladen werden.",
+          );
         }
-
-        setErrorMessage(
-          error instanceof Error
-            ? error.message
-            : "Die Hinweise konnten nicht geladen werden.",
-        );
       } finally {
         if (isCurrentRequest) {
           setIsLoading(false);
