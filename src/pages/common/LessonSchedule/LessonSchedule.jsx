@@ -1,37 +1,13 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./LessonSchedule.css";
 
-const weeklyLessons = [
-  {
-    id: 1,
-    day: "Dienstag",
-    time: "Nach Asr",
-    subject: "Mustalah al-Hadith",
-  },
-  {
-    id: 2,
-    day: "Mittwoch",
-    time: "Nach Asr",
-    subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)",
-  },
-  {
-    id: 3,
-    day: "Donnerstag",
-    time: "Nach Asr",
-    subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)",
-  },
-  {
-    id: 4,
-    day: "Sonntag",
-    time: "Nach Asr",
-    subject: "Fiqh",
-  },
-  {
-    id: 5,
-    day: "Sonntag",
-    time: "Nach Maghrib bis Ishaa",
-    subject: "Fiqh (Arabisch)",
-  },
+const fallbackLessons = [
+  { id: 1, day: "Dienstag", time: "Nach Asr", subject: "Mustalah al-Hadith" },
+  { id: 2, day: "Mittwoch", time: "Nach Asr", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
+  { id: 3, day: "Donnerstag", time: "Nach Asr", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
+  { id: 4, day: "Sonntag", time: "Nach Asr", subject: "Fiqh" },
+  { id: 5, day: "Sonntag", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Arabisch)" },
 ];
 
 function ArrowIcon() {
@@ -61,6 +37,35 @@ function ArrowIcon() {
 }
 
 function LessonSchedule() {
+  const [weeklyLessons, setWeeklyLessons] = useState(fallbackLessons);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadSchedule() {
+      try {
+        const response = await fetch(`${import.meta.env.BASE_URL}data/durus-schedule.json`, {
+          signal: controller.signal,
+          cache: "no-store",
+        });
+        if (!response.ok) throw new Error("Schedule request failed");
+        const data = await response.json();
+        if (!Array.isArray(data.lessons)) throw new Error("Invalid schedule format");
+        const lessons = data.lessons
+          .filter((lesson) => lesson.enabled !== false)
+          .filter((lesson) => lesson.day && lesson.time && lesson.subject);
+        setWeeklyLessons(lessons);
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error("Could not load Durus schedule:", error);
+        }
+      }
+    }
+
+    loadSchedule();
+    return () => controller.abort();
+  }, []);
+
   return (
     <section className="sib-schedule">
       <div className="sib-schedule-container">
