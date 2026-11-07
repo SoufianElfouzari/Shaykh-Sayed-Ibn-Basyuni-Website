@@ -2,6 +2,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router";
 import PageRoutes from "./PageRoutes";
+import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
 import { getPublishedArticles, getPublishedArticleBySlug } from "./supabase/articleService";
 import { getPublishedDuruus } from "./supabase/duruusService";
@@ -33,7 +34,7 @@ export async function renderPage(pathname) {
     <StaticRouter location={path}>
       <SsrDataContext.Provider value={data}>
         <div className="app">
-          <PageRoutes />
+          {status === 404 && path.startsWith("/artikel/") ? <NotFound /> : <PageRoutes />}
         </div>
       </SsrDataContext.Provider>
     </StaticRouter>
