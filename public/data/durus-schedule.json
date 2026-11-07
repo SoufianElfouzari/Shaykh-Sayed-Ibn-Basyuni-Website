@@ -1,0 +1,39 @@
+{
+  "lessons": [
+    {
+      "id": 1,
+      "day": "Dienstag",
+      "time": "Nach Asr",
+      "subject": "Mustalah al-Hadith",
+      "enabled": true
+    },
+    {
+      "id": 2,
+      "day": "Mittwoch",
+      "time": "Nach Asr",
+      "subject": "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)",
+      "enabled": true
+    },
+    {
+      "id": 3,
+      "day": "Donnerstag",
+      "time": "Nach Asr",
+      "subject": "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)",
+      "enabled": true
+    },
+    {
+      "id": 4,
+      "day": "Sonntag",
+      "time": "Nach Asr",
+      "subject": "Fiqh",
+      "enabled": true
+    },
+    {
+      "id": 5,
+      "day": "Sonntag",
+      "time": "Nach Maghrib bis Ishaa",
+      "subject": "Fiqh (Arabisch)",
+      "enabled": true
+    }
+  ]
+}
