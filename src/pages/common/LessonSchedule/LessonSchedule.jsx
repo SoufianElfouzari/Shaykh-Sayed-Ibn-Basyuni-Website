@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import "./LessonSchedule.css";
 
 const fallbackLessons = [
-  { id: 1, day: "Dienstag", time: "Nach Asr", subject: "Mustalah al-Hadith" },
-  { id: 2, day: "Mittwoch", time: "Nach Asr", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
-  { id: 3, day: "Donnerstag", time: "Nach Asr", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
+  { id: 1, day: "Dienstag", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
+  { id: 2, day: "Mittwoch", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
+  { id: 3, day: "Donnerstag", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
   { id: 4, day: "Sonntag", time: "Nach Asr", subject: "Fiqh" },
-  { id: 5, day: "Sonntag", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Arabisch)" },
 ];
 
 function ArrowIcon() {
@@ -76,13 +75,13 @@ function LessonSchedule() {
             </p>
 
             <h2 className="sib-schedule-title">
-              Regelmäßige Unterrichte
+              Islamische Unterrichte in Kassel
             </h2>
           </div>
 
           <p className="sib-schedule-intro">
-            Eine Übersicht der aktuellen Unterrichtstage und
-            Uhrzeiten.
+            Hier findest du die regelmäßigen Fiqh-Unterrichtstage
+            und Uhrzeiten von Shaykh Sayed Ibn Basyuni.
           </p>
         </header>
 
