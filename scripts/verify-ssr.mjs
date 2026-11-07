@@ -28,6 +28,7 @@ async function request(path) {
 }
 
 const pages = [
+  ["/", "Islam lernen auf Deutsch"],
   ["/shaykh", "Biografie und Werdegang"],
   ["/kontakt", "Kontakt"],
   ["/impressum", "Impressum"],
@@ -41,6 +42,20 @@ for (const [path, title] of pages) {
   assert.ok(response.body.includes('rel="canonical" href="https://shaykh-sayed.de' + path + '"'), path + ": wrong canonical");
   assert.ok(response.body.includes('/assets/index-'), path + ": missing client assets");
   assert.ok(response.body.includes('id="root"'), path + ": missing React root");
+  if (path === "/") {
+    assert.ok(
+      response.body.includes('name="description" content="Islam lernen auf Deutsch:'),
+      "home: missing keyword in SSR description",
+    );
+    assert.ok(
+      response.body.includes('mit Quran und Sunnah.'),
+      "home: missing learning focus in server-rendered hero",
+    );
+    assert.ok(
+      response.body.includes('property="og:title" content="Islam lernen auf Deutsch'),
+      "home: Open Graph title does not match",
+    );
+  }
   console.log("PASS:", path, "(200, correct metadata and SSR body)");
 }
 
