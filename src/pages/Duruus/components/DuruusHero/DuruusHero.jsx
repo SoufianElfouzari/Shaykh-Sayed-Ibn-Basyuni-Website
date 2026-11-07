@@ -20,18 +20,19 @@ function DuruusHero() {
 
       <div className="sib-duruus-page-hero-container">
         <p className="sib-duruus-page-hero-label">
-          Unterricht und Aufnahmen
+          Islamische Unterrichte und Durous
         </p>
 
         <h1 className="sib-duruus-page-hero-title">
-          Durous und Unterricht
-          <span>übersichtlich gesammelt.</span>
+          Islamische Unterrichte
+          <span>von Shaykh Sayed.</span>
         </h1>
 
         <p className="sib-duruus-page-hero-description">
-          Hier finden sich aktuelle und kommende Unterrichte,
-          aufgezeichnete Durous sowie geordnete Unterrichtsreihen
-          von Dr. Shaykh Sayed Ibn Basyuni.
+          Islam lernen mit den Unterrichten von Dr. Shaykh Sayed
+          Ibn Basyuni: Hier findest du den Fiqh-Unterrichtsplan
+          in Kassel, aktuelle Hinweise und veröffentlichte
+          Audioaufnahmen der Durous.
         </p>
       </div>
     </section>
