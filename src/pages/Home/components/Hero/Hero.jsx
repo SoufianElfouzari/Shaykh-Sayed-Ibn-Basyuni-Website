@@ -24,13 +24,14 @@ function Hero() {
         </p>
 
         <h1 className="sib-home-hero-title">
-          Durous, Artikel und Termine
-          <span>geordnet an einem Ort.</span>
+          Islam lernen{" "}
+          <span>mit Quran und Sunnah.</span>
         </h1>
 
         <p className="sib-home-hero-description">
-          Diese Website bietet eine übersichtliche Sammlung der
-          Unterrichte, Artikel und aktuellen Hinweise des Shaykh.
+          Islam lernen auf Deutsch: Entdecke die Unterrichte,
+          Artikel und aktuellen Unterrichtstermine von
+          Shaykh Sayed Ibn Basyuni.
         </p>
       </div>
     </section>
