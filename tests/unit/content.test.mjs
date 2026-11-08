@@ -38,3 +38,15 @@ test("metadata query hides draft content", () => {
   assert.ok(result.body.every((row) => !Object.hasOwn(row, "contentHtml")));
   assert.ok(result.body.every((row) => row.slug !== "geheimer-entwurf"));
 });
+
+
+test("nested scholarly headings retain their actual levels and unique IDs", () => {
+  const content = parseServerArticleContent(
+    "<h2>Hauptthema</h2><p>Text</p><h3>Unterthema</h3><p>Weitere Erklärung</p><h4>Detail</h4><h2>Hauptthema</h2>",
+    createSectionId,
+  );
+  assert.deepEqual(content.sections.map((section) => section.level), [2, 3, 4, 2]);
+  assert.deepEqual(content.sections.map((section) => section.id),
+    ["hauptthema", "unterthema", "detail", "hauptthema-2"]);
+  assert.ok(content.sections[1].html.includes("Weitere Erklärung"));
+});
