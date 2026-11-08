@@ -19,7 +19,7 @@ function updateMeta(attribute, key, value) {
 }
 
 function RouteSeo({ notFoundPath }) {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   useEffect(() => {
     const path = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
@@ -40,7 +40,13 @@ function RouteSeo({ notFoundPath }) {
       return;
     }
 
-    const canonicalUrl = SITE_ORIGIN + path;
+    const archivePage = path === "/artikel"
+      ? Number(new URLSearchParams(search).get("page") || 1)
+      : 1;
+    const suffix = path === "/artikel" && Number.isSafeInteger(archivePage) && archivePage > 1
+      ? "?page=" + archivePage
+      : "";
+    const canonicalUrl = SITE_ORIGIN + path + suffix;
     let canonicalElement = canonical;
     if (!canonicalElement) {
       canonicalElement = document.createElement("link");
@@ -66,7 +72,7 @@ function RouteSeo({ notFoundPath }) {
     document.head.querySelectorAll(
       'meta[property="article:published_time"], meta[property="article:modified_time"], meta[name="author"]',
     ).forEach((element) => element.remove());
-  }, [pathname, notFoundPath]);
+  }, [pathname, search, notFoundPath]);
   return null;
 }
 
