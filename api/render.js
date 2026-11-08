@@ -60,8 +60,8 @@ const staticMetadata = {
     description: "Islamische Unterrichte von Shaykh Sayed Ibn Basyuni: Fiqh-Unterrichtszeiten in Kassel, aktuelle Hinweise und veröffentlichte Durous als Audioaufnahmen."
   },
   "/artikel": {
-    title: "Islamische Artikel über Quran und Sunnah | Shaykh Sayed",
-    description: "Lies islamische Artikel und wissenschaftliche Beiträge über Quran, Sunnah, Aqidah, Fiqh und weitere Themen."
+    title: "Islamische Artikel auf Deutsch | Shaykh Sayed Ibn Basyuni",
+    description: "Islamische Artikel auf Deutsch von Shaykh Sayed Ibn Basyuni. Entdecke veröffentlichte Beiträge zu islamischen Wissenschaften und vertiefe dein Wissen."
   },
   "/kontakt": {
     title: "Kontakt | Shaykh Sayed Ibn Basyuni",
@@ -170,6 +170,61 @@ function structuredData(pathname, metadata, article, status, data) {
       });
     }
   }
+  if (pathname === "/artikel") {
+    Object.assign(graph[2], {
+      "@type": "CollectionPage",
+      about: { "@type": "Thing", name: "Islamische Wissenschaften" }
+    });
+
+    const publishedArticles = Array.isArray(data?.articles)
+      ? data.articles.filter((entry) => typeof entry?.slug === "string" && entry.slug && !entry.slug.includes("/") && entry.title)
+      : [];
+
+    const visibleArticles = [...publishedArticles]
+      .sort((first, second) => (new Date(second.publishedAt || 0).getTime() || 0) -
+        (new Date(first.publishedAt || 0).getTime() || 0))
+      .slice(0, 12);
+
+    if (visibleArticles.length > 0) {
+      graph[2].mainEntity = { "@id": url + "#artikelliste" };
+      graph.push({
+        "@type": "ItemList",
+        "@id": url + "#artikelliste",
+        name: "Veröffentlichte islamische Artikel",
+        numberOfItems: visibleArticles.length,
+        itemListElement: visibleArticles.map((entry, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: entry.title,
+          url: origin + "/artikel/" + encodeURIComponent(entry.slug)
+        }))
+      });
+    }
+  }
+
+  if (pathname === "/artikel" || article) {
+    const breadcrumbs = [
+      { "@type": "ListItem", position: 1, name: "Startseite", item: origin + "/" },
+      { "@type": "ListItem", position: 2, name: "Islamische Artikel", item: origin + "/artikel" }
+    ];
+
+    if (article) {
+      breadcrumbs.push({
+        "@type": "ListItem",
+        position: 3,
+        name: String(article.title),
+        item: url
+      });
+    }
+
+    graph.push({
+      "@type": "BreadcrumbList",
+      "@id": url + "#breadcrumbs",
+      itemListElement: breadcrumbs
+    });
+    graph[2].breadcrumb = { "@id": url + "#breadcrumbs" };
+  }
+
   if (article) {
     const schema = {
       "@type": "Article",
@@ -178,12 +233,21 @@ function structuredData(pathname, metadata, article, status, data) {
       headline: article.title,
       description: metadata.description,
       inLanguage: "de",
-      author: { "@type": "Person", name: article.author || "Redaktion Shaykh Sayed" },
-      publisher: { "@id": origin + "/#person" }
+      author: {
+        "@type": "Person",
+        name: article.author || "Redaktion Shaykh Sayed",
+        ...(String(article.author || "").includes("Sayed Ibn Basyuni")
+          ? { url: origin + "/shaykh" }
+          : {})
+      },
+      publisher: { "@id": origin + "/#person" },
+      isAccessibleForFree: true
     };
     if (article.publishedAt) schema.datePublished = article.publishedAt;
     if (article.updatedAt) schema.dateModified = article.updatedAt;
     if (article.coverImageUrl) schema.image = absoluteImage(article.coverImageUrl);
+    if (article.category && article.category !== "Artikel") schema.articleSection = article.category;
+    if (Array.isArray(article.tags) && article.tags.length > 0) schema.keywords = article.tags.join(", ");
     graph.push(schema);
   }
   return '<script type="application/ld+json">' +

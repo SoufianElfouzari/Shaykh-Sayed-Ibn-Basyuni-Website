@@ -209,7 +209,7 @@ function ArticlesOverview() {
   const [
     visibleCount,
     setVisibleCount,
-  ] = useState(6);
+  ] = useState(12);
 
   const [isLoading, setIsLoading] =
     useState(!initialArticles);
@@ -379,7 +379,7 @@ function ArticlesOverview() {
   ].filter(Boolean).length;
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => setVisibleCount(6));
+    const frame = window.requestAnimationFrame(() => setVisibleCount(12));
     return () => window.cancelAnimationFrame(frame);
   }, [searchTerm, activeCategory, activeLanguage, sortBy]);
 
@@ -416,15 +416,16 @@ function ArticlesOverview() {
             </div>
 
             <h2 id="sib-articles-overview-title">
-              Alle veröffentlichten
-              <span>Beiträge.</span>
+              Islamisches Wissen
+              <span>in Artikeln entdecken.</span>
             </h2>
           </div>
 
           <p className="sib-articles-overview-description">
-            Durchsuche die veröffentlichten Artikel
-            und öffne jeden Beitrag auf seiner
-            eigenen Artikelseite.
+            Lies die veröffentlichten Artikel und wissenschaftlichen
+            Beiträge zu islamischen Themen. Informiere dich auch
+            über die <Link to="/durous">islamischen Unterrichte</Link>
+            {" "}und die <Link to="/shaykh">Biografie des Shaykhs</Link>.
           </p>
         </header>
 
@@ -764,7 +765,7 @@ function ArticlesOverview() {
                             currentCount,
                           ) =>
                             currentCount +
-                            6,
+                            12,
                         )
                       }
                     >
