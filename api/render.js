@@ -39,16 +39,16 @@ let clientManifest;
 function getAssets(pathname) {
   if (assetTags === undefined) {
     const template = readFileSync(templatePath, "utf8");
-    assetTags = (template.match(/<(?:script|link)\\b[^>]*>/gi) || [])
-      .filter((tag) => /(?:src|href)="\\/assets\\//.test(tag))
-      .map((tag) => /^<script\\b/i.test(tag) ? tag + "</script>" : tag);
+    assetTags = (template.match(/<(?:script|link)\b[^>]*>/gi) || [])
+      .filter((tag) => /(?:src|href)="\/assets\//.test(tag))
+      .map((tag) => /^<script\b/i.test(tag) ? tag + "</script>" : tag);
     if (!assetTags.some((tag) => tag.includes("/assets/"))) {
       throw new Error("The Vite client assets were not found in dist/index.html");
     }
   }
 
-  const styles = assetTags.filter((tag) => /^<link\\b/i.test(tag));
-  const scripts = assetTags.filter((tag) => /^<script\\b/i.test(tag));
+  const styles = assetTags.filter((tag) => /^<link\b/i.test(tag));
+  const scripts = assetTags.filter((tag) => /^<script\b/i.test(tag));
   const routeEntry = pathname.startsWith("/artikel/")
     ? "src/pages/Articles/components/ArticleDetails/ArticleDetails.jsx"
     : routeModulePaths[pathname];
