@@ -6,9 +6,6 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 
-import {
-  getPublishedArticleSummaries,
-} from "../../../../supabase/articleService";
 import { useSsrData } from "../../../../SsrDataContext";
 
 import "./LatestArticles.css";
@@ -187,6 +184,11 @@ function LatestArticles() {
     setErrorMessage("");
 
     try {
+      // No Supabase code is needed during initial homepage hydration:
+      // SSR already provided six preview articles. Load the client only
+      // if we reach the homepage through client-side navigation.
+      const { getPublishedArticleSummaries } =
+        await import("../../../../supabase/articleService");
       const loadedArticles =
         await getPublishedArticleSummaries(6);
 
