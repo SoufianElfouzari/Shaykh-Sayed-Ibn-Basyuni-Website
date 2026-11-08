@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { createServer as createViteServer } from "vite";
 import handler from "../../api/render.js";
 import sitemapHandler from "../../api/sitemap.js";
+import { rows } from "../fixtures/data.mjs";
 
 const vite = await createViteServer({
   server: { middlewareMode: true },
@@ -76,4 +77,48 @@ test("SSR and sitemap return no private drafts", async () => {
   assert.equal(sitemap.code, 200);
   assert.ok(sitemap.body.includes("/artikel/fiqh-grundlagen"));
   assert.ok(!sitemap.body.includes("geheimer-entwurf"));
+});
+
+
+test("archive pagination serves all published pages, valid canonicals and real 404 statuses", async () => {
+  const extra = Array.from({ length: 13 }, (_, index) => ({
+    ...rows.articles[1],
+    id: "fixture-paginated-" + index,
+    slug: "veroeffentlichter-testartikel-" + index,
+    title: "Veröffentlichter Testartikel " + index,
+    publishedAt: "2026-10-11T08:00:00Z",
+  }));
+  rows.articles.push(...extra);
+
+  try {
+    const first = testResponse();
+    await handler({ method: "GET", query: { path: "/artikel" } }, first);
+    assert.equal(first.code, 200);
+    assert.ok(first.body.includes('href="/artikel?page=2"'),
+      "page one must link to page two without JavaScript");
+    const firstData = JSON.parse(first.body.match(/<script>window\.__SSR_DATA__=([\s\S]*?);<\/script>/)[1]);
+    assert.equal(firstData.articles.length, 12);
+    assert.equal(firstData.pagination.totalCount, 15);
+    assert.ok(firstData.articles.every((entry) => !entry.contentHtml),
+      "article bodies must not be sent in list HTML");
+
+    const second = testResponse();
+    await handler({ method: "GET", query: { path: "/artikel", page: "2" } }, second);
+    assert.equal(second.code, 200);
+    assert.ok(second.body.includes('rel="canonical" href="https://www.shaykh-sayed.de/artikel?page=2"'));
+    assert.ok(second.body.includes('href="/artikel"'), "page two must link to page one");
+    assert.ok(!second.body.includes("geheimer-entwurf"), "drafts must not appear");
+
+    const notFound = testResponse();
+    await handler({ method: "GET", query: { path: "/artikel", page: "99" } }, notFound);
+    assert.equal(notFound.code, 404);
+    assert.ok(notFound.body.includes('name="robots" content="noindex'));
+    assert.ok(!notFound.body.includes('rel="canonical"'));
+
+    const malformed = testResponse();
+    await handler({ method: "GET", query: { path: "/artikel", page: "0" } }, malformed);
+    assert.equal(malformed.code, 404);
+  } finally {
+    rows.articles.splice(-extra.length);
+  }
 });
