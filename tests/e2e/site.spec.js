@@ -39,6 +39,7 @@ test("404 articles return the correct HTTP status and robots directive", async (
   expect(response.status()).toBe(404);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
 });
 
 test("sitemap contains only published articles", async ({ request }) => {
@@ -59,4 +60,21 @@ test("mobile navigation can be opened and closed with keyboard", async ({ page, 
   await expect(page.getByRole("button", { name: "Menü schließen" }).first()).toHaveAttribute("aria-expanded", "true");
   await page.keyboard.press("Escape");
   await expect(menu).toHaveAttribute("aria-expanded", "false");
+});
+
+
+test("published article SSR hydrates with its real content and metadata", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error" && /hydrat|react/i.test(message.text())) errors.push(message.text());
+  });
+  const response = await page.goto("/artikel/fiqh-grundlagen");
+  expect(response.status()).toBe(200);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href", "https://www.shaykh-sayed.de/artikel/fiqh-grundlagen",
+  );
+  await expect(page.locator(".sib-article-details-section").first()).toBeVisible();
+  expect(errors).toEqual([]);
 });
