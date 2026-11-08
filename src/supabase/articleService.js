@@ -14,6 +14,8 @@ const mapArticle = (row) => {
     id: row.id,
     slug: row.slug,
     title: row.title,
+    seoTitle: row.seoTitle || "",
+    seoDescription: row.seoDescription || "",
     excerpt: row.excerpt || (contentText.length > 190 ? contentText.slice(0, 187).trim() + "..." : contentText),
     contentHtml,
     contentText,
