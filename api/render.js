@@ -71,7 +71,7 @@ function metadataFor(pathname, article, status) {
 
 function structuredData(pathname, metadata, article, status, data) {
   if (status === 404) return "";
-  const url = origin + pathname;
+  const url = origin + pathname + (pathname === "/artikel" && data?.pagination?.page > 1 ? "?page=" + data.pagination.page : "");
   const graph = [
     {
       "@type": "WebSite",
@@ -239,7 +239,7 @@ function structuredData(pathname, metadata, article, status, data) {
 function buildHtml(result) {
   const { markup, data, status, pathname } = result;
   const meta = metadataFor(pathname, data.article, status);
-  const url = origin + pathname;
+  const url = origin + pathname + (pathname === "/artikel" && data?.pagination?.page > 1 ? "?page=" + data.pagination.page : "");
   const image = absoluteImage(meta.image);
   const imageIsFallback = !meta.image;
   const imageAlt = imageIsFallback ? siteName + " - offizielles Logo" : (data.article?.title || meta.title);
@@ -304,14 +304,20 @@ export default async function handler(request, response) {
     return response.status(400).end("Invalid path");
   }
   let pathname;
+  let page = null;
   try {
-    pathname = decodeURI(rawPath).split("?")[0];
+    const parsedPath = new URL(rawPath, origin);
+    pathname = decodeURI(parsedPath.pathname);
+    const requestUrl = new URL(request.url || "/", origin);
+    page = typeof request.query?.page === "string"
+      ? request.query.page
+      : (parsedPath.searchParams.get("page") ?? requestUrl.searchParams.get("page"));
   } catch {
     return response.status(400).end("Invalid path");
   }
   try {
     const { renderPage } = await import("../dist-ssr/entry-server.js");
-    const result = await renderPage(pathname);
+    const result = await renderPage(pathname, { page });
     const html = buildHtml(result);
     response.setHeader("Content-Type", "text/html; charset=utf-8");
     response.setHeader("X-Content-Type-Options", "nosniff");
