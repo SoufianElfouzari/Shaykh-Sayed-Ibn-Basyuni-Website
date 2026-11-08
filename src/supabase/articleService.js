@@ -40,7 +40,7 @@ const mapArticle = (row) => {
 export async function getPublishedArticleSummaries() {
   const { data, error } = await supabase
     .from("articles")
-    .select("id,slug,title,seoTitle,seoDescription,excerpt,coverImageUrl,status,publishedAt,updated_at,author,category,language,featured,tags")
+    .select("id,slug,title,excerpt,coverImageUrl,status,publishedAt,updated_at,author,category,language,featured,tags")
     .eq("status", "published")
     .order("publishedAt", { ascending: false, nullsFirst: false })
     .range(0, 999);
