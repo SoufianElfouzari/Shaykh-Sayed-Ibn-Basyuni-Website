@@ -131,5 +131,11 @@ export async function getRelatedPublishedArticles(referenceArticle, maxResults =
     .sort((first, second) => second.score - first.score ||
       (new Date(second.publishedAt || 0) - new Date(first.publishedAt || 0)))
     .slice(0, Math.max(0, Math.min(6, maxResults)))
-    .map(({ score: _score, ...article }) => article);
+    .map((candidate) => ({
+      slug: candidate.slug,
+      title: candidate.title,
+      excerpt: candidate.excerpt,
+      category: candidate.category,
+      publishedAt: candidate.publishedAt,
+    }));
 }
