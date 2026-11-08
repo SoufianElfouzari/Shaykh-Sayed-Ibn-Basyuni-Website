@@ -174,7 +174,8 @@ function getArticlePath(article) {
 }
 
 function LatestArticles() {
-  const { articles: initialArticles } = useSsrData();
+  const { articles: ssrArticles, __ssrPath } = useSsrData();
+  const initialArticles = __ssrPath === "/" ? ssrArticles : undefined;
   const [articles, setArticles] = useState(initialArticles || []);
   const [isLoading, setIsLoading] =
     useState(!initialArticles);
@@ -187,7 +188,7 @@ function LatestArticles() {
 
     try {
       const loadedArticles =
-        await getPublishedArticleSummaries();
+        await getPublishedArticleSummaries(6);
 
       setArticles(
         Array.isArray(loadedArticles)
