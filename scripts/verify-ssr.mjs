@@ -84,6 +84,14 @@ for (const [path, title] of pages) {
   assert.ok(response.body.includes('property="og:image:type" content="image/png"'), path + ": missing fallback image type");
 
   if (path === "/") {
+    const dataMatch = response.body.match(/<script>window\.__SSR_DATA__=([\s\S]*?);<\/script>/);
+    assert.ok(dataMatch, "home: SSR preload data missing");
+    const preload = JSON.parse(dataMatch[1]);
+    assert.equal(preload.__ssrPath, "/", "home: SSR route identifier missing");
+    assert.ok(Array.isArray(preload.articles), "home: article summaries missing");
+    assert.ok(preload.articles.every((item) => !item.contentHtml && !item.contentText),
+      "home: full article bodies must not be serialized to the client");
+
     assert.ok(
       response.body.includes('name="description" content="Islam lernen auf Deutsch:'),
       "home: missing keyword in SSR description",
@@ -100,6 +108,12 @@ for (const [path, title] of pages) {
       response.body.includes('property="og:title" content="Islam lernen auf Deutsch'),
       "home: Open Graph title does not match",
     );
+  }
+  if (path === "/artikel") {
+    const dataMatch = response.body.match(/<script>window\.__SSR_DATA__=([\s\S]*?);<\/script>/);
+    assert.ok(dataMatch, "archive: SSR preload missing");
+    assert.equal(JSON.parse(dataMatch[1]).__ssrPath, "/artikel",
+      "archive: full-text dataset should be scoped to its original route");
   }
   if (path === "/shaykh") {
     assert.ok(
