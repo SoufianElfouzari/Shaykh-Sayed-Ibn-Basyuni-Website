@@ -36,7 +36,7 @@ const routeModulePaths = {
 
 let clientManifest;
 
-function getAssets(pathname, status) {
+function getAssets(pathname) {
   if (assetTags === undefined) {
     const template = readFileSync(templatePath, "utf8");
     assetTags = (template.match(/<(?:script|link)\b[^>]*>/gi) || [])
@@ -49,11 +49,9 @@ function getAssets(pathname, status) {
 
   const styles = assetTags.filter((tag) => /^<link\b/i.test(tag));
   const scripts = assetTags.filter((tag) => /^<script\b/i.test(tag));
-  const routeEntry = status === 404
-    ? "src/pages/NotFound/NotFound.jsx"
-    : pathname.startsWith("/artikel/")
-      ? "src/pages/Articles/components/ArticleDetails/ArticleDetails.jsx"
-      : routeModulePaths[pathname];
+  const routeEntry = pathname.startsWith("/artikel/")
+    ? "src/pages/Articles/components/ArticleDetails/ArticleDetails.jsx"
+    : routeModulePaths[pathname];
 
   if (routeEntry) {
     if (!clientManifest) {
@@ -303,7 +301,7 @@ function buildHtml(result) {
   const description = escapeHtml(meta.description);
   const canonical = escapeHtml(url);
   const ld = structuredData(pathname, meta, data.article, status, data);
-  const assets = getAssets(pathname, status);
+  const assets = getAssets(pathname);
   const articleDetails = data.article && status === 200 ? articleSeo(data.article) : null;
   const pageLanguage = articleDetails?.language || "de";
   const ogLocale = pageLanguage === "ar" ? "ar_AR" : pageLanguage === "en" ? "en_US" : "de_DE";
