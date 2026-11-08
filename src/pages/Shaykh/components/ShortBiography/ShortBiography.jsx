@@ -75,8 +75,10 @@ function ShortBiography() {
         observer.unobserve(section);
       },
       {
-        threshold: 0.1,
-        rootMargin: "0px 0px -70px 0px",
+        // The section is far taller than the mobile viewport. A 10% threshold
+        // can never be reached on smaller screens, so trigger at first contact.
+        threshold: 0,
+        rootMargin: "0px 0px -40px 0px",
       },
     );
 
