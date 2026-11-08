@@ -297,7 +297,7 @@ function buildHtml(result) {
     '<meta property="og:description" content="' + description + '">',
     '<meta property="og:url" content="' + canonical + '">',
     '<meta property="og:image" content="' + escapeHtml(image) + '">',
-    '<meta property="og:image:secure_url" content="' + escapeHtml(image) + '">',
+    image.startsWith("https://") ? '<meta property="og:image:secure_url" content="' + escapeHtml(image) + '">' : "",
     imageIsFallback ? '<meta property="og:image:type" content="image/png">' : "",
     '<meta property="og:image:alt" content="' + escapeHtml(imageAlt) + '">',
     articleDetails?.publishedAt ? '<meta property="article:published_time" content="' + escapeHtml(articleDetails.publishedAt) + '">' : "",
