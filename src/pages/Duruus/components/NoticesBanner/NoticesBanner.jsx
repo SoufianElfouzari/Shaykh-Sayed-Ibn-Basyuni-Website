@@ -220,6 +220,7 @@ function NoticesBanner() {
   ] = useState("");
 
   useEffect(() => {
+    if (Array.isArray(initialNotices)) return undefined;
     let isCurrentRequest = true;
 
     async function loadNotices() {
