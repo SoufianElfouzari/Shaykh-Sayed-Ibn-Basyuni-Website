@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useSsrData } from "../../../../SsrDataContext";
-import { parseServerArticleContent } from "../../../../utils/serverArticleContent";
+import { createSectionId } from "../../../../utils/articleSections";
 import { articleSeo, SITE_FALLBACK_IMAGE, SITE_ORIGIN } from "../../../../utils/articleSeo";
 
 import {
@@ -156,47 +156,11 @@ function CheckIcon() {
   );
 }
 
-function createSectionId(
-  title,
-  index,
-  usedIds,
-) {
-  const normalizedTitle = String(title || "")
-    .trim()
-    .toLocaleLowerCase("de-DE")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/ä/g, "ae")
-    .replace(/ö/g, "oe")
-    .replace(/ü/g, "ue")
-    .replace(/ß/g, "ss")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-  const baseId =
-    normalizedTitle ||
-    `abschnitt-${index + 1}`;
-
-  let sectionId = baseId;
-  let duplicateNumber = 2;
-
-  while (usedIds.has(sectionId)) {
-    sectionId =
-      `${baseId}-${duplicateNumber}`;
-
-    duplicateNumber += 1;
-  }
-
-  usedIds.add(sectionId);
-
-  return sectionId;
-}
-
-function parseArticleContent(contentHtml) {
-  // Preserve the authored headings and paragraphs in the SSR HTML.
-  // Browser rendering continues to use the rich-text DOMPurify parser.
+function parseArticleContent(contentHtml, serverContent) {
+  // The server prepares safely sanitized rich text before rendering.
+  // The browser continues using the existing DOMPurify editor renderer.
   if (typeof document === "undefined") {
-    return parseServerArticleContent(contentHtml, createSectionId);
+    return serverContent || { introductionHtml: "", sections: [] };
   }
   const sanitizedHtml = DOMPurify.sanitize(
     String(contentHtml || ""),
@@ -363,7 +327,11 @@ function ArticleStatePage({
 
 function ArticleDetails() {
   const { slug } = useParams();
-  const { article: initialArticle, relatedArticles: initialRelated = [] } = useSsrData();
+  const {
+    article: initialArticle,
+    articleContent: initialServerContent,
+    relatedArticles: initialRelated = [],
+  } = useSsrData();
 
   const [articles, setArticles] =
     useState(initialArticle ? [initialArticle] : []);
@@ -473,7 +441,8 @@ function ArticleDetails() {
 
   const relatedArticles = useMemo(() => {
     if (!article) return [];
-    if (Array.isArray(initialRelated) && initialRelated.length) {
+    if (initialArticle?.slug === article.slug &&
+        Array.isArray(initialRelated) && initialRelated.length) {
       return initialRelated.filter((item) => item.slug !== article.slug);
     }
 
@@ -492,13 +461,14 @@ function ArticleDetails() {
       .filter((entry) => entry.relevance > 0)
       .sort((a, b) => b.relevance - a.relevance)
       .slice(0, 4);
-  }, [article, articles, initialRelated]);
+  }, [article, articles, initialArticle?.slug, initialRelated]);
 
   const articleContent = useMemo(() => {
     return parseArticleContent(
       article?.contentHtml,
+      initialServerContent,
     );
-  }, [article?.contentHtml]);
+  }, [article?.contentHtml, initialServerContent]);
 
   const tableOfContents =
     useMemo(() => {
