@@ -247,9 +247,10 @@ function ArticlesOverview() {
   );
 
   useEffect(() => {
+    if (Array.isArray(initialArticles)) return undefined;
     const frame = window.requestAnimationFrame(() => { void loadArticles(); });
     return () => window.cancelAnimationFrame(frame);
-  }, [loadArticles]);
+  }, [initialArticles, loadArticles]);
 
   const categories = useMemo(() => {
     return [
