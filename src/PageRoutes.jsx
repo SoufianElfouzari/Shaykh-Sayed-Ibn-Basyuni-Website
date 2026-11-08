@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { Suspense } from "react";
 import Home from "./pages/Home/Home";
 import Shaykh from "./pages/Shaykh/Shaykh";
 import Duruus from "./pages/Duruus/Duruus";
@@ -11,6 +12,7 @@ import NotFound from "./pages/NotFound/NotFound";
 
 export default function PageRoutes() {
   return (
+    <Suspense fallback={<div role="status" aria-live="polite">Seite wird geladen.</div>}>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/shaykh" element={<Shaykh />} />
@@ -22,5 +24,6 @@ export default function PageRoutes() {
       <Route path="/impressum" element={<Impressum />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </Suspense>
   );
 }
