@@ -10,6 +10,7 @@ import {
 import DOMPurify from "dompurify";
 import { useSsrData } from "../../../../SsrDataContext";
 import { parseServerArticleContent } from "../../../../utils/serverArticleContent";
+import { articleSeo, SITE_FALLBACK_IMAGE, SITE_ORIGIN } from "../../../../utils/articleSeo";
 
 import {
   getPublishedArticles,
@@ -362,7 +363,7 @@ function ArticleStatePage({
 
 function ArticleDetails() {
   const { slug } = useParams();
-  const { article: initialArticle } = useSsrData();
+  const { article: initialArticle, relatedArticles: initialRelated = [] } = useSsrData();
 
   const [articles, setArticles] =
     useState(initialArticle ? [initialArticle] : []);
@@ -465,6 +466,34 @@ function ArticleDetails() {
       ? articles[currentArticleIndex + 1]
       : null;
 
+  const seo = useMemo(
+    () => (article ? articleSeo(article) : null),
+    [article],
+  );
+
+  const relatedArticles = useMemo(() => {
+    if (!article) return [];
+    if (Array.isArray(initialRelated) && initialRelated.length) {
+      return initialRelated.filter((item) => item.slug !== article.slug);
+    }
+
+    const tags = new Set(
+      (article.tags || []).map((tag) => String(tag).toLowerCase()),
+    );
+    const category = String(article.category || "").toLowerCase();
+    return articles
+      .filter((entry) => entry.slug && entry.slug !== article.slug)
+      .map((entry) => ({
+        ...entry,
+        relevance: (entry.tags || []).filter((tag) =>
+          tags.has(String(tag).toLowerCase())).length * 3 +
+          (category && String(entry.category || "").toLowerCase() === category ? 2 : 0),
+      }))
+      .filter((entry) => entry.relevance > 0)
+      .sort((a, b) => b.relevance - a.relevance)
+      .slice(0, 4);
+  }, [article, articles, initialRelated]);
+
   const articleContent = useMemo(() => {
     return parseArticleContent(
       article?.contentHtml,
@@ -510,30 +539,35 @@ function ArticleDetails() {
   }, [slug]);
 
   useEffect(() => {
-    if (!article) {
-      return;
-    }
+    if (!seo) return;
 
-    const title = `${article.title} | Shaykh Sayed`;
-    const description = String(article.excerpt || article.contentText || "")
-      .replace(/<[^>]*>/g, " ")
-      .replace(/\s+/g, " ")
-      .trim()
-      .slice(0, 180);
-
-    document.title = title;
+    document.title = seo.title;
+    const image = seo.image || SITE_FALLBACK_IMAGE;
+    const url = SITE_ORIGIN + "/artikel/" + encodeURIComponent(article.slug);
 
     const metadata = [
-      ["name", "description", description],
+      ["name", "description", seo.description],
+      ["name", "author", seo.author.name],
       ["property", "og:type", "article"],
-      ["property", "og:title", title],
-      ["property", "og:description", description],
-      ["name", "twitter:title", title],
-      ["name", "twitter:description", description],
+      ["property", "og:title", seo.title],
+      ["property", "og:description", seo.description],
+      ["property", "og:url", url],
+      ["property", "og:image", image],
+      ["property", "og:image:alt", seo.headline],
+      ["name", "twitter:title", seo.title],
+      ["name", "twitter:description", seo.description],
+      ["name", "twitter:image", image],
+      ["name", "twitter:image:alt", seo.headline],
+      ["property", "article:published_time", seo.publishedAt],
+      ["property", "article:modified_time", seo.updatedAt],
     ];
 
     for (const [attribute, name, value] of metadata) {
       let element = document.head.querySelector(`meta[${attribute}="${name}"]`);
+      if (!value) {
+        element?.remove();
+        continue;
+      }
       if (!element) {
         element = document.createElement("meta");
         element.setAttribute(attribute, name);
@@ -541,7 +575,13 @@ function ArticleDetails() {
       }
       element.setAttribute("content", value);
     }
-  }, [article]);
+
+    return () => {
+      document.head.querySelectorAll(
+        'meta[property="article:published_time"], meta[property="article:modified_time"], meta[name="author"]',
+      ).forEach((element) => element.remove());
+    };
+  }, [article, seo]);
 
   useEffect(() => {
     const updateReadingProgress = () => {
@@ -752,6 +792,14 @@ function ArticleDetails() {
         </div>
 
         <div className="sib-article-details-hero-container">
+          <nav className="sib-article-details-breadcrumbs" aria-label="Seitenpfad">
+            <Link to="/">Startseite</Link>
+            <span aria-hidden="true">/</span>
+            <Link to="/artikel">Islamische Artikel</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{article.title}</span>
+          </nav>
+
           <Link
             to="/artikel"
             className="sib-article-details-back"
@@ -761,7 +809,7 @@ function ArticleDetails() {
           </Link>
 
           <div className="sib-article-details-category-row">
-            <span>Artikel</span>
+            <span>{seo?.category || "Artikel"}</span>
           </div>
 
           <h1>{article.title}</h1>
@@ -777,7 +825,13 @@ function ArticleDetails() {
               <span>Autor</span>
 
               <strong>
-                {article.author}
+                {seo?.author.profileUrl ? (
+                  <Link to="/shaykh" className="sib-article-details-author-link">
+                    {article.author}
+                  </Link>
+                ) : (
+                  article.author
+                )}
               </strong>
             </div>
 
@@ -946,6 +1000,16 @@ function ArticleDetails() {
             </div>
 
             <footer className="sib-article-details-footer">
+              {seo?.tags.length > 0 && (
+                <div className="sib-article-details-topics" aria-label="Themen des Artikels">
+                  <span>Themen</span>
+                  <div>
+                    {seo.tags.map((tag) => (
+                      <span key={tag} className="sib-article-details-topic">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="sib-article-details-updated">
                 <span>
                   Zuletzt aktualisiert
@@ -965,6 +1029,21 @@ function ArticleDetails() {
             </footer>
           </article>
         </div>
+
+        {relatedArticles.length > 0 && (
+          <section className="sib-article-details-related" aria-labelledby="related-articles-heading">
+            <h2 id="related-articles-heading">Weitere Artikel zum Thema</h2>
+            <div className="sib-article-details-related-grid">
+              {relatedArticles.map((entry) => (
+                <article key={entry.slug} className="sib-article-details-related-card">
+                  {entry.category && <p>{entry.category}</p>}
+                  <h3><Link to={`/artikel/${entry.slug}`}>{entry.title}</Link></h3>
+                  {entry.excerpt && <p>{entry.excerpt}</p>}
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
 
         <nav
           className="sib-article-details-navigation"
