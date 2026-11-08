@@ -3,9 +3,11 @@ import { StaticRouter } from "react-router";
 import PageRoutes from "./PageRoutes";
 import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
-import { getPublishedArticles, getPublishedArticleBySlug, getPublishedArticleIndex } from "./supabase/articleService";
+import { getPublishedArticles, getPublishedArticleBySlug, getPublishedArticleIndex, getRelatedPublishedArticles } from "./supabase/articleService";
 import { getPublishedDuruus } from "./supabase/duruusService";
 import { getActivePublishedNotices } from "./supabase/noticesService";
+import { createSectionId } from "./utils/articleSections";
+import { parseServerArticleContent } from "./utils/serverArticleContent";
 
 const pages = new Set([
   "/", "/shaykh", "/durous", "/artikel", "/kontakt", "/impressum", "/datenschutz"
@@ -38,7 +40,15 @@ export async function renderPage(pathname) {
     if (slug && !slug.includes("/")) {
       data.article = await getPublishedArticleBySlug(slug);
     }
-    if (!data.article) status = 404;
+    if (!data.article) {
+      status = 404;
+    } else {
+      data.articleContent = parseServerArticleContent(data.article.contentHtml, createSectionId);
+      data.relatedArticles = await getRelatedPublishedArticles(data.article).catch((error) => {
+        console.error("Verwandte Artikel konnten nicht geladen werden:", error);
+        return [];
+      });
+    }
   } else if (!pages.has(path)) {
     status = 404;
   }

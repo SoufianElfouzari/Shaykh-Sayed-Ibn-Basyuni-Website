@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { articleSeo, SITE_FALLBACK_IMAGE } from "../src/utils/articleSeo.js";
 
 const origin = "https://www.shaykh-sayed.de";
 const siteName = "Shaykh Sayed Ibn Basyuni";
@@ -43,7 +44,7 @@ function absoluteImage(source) {
       if (url.protocol === "https:" || url.protocol === "http:") return url.href;
     } catch { /* use default image */ }
   }
-  return origin + "/ShaykhSayedLogo.png";
+  return SITE_FALLBACK_IMAGE;
 }
 
 const staticMetadata = {
@@ -85,10 +86,11 @@ function metadataFor(pathname, article, status) {
     };
   }
   if (article) {
+    const seo = articleSeo(article);
     return {
-      title: String(article.title || "Artikel") + " | Shaykh Sayed",
-      description: String(article.excerpt || article.contentText || "").slice(0, 180),
-      image: article.coverImageUrl,
+      title: seo.title,
+      description: seo.description,
+      image: seo.image,
       type: "article"
     };
   }
@@ -226,28 +228,35 @@ function structuredData(pathname, metadata, article, status, data) {
   }
 
   if (article) {
+    const seo = articleSeo(article);
+    graph[2].mainEntity = { "@id": url + "#article" };
+    graph[2].inLanguage = seo.language;
+
+    const author = {
+      "@type": seo.author.type,
+      name: seo.author.name
+    };
+    if (seo.author.profileUrl) author.url = seo.author.profileUrl;
+
     const schema = {
       "@type": "Article",
       "@id": url + "#article",
+      url,
       mainEntityOfPage: { "@id": url + "#webpage" },
-      headline: article.title,
-      description: metadata.description,
-      inLanguage: "de",
-      author: {
-        "@type": "Person",
-        name: article.author || "Redaktion Shaykh Sayed",
-        ...(String(article.author || "").includes("Sayed Ibn Basyuni")
-          ? { url: origin + "/shaykh" }
-          : {})
-      },
+      headline: seo.headline,
+      description: seo.description,
+      inLanguage: seo.language,
+      author,
       publisher: { "@id": origin + "/#person" },
-      isAccessibleForFree: true
+      isAccessibleForFree: true,
+      timeRequired: "PT" + seo.readingTime + "M"
     };
-    if (article.publishedAt) schema.datePublished = article.publishedAt;
-    if (article.updatedAt) schema.dateModified = article.updatedAt;
-    if (article.coverImageUrl) schema.image = absoluteImage(article.coverImageUrl);
-    if (article.category && article.category !== "Artikel") schema.articleSection = article.category;
-    if (Array.isArray(article.tags) && article.tags.length > 0) schema.keywords = article.tags.join(", ");
+    if (seo.wordCount > 0) schema.wordCount = seo.wordCount;
+    if (seo.publishedAt) schema.datePublished = seo.publishedAt;
+    if (seo.updatedAt) schema.dateModified = seo.updatedAt;
+    if (seo.image) schema.image = seo.image;
+    if (seo.category) schema.articleSection = seo.category;
+    if (seo.tags.length) schema.keywords = seo.tags.join(", ");
     graph.push(schema);
   }
   return '<script type="application/ld+json">' +
@@ -265,6 +274,7 @@ function buildHtml(result) {
   const description = escapeHtml(meta.description);
   const canonical = escapeHtml(url);
   const ld = structuredData(pathname, meta, data.article, status, data);
+  const articleDetails = data.article && status === 200 ? articleSeo(data.article) : null;
 
   return [
     "<!doctype html>",
@@ -282,10 +292,16 @@ function buildHtml(result) {
     '<meta property="og:description" content="' + description + '">',
     '<meta property="og:url" content="' + canonical + '">',
     '<meta property="og:image" content="' + escapeHtml(image) + '">',
+    articleDetails ? '<meta property="og:image:alt" content="' + escapeHtml(articleDetails.headline) + '">' : "",
+    articleDetails?.publishedAt ? '<meta property="article:published_time" content="' + escapeHtml(articleDetails.publishedAt) + '">' : "",
+    articleDetails?.updatedAt ? '<meta property="article:modified_time" content="' + escapeHtml(articleDetails.updatedAt) + '">' : "",
+    articleDetails?.author?.name ? '<meta name="author" content="' + escapeHtml(articleDetails.author.name) + '">' : "",
     '<meta name="twitter:card" content="summary_large_image">',
     '<meta name="twitter:title" content="' + title + '">',
     '<meta name="twitter:description" content="' + description + '">',
     '<meta name="twitter:image" content="' + escapeHtml(image) + '">',
+    articleDetails ? '<meta name="twitter:image:alt" content="' + escapeHtml(articleDetails.headline) + '">' : "",
+    articleDetails?.author?.profileUrl ? '<link rel="author" href="' + escapeHtml(articleDetails.author.profileUrl) + '">' : "",
     '<meta name="theme-color" content="#084c3c">',
     '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
     ld,
