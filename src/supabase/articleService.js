@@ -37,13 +37,14 @@ const mapArticle = (row) => {
 
 // Lightweight public metadata for homepage cards and article navigation.
 // Full texts are fetched only for the archive's full-text search or detail pages.
-export async function getPublishedArticleSummaries() {
+export async function getPublishedArticleSummaries(limit = 1000) {
+  const safeLimit = Math.max(1, Math.min(1000, Math.trunc(Number(limit) || 1000)));
   const { data, error } = await supabase
     .from("articles")
     .select("id,slug,title,excerpt,coverImageUrl,status,publishedAt,updated_at,author,category,language,featured,tags")
     .eq("status", "published")
     .order("publishedAt", { ascending: false, nullsFirst: false })
-    .range(0, 999);
+    .range(0, safeLimit - 1);
 
   if (error) throw error;
   return (data || []).filter((row) => row.slug && row.title).map(mapArticle);
