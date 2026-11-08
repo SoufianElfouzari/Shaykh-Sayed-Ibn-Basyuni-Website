@@ -363,13 +363,7 @@ function ArticleDetails() {
 
   useEffect(() => {
     if (initialArticle?.slug === slug) {
-      // Hydrated article is complete: do not fetch the entire article archive again.
-      setArticles((current) =>
-        current.length === 1 && current[0] === initialArticle ? current : [initialArticle],
-      );
-      setRequestedSlug(slug);
-      setIsLoading(false);
-      setErrorMessage("");
+      // Hydrated article already includes its complete content.
       return undefined;
     }
 
@@ -423,15 +417,9 @@ function ArticleDetails() {
   }, []);
 
   const article = useMemo(() => {
-    return (
-      articles.find(
-        (entry) => entry.slug === slug,
-      ) || null
-    );
-  }, [
-    articles,
-    slug,
-  ]);
+    if (initialArticle?.slug === slug) return initialArticle;
+    return articles.find((entry) => entry.slug === slug) || null;
+  }, [articles, slug, initialArticle]);
 
   const currentArticleIndex =
     useMemo(() => {
@@ -727,7 +715,7 @@ function ArticleDetails() {
     }, 2200);
   };
 
-  if (isLoading || requestedSlug !== slug) {
+  if (initialArticle?.slug !== slug && (isLoading || requestedSlug !== slug)) {
     return (
       <ArticleStatePage
         code="..."
