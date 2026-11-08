@@ -29,9 +29,9 @@ function Hero() {
         </h1>
 
         <p className="sib-home-hero-description">
-          Islam lernen auf Deutsch: Entdecke die Unterrichte,
-          Artikel und aktuellen Unterrichtstermine von
-          Shaykh Sayed Ibn Basyuni.
+          Islam lernen auf Deutsch: Entdecke Unterrichte und Artikel
+          über islamische Wissenschaften, Quran und Sunnah sowie die
+          aktuellen Unterrichtstermine von Shaykh Sayed Ibn Basyuni.
         </p>
       </div>
     </section>
