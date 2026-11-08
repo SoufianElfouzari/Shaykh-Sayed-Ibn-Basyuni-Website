@@ -219,6 +219,23 @@
   font-weight: 450;
 }
 
+.sib-articles-overview-description a {
+  color: var(--sib-color-primary, #0d6a52);
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-color: rgba(13, 106, 82, 0.35);
+  text-underline-offset: 3px;
+}
+
+.sib-articles-overview-description a:hover {
+  text-decoration-color: currentColor;
+}
+
+.sib-articles-overview-description a:focus-visible {
+  outline: 2px solid var(--sib-color-primary, #0d6a52);
+  outline-offset: 3px;
+}
+
 .sib-articles-overview-controls {
   margin-top: 48px;
   padding: 20px;
