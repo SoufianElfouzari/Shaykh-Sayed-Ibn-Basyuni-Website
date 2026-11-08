@@ -82,3 +82,55 @@ test("SPA navigation to a missing article removes canonical after hydration", as
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
 });
+
+test("biography stays visible on a 410px screen, including long chapters", async ({ page }) => {
+  await page.setViewportSize({ width: 410, height: 860 });
+  const response = await page.goto("/shaykh");
+  expect(response.status()).toBe(200);
+  await expect(page.locator(".sib-short-biography-chapter")).toHaveCount(4);
+
+  for (const selector of [
+    ".sib-short-biography-header",
+    ".sib-short-biography-lead",
+    ".sib-short-biography-chapter",
+    ".sib-short-biography-footer",
+  ]) {
+    const element = page.locator(selector).first();
+    await element.scrollIntoViewIfNeeded();
+    await expect(element).toBeVisible();
+    await expect.poll(
+      () => element.evaluate((node) => getComputedStyle(node).opacity),
+      { timeout: 5000 },
+    ).toBe("1");
+  }
+
+  await expect(page.locator(".sib-short-biography-title"))
+    .toContainText("wissenschaftlicher Werdegang");
+});
+
+test("biography is readable on mobile Safari without JavaScript", async ({ browser, browserName }) => {
+  test.skip(browserName !== "webkit", "Verify the reported Safari layout.");
+  const context = await browser.newContext({
+    baseURL: "http://127.0.0.1:4179",
+    javaScriptEnabled: false,
+    viewport: { width: 410, height: 860 },
+  });
+  try {
+    const page = await context.newPage();
+    const response = await page.goto("/shaykh");
+    expect(response.status()).toBe(200);
+
+    const heading = page.locator(".sib-short-biography-title");
+    await heading.scrollIntoViewIfNeeded();
+    await expect(heading).toBeVisible();
+    expect(await heading.evaluate((node) => getComputedStyle(node).opacity)).toBe("1");
+
+    const paragraphs = page.locator(".sib-short-biography-chapter-text p");
+    expect(await paragraphs.count()).toBeGreaterThan(4);
+    const firstParagraph = paragraphs.first();
+    await firstParagraph.scrollIntoViewIfNeeded();
+    expect(await firstParagraph.evaluate((node) => getComputedStyle(node).opacity)).toBe("1");
+  } finally {
+    await context.close();
+  }
+});
