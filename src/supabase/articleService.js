@@ -49,6 +49,38 @@ export async function getPublishedArticleSummaries() {
   return (data || []).filter((row) => row.slug && row.title).map(mapArticle);
 }
 
+
+export const ARTICLE_PAGE_SIZE = 12;
+
+// Only lightweight, published metadata is transferred for each indexable archive
+// page. Full article bodies are loaded solely for detail pages or full-text search.
+export async function getPublishedArticlePage(requestedPage = 1) {
+  const page = Number(requestedPage);
+  if (!Number.isSafeInteger(page) || page < 1) {
+    throw new RangeError("Invalid article page");
+  }
+
+  const offset = (page - 1) * ARTICLE_PAGE_SIZE;
+  const { data, count, error } = await supabase
+    .from("articles")
+    .select("id,slug,title,excerpt,coverImageUrl,status,publishedAt,updated_at,author,category,language,featured,tags", { count: "exact" })
+    .eq("status", "published")
+    .order("publishedAt", { ascending: false, nullsFirst: false })
+    .range(offset, offset + ARTICLE_PAGE_SIZE - 1);
+
+  if (error) throw error;
+  const articles = (data || [])
+    .filter((row) => row.slug && row.title)
+    .map(mapArticle);
+  const total = Number.isInteger(count) ? count : articles.length;
+  return {
+    articles,
+    page,
+    total,
+    totalPages: Math.max(1, Math.ceil(total / ARTICLE_PAGE_SIZE)),
+  };
+}
+
 export async function getPublishedArticles() {
   const { data, error } = await supabase
     .from("articles")
