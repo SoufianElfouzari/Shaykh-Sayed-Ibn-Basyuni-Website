@@ -349,6 +349,15 @@
 
 
     <style>
+      /*
+       * The static SEO fallback is replaced by React in development and by
+       * the actual rendered page in production SSR. Never paint this unstyled
+       * placeholder while the client bundle is loading.
+       */
+      .seo-initial-content {
+        display: none;
+      }
+
       .noscript-page {
         width: 100%;
         min-height: 100vh;
