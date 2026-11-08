@@ -18,8 +18,8 @@ const routeMetadata = {
     description: "Islamische Unterrichte von Shaykh Sayed Ibn Basyuni: Fiqh-Unterrichtszeiten in Kassel, aktuelle Hinweise und veröffentlichte Durous als Audioaufnahmen.",
   },
   "/artikel": {
-    title: "Islamische Artikel über Quran und Sunnah | Shaykh Sayed",
-    description: "Lies islamische Artikel und wissenschaftliche Beiträge über Quran, Sunnah, Aqidah, Fiqh und weitere Themen.",
+    title: "Islamische Artikel auf Deutsch | Shaykh Sayed Ibn Basyuni",
+    description: "Islamische Artikel auf Deutsch von Shaykh Sayed Ibn Basyuni. Entdecke veröffentlichte Beiträge zu islamischen Wissenschaften und vertiefe dein Wissen.",
   },
   "/kontakt": {
     title: "Kontakt | Shaykh Sayed Ibn Basyuni",
@@ -68,6 +68,7 @@ function RouteSeo() {
       updateMeta("property", "og:description", metadata.description);
       updateMeta("name", "twitter:title", metadata.title);
       updateMeta("name", "twitter:description", metadata.description);
+      updateMeta("property", "og:type", "website");
     }
   }, [pathname]);
   return null;
