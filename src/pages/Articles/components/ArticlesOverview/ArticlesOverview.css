@@ -1118,3 +1118,44 @@
     transform: none;
   }
 }
+/* Crawlable, keyboard-accessible server-rendered archive pagination. */
+.sib-articles-overview-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 38px;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.sib-articles-overview-pagination a {
+  color: #0d5f4b;
+  border: 1px solid rgba(13, 106, 82, 0.3);
+  border-radius: 999px;
+  padding: 12px 20px;
+  background: #fffefa;
+  text-decoration: none;
+}
+
+.sib-articles-overview-pagination a:hover,
+.sib-articles-overview-pagination a:focus-visible {
+  background: #e7f2eb;
+  outline-offset: 3px;
+}
+
+.sib-articles-overview-pagination span {
+  color: #4c5853;
+}
+
+@media (max-width: 480px) {
+  .sib-articles-overview-pagination {
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  .sib-articles-overview-pagination a {
+    padding: 10px 12px;
+  }
+}
