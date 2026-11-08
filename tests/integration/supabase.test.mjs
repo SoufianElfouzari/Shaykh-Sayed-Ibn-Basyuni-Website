@@ -13,6 +13,7 @@ after(async () => { await vite.close(); });
 
 const {
   getPublishedArticles,
+  getPublishedArticlePage,
   getPublishedArticleSummaries,
   getPublishedArticleBySlug,
   getPublishedArticleIndex,
@@ -76,4 +77,16 @@ test("SSR and sitemap return no private drafts", async () => {
   assert.equal(sitemap.code, 200);
   assert.ok(sitemap.body.includes("/artikel/fiqh-grundlagen"));
   assert.ok(!sitemap.body.includes("geheimer-entwurf"));
+});
+
+test("archive pages are metadata-only and never expose drafts", async () => {
+  const archive = await getPublishedArticlePage(1);
+  assert.equal(archive.page, 1);
+  assert.equal(archive.total, 2);
+  assert.equal(archive.totalPages, 1);
+  assert.equal(archive.articles.length, 2);
+  assert.ok(archive.articles.every((article) => !article.contentHtml && !article.contentText));
+  assert.ok(archive.articles.every((article) => article.status === "published"));
+  assert.deepEqual((await getPublishedArticlePage(2)).articles, []);
+  await assert.rejects(getPublishedArticlePage(0), RangeError);
 });
