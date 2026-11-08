@@ -523,15 +523,36 @@ function ArticleDetails() {
 
   useEffect(() => {
     if (!article) {
-      return undefined;
+      return;
     }
 
-    document.title =
-      `${article.title} | Shaykh Sayed`;
+    const title = `${article.title} | Shaykh Sayed`;
+    const description = String(article.excerpt || article.contentText || "")
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\\s+/g, " ")
+      .trim()
+      .slice(0, 180);
 
-    return () => {
-      document.title = "Shaykh Sayed";
-    };
+    document.title = title;
+
+    const metadata = [
+      ["name", "description", description],
+      ["property", "og:type", "article"],
+      ["property", "og:title", title],
+      ["property", "og:description", description],
+      ["name", "twitter:title", title],
+      ["name", "twitter:description", description],
+    ];
+
+    for (const [attribute, name, value] of metadata) {
+      let element = document.head.querySelector(`meta[${attribute}="${name}"]`);
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attribute, name);
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", value);
+    }
   }, [article]);
 
   useEffect(() => {
