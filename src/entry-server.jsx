@@ -29,7 +29,7 @@ export async function renderPage(pathname) {
   } else if (path === "/artikel") {
     const rawPage = requestedUrl.searchParams.get("page");
     const requestedPage = rawPage === null ? 1 : Number(rawPage);
-    if ((rawPage !== null && !/^[1-9]\\d*$/.test(rawPage)) ||
+    if ((rawPage !== null && !/^[1-9]\d*$/.test(rawPage)) ||
         !Number.isSafeInteger(requestedPage) || requestedPage > 1000000) {
       status = 404;
     } else {
