@@ -51,6 +51,8 @@ for (const [path, title] of pages) {
     path + ": expected exactly one main H1; shared sections should use H2",
   );
   assert.ok(response.body.includes("<title>" + title), path + ": wrong title");
+  assert.ok(response.body.includes('<html lang="de" dir="ltr">'), path + ": default language must be German");
+  assert.ok(!/rel="alternate"[^>]*hreflang=/i.test(response.body), path + ": do not emit single-language hreflang");
   assert.ok(response.body.includes('rel="canonical" href="https://www.shaykh-sayed.de' + path + '"'), path + ": wrong canonical");
   assert.ok(response.body.includes('/assets/index-'), path + ": missing client assets");
   assert.ok(response.body.includes('id="root"'), path + ": missing React root");
@@ -292,6 +294,11 @@ if (articles.length > 0) {
     "published article: description must match the editorial excerpt");
   assert.equal(articleSchema.inLanguage, seo.language,
     "published article: language must match the source");
+  assert.ok(response.body.includes('<html lang="' + seo.language + '"'),
+    "published article: HTML language must match article language");
+  assert.ok(response.body.includes('property="og:locale" content="' +
+    (seo.language === "ar" ? "ar_AR" : seo.language === "en" ? "en_US" : "de_DE") + '"'),
+    "published article: Open Graph locale must match article language");
   assert.equal(articleSchema.wordCount, seo.wordCount,
     "published article: word count must reflect the article content");
   assert.equal(articleSchema.author.name, seo.author.name,
