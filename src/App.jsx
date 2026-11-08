@@ -48,7 +48,7 @@ function updateMeta(attribute, key, value) {
 function RouteSeo() {
   const { pathname } = useLocation();
   useEffect(() => {
-    const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\\/+$/, "");
+    const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
     const canonicalUrl = "https://www.shaykh-sayed.de" + normalizedPath;
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
