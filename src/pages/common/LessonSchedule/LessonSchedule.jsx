@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSsrData } from "../../../SsrDataContext";
 import "./LessonSchedule.css";
-
-const fallbackLessons = [
-  { id: 1, day: "Dienstag", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
-  { id: 2, day: "Mittwoch", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
-  { id: 3, day: "Donnerstag", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
-  { id: 4, day: "Sonntag", time: "Nach Asr", subject: "Fiqh" },
-];
 
 function ArrowIcon() {
   return (
@@ -36,9 +30,12 @@ function ArrowIcon() {
 }
 
 function LessonSchedule() {
-  const [weeklyLessons, setWeeklyLessons] = useState(fallbackLessons);
+  const { lessons: serverLessons, __ssrPath } = useSsrData();
+  const hasServerLessons = __ssrPath === "/durous" && Array.isArray(serverLessons);
+  const [weeklyLessons, setWeeklyLessons] = useState(hasServerLessons ? serverLessons : []);
 
   useEffect(() => {
+    if (hasServerLessons) return undefined;
     const controller = new AbortController();
 
     async function loadSchedule() {
@@ -63,7 +60,7 @@ function LessonSchedule() {
 
     loadSchedule();
     return () => controller.abort();
-  }, []);
+  }, [hasServerLessons]);
 
   return (
     <section className="sib-schedule">
