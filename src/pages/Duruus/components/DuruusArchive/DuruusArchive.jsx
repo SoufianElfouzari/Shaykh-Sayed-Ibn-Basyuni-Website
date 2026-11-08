@@ -341,7 +341,7 @@ function DuruusArchive() {
     return () => {
       isCurrentRequest = false;
     };
-  }, []);
+  }, [initialDuruus]);
 
   const categories = useMemo(() => {
     return [
