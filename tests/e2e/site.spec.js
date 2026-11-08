@@ -60,3 +60,14 @@ test("mobile navigation can be opened and closed with keyboard", async ({ page, 
   await page.keyboard.press("Escape");
   await expect(menu).toHaveAttribute("aria-expanded", "false");
 });
+
+test("archive page parameters keep canonical URL and reject nonexistent pages", async ({ page }) => {
+  const first = await page.goto("/artikel?page=1");
+  expect(first.status()).toBe(200);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://www.shaykh-sayed.de/artikel");
+
+  const missing = await page.goto("/artikel?page=2");
+  expect(missing.status()).toBe(404);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+});
