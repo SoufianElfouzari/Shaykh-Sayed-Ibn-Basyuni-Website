@@ -72,9 +72,9 @@ for (const [path, title] of pages) {
   assert.ok(!/rel="alternate"[^>]*hreflang=/i.test(response.body), path + ": do not emit single-language hreflang");
   assert.ok(response.body.includes('rel="canonical" href="https://www.shaykh-sayed.de' + path + '"'), path + ": wrong canonical");
   assert.ok(response.body.includes('/assets/index-'), path + ": missing client assets");
-  assert.match(response.body, /<script\\b[^>]*src="\\/assets\\/[^"]+\\.js"[^>]*><\\/script>/i,
+  assert.match(response.body, /<script\b[^>]*src="\/assets\/[^"]+\.js"[^>]*><\/script>/i,
     path + ": client bundle script must be properly closed for hydration");
-  assert.match(response.body, /<link\\b[^>]*href="\\/assets\\/[^"]+\\.css"[^>]*>/i,
+  assert.match(response.body, /<link\b[^>]*href="\/assets\/[^"]+\.css"[^>]*>/i,
     path + ": SSR page must include its CSS asset");
   assert.ok(response.body.includes('id="root"'), path + ": missing React root");
   assert.ok(response.body.includes('property="og:url" content="https://www.shaykh-sayed.de' + path + '"'), path + ": wrong Open Graph URL");
