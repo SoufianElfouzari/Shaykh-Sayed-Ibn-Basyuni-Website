@@ -124,7 +124,8 @@ function structuredData(pathname, metadata, article, status, data) {
       "@id": origin + "/#website",
       url: origin + "/",
       name: siteName,
-      inLanguage: "de"
+      inLanguage: "de",
+      publisher: { "@id": origin + "/#person" }
     },
     {
       "@type": "Person",
@@ -255,6 +256,11 @@ function structuredData(pathname, metadata, article, status, data) {
       name: seo.author.name
     };
     if (seo.author.profileUrl) author.url = seo.author.profileUrl;
+    // Only link the named author to this Person when articleSeo has
+    // verified that the actual author name resolves to the Shaykh.
+    if (seo.author.profileUrl === origin + "/shaykh" && seo.author.type === "Person") {
+      author["@id"] = origin + "/#person";
+    }
 
     const schema = {
       "@type": "Article",
