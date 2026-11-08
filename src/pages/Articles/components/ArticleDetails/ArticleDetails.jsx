@@ -529,7 +529,7 @@ function ArticleDetails() {
     const title = `${article.title} | Shaykh Sayed`;
     const description = String(article.excerpt || article.contentText || "")
       .replace(/<[^>]*>/g, " ")
-      .replace(/\\s+/g, " ")
+      .replace(/\s+/g, " ")
       .trim()
       .slice(0, 180);
 
