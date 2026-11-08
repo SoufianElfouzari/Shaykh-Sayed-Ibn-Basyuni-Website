@@ -53,3 +53,35 @@ export async function getPublishedArticleBySlug(slug) {
   if (error) throw error;
   return data ? mapArticle(data) : null;
 }
+
+
+// Lightweight, paginated lookup for the XML sitemap. Only published article
+// URLs are returned; drafts and unpublished articles must never be listed.
+export async function getPublishedArticleIndex() {
+  const pageSize = 500;
+  const maxArticles = 49_000;
+  const articles = [];
+
+  for (let offset = 0; offset < maxArticles; offset += pageSize) {
+    const { data, error } = await supabase
+      .from("articles")
+      .select("slug,publishedAt,updated_at")
+      .eq("status", "published")
+      .order("publishedAt", { ascending: false, nullsFirst: false })
+      .range(offset, offset + pageSize - 1);
+
+    if (error) throw error;
+
+    const rows = data || [];
+    articles.push(...rows
+      .filter((row) => typeof row.slug === "string" && row.slug.trim() && !row.slug.includes("/"))
+      .map((row) => ({
+        slug: row.slug.trim(),
+        lastModified: row.updated_at || row.publishedAt || null,
+      })));
+
+    if (rows.length < pageSize) break;
+  }
+
+  return articles;
+}
