@@ -20,7 +20,7 @@ export async function getSitemapArticles() {
 
 export async function renderPage(pathname) {
   const path = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
-  const data = {};
+  const data = { __ssrPath: path };
   let status = 200;
 
   if (path === "/") {
