@@ -56,6 +56,12 @@ for (const [path, title] of pages) {
   assert.ok(response.body.includes('rel="canonical" href="https://www.shaykh-sayed.de' + path + '"'), path + ": wrong canonical");
   assert.ok(response.body.includes('/assets/index-'), path + ": missing client assets");
   assert.ok(response.body.includes('id="root"'), path + ": missing React root");
+  assert.ok(response.body.includes('property="og:url" content="https://www.shaykh-sayed.de' + path + '"'), path + ": wrong Open Graph URL");
+  assert.ok(response.body.includes('property="og:image:alt" content="Shaykh Sayed Ibn Basyuni - offizielles Logo"'), path + ": missing fallback logo alt");
+  assert.ok(response.body.includes('name="twitter:image:alt" content="Shaykh Sayed Ibn Basyuni - offizielles Logo"'), path + ": missing Twitter image alt");
+  assert.ok(response.body.includes('name="twitter:card" content="summary"'), path + ": square logo should use summary card");
+  assert.ok(response.body.includes('property="og:image:type" content="image/png"'), path + ": missing fallback image type");
+
   if (path === "/") {
     assert.ok(
       response.body.includes('name="description" content="Islam lernen auf Deutsch:'),
@@ -315,6 +321,18 @@ if (articles.length > 0) {
     "published article: visible breadcrumbs missing");
   assert.ok(response.body.includes('name="description" content="'),
     "published article: metadata description missing");
+  assert.ok(response.body.includes('property="og:url" content="' + SITE_ORIGIN + '/artikel/' + encodeURIComponent(first.slug) + '"'),
+    "published article: Open Graph URL must match canonical");
+  assert.ok(response.body.includes('property="og:title" content="'),
+    "published article: Open Graph title missing");
+  assert.ok(response.body.includes('name="twitter:title" content="'),
+    "published article: Twitter title missing");
+  assert.ok(response.body.includes('property="og:image:alt" content="'),
+    "published article: Open Graph image alternative text missing");
+  assert.ok(response.body.includes('name="twitter:image:alt" content="'),
+    "published article: Twitter image alternative text missing");
+  assert.ok(response.body.includes('name="twitter:card" content="' + (seo.image ? "summary_large_image" : "summary") + '"'),
+    "published article: Twitter card should match whether a real cover image exists");
   assert.ok(response.body.includes('property="og:type" content="article"'),
     "published article: missing Article Open Graph type");
   assert.ok(response.body.includes('<title>' + seo.title.replace(/&/g, "&amp;")),

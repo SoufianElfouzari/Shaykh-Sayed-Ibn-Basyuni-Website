@@ -269,6 +269,9 @@ function buildHtml(result) {
   const meta = metadataFor(pathname, data.article, status);
   const url = origin + pathname;
   const image = absoluteImage(meta.image);
+  const imageIsFallback = !meta.image;
+  const imageAlt = imageIsFallback ? siteName + " - offizielles Logo" : (data.article?.title || meta.title);
+  const socialCard = imageIsFallback ? "summary" : "summary_large_image";
   const robots = status === 404 ? "noindex, follow" : "index, follow, max-image-preview:large";
   const title = escapeHtml(meta.title);
   const description = escapeHtml(meta.description);
@@ -294,15 +297,17 @@ function buildHtml(result) {
     '<meta property="og:description" content="' + description + '">',
     '<meta property="og:url" content="' + canonical + '">',
     '<meta property="og:image" content="' + escapeHtml(image) + '">',
-    articleDetails ? '<meta property="og:image:alt" content="' + escapeHtml(articleDetails.headline) + '">' : "",
+    image.startsWith("https://") ? '<meta property="og:image:secure_url" content="' + escapeHtml(image) + '">' : "",
+    imageIsFallback ? '<meta property="og:image:type" content="image/png">' : "",
+    '<meta property="og:image:alt" content="' + escapeHtml(imageAlt) + '">',
     articleDetails?.publishedAt ? '<meta property="article:published_time" content="' + escapeHtml(articleDetails.publishedAt) + '">' : "",
     articleDetails?.updatedAt ? '<meta property="article:modified_time" content="' + escapeHtml(articleDetails.updatedAt) + '">' : "",
     articleDetails?.author?.name ? '<meta name="author" content="' + escapeHtml(articleDetails.author.name) + '">' : "",
-    '<meta name="twitter:card" content="summary_large_image">',
+    '<meta name="twitter:card" content="' + socialCard + '">',
     '<meta name="twitter:title" content="' + title + '">',
     '<meta name="twitter:description" content="' + description + '">',
     '<meta name="twitter:image" content="' + escapeHtml(image) + '">',
-    articleDetails ? '<meta name="twitter:image:alt" content="' + escapeHtml(articleDetails.headline) + '">' : "",
+    '<meta name="twitter:image:alt" content="' + escapeHtml(imageAlt) + '">',
     articleDetails?.author?.profileUrl ? '<link rel="author" href="' + escapeHtml(articleDetails.author.profileUrl) + '">' : "",
     '<meta name="theme-color" content="#084c3c">',
     '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
