@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useSsrData } from "../../../../SsrDataContext";
+import { parseServerArticleContent } from "../../../../utils/serverArticleContent";
 
 import {
   getPublishedArticles,
@@ -191,23 +192,10 @@ function createSectionId(
 }
 
 function parseArticleContent(contentHtml) {
-  // Serve a safely escaped readable text version when no DOM is available.
-  // The browser uses the existing DOMPurify rich-text parser.
+  // Preserve the authored headings and paragraphs in the SSR HTML.
+  // Browser rendering continues to use the rich-text DOMPurify parser.
   if (typeof document === "undefined") {
-    const text = String(contentHtml || "")
-      .replace(/<[^>]*>/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-    const escaped = text.replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    return {
-      introductionHtml: "",
-      sections: [{
-        id: "artikelinhalt",
-        title: "Artikelinhalt",
-        html: "<p>" + escaped + "</p>",
-      }],
-    };
+    return parseServerArticleContent(contentHtml, createSectionId);
   }
   const sanitizedHtml = DOMPurify.sanitize(
     String(contentHtml || ""),
