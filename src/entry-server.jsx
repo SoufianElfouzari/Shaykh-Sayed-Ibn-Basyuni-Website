@@ -3,7 +3,7 @@ import { StaticRouter } from "react-router";
 import PageRoutes from "./PageRoutes";
 import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
-import { getPublishedArticles, getPublishedArticleSummaries, getPublishedArticleBySlug, getPublishedArticleIndex, getRelatedPublishedArticles } from "./supabase/articleService";
+import { getPublishedArticlePage, getPublishedArticleSummaries, getPublishedArticleBySlug, getPublishedArticleIndex, getRelatedPublishedArticles } from "./supabase/articleService";
 import { getPublishedDuruus } from "./supabase/duruusService";
 import { getActivePublishedNotices } from "./supabase/noticesService";
 import { createSectionId } from "./utils/articleSections";
@@ -19,14 +19,32 @@ export async function getSitemapArticles() {
 }
 
 export async function renderPage(pathname) {
-  const path = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
+  const requestedUrl = new URL(pathname, "https://www.shaykh-sayed.de");
+  const path = requestedUrl.pathname === "/" ? "/" : requestedUrl.pathname.replace(/\/+$/, "");
   const data = { __ssrPath: path };
   let status = 200;
 
   if (path === "/") {
     data.articles = await getPublishedArticleSummaries();
   } else if (path === "/artikel") {
-    data.articles = await getPublishedArticles();
+    const rawPage = requestedUrl.searchParams.get("page");
+    const requestedPage = rawPage === null ? 1 : Number(rawPage);
+    if ((rawPage !== null && !/^[1-9]\\d*$/.test(rawPage)) ||
+        !Number.isSafeInteger(requestedPage) || requestedPage > 1000000) {
+      status = 404;
+    } else {
+      const archive = await getPublishedArticlePage(requestedPage);
+      if (requestedPage > archive.totalPages) {
+        status = 404;
+      } else {
+        data.articles = archive.articles;
+        data.archivePagination = {
+          page: archive.page,
+          total: archive.total,
+          totalPages: archive.totalPages,
+        };
+      }
+    }
   } else if (path === "/durous") {
     const [duruus, notices] = await Promise.all([
       getPublishedDuruus(),
@@ -56,15 +74,19 @@ export async function renderPage(pathname) {
     status = 404;
   }
 
+  if (status === 404) {
+    data.__notFoundPath = path + requestedUrl.search;
+  }
+
   const markup = renderToString(
-    <StaticRouter location={path}>
+    <StaticRouter location={path + requestedUrl.search}>
       <SsrDataContext.Provider value={data}>
         <div className="app">
-          {status === 404 && path.startsWith("/artikel/") ? <NotFound /> : <PageRoutes />}
+          {status === 404 ? <NotFound /> : <PageRoutes />}
         </div>
       </SsrDataContext.Provider>
     </StaticRouter>
   );
 
-  return { markup, data, status, pathname: path };
+  return { markup, data, status, pathname: path, search: requestedUrl.search };
 }
