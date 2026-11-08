@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./ArchiveIntroduction.css";
 
 function ArrowDownIcon() {
@@ -100,16 +101,16 @@ function ArchiveIntroduction() {
             id="sib-archive-introduction-title"
             className="sib-archive-introduction-title"
           >
-            Durous geordnet
-            <span>und dauerhaft zugänglich.</span>
+            Durous nach Themen
+            <span>und Reihen entdecken.</span>
           </h2>
         </header>
 
         <div className="sib-archive-introduction-content">
           <p className="sib-archive-introduction-lead">
-            Das Unterrichtsarchiv bietet einen geordneten Zugang
-            zu vergangenen Durous, einzelnen Unterrichtseinheiten
-            und zusammenhängenden Unterrichtsreihen.
+            Das Unterrichtsarchiv hilft dir, veröffentlichte
+            islamische Unterrichte nach Themen und Reihen zu
+            finden und systematisch nachzuhören.
           </p>
 
           <div className="sib-archive-introduction-text">
@@ -121,10 +122,12 @@ function ArchiveIntroduction() {
             </p>
 
             <p>
-              Neben abgeschlossenen Reihen können auch einzelne
-              Durous und fortlaufende Unterrichte im Archiv
-              aufgerufen werden. Neue Aufnahmen werden an der
-              entsprechenden Stelle ergänzt.
+              Neben Unterrichtsreihen können auch einzelne
+              Durous im Archiv erscheinen. Neue Aufnahmen werden
+              nach ihrer Veröffentlichung ergänzt. Erfahre mehr
+              über den <Link to="/shaykh">Shaykh und seinen
+              wissenschaftlichen Werdegang</Link> oder lies die
+              <Link to="/artikel"> islamischen Artikel</Link>.
             </p>
           </div>
         </div>

@@ -6,6 +6,7 @@ import {
 import {
   getActivePublishedNotices,
 } from "../../../../supabase/noticesService";
+import { useSsrData } from "../../../../SsrDataContext";
 
 import "./NoticesBanner.css";
 
@@ -206,11 +207,12 @@ function formatNoticeDate(
 }
 
 function NoticesBanner() {
+  const { notices: initialNotices } = useSsrData();
   const [notices, setNotices] =
-    useState([]);
+    useState(Array.isArray(initialNotices) ? initialNotices : []);
 
   const [isLoading, setIsLoading] =
-    useState(true);
+    useState(!Array.isArray(initialNotices));
 
   const [
     errorMessage,
@@ -221,7 +223,9 @@ function NoticesBanner() {
     let isCurrentRequest = true;
 
     async function loadNotices() {
-      setIsLoading(true);
+      if (!Array.isArray(initialNotices)) {
+        setIsLoading(true);
+      }
       setErrorMessage("");
 
       try {
@@ -245,13 +249,14 @@ function NoticesBanner() {
           return;
         }
 
-        setNotices([]);
-
-        setErrorMessage(
-          error instanceof Error
-            ? error.message
-            : "Die Hinweise konnten nicht geladen werden.",
-        );
+        if (!Array.isArray(initialNotices)) {
+          setNotices([]);
+          setErrorMessage(
+            error instanceof Error
+              ? error.message
+              : "Die Hinweise konnten nicht geladen werden.",
+          );
+        }
       } finally {
         if (isCurrentRequest) {
           setIsLoading(false);
@@ -264,7 +269,7 @@ function NoticesBanner() {
     return () => {
       isCurrentRequest = false;
     };
-  }, []);
+  }, [initialNotices]);
 
   if (isLoading) {
     return (

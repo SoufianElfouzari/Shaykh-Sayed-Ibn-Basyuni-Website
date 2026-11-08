@@ -766,7 +766,7 @@ function DuruusArchive() {
             ></span>
 
             <p className="sib-duruus-archive-label">
-              Alle verfügbaren Durous
+              Durous und Audioarchiv
             </p>
           </div>
 
@@ -775,16 +775,16 @@ function DuruusArchive() {
               id="sib-duruus-archive-title"
               className="sib-duruus-archive-title"
             >
-              Das vollständige
+              Audioaufnahmen
               <span>
-                Unterrichtsarchiv.
+                und Unterrichtsreihen.
               </span>
             </h2>
 
             <p className="sib-duruus-archive-description">
-              Durchsuche alle veröffentlichten
-              Durous und Unterrichtsreihen nach
-              Thema, Sprache oder Titel.
+              Suche nach veröffentlichten Durous und
+              islamischen Unterrichten. Filtere die Aufnahmen
+              nach Thema, Sprache oder Unterrichtsreihe.
             </p>
           </div>
         </header>

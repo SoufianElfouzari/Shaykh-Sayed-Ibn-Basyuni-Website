@@ -286,6 +286,18 @@
   letter-spacing: -0.05px;
 }
 
+.sib-archive-introduction-text a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--sib-color-accent-soft, #d8ceb2);
+  text-underline-offset: 3px;
+}
+
+.sib-archive-introduction-text a:focus-visible {
+  outline: 2px solid var(--sib-color-accent-soft, #d8ceb2);
+  outline-offset: 3px;
+}
+
 .sib-archive-introduction-footer {
   padding-top: 37px;
   display: flex;

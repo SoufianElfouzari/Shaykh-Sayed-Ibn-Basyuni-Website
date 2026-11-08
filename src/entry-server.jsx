@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
 import { getPublishedArticles, getPublishedArticleBySlug } from "./supabase/articleService";
 import { getPublishedDuruus } from "./supabase/duruusService";
+import { getActivePublishedNotices } from "./supabase/noticesService";
 
 const pages = new Set([
   "/", "/shaykh", "/durous", "/artikel", "/kontakt", "/impressum", "/datenschutz"
@@ -18,7 +19,15 @@ export async function renderPage(pathname) {
   if (path === "/" || path === "/artikel") {
     data.articles = await getPublishedArticles();
   } else if (path === "/durous") {
-    data.duruus = await getPublishedDuruus();
+    const [duruus, notices] = await Promise.all([
+      getPublishedDuruus(),
+      getActivePublishedNotices().catch((error) => {
+        console.error("Aktuelle Hinweise konnten serverseitig nicht geladen werden:", error);
+        return [];
+      }),
+    ]);
+    data.duruus = duruus;
+    data.notices = notices;
   } else if (path.startsWith("/artikel/")) {
     const slug = path.slice("/artikel/".length);
     if (slug && !slug.includes("/")) {
