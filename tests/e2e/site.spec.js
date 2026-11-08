@@ -71,3 +71,14 @@ test("archive page parameters keep canonical URL and reject nonexistent pages", 
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
 });
+
+test("SPA navigation to a missing article removes canonical after hydration", async ({ page }) => {
+  await page.goto("/artikel");
+  await page.evaluate(() => {
+    window.history.pushState({}, "", "/artikel/geheimer-entwurf");
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  });
+  await expect(page.getByRole("heading", { name: "Artikel nicht gefunden" })).toBeVisible();
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+});
