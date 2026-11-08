@@ -19,7 +19,7 @@ const mapArticle = (row) => {
     contentText,
     coverImageUrl: row.coverImageUrl || "",
     status: row.status,
-    publishedAt: row.publishedAt || row.updated_at,
+    publishedAt: row.publishedAt || null,
     updatedAt: row.updated_at,
     readingTime: Math.max(1, Math.ceil(contentText.split(/\s+/).filter(Boolean).length / 200)),
     author: row.author || "Redaktion Shaykh Sayed",
@@ -84,4 +84,52 @@ export async function getPublishedArticleIndex() {
   }
 
   return articles;
+}
+
+ 
+// Recommend only genuinely published articles with matching subjects/tags.
+// A small metadata-only query avoids fetching their full religious texts on SSR.
+export async function getRelatedPublishedArticles(referenceArticle, maxResults = 4) {
+  if (!referenceArticle?.slug) return [];
+
+  const { data, error } = await supabase
+    .from("articles")
+    .select("slug,title,excerpt,category,tags,publishedAt")
+    .eq("status", "published")
+    .neq("slug", referenceArticle.slug)
+    .order("publishedAt", { ascending: false, nullsFirst: false })
+    .limit(100);
+
+  if (error) throw error;
+
+  const referenceCategory = String(referenceArticle.category || "").trim().toLowerCase();
+  const referenceTags = new Set(
+    (referenceArticle.tags || []).map((tag) => String(tag).trim().toLowerCase()).filter(Boolean),
+  );
+
+  const candidates = (data || [])
+    .filter((row) => typeof row.slug === "string" &&
+      row.slug.trim() && !row.slug.includes("/") && row.title)
+    .map((row) => {
+      const tags = Array.isArray(row.tags) ? row.tags : [];
+      const sharedTags = tags.filter((tag) =>
+        referenceTags.has(String(tag).trim().toLowerCase())).length;
+      const categoryMatches = referenceCategory &&
+        String(row.category || "").trim().toLowerCase() === referenceCategory;
+      return {
+        slug: row.slug,
+        title: row.title,
+        excerpt: row.excerpt || "",
+        category: row.category || "",
+        score: sharedTags * 3 + (categoryMatches ? 2 : 0),
+        publishedAt: row.publishedAt || null,
+      };
+    });
+
+  return candidates
+    .filter((candidate) => candidate.score > 0)
+    .sort((first, second) => second.score - first.score ||
+      (new Date(second.publishedAt || 0) - new Date(first.publishedAt || 0)))
+    .slice(0, Math.max(0, Math.min(6, maxResults)))
+    .map(({ score: _score, ...article }) => article);
 }
