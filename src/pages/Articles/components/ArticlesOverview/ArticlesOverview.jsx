@@ -2,12 +2,14 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   getPublishedArticles,
+  getPublishedArticlePage,
 } from "../../../../supabase/articleService";
 import { useSsrData } from "../../../../SsrDataContext";
 
@@ -187,11 +189,23 @@ function formatDate(value) {
 }
 
 function ArticlesOverview() {
-  const { articles: initialArticles, __ssrPath } = useSsrData();
-  // Home SSR carries metadata-only cards. The archive needs its full-text
-  // dataset to retain full-text search and accurate reading-time sorting.
-  const archiveArticles = __ssrPath === "/artikel" ? initialArticles : undefined;
+  const { search: routeSearch } = useLocation();
+  const currentPage = Number(new URLSearchParams(routeSearch).get("page") || 1);
+  const {
+    articles: initialArticles,
+    pagination: initialPagination,
+    __ssrPage,
+    __ssrPath,
+  } = useSsrData();
+  // Only reuse initial data for the exact URL that produced the server HTML.
+  const isMatchingSsrPage = __ssrPath === "/artikel" && __ssrPage === currentPage;
+  const archiveArticles = isMatchingSsrPage ? initialArticles : undefined;
   const [articles, setArticles] = useState(archiveArticles || []);
+  const [pagination, setPagination] = useState(isMatchingSsrPage ? initialPagination : null);
+  const [hasLoadedAll, setHasLoadedAll] = useState(false);
+  const [isSearchingAll, setIsSearchingAll] = useState(false);
+  const fullLoadRef = useRef(null);
+  const requestIdRef = useRef(0);
 
   const [searchTerm, setSearchTerm] =
     useState("");
@@ -222,38 +236,64 @@ function ArticlesOverview() {
     setErrorMessage,
   ] = useState("");
 
-  const loadArticles = useCallback(
-    async () => {
-      setIsLoading(true);
-      setErrorMessage("");
-
-      try {
-        const loadedArticles =
-          await getPublishedArticles();
-
-        setArticles(loadedArticles);
-      } catch (error) {
-        console.error(
-          "Artikel konnten nicht geladen werden:",
-          error,
-        );
-
-        setArticles([]);
-        setErrorMessage(
-          "Die veröffentlichten Artikel konnten nicht geladen werden. Bitte versuche es erneut.",
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [],
-  );
+  const loadArticles = useCallback(async () => {
+    const requestId = ++requestIdRef.current;
+    setIsLoading(true);
+    setErrorMessage("");
+    try {
+      const result = await getPublishedArticlePage(currentPage);
+      if (requestId !== requestIdRef.current) return;
+      setArticles(result.articles);
+      setPagination({
+        page: result.page,
+        pageSize: result.pageSize,
+        totalCount: result.totalCount,
+        pageCount: result.pageCount,
+      });
+    } catch (error) {
+      if (requestId !== requestIdRef.current) return;
+      console.error("Artikel konnten nicht geladen werden:", error);
+      setArticles([]);
+      setErrorMessage("Die veröffentlichten Artikel konnten nicht geladen werden. Bitte versuche es erneut.");
+    } finally {
+      if (requestId === requestIdRef.current) setIsLoading(false);
+    }
+  }, [currentPage]);
 
   useEffect(() => {
     if (Array.isArray(archiveArticles)) return undefined;
     const frame = window.requestAnimationFrame(() => { void loadArticles(); });
     return () => window.cancelAnimationFrame(frame);
   }, [archiveArticles, loadArticles]);
+
+  // Keep the existing full-text search and all sorting/filter options.
+  // Full article bodies are only fetched when a visitor activates a filter.
+  const loadFullArchive = useCallback(() => {
+    if (hasLoadedAll) return;
+    if (fullLoadRef.current) return;
+    const requestId = ++requestIdRef.current;
+    setIsSearchingAll(true);
+    fullLoadRef.current = getPublishedArticles()
+      .then((entries) => {
+        if (requestId !== requestIdRef.current) return;
+        setArticles(entries);
+        setPagination(null);
+        setHasLoadedAll(true);
+        setErrorMessage("");
+      })
+      .catch((error) => {
+        if (requestId !== requestIdRef.current) return;
+        console.error("Volltextsuche konnte nicht geladen werden:", error);
+        setErrorMessage("Die Volltextsuche ist derzeit nicht verfügbar. Bitte versuche es erneut.");
+      })
+      .finally(() => {
+        if (requestId === requestIdRef.current) {
+          setIsSearchingAll(false);
+          setIsLoading(false);
+        }
+        fullLoadRef.current = null;
+      });
+  }, [hasLoadedAll]);
 
   const categories = useMemo(() => {
     return [
@@ -488,11 +528,10 @@ function ArticlesOverview() {
                 <input
                   type="search"
                   value={searchTerm}
-                  onChange={(event) =>
-                    setSearchTerm(
-                      event.target.value,
-                    )
-                  }
+                  onChange={(event) => {
+                    setSearchTerm(event.target.value);
+                    if (event.target.value.trim()) loadFullArchive();
+                  }}
                   placeholder="Artikel oder Begriff suchen"
                   aria-label="Artikel durchsuchen"
                 />
@@ -518,11 +557,11 @@ function ArticlesOverview() {
                 <select
                   id="article-language"
                   value={activeLanguage}
-                  onChange={(event) =>
-                    setActiveLanguage(
-                      event.target.value,
-                    )
-                  }
+                  onChange={(event) => {
+                    setActiveLanguage(event.target.value);
+                    loadFullArchive();
+                  }}
+                  onFocus={loadFullArchive}
                 >
                   {languages.map(
                     (language) => (
@@ -545,11 +584,10 @@ function ArticlesOverview() {
                 <select
                   id="article-sort"
                   value={sortBy}
-                  onChange={(event) =>
-                    setSortBy(
-                      event.target.value,
-                    )
-                  }
+                  onChange={(event) => {
+                    setSortBy(event.target.value);
+                    loadFullArchive();
+                  }}
                 >
                   {sortOptions.map(
                     (option) => (
@@ -564,6 +602,10 @@ function ArticlesOverview() {
                 </select>
               </div>
             </div>
+
+            {isSearchingAll && (
+              <p role="status" aria-live="polite">Alle veröffentlichten Artikel werden durchsucht.</p>
+            )}
 
             <nav
               className="sib-articles-overview-categories"
@@ -590,11 +632,10 @@ function ArticlesOverview() {
                           ? "sib-articles-overview-category sib-articles-overview-category-active"
                           : "sib-articles-overview-category"
                       }
-                      onClick={() =>
-                        setActiveCategory(
-                          category,
-                        )
-                      }
+                      onClick={() => {
+                        setActiveCategory(category);
+                        loadFullArchive();
+                      }}
                     >
                       <span>
                         {category}
@@ -613,7 +654,9 @@ function ArticlesOverview() {
               <p>
                 <strong>
                   {
-                    filteredArticles.length
+                    pagination && !hasLoadedAll && activeFilterCount === 0
+                      ? pagination.totalCount
+                      : filteredArticles.length
                   }
                 </strong>{" "}
                 {filteredArticles.length ===
@@ -688,10 +731,9 @@ function ArticlesOverview() {
                               ></span>
 
                               <p>
-                                {
-                                  article.readingTime
-                                }{" "}
-                                Min. Lesezeit
+                                {article.readingTime
+                                  ? article.readingTime + " Min. Lesezeit"
+                                  : "Lesezeit offen"}
                               </p>
                             </div>
 
@@ -756,6 +798,25 @@ function ArticlesOverview() {
                     ),
                   )}
                 </div>
+
+                {pagination && !hasLoadedAll && !isSearchingAll &&
+                  activeFilterCount === 0 && pagination.pageCount > 1 && (
+                  <nav className="sib-articles-overview-pagination" aria-label="Artikelseiten">
+                    {pagination.page > 1 && (
+                      <a href={pagination.page === 2 ? "/artikel" : `/artikel?page=${pagination.page - 1}`} rel="prev">
+                        Vorherige Seite
+                      </a>
+                    )}
+                    <span>
+                      Seite {pagination.page} von {pagination.pageCount}
+                    </span>
+                    {pagination.page < pagination.pageCount && (
+                      <a href={`/artikel?page=${pagination.page + 1}`} rel="next">
+                        Nächste Seite
+                      </a>
+                    )}
+                  </nav>
+                )}
 
                 {visibleCount <
                   filteredArticles.length && (
