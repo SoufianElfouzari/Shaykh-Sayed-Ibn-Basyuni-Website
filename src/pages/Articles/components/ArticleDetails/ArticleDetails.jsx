@@ -205,11 +205,7 @@ function parseArticleContent(contentHtml, serverContent) {
       ? node.tagName.toLowerCase()
       : "";
 
-    const isHeading = [
-      "h1",
-      "h2",
-      "h3",
-    ].includes(tagName);
+    const isHeading = /^h[1-6]$/.test(tagName);
 
     if (isHeading) {
       const title =
@@ -228,6 +224,7 @@ function parseArticleContent(contentHtml, serverContent) {
       currentSection = {
         id: sectionId,
         title,
+        level: Math.max(2, Number(tagName[1])),
         html: "",
       };
 
@@ -259,6 +256,7 @@ function parseArticleContent(contentHtml, serverContent) {
         {
           id: "artikelinhalt",
           title: "Artikelinhalt",
+          level: 2,
           html: sanitizedHtml,
         },
       ],
@@ -324,6 +322,13 @@ function ArticleStatePage({
       </div>
     </main>
   );
+}
+
+function SectionHeading({ level, children }) {
+  // The page title is the only H1. Keep each editorial subheading level.
+  const safeLevel = Math.max(2, Math.min(6, Number(level) || 2));
+  const Tag = `h${safeLevel}`;
+  return <Tag>{children}</Tag>;
 }
 
 function ArticleDetails() {
@@ -964,9 +969,9 @@ function ArticleDetails() {
                         )}
                       </span>
 
-                      <h2>
+                      <SectionHeading level={section.level}>
                         {section.title}
-                      </h2>
+                      </SectionHeading>
                     </header>
 
                     <div
