@@ -50,6 +50,37 @@ export async function getPublishedArticleSummaries(limit = 1000) {
   return (data || []).filter((row) => row.slug && row.title).map(mapArticle);
 }
 
+// SEO-friendly archive pages return only metadata, never complete article bodies.
+// Exact counts allow the server to return a true 404 for a nonexistent page.
+export async function getPublishedArticlePage(page = 1, pageSize = 12) {
+  const safePage = Number(page);
+  const safeSize = Math.max(1, Math.min(50, Math.trunc(Number(pageSize) || 12)));
+  if (!Number.isSafeInteger(safePage) || safePage < 1) {
+    throw new RangeError("Invalid article page");
+  }
+
+  const from = (safePage - 1) * safeSize;
+  const { data, error, count } = await supabase
+    .from("articles")
+    .select(
+      "id,slug,title,excerpt,coverImageUrl,status,publishedAt,updated_at,author,category,language,featured,tags",
+      { count: "exact" },
+    )
+    .eq("status", "published")
+    .order("publishedAt", { ascending: false, nullsFirst: false })
+    .range(from, from + safeSize - 1);
+
+  if (error) throw error;
+
+  return {
+    articles: (data || []).filter((row) => row.slug && row.title).map(mapArticle),
+    page: safePage,
+    pageSize: safeSize,
+    totalCount: Number(count) || 0,
+    pageCount: Math.max(1, Math.ceil((Number(count) || 0) / safeSize)),
+  };
+}
+
 export async function getPublishedArticles() {
   const { data, error } = await supabase
     .from("articles")
