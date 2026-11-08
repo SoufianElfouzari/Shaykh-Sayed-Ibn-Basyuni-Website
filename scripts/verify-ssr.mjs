@@ -89,6 +89,10 @@ for (const [path, title] of pages) {
       "home: missing learning focus in server-rendered hero",
     );
     assert.ok(
+      response.body.includes('über islamische Wissenschaften, Quran und Sunnah'),
+      "home: H1 topic terms must appear naturally in the paragraph",
+    );
+    assert.ok(
       response.body.includes('property="og:title" content="Islam lernen auf Deutsch'),
       "home: Open Graph title does not match",
     );
