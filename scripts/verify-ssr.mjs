@@ -32,6 +32,23 @@ async function request(path, pageHandler = handler, method = "GET") {
   return response;
 }
 
+const htmlTemplate = readFileSync(new URL("../index.html", import.meta.url), "utf8");
+for (const obsolete of [
+  "X-UA-Compatible", "name=\"creator\"", "name=\"publisher\"",
+  "name=\"subject\"", "name=\"classification\"", "name=\"category\"",
+  "name=\"rating\"", "name=\"distribution\"", "name=\"coverage\"",
+  "name=\"googlebot\"", "name=\"bingbot\"",
+  "name=\"msapplication-TileColor\"", "name=\"mobile-web-app-capable\"",
+  "name=\"apple-mobile-web-app-capable\"",
+  "name=\"apple-mobile-web-app-status-bar-style\"",
+]) {
+  assert.ok(!htmlTemplate.includes(obsolete), "obsolete metadata remains: " + obsolete);
+}
+assert.ok(htmlTemplate.includes('name="robots"'), "HTML fallback needs general robots metadata");
+assert.ok(htmlTemplate.includes('name="description"'), "HTML fallback needs a description");
+assert.ok(htmlTemplate.includes('name="twitter:card"'), "HTML fallback needs Twitter metadata");
+console.log("PASS: obsolete and duplicate meta tags removed from HTML fallback");
+
 const pages = [
   ["/", "Islam lernen auf Deutsch"],
   ["/shaykh", "Shaykh Sayed Ibn Basyuni | Biografie und Werdegang"],
