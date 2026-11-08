@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import handler from "../api/render.js";
 import sitemapHandler from "../api/sitemap.js";
+import { parseServerArticleContent } from "../src/utils/serverArticleContent.js";
 
 async function request(path, pageHandler = handler, method = "GET") {
   const response = {
@@ -180,6 +181,19 @@ for (const path of ["/unknown-route", "/artikel/unknown-article-for-test"]) {
   console.log("PASS:", path, "(404, noindex and SSR body)");
 }
 
+const serverContent = parseServerArticleContent(
+  '<h2>Einleitung</h2><p>Wissen &amp; Lernen.</p>' +
+  '<h2>Grundlagen</h2><p>Ein <strong>zweiter</strong> Absatz.</p>' +
+  '<img src="x" onerror="alert(1)"><script>alert(1)</script>',
+  (title, index) => "abschnitt-" + (index + 1),
+);
+assert.deepEqual(serverContent.sections.map((section) => section.title), ["Einleitung", "Grundlagen"]);
+assert.ok(serverContent.sections[0].html.includes("<p>Wissen &amp; Lernen.</p>"));
+assert.ok(serverContent.sections[1].html.includes("<p>Ein zweiter Absatz.</p>"));
+assert.ok(!JSON.stringify(serverContent).includes("onerror"), "SSR article parser must remove unsafe attributes");
+assert.ok(!JSON.stringify(serverContent).includes("alert(1)"), "SSR article parser must remove scripts");
+console.log("PASS: article SSR preserves sections and escapes unsafe markup");
+
 const sitemapResponse = await request("/sitemap.xml", sitemapHandler);
 assert.equal(sitemapResponse.statusCode, 200, "dynamic sitemap: wrong status");
 assert.match(sitemapResponse.headers["content-type"], /application\/xml/, "dynamic sitemap: wrong content type");
@@ -218,7 +232,13 @@ if (articles.length > 0) {
   assert.equal(articleSchema?.headline, first.title, "published article: incorrect headline schema");
   assert.ok(graph.some((item) => item["@type"] === "BreadcrumbList"), "published article: breadcrumb missing");
   assert.ok(response.body.includes('name="robots" content="index'), "published article: should be indexable");
-  console.log("PASS: published article SSR metadata, schema and breadcrumbs");
+  const sourceHeadings = (first.contentHtml.match(/<h[1-3]\\b/gi) || []).length;
+  if (sourceHeadings > 0) {
+    const renderedHeadings = (response.body.match(/<h2\\b/gi) || []).length;
+    assert.ok(renderedHeadings >= sourceHeadings,
+      "published article: authored section headings were flattened during SSR");
+  }
+  console.log("PASS: published article SSR metadata, schema, breadcrumbs and headings");
 }
 
 const vercel = JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
