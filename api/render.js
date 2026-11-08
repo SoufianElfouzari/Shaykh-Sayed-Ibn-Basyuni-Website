@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-const origin = "https://shaykh-sayed.de";
+const origin = "https://www.shaykh-sayed.de";
 const siteName = "Shaykh Sayed Ibn Basyuni";
 const templatePath = fileURLToPath(new URL("../dist/index.html", import.meta.url));
 let assetTags;
