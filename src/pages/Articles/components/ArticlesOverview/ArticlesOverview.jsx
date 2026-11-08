@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { Link } from "react-router-dom";
@@ -187,11 +188,13 @@ function formatDate(value) {
 }
 
 function ArticlesOverview() {
-  const { articles: initialArticles, __ssrPath } = useSsrData();
+  const { articles: initialArticles, __ssrPath, archivePagination } = useSsrData();
   // Home SSR carries metadata-only cards. The archive needs its full-text
   // dataset to retain full-text search and accurate reading-time sorting.
   const archiveArticles = __ssrPath === "/artikel" ? initialArticles : undefined;
   const [articles, setArticles] = useState(archiveArticles || []);
+  const [fullArchiveLoaded, setFullArchiveLoaded] = useState(false);
+  const archiveRequestStarted = useRef(false);
 
   const [searchTerm, setSearchTerm] =
     useState("");
@@ -224,6 +227,7 @@ function ArticlesOverview() {
 
   const loadArticles = useCallback(
     async () => {
+      archiveRequestStarted.current = true;
       setIsLoading(true);
       setErrorMessage("");
 
@@ -232,6 +236,7 @@ function ArticlesOverview() {
           await getPublishedArticles();
 
         setArticles(loadedArticles);
+        setFullArchiveLoaded(true);
       } catch (error) {
         console.error(
           "Artikel konnten nicht geladen werden:",
@@ -248,6 +253,10 @@ function ArticlesOverview() {
     },
     [],
   );
+
+  const activateFullArchive = useCallback(() => {
+    if (!archiveRequestStarted.current) void loadArticles();
+  }, [loadArticles]);
 
   useEffect(() => {
     if (Array.isArray(archiveArticles)) return undefined;
@@ -370,6 +379,7 @@ function ArticlesOverview() {
     sortBy,
   ]);
 
+  const paginationActive = Boolean(archivePagination && !fullArchiveLoaded);
   const visibleArticles =
     filteredArticles.slice(
       0,
@@ -488,11 +498,10 @@ function ArticlesOverview() {
                 <input
                   type="search"
                   value={searchTerm}
-                  onChange={(event) =>
-                    setSearchTerm(
-                      event.target.value,
-                    )
-                  }
+                  onChange={(event) => {
+                    activateFullArchive();
+                    setSearchTerm(event.target.value);
+                  }}
                   placeholder="Artikel oder Begriff suchen"
                   aria-label="Artikel durchsuchen"
                 />
@@ -518,11 +527,10 @@ function ArticlesOverview() {
                 <select
                   id="article-language"
                   value={activeLanguage}
-                  onChange={(event) =>
-                    setActiveLanguage(
-                      event.target.value,
-                    )
-                  }
+                  onChange={(event) => {
+                    activateFullArchive();
+                    setActiveLanguage(event.target.value);
+                  }}
                 >
                   {languages.map(
                     (language) => (
@@ -545,11 +553,10 @@ function ArticlesOverview() {
                 <select
                   id="article-sort"
                   value={sortBy}
-                  onChange={(event) =>
-                    setSortBy(
-                      event.target.value,
-                    )
-                  }
+                  onChange={(event) => {
+                    activateFullArchive();
+                    setSortBy(event.target.value);
+                  }}
                 >
                   {sortOptions.map(
                     (option) => (
@@ -590,11 +597,10 @@ function ArticlesOverview() {
                           ? "sib-articles-overview-category sib-articles-overview-category-active"
                           : "sib-articles-overview-category"
                       }
-                      onClick={() =>
-                        setActiveCategory(
-                          category,
-                        )
-                      }
+                      onClick={() => {
+                        activateFullArchive();
+                        setActiveCategory(category);
+                      }}
                     >
                       <span>
                         {category}
@@ -613,7 +619,7 @@ function ArticlesOverview() {
               <p>
                 <strong>
                   {
-                    filteredArticles.length
+                    paginationActive ? archivePagination.total : filteredArticles.length
                   }
                 </strong>{" "}
                 {filteredArticles.length ===
@@ -687,12 +693,9 @@ function ArticlesOverview() {
                                 aria-hidden="true"
                               ></span>
 
-                              <p>
-                                {
-                                  article.readingTime
-                                }{" "}
-                                Min. Lesezeit
-                              </p>
+                              {article.readingTime ? (
+                                <p>{article.readingTime} Min. Lesezeit</p>
+                              ) : null}
                             </div>
 
                             <h3>
@@ -757,7 +760,7 @@ function ArticlesOverview() {
                   )}
                 </div>
 
-                {visibleCount <
+                {!paginationActive && visibleCount <
                   filteredArticles.length && (
                   <div className="sib-articles-overview-load-more">
                     <button
@@ -786,6 +789,19 @@ function ArticlesOverview() {
                       Artikeln
                     </p>
                   </div>
+                )}
+                {paginationActive && archivePagination.totalPages > 1 && (
+                  <nav className="sib-articles-overview-pagination" aria-label="Artikelseiten">
+                    {archivePagination.page > 1 && (
+                      <a href={archivePagination.page === 2 ? "/artikel" : `/artikel?page=${archivePagination.page - 1}`}>
+                        Vorherige Seite
+                      </a>
+                    )}
+                    <span>Seite {archivePagination.page} von {archivePagination.totalPages}</span>
+                    {archivePagination.page < archivePagination.totalPages && (
+                      <a href={`/artikel?page=${archivePagination.page + 1}`}>Nächste Seite</a>
+                    )}
+                  </nav>
                 )}
               </>
             ) : (
