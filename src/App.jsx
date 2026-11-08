@@ -8,7 +8,7 @@ function RouteSeo() {
   const { pathname } = useLocation();
   useEffect(() => {
     const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
-    const canonicalUrl = "https://shaykh-sayed.de" + normalizedPath;
+    const canonicalUrl = "https://www.shaykh-sayed.de" + normalizedPath;
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");
