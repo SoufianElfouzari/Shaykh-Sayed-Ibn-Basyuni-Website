@@ -57,7 +57,8 @@ function CheckIcon() {
   );
 }
 
-function ContactForm() {
+function ContactForm({ headingLevel = 2 }) {
+  const HeadingTag = headingLevel === 1 ? "h1" : "h2";
   const sectionRef = useRef(null);
 
   const [formData, setFormData] = useState(initialFormData);
@@ -199,10 +200,10 @@ function ContactForm() {
             </span>
           </div>
 
-          <h1 className="sib-contact-form-title">
+          <HeadingTag className="sib-contact-form-title">
             Eine Nachricht
             <span>übermitteln.</span>
-          </h1>
+          </HeadingTag>
 
           <p className="sib-contact-form-description">
             Über dieses Formular können allgemeine Anfragen,

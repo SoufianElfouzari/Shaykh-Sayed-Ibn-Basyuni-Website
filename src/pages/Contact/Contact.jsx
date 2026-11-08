@@ -8,7 +8,7 @@ function Contact() {
         <Header />
 
         <main>
-           <ContactForm /> 
+           <ContactForm headingLevel={1} /> 
         </main>
 
         <Footer />

@@ -45,6 +45,11 @@ for (const [path, title] of pages) {
   const response = await request(path);
   assert.equal(response.statusCode, 200, path);
   assert.match(response.body, /<h1\b/i, path + ": missing server-rendered H1");
+  assert.equal(
+    (response.body.match(/<h1\b/gi) || []).length,
+    1,
+    path + ": expected exactly one main H1; shared sections should use H2",
+  );
   assert.ok(response.body.includes("<title>" + title), path + ": wrong title");
   assert.ok(response.body.includes('rel="canonical" href="https://www.shaykh-sayed.de' + path + '"'), path + ": wrong canonical");
   assert.ok(response.body.includes('/assets/index-'), path + ": missing client assets");
