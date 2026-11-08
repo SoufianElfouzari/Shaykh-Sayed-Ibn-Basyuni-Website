@@ -7,7 +7,7 @@ import {
 import { Link } from "react-router-dom";
 
 import {
-  getPublishedArticles,
+  getPublishedArticleSummaries,
 } from "../../../../supabase/articleService";
 import { useSsrData } from "../../../../SsrDataContext";
 
@@ -187,7 +187,7 @@ function LatestArticles() {
 
     try {
       const loadedArticles =
-        await getPublishedArticles();
+        await getPublishedArticleSummaries();
 
       setArticles(
         Array.isArray(loadedArticles)
@@ -210,9 +210,11 @@ function LatestArticles() {
   }, []);
 
   useEffect(() => {
+    // SSR already supplied the first page of public articles.
+    if (Array.isArray(initialArticles)) return undefined;
     const frame = window.requestAnimationFrame(() => { void loadArticles(); });
     return () => window.cancelAnimationFrame(frame);
-  }, [loadArticles]);
+  }, [initialArticles, loadArticles]);
 
   const latestArticles = useMemo(() => {
     return [...articles].sort(
