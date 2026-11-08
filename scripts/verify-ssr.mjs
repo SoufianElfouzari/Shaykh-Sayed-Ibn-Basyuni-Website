@@ -232,9 +232,9 @@ if (articles.length > 0) {
   assert.equal(articleSchema?.headline, first.title, "published article: incorrect headline schema");
   assert.ok(graph.some((item) => item["@type"] === "BreadcrumbList"), "published article: breadcrumb missing");
   assert.ok(response.body.includes('name="robots" content="index'), "published article: should be indexable");
-  const sourceHeadings = (first.contentHtml.match(/<h[1-3]\\b/gi) || []).length;
+  const sourceHeadings = (first.contentHtml.match(/<h[1-3]\b/gi) || []).length;
   if (sourceHeadings > 0) {
-    const renderedHeadings = (response.body.match(/<h2\\b/gi) || []).length;
+    const renderedHeadings = (response.body.match(/<h2\b/gi) || []).length;
     assert.ok(renderedHeadings >= sourceHeadings,
       "published article: authored section headings were flattened during SSR");
   }
