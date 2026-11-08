@@ -134,3 +134,21 @@ test("biography is readable on mobile Safari without JavaScript", async ({ brows
     await context.close();
   }
 });
+
+test("Safari mobile hard reload keeps biography visible without animation", async ({ page, browserName }) => {
+  test.skip(browserName !== "webkit", "Safari-specific regression.");
+  await page.setViewportSize({ width: 410, height: 860 });
+  await page.goto("/shaykh");
+  await page.reload({ waitUntil: "domcontentloaded" });
+  const heading = page.locator(".sib-short-biography-title");
+  await heading.scrollIntoViewIfNeeded();
+  await expect(heading).toBeVisible();
+  await expect.poll(() => heading.evaluate((node) => getComputedStyle(node).opacity)).toBe("1");
+  await expect(page.locator(".sib-short-biography-chapter")).toHaveCount(4);
+  expect(await page.locator(".sib-short-biography-chapter").first().evaluate((node) => getComputedStyle(node).animationName)).toBe("none");
+});
+
+test("static development fallback never flashes unstyled text", async ({ page }) => {
+  await page.goto("/shaykh", { waitUntil: "domcontentloaded" });
+  await expect(page.locator(".seo-initial-content")).toHaveCount(0);
+});
