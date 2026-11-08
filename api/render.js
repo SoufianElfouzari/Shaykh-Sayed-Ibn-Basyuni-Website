@@ -29,6 +29,8 @@ function getAssets() {
     const template = readFileSync(templatePath, "utf8");
     assetTags = (template.match(/<(?:script|link)\b[^>]*>/gi) || [])
       .filter((tag) => /(?:src|href)="\/assets\//.test(tag))
+      // A script opening tag without </script> swallows following HTML.
+      .map((tag) => /^<script\b/i.test(tag) ? tag + "</script>" : tag)
       .join("\n");
     if (!assetTags.includes("/assets/")) {
       throw new Error("The Vite client assets were not found in dist/index.html");
