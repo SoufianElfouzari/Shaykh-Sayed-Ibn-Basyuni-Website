@@ -529,10 +529,14 @@ function ArticleDetails() {
     if (!seo) return;
 
     document.title = seo.title;
+    document.documentElement.lang = seo.language;
+    document.documentElement.dir = seo.language === "ar" ? "rtl" : "ltr";
     const image = seo.image || SITE_FALLBACK_IMAGE;
     const url = SITE_ORIGIN + "/artikel/" + encodeURIComponent(article.slug);
 
     const metadata = [
+      ["property", "og:locale", seo.language === "ar" ? "ar_AR" : seo.language === "en" ? "en_US" : "de_DE"],
+      ["name", "twitter:card", seo.image ? "summary_large_image" : "summary"],
       ["name", "description", seo.description],
       ["name", "author", seo.author.name],
       ["property", "og:type", "article"],
@@ -569,6 +573,21 @@ function ArticleDetails() {
       ).forEach((element) => element.remove());
     };
   }, [article, seo]);
+
+  // A missing article reached through client navigation must not inherit a
+  // crawlable canonical from the requested URL.
+  useEffect(() => {
+    if (isLoading || requestedSlug !== slug || article) return;
+    document.head.querySelector('link[rel="canonical"]')?.remove();
+    let robots = document.head.querySelector('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement("meta");
+      robots.setAttribute("name", "robots");
+      document.head.appendChild(robots);
+    }
+    robots.setAttribute("content", "noindex, follow");
+    document.title = "Artikel nicht gefunden | Shaykh Sayed";
+  }, [isLoading, requestedSlug, slug, article]);
 
   useEffect(() => {
     const updateReadingProgress = () => {
