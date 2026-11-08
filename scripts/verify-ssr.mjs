@@ -338,7 +338,10 @@ if (articles.length > 0) {
   assert.equal(articleSchema?.headline, first.title, "published article: incorrect headline schema");
   assert.ok(graph.some((item) => item["@type"] === "BreadcrumbList"), "published article: breadcrumb missing");
   assert.ok(response.body.includes('name="robots" content="index'), "published article: should be indexable");
-  const seo = articleSeo(first);
+  const detailDataMatch = response.body.match(/<script>window\.__SSR_DATA__=([\s\S]*?);<\/script>/);
+  assert.ok(detailDataMatch, "published article: SSR detail data missing");
+  const detailArticle = JSON.parse(detailDataMatch[1]).article;
+  const seo = articleSeo(detailArticle);
   assert.equal(articleSchema.description, seo.description,
     "published article: description must match the editorial excerpt");
   assert.equal(articleSchema.inLanguage, seo.language,
