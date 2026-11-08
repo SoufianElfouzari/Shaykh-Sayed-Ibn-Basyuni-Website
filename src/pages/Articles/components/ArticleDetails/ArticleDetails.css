@@ -650,7 +650,7 @@
   font-weight: 750;
 }
 
-.sib-article-details-section h2 {
+.sib-article-details-section header :is(h2, h3, h4, h5, h6) {
   margin: 0;
   color: #151b19;
   font-family:
@@ -1167,7 +1167,7 @@
     gap: 57px;
   }
 
-  .sib-article-details-section h2 {
+  .sib-article-details-section header :is(h2, h3, h4, h5, h6) {
     font-size: 31px;
   }
 
@@ -1247,7 +1247,7 @@
     padding-top: 0;
   }
 
-  .sib-article-details-section h2 {
+  .sib-article-details-section header :is(h2, h3, h4, h5, h6) {
     font-size: 29px;
   }
 
