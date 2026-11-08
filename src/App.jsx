@@ -46,12 +46,22 @@ function updateMeta(attribute, key, value) {
   element.setAttribute("content", value);
 }
 
-function RouteSeo() {
+function RouteSeo({ notFoundPath }) {
   const { pathname } = useLocation();
   useEffect(() => {
     const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
     const canonicalUrl = "https://www.shaykh-sayed.de" + normalizedPath;
+    const knownRoute = Object.hasOwn(routeMetadata, normalizedPath) || /^\/artikel\/[^/]+$/.test(normalizedPath);
+    const isNotFound = normalizedPath === notFoundPath || !knownRoute;
     let canonical = document.querySelector('link[rel="canonical"]');
+    if (isNotFound) {
+      canonical?.remove();
+      updateMeta("name", "robots", "noindex, follow");
+      document.title = "Seite nicht gefunden | Shaykh Sayed";
+      updateMeta("name", "description", "Die gesuchte Seite oder der Artikel ist nicht verfügbar.");
+      return;
+    }
+    updateMeta("name", "robots", "index, follow, max-image-preview:large");
     if (!canonical) {
       canonical = document.createElement("link");
       canonical.setAttribute("rel", "canonical");
@@ -71,7 +81,7 @@ function RouteSeo() {
       updateMeta("name", "twitter:description", metadata.description);
       updateMeta("property", "og:type", "website");
     }
-  }, [pathname]);
+  }, [pathname, notFoundPath]);
   return null;
 }
 
@@ -96,7 +106,7 @@ export default function App({ initialData = {} }) {
     <SsrDataContext.Provider value={initialData}>
       <BrowserRouter>
         <ScrollToTop />
-        <RouteSeo />
+        <RouteSeo notFoundPath={initialData.__notFoundPath} />
         <div className="app">
           <ClientRoutes notFoundPath={initialData.__notFoundPath} />
         </div>
