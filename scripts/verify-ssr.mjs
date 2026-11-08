@@ -356,6 +356,15 @@ if (articles.length > 0) {
     "published article: word count must reflect the article content");
   assert.equal(articleSchema.author.name, seo.author.name,
     "published article: author must match the source");
+  if (seo.author.profileUrl === SITE_ORIGIN + "/shaykh") {
+    assert.equal(articleSchema.author["@id"], SITE_ORIGIN + "/#person",
+      "published article: verified Shaykh author should link to Person entity");
+  } else {
+    assert.equal(articleSchema.author["@id"], undefined,
+      "published article: do not invent a Person identity for editorial authors");
+  }
+  assert.equal(graph.find((item) => item["@type"] === "WebSite")?.publisher?.["@id"],
+    SITE_ORIGIN + "/#person", "WebSite publisher must link to known Person entity");
   assert.equal(articleSchema.url, SITE_ORIGIN + "/artikel/" + encodeURIComponent(first.slug));
   assert.equal(articleSchema.datePublished, seo.publishedAt || undefined,
     "published article: do not invent datePublished");
