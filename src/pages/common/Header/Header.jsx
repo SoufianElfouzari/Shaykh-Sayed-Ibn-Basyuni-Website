@@ -139,7 +139,6 @@ function Header() {
           <Link
             to="/"
             className="sib-header-brand"
-            aria-label="Zur Startseite von Dr. Shaykh Sayed Ibn Basyuni"
             onClick={closeMenu}
           >
             <span

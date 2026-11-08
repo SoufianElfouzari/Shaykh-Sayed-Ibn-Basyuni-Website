@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
+import "./a11y-contrast.css";
 
 const root = document.getElementById("root");
 const hasServerData = Object.prototype.hasOwnProperty.call(window, "__SSR_DATA__");

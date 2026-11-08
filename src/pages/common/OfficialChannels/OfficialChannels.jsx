@@ -203,7 +203,6 @@ function OfficialChannels() {
           <Link
             to="/artikel"
             className="sib-official-channels-button"
-            aria-label="Zum Artikelbereich"
           >
             <span>Zu den Artikeln</span>
 

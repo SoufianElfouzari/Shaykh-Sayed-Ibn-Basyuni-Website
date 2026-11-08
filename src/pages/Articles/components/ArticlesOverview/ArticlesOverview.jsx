@@ -655,7 +655,6 @@ function ArticlesOverview() {
                         <Link
                           to={`/artikel/${article.slug}`}
                           className="sib-article-card-link"
-                          aria-label={`${article.title} lesen`}
                         >
                           <div className="sib-article-card-top">
                             <span className="sib-article-card-category">

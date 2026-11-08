@@ -116,8 +116,7 @@ function Footer() {
             <Link
               to="/"
               className="sib-footer-brand"
-              aria-label="Zur Startseite"
-            >
+              >
               <span
                 className="sib-footer-brand-line"
                 aria-hidden="true"
@@ -266,7 +265,6 @@ function Footer() {
           <a
             href="#top"
             className="sib-footer-top-link"
-            aria-label="Zum Seitenanfang"
           >
             <span>Nach oben</span>
 

@@ -1,0 +1,49 @@
+/* Readability improvements verified with axe: text only, no layout changes. */
+.sib-about-label,
+.sib-articles-label,
+.sib-articles-secondary-top .sib-articles-category,
+.sib-schedule-label,
+.sib-contact-form-panel-label {
+  color: #766035 !important;
+}
+
+.sib-articles-featured .sib-articles-meta,
+.sib-articles-featured .sib-articles-meta time,
+.sib-articles-featured .sib-articles-meta span {
+  color: #c8e0d7 !important;
+}
+
+.sib-articles-page-hero-description,
+.sib-duruus-page-hero-description,
+.sib-article-card-footer > div > span,
+.sib-contact-form-section-number,
+.sib-contact-form-description,
+.sib-contact-form-panel-subtitle,
+.sib-contact-form-required-note,
+.sib-contact-field label,
+.sib-contact-privacy-text {
+  color: #59645d !important;
+}
+
+.sib-notices-banner-index {
+  color: #c8e0d7 !important;
+}
+
+.sib-contact-privacy-text a {
+  color: #176249 !important;
+}
+
+.sib-contact-submit > span {
+  color: #ffffff !important;
+}
+
+.sib-footer-description,
+.sib-footer-status,
+.sib-footer-link,
+.sib-footer-information p,
+.sib-footer-top-link,
+.sib-footer-bottom a,
+.sib-footer-bottom span,
+.sib-footer-legal a {
+  color: rgba(255, 255, 255, 0.9) !important;
+}

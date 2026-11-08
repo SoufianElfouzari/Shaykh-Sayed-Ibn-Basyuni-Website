@@ -34,3 +34,9 @@ Structure.md
 Todos.md
 .vercel
 .env*
+
+# QA artifacts
+.lighthouseci/
+lighthouse-reports/
+playwright-report/
+test-results/

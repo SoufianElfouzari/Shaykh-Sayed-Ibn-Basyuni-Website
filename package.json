@@ -8,7 +8,14 @@
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test:ssr": "node scripts/verify-ssr.mjs"
+    "test:ssr": "node scripts/verify-ssr.mjs",
+    "test:setup": "npm install --no-save --package-lock=false @playwright/test@1.65.0 @axe-core/playwright@4.14.0 @lhci/cli@0.16.0",
+    "test:unit": "node --test tests/unit/*.test.mjs",
+    "test:integration": "node --import ./tests/fixtures/install-fetch.mjs --test tests/integration/*.test.mjs",
+    "test:ssr:fixture": "node --import ./tests/fixtures/install-fetch.mjs scripts/verify-ssr.mjs",
+    "test:e2e": "playwright test",
+    "test:budget": "node scripts/check-bundle-budget.mjs",
+    "test:lighthouse": "lhci autorun"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

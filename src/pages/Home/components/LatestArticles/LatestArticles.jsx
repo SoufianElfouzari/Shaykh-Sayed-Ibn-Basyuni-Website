@@ -387,7 +387,6 @@ function LatestArticles() {
                   featuredArticle,
                 )}
                 className="sib-articles-featured"
-                aria-label={`${featuredArticle.title} lesen`}
               >
                 <div className="sib-articles-featured-top">
                   <span className="sib-articles-icon">
@@ -452,7 +451,6 @@ function LatestArticles() {
                         key={article.id}
                         to={getArticlePath(article)}
                         className="sib-articles-secondary"
-                        aria-label={`${article.title} lesen`}
                       >
                         <div className="sib-articles-secondary-content">
                           <div className="sib-articles-secondary-top">
