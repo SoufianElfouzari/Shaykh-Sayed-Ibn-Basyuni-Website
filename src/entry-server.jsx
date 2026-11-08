@@ -4,7 +4,7 @@ import { StaticRouter } from "react-router";
 import PageRoutes from "./PageRoutes";
 import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
-import { getPublishedArticles, getPublishedArticleSummaries, getPublishedArticleBySlug, getPublishedArticleIndex, getRelatedPublishedArticles } from "./supabase/articleService";
+import { getPublishedArticlePage, getPublishedArticleSummaries, getPublishedArticleBySlug, getPublishedArticleIndex, getRelatedPublishedArticles } from "./supabase/articleService";
 import { getPublishedDuruus } from "./supabase/duruusService";
 import { getActivePublishedNotices } from "./supabase/noticesService";
 import { createSectionId } from "./utils/articleSections";
@@ -30,7 +30,7 @@ function getWeeklyLessons() {
     .filter((lesson) => lesson.day && lesson.time && lesson.subject);
 }
 
-export async function renderPage(pathname) {
+export async function renderPage(pathname, options = {}) {
   const path = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
   const data = { __ssrPath: path };
   let status = 200;
@@ -39,7 +39,27 @@ export async function renderPage(pathname) {
     data.lessons = getWeeklyLessons();
     data.articles = await getPublishedArticleSummaries(6);
   } else if (path === "/artikel") {
-    data.articles = await getPublishedArticles();
+    const requestedPage = String(options.page ?? "1");
+    if (!/^[1-9]\\d{0,5}$/.test(requestedPage)) {
+      status = 404;
+      data.__notFoundPath = path;
+    } else {
+      const page = Number(requestedPage);
+      const archive = await getPublishedArticlePage(page);
+      if (page > archive.pageCount || (page > 1 && archive.articles.length === 0)) {
+        status = 404;
+        data.__notFoundPath = path;
+      } else {
+        data.articles = archive.articles;
+        data.pagination = {
+          page: archive.page,
+          pageSize: archive.pageSize,
+          totalCount: archive.totalCount,
+          pageCount: archive.pageCount,
+        };
+        data.__ssrPage = page;
+      }
+    }
   } else if (path === "/durous") {
     data.lessons = getWeeklyLessons();
     const [duruus, notices] = await Promise.all([
@@ -74,7 +94,7 @@ export async function renderPage(pathname) {
     <StaticRouter location={path}>
       <SsrDataContext.Provider value={data}>
         <div className="app">
-          {status === 404 && path.startsWith("/artikel/") ? <NotFound /> : <PageRoutes />}
+          {status === 404 ? <NotFound /> : <PageRoutes />}
         </div>
       </SsrDataContext.Provider>
     </StaticRouter>
