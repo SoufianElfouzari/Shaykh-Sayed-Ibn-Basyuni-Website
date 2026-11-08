@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect } from "react";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import "./App.css";
-import PageRoutes from "./PageRoutes";
+import ClientPageRoutes from "./ClientPageRoutes";
 import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
 import { staticMetadata, SITE_ORIGIN } from "./utils/staticSeo";
@@ -81,7 +81,7 @@ function ClientRoutes({ notFoundPath }) {
   if (notFoundPath && pathname === notFoundPath) {
     return <NotFound />;
   }
-  return <PageRoutes />;
+  return <ClientPageRoutes />;
 }
 
 function ScrollToTop() {
