@@ -304,7 +304,7 @@ export default async function handler(request, response) {
     return response.status(400).end("Invalid path");
   }
   let pathname;
-  let page = null;
+  let page;
   try {
     const parsedPath = new URL(rawPath, origin);
     pathname = decodeURI(parsedPath.pathname);
