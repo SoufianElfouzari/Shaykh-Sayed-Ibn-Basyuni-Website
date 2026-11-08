@@ -13,7 +13,7 @@ const footerNavigation = [
   },
   {
     label: "Durous",
-    to: "/duruus",
+    to: "/durous",
   },
   {
     label: "Artikel",
