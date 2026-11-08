@@ -4,6 +4,7 @@ import "./App.css";
 import PageRoutes from "./PageRoutes";
 import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
+import { SITE_FALLBACK_IMAGE } from "./utils/articleSeo";
 
 const routeMetadata = {
   "/": {
@@ -64,6 +65,10 @@ function RouteSeo({ notFoundPath }) {
       updateMeta("name", "robots", "noindex, follow");
       document.title = "Seite nicht gefunden | Shaykh Sayed";
       updateMeta("name", "description", "Die gesuchte Seite oder der Artikel ist nicht verfügbar.");
+      updateMeta("property", "og:title", "Seite nicht gefunden | Shaykh Sayed");
+      updateMeta("property", "og:description", "Die gesuchte Seite oder der Artikel ist nicht verfügbar.");
+      updateMeta("name", "twitter:title", "Seite nicht gefunden | Shaykh Sayed");
+      updateMeta("name", "twitter:description", "Die gesuchte Seite oder der Artikel ist nicht verfügbar.");
       return;
     }
     updateMeta("name", "robots", "index, follow, max-image-preview:large");
@@ -82,6 +87,10 @@ function RouteSeo({ notFoundPath }) {
       document.documentElement.dir = "ltr";
       updateMeta("property", "og:locale", "de_DE");
       updateMeta("name", "twitter:card", "summary");
+      updateMeta("property", "og:image", SITE_FALLBACK_IMAGE);
+      updateMeta("name", "twitter:image", SITE_FALLBACK_IMAGE);
+      updateMeta("property", "og:image:alt", "Shaykh Sayed Ibn Basyuni - offizielles Logo");
+      updateMeta("name", "twitter:image:alt", "Shaykh Sayed Ibn Basyuni - offizielles Logo");
       document.title = metadata.title;
       updateMeta("name", "description", metadata.description);
       updateMeta("property", "og:title", metadata.title);
