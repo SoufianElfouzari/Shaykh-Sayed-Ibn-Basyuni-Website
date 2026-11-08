@@ -6,6 +6,8 @@ import { SsrDataContext } from "./SsrDataContext";
 import { getPublishedArticles, getPublishedArticleBySlug, getPublishedArticleIndex, getRelatedPublishedArticles } from "./supabase/articleService";
 import { getPublishedDuruus } from "./supabase/duruusService";
 import { getActivePublishedNotices } from "./supabase/noticesService";
+import { createSectionId } from "./utils/articleSections";
+import { parseServerArticleContent } from "./utils/serverArticleContent";
 
 const pages = new Set([
   "/", "/shaykh", "/durous", "/artikel", "/kontakt", "/impressum", "/datenschutz"
@@ -41,6 +43,7 @@ export async function renderPage(pathname) {
     if (!data.article) {
       status = 404;
     } else {
+      data.articleContent = parseServerArticleContent(data.article.contentHtml, createSectionId);
       data.relatedArticles = await getRelatedPublishedArticles(data.article).catch((error) => {
         console.error("Verwandte Artikel konnten nicht geladen werden:", error);
         return [];
