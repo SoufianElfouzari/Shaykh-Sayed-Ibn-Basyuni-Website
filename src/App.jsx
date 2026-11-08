@@ -58,6 +58,8 @@ function RouteSeo({ notFoundPath }) {
     const isNotFound = normalizedPath + search === notFoundPath || !knownRoute || invalidPage;
     let canonical = document.querySelector('link[rel="canonical"]');
     if (isNotFound) {
+      document.documentElement.lang = "de";
+      document.documentElement.dir = "ltr";
       canonical?.remove();
       updateMeta("name", "robots", "noindex, follow");
       document.title = "Seite nicht gefunden | Shaykh Sayed";
@@ -76,6 +78,10 @@ function RouteSeo({ notFoundPath }) {
 
     const metadata = routeMetadata[normalizedPath];
     if (metadata) {
+      document.documentElement.lang = "de";
+      document.documentElement.dir = "ltr";
+      updateMeta("property", "og:locale", "de_DE");
+      updateMeta("name", "twitter:card", "summary");
       document.title = metadata.title;
       updateMeta("name", "description", metadata.description);
       updateMeta("property", "og:title", metadata.title);
