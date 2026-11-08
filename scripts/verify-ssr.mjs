@@ -41,7 +41,7 @@ for (const [path, title] of pages) {
   assert.equal(response.statusCode, 200, path);
   assert.match(response.body, /<h1\b/i, path + ": missing server-rendered H1");
   assert.ok(response.body.includes("<title>" + title), path + ": wrong title");
-  assert.ok(response.body.includes('rel="canonical" href="https://shaykh-sayed.de' + path + '"'), path + ": wrong canonical");
+  assert.ok(response.body.includes('rel="canonical" href="https://www.shaykh-sayed.de' + path + '"'), path + ": wrong canonical");
   assert.ok(response.body.includes('/assets/index-'), path + ": missing client assets");
   assert.ok(response.body.includes('id="root"'), path + ": missing React root");
   if (path === "/") {
@@ -77,7 +77,7 @@ for (const [path, title] of pages) {
     const person = schema["@graph"].find((item) => item["@type"] === "Person");
     const page = schema["@graph"].find((item) => item["@type"] === "WebPage");
     assert.equal(person?.alumniOf?.name, "Al-Azhar-Universität", "shaykh: education missing in schema");
-    assert.equal(page?.mainEntity?.["@id"], "https://shaykh-sayed.de/#person", "shaykh: wrong main entity");
+    assert.equal(page?.mainEntity?.["@id"], "https://www.shaykh-sayed.de/#person", "shaykh: wrong main entity");
   }
   if (path === "/durous") {
     assert.ok(
@@ -114,7 +114,7 @@ for (const [path, title] of pages) {
     const schema = JSON.parse(schemaMatch[1]);
     const page = schema["@graph"].find((item) => item["@type"] === "CollectionPage");
     assert.ok(page, "durous: CollectionPage schema missing");
-    assert.equal(page.about?.["@id"], "https://shaykh-sayed.de/#person");
+    assert.equal(page.about?.["@id"], "https://www.shaykh-sayed.de/#person");
     const itemList = schema["@graph"].find((item) => item["@type"] === "ItemList");
     if (itemList) {
       assert.ok(itemList.numberOfItems > 0, "durous: empty ItemList must not be emitted");
@@ -138,8 +138,11 @@ for (const path of ["/unknown-route", "/artikel/unknown-article-for-test"]) {
 
 const robots = readFileSync(new URL("../public/robots.txt", import.meta.url), "utf8");
 const sitemap = readFileSync(new URL("../public/sitemap.xml", import.meta.url), "utf8");
-assert.ok(robots.includes("Sitemap: https://shaykh-sayed.de/sitemap.xml"));
-assert.ok(sitemap.includes("<loc>https://shaykh-sayed.de/durous</loc>"));
-assert.ok(!sitemap.includes("https://www.shaykh-sayed.de/"), "sitemap: www host contradicts canonicals");
+assert.ok(robots.includes("Sitemap: https://www.shaykh-sayed.de/sitemap.xml"));
+assert.ok(sitemap.includes("<loc>https://www.shaykh-sayed.de/durous</loc>"));
+assert.ok(!sitemap.includes("https://shaykh-sayed.de/"), "sitemap: non-www host contradicts redirects and canonicals");
+assert.ok(!sitemap.includes("/artikel/mondsichtung-ramadan"), "sitemap: unpublished article still indexed");
+assert.ok(!sitemap.includes("/artikel/die-bedeutung-von-wissen-und-aufrichtigem-lernen"), "sitemap: missing article still indexed");
+assert.ok(sitemap.includes("/artikel/die-unterscheidung-zwischen-konsens-und-uebereinstimmung-der-gelehrten-in-der-islamischen-rechtsmethodik"), "sitemap: known published article missing");
 console.log("PASS: canonical host matches sitemap and robots.txt");
 console.log("SSR smoke tests passed.");
