@@ -23,21 +23,22 @@ function ArticlesHero() {
 
       <div className="sib-articles-page-hero-container">
         <p className="sib-articles-page-hero-label">
-          Texte und wissenschaftliche Beiträge
+          Islamisches Wissen auf Deutsch
         </p>
 
         <h1
           id="sib-articles-page-hero-title"
           className="sib-articles-page-hero-title"
         >
-          Artikel und Beiträge
-          <span>geordnet an einem Ort.</span>
+          Islamische Artikel
+          <span>auf Deutsch lesen.</span>
         </h1>
 
         <p className="sib-articles-page-hero-description">
-          Hier finden sich veröffentlichte Artikel, kurze
-          Abhandlungen und weitere schriftliche Beiträge von
-          Dr. Shaykh Sayed Ibn Basyuni.
+          Islam lernen und Wissen vertiefen: Entdecke
+          veröffentlichte Artikel und wissenschaftliche Beiträge
+          von Dr. Shaykh Sayed Ibn Basyuni über Themen der
+          islamischen Wissenschaften.
         </p>
       </div>
     </section>
