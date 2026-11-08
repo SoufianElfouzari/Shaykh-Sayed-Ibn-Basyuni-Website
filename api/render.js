@@ -101,7 +101,7 @@ function metadataFor(pathname, article, status) {
 
 function structuredData(pathname, metadata, article, status, data) {
   if (status === 404) return "";
-  const url = origin + pathname;
+  const url = origin + pathname + (data?.archivePagination?.page > 1 ? "?page=" + data.archivePagination.page : "");
   const graph = [
     {
       "@type": "WebSite",
@@ -269,7 +269,7 @@ function structuredData(pathname, metadata, article, status, data) {
 function buildHtml(result) {
   const { markup, data, status, pathname } = result;
   const meta = metadataFor(pathname, data.article, status);
-  const url = origin + pathname;
+  const url = origin + pathname + (data.archivePagination?.page > 1 ? "?page=" + data.archivePagination.page : "");
   const image = absoluteImage(meta.image);
   const imageIsFallback = !meta.image;
   const imageAlt = imageIsFallback ? siteName + " - offizielles Logo" : (data.article?.title || meta.title);
@@ -335,20 +335,28 @@ export default async function handler(request, response) {
   }
   let pathname;
   try {
-    pathname = decodeURI(rawPath).split("?")[0];
+    pathname = decodeURI(rawPath.split("?")[0]);
   } catch {
     return response.status(400).end("Invalid path");
   }
   try {
     const { renderPage } = await import("../dist-ssr/entry-server.js");
-    const result = await renderPage(pathname);
+    const rawPage = new URLSearchParams(rawPath.split("?").slice(1).join("?")).get("page");
+    const forwardedPage = typeof request.query?.page === "string" ? request.query.page : new URL(request.url || "/", origin).searchParams.get("page");
+    const pageValue = rawPage ?? forwardedPage;
+    const renderPath = pathname === "/artikel" && pageValue !== null
+      ? pathname + "?page=" + encodeURIComponent(pageValue)
+      : pathname;
+    const result = await renderPage(renderPath);
     const html = buildHtml(result);
     response.setHeader("Content-Type", "text/html; charset=utf-8");
     response.setHeader("X-Content-Type-Options", "nosniff");
     response.setHeader("Cache-Control", result.status === 404
       ? "public, s-maxage=30, stale-while-revalidate=60"
       : "public, s-maxage=60, stale-while-revalidate=300");
-    return response.status(result.status).send(html);
+    return request.method === "HEAD"
+      ? response.status(result.status).end()
+      : response.status(result.status).send(html);
   } catch (error) {
     console.error("SSR rendering failed:", error);
     response.setHeader("Content-Type", "text/html; charset=utf-8");
