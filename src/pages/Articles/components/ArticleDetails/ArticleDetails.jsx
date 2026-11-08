@@ -1,4 +1,5 @@
 import {
+  createElement,
   useEffect,
   useMemo,
   useState,
@@ -209,6 +210,9 @@ function parseArticleContent(contentHtml, serverContent) {
       "h1",
       "h2",
       "h3",
+      "h4",
+      "h5",
+      "h6",
     ].includes(tagName);
 
     if (isHeading) {
@@ -228,6 +232,7 @@ function parseArticleContent(contentHtml, serverContent) {
       currentSection = {
         id: sectionId,
         title,
+        level: Math.max(2, Number(tagName[1])),
         html: "",
       };
 
@@ -259,6 +264,7 @@ function parseArticleContent(contentHtml, serverContent) {
         {
           id: "artikelinhalt",
           title: "Artikelinhalt",
+          level: 2,
           html: sanitizedHtml,
         },
       ],
@@ -964,9 +970,7 @@ function ArticleDetails() {
                         )}
                       </span>
 
-                      <h2>
-                        {section.title}
-                      </h2>
+                      {createElement(`h${section.level || 2}`, null, section.title)}
                     </header>
 
                     <div
