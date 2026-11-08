@@ -7,6 +7,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   ssr: {
-    noExternal: ['react-router', 'react-router-dom'],
+    noExternal: ['react-router', 'react-router-dom', 'sanitize-html', 'htmlparser2'],
   },
 })
