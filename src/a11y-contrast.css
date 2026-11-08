@@ -47,3 +47,15 @@
 .sib-footer-legal a {
   color: rgba(255, 255, 255, 0.9) !important;
 }
+
+/* The article TOC and section numbering were 2.83:1 against the light
+   background. Preserve the warm-gold accent with a readable dark variant.
+   Also darken the updated timestamp label (formerly 4.15:1). */
+.sib-article-details-sidebar nav a span,
+.sib-article-details-section header > span {
+  color: #765f38 !important;
+}
+
+.sib-article-details-updated span {
+  color: #606c66 !important;
+}
