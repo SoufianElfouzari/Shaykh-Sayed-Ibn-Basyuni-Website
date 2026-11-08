@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect } from "react";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import "./App.css";
 import PageRoutes from "./PageRoutes";
+import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
 
 const routeMetadata = {
@@ -74,6 +75,14 @@ function RouteSeo() {
   return null;
 }
 
+function ClientRoutes({ notFoundPath }) {
+  const { pathname } = useLocation();
+  if (notFoundPath && pathname === notFoundPath) {
+    return <NotFound />;
+  }
+  return <PageRoutes />;
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useLayoutEffect(() => {
@@ -89,7 +98,7 @@ export default function App({ initialData = {} }) {
         <ScrollToTop />
         <RouteSeo />
         <div className="app">
-          <PageRoutes />
+          <ClientRoutes notFoundPath={initialData.__notFoundPath} />
         </div>
       </BrowserRouter>
     </SsrDataContext.Provider>
