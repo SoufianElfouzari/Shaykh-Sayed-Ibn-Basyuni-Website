@@ -42,6 +42,7 @@ export async function renderPage(pathname) {
     }
     if (!data.article) {
       status = 404;
+      data.__notFoundPath = path;
     } else {
       data.articleContent = parseServerArticleContent(data.article.contentHtml, createSectionId);
       data.relatedArticles = await getRelatedPublishedArticles(data.article).catch((error) => {
