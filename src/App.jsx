@@ -4,37 +4,9 @@ import "./App.css";
 import PageRoutes from "./PageRoutes";
 import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
+import { staticMetadata, SITE_ORIGIN } from "./utils/staticSeo";
+import { SITE_FALLBACK_IMAGE } from "./utils/articleSeo";
 
-const routeMetadata = {
-  "/": {
-    title: "Islam lernen auf Deutsch | Shaykh Sayed Ibn Basyuni",
-    description: "Islam lernen auf Deutsch: Unterrichte und Artikel von Shaykh Sayed Ibn Basyuni zu Fiqh, Aqidah und weiteren islamischen Wissenschaften.",
-  },
-  "/shaykh": {
-    title: "Shaykh Sayed Ibn Basyuni | Biografie und Werdegang",
-    description: "Biografie von Dr. Shaykh Sayed Ibn Basyuni: Ausbildung an der Al-Azhar-Universität, Lehrer, Forschung und islamische Unterrichte in Kassel.",
-  },
-  "/durous": {
-    title: "Islamische Unterrichte und Durous | Shaykh Sayed",
-    description: "Islamische Unterrichte von Shaykh Sayed Ibn Basyuni: Fiqh-Unterrichtszeiten in Kassel, aktuelle Hinweise und veröffentlichte Durous als Audioaufnahmen.",
-  },
-  "/artikel": {
-    title: "Islamische Artikel auf Deutsch | Shaykh Sayed Ibn Basyuni",
-    description: "Islamische Artikel auf Deutsch von Shaykh Sayed Ibn Basyuni. Entdecke veröffentlichte Beiträge zu islamischen Wissenschaften und vertiefe dein Wissen.",
-  },
-  "/kontakt": {
-    title: "Kontakt | Shaykh Sayed Ibn Basyuni",
-    description: "Kontaktmöglichkeiten und Informationen zur offiziellen Website von Shaykh Sayed Ibn Basyuni.",
-  },
-  "/impressum": {
-    title: "Impressum | Shaykh Sayed Ibn Basyuni",
-    description: "Impressum und rechtliche Angaben zur Website von Shaykh Sayed Ibn Basyuni.",
-  },
-  "/datenschutz": {
-    title: "Datenschutz | Shaykh Sayed Ibn Basyuni",
-    description: "Datenschutzhinweise und Informationen über den Umgang mit personenbezogenen Daten auf shaykh-sayed.de.",
-  },
-};
 
 function updateMeta(attribute, key, value) {
   let element = document.head.querySelector(`meta[${attribute}="${key}"]`);
@@ -46,32 +18,55 @@ function updateMeta(attribute, key, value) {
   element.setAttribute("content", value);
 }
 
-function RouteSeo() {
+function RouteSeo({ notFoundPath }) {
   const { pathname } = useLocation();
-  useEffect(() => {
-    const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
-    const canonicalUrl = "https://www.shaykh-sayed.de" + normalizedPath;
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute("href", canonicalUrl);
 
+  useEffect(() => {
+    const path = pathname === "/" ? "/" : pathname.replace(/\\/+$/, "");
+    const isArticle = /^\\/artikel\\/[^/]+$/.test(path);
+    const metadata = staticMetadata[path];
+    const isNotFound = notFoundPath === path || (!metadata && !isArticle);
+    const canonical = document.head.querySelector('link[rel="canonical"]');
+
+    if (isNotFound) {
+      canonical?.remove();
+      document.title = "Seite nicht gefunden | Shaykh Sayed";
+      updateMeta("name", "robots", "noindex, follow");
+      updateMeta("name", "description", "Die gesuchte Seite oder der Artikel ist nicht verfügbar.");
+      updateMeta("property", "og:type", "website");
+      updateMeta("property", "og:title", document.title);
+      updateMeta("property", "og:description", "Die gesuchte Seite oder der Artikel ist nicht verfügbar.");
+      document.head.querySelector('meta[property="og:url"]')?.remove();
+      return;
+    }
+
+    const canonicalUrl = SITE_ORIGIN + path;
+    let canonicalElement = canonical;
+    if (!canonicalElement) {
+      canonicalElement = document.createElement("link");
+      canonicalElement.setAttribute("rel", "canonical");
+      document.head.appendChild(canonicalElement);
+    }
+    canonicalElement.setAttribute("href", canonicalUrl);
+    updateMeta("name", "robots", "index, follow, max-image-preview:large");
     updateMeta("property", "og:url", canonicalUrl);
 
-    const metadata = routeMetadata[normalizedPath];
-    if (metadata) {
-      document.title = metadata.title;
-      updateMeta("name", "description", metadata.description);
-      updateMeta("property", "og:title", metadata.title);
-      updateMeta("property", "og:description", metadata.description);
-      updateMeta("name", "twitter:title", metadata.title);
-      updateMeta("name", "twitter:description", metadata.description);
-      updateMeta("property", "og:type", "website");
-    }
-  }, [pathname]);
+    // ArticleDetails is authoritative for the article-specific SEO metadata.
+    if (isArticle) return;
+
+    document.title = metadata.title;
+    updateMeta("name", "description", metadata.description);
+    updateMeta("property", "og:title", metadata.title);
+    updateMeta("property", "og:description", metadata.description);
+    updateMeta("property", "og:type", "website");
+    updateMeta("property", "og:image", SITE_FALLBACK_IMAGE);
+    updateMeta("name", "twitter:title", metadata.title);
+    updateMeta("name", "twitter:description", metadata.description);
+    updateMeta("name", "twitter:image", SITE_FALLBACK_IMAGE);
+    document.head.querySelectorAll(
+      'meta[property="article:published_time"], meta[property="article:modified_time"], meta[name="author"]',
+    ).forEach((element) => element.remove());
+  }, [pathname, notFoundPath]);
   return null;
 }
 
@@ -96,7 +91,7 @@ export default function App({ initialData = {} }) {
     <SsrDataContext.Provider value={initialData}>
       <BrowserRouter>
         <ScrollToTop />
-        <RouteSeo />
+        <RouteSeo notFoundPath={initialData.__notFoundPath} />
         <div className="app">
           <ClientRoutes notFoundPath={initialData.__notFoundPath} />
         </div>
