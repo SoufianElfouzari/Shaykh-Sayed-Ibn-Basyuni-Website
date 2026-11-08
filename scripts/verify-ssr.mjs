@@ -3,6 +3,8 @@ import { readFileSync } from "node:fs";
 import handler from "../api/render.js";
 import sitemapHandler from "../api/sitemap.js";
 import { parseServerArticleContent } from "../src/utils/serverArticleContent.js";
+import { articleSeo, conciseDescription, articleLanguage, SITE_ORIGIN } from "../src/utils/articleSeo.js";
+import { createSectionId } from "../src/utils/articleSections.js";
 
 async function request(path, pageHandler = handler, method = "GET") {
   const response = {
@@ -189,9 +191,57 @@ const serverContent = parseServerArticleContent(
 );
 assert.deepEqual(serverContent.sections.map((section) => section.title), ["Einleitung", "Grundlagen"]);
 assert.ok(serverContent.sections[0].html.includes("<p>Wissen &amp; Lernen.</p>"));
-assert.ok(serverContent.sections[1].html.includes("<p>Ein zweiter Absatz.</p>"));
+assert.ok(serverContent.sections[1].html.includes("<p>Ein <strong>zweiter</strong> Absatz.</p>"));
 assert.ok(!JSON.stringify(serverContent).includes("onerror"), "SSR article parser must remove unsafe attributes");
 assert.ok(!JSON.stringify(serverContent).includes("alert(1)"), "SSR article parser must remove scripts");
+const richContent = parseServerArticleContent(
+  '<h2>Belege</h2><p>Siehe <a href="https://example.org/quelle" target="_blank">Quelle 1</a>.</p>' +
+  '<p><a href="javascript:alert(1)" onclick="alert(1)">Unsicherer Link</a></p>' +
+  '<blockquote>Eine belegte Aussage.</blockquote>' +
+  '<table><tr><td>Begriff</td><td>Bedeutung</td></tr></table>',
+  createSectionId,
+);
+assert.ok(richContent.sections[0].html.includes('href="https://example.org/quelle"'),
+  "SSR article parser removes genuine reference links");
+assert.ok(richContent.sections[0].html.includes("<blockquote>Eine belegte Aussage.</blockquote>"),
+  "SSR article parser removes actual quotations");
+assert.ok(richContent.sections[0].html.includes("<table>"),
+  "SSR article parser removes source tables");
+assert.ok(!richContent.sections[0].html.includes("javascript:"),
+  "SSR article parser must remove unsafe URLs");
+assert.ok(!richContent.sections[0].html.includes("onclick="),
+  "SSR article parser must remove event handler attributes");
+
+const exampleSeo = articleSeo({
+  title: "Was ist Fiqh?",
+  excerpt: "Eine kurze Erklärung der Grundlagen &amp; Begriffe.",
+  author: "Redaktion Shaykh Sayed",
+  category: "Fiqh",
+  tags: ["Fiqh", "Islamisches Wissen", "Fiqh"],
+  language: "Deutsch",
+  publishedAt: null,
+  updatedAt: null,
+  contentText: "Fiqh ist islamisches Wissen.",
+});
+assert.equal(exampleSeo.title, "Was ist Fiqh? | Shaykh Sayed");
+assert.equal(exampleSeo.description, "Eine kurze Erklärung der Grundlagen & Begriffe.");
+assert.equal(exampleSeo.author.type, "Organization", "editorial authors are not fake people");
+assert.equal(exampleSeo.author.profileUrl, null, "editorial team has no invented personal profile");
+assert.deepEqual(exampleSeo.tags, ["Fiqh", "Islamisches Wissen"]);
+assert.equal(exampleSeo.publishedAt, null, "never invent publication timestamps");
+assert.equal(exampleSeo.updatedAt, null, "never invent modified timestamps");
+assert.equal(exampleSeo.image, null, "never claim a generic logo is the article image");
+assert.equal(articleLanguage("Arabisch"), "ar");
+assert.equal(articleLanguage("English"), "en");
+assert.ok(conciseDescription("Test ".repeat(100)).length <= 165,
+  "article description must be concise");
+const scholarlyTitle = "Die Unterscheidung zwischen den verschiedenen Begriffen und ihrer wissenschaftlichen Anwendung in der islamischen Rechtsmethodik";
+assert.equal(articleSeo({ title: scholarlyTitle }).headline, scholarlyTitle,
+  "long scholarly article headlines must retain their actual meaning");
+assert.equal(articleSeo({ author: "Dr. Shaykh Sayed Ibn Basyuni" }).author.profileUrl,
+  SITE_ORIGIN + "/shaykh");
+console.log("PASS: dynamic article SEO metadata, real authorship, source formatting and language");
+
 console.log("PASS: article SSR preserves sections and escapes unsafe markup");
 
 const sitemapResponse = await request("/sitemap.xml", sitemapHandler);
@@ -232,6 +282,31 @@ if (articles.length > 0) {
   assert.equal(articleSchema?.headline, first.title, "published article: incorrect headline schema");
   assert.ok(graph.some((item) => item["@type"] === "BreadcrumbList"), "published article: breadcrumb missing");
   assert.ok(response.body.includes('name="robots" content="index'), "published article: should be indexable");
+  const seo = articleSeo(first);
+  assert.equal(articleSchema.description, seo.description,
+    "published article: description must match the editorial excerpt");
+  assert.equal(articleSchema.inLanguage, seo.language,
+    "published article: language must match the source");
+  assert.equal(articleSchema.wordCount, seo.wordCount,
+    "published article: word count must reflect the article content");
+  assert.equal(articleSchema.author.name, seo.author.name,
+    "published article: author must match the source");
+  assert.equal(articleSchema.url, SITE_ORIGIN + "/artikel/" + encodeURIComponent(first.slug));
+  assert.equal(articleSchema.datePublished, seo.publishedAt || undefined,
+    "published article: do not invent datePublished");
+  assert.equal(articleSchema.image, seo.image || undefined,
+    "published article: use only the actual cover image");
+  const pageSchema = graph.find((entry) => entry["@type"] === "WebPage");
+  assert.equal(pageSchema.mainEntity["@id"], articleSchema["@id"],
+    "published article: page mainEntity must resolve to the article");
+  assert.ok(response.body.includes('aria-label="Seitenpfad"'),
+    "published article: visible breadcrumbs missing");
+  assert.ok(response.body.includes('name="description" content="'),
+    "published article: metadata description missing");
+  assert.ok(response.body.includes('property="og:type" content="article"'),
+    "published article: missing Article Open Graph type");
+  assert.ok(response.body.includes('<title>' + seo.title.replace(/&/g, "&amp;"),
+    "published article: title not generated from article metadata");
   const sourceHeadings = (first.contentHtml.match(/<h[1-3]\b/gi) || []).length;
   if (sourceHeadings > 0) {
     const renderedHeadings = (response.body.match(/<h2\b/gi) || []).length;
