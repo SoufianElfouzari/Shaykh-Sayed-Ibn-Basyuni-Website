@@ -3,7 +3,7 @@ import { StaticRouter } from "react-router";
 import PageRoutes from "./PageRoutes";
 import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
-import { getPublishedArticles, getPublishedArticleBySlug, getPublishedArticleIndex, getRelatedPublishedArticles } from "./supabase/articleService";
+import { getPublishedArticles, getPublishedArticleSummaries, getPublishedArticleBySlug, getPublishedArticleIndex, getRelatedPublishedArticles } from "./supabase/articleService";
 import { getPublishedDuruus } from "./supabase/duruusService";
 import { getActivePublishedNotices } from "./supabase/noticesService";
 import { createSectionId } from "./utils/articleSections";
@@ -20,10 +20,12 @@ export async function getSitemapArticles() {
 
 export async function renderPage(pathname) {
   const path = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
-  const data = {};
+  const data = { __ssrPath: path };
   let status = 200;
 
-  if (path === "/" || path === "/artikel") {
+  if (path === "/") {
+    data.articles = await getPublishedArticleSummaries();
+  } else if (path === "/artikel") {
     data.articles = await getPublishedArticles();
   } else if (path === "/durous") {
     const [duruus, notices] = await Promise.all([
@@ -42,6 +44,7 @@ export async function renderPage(pathname) {
     }
     if (!data.article) {
       status = 404;
+      data.__notFoundPath = path;
     } else {
       data.articleContent = parseServerArticleContent(data.article.contentHtml, createSectionId);
       data.relatedArticles = await getRelatedPublishedArticles(data.article).catch((error) => {

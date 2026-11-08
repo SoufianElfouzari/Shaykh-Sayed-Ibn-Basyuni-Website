@@ -13,7 +13,8 @@ import { createSectionId } from "../../../../utils/articleSections";
 import { articleSeo, SITE_FALLBACK_IMAGE, SITE_ORIGIN } from "../../../../utils/articleSeo";
 
 import {
-  getPublishedArticles,
+  getPublishedArticleBySlug,
+  getPublishedArticleSummaries,
 } from "../../../../supabase/articleService";
 
 import "./ArticleDetails.css";
@@ -334,10 +335,13 @@ function ArticleDetails() {
   } = useSsrData();
 
   const [articles, setArticles] =
-    useState(initialArticle ? [initialArticle] : []);
+    useState(initialArticle?.slug === slug ? [initialArticle] : []);
+
+  const [articleSummaries, setArticleSummaries] = useState([]);
+  const [requestedSlug, setRequestedSlug] = useState(slug);
 
   const [isLoading, setIsLoading] =
-    useState(!initialArticle);
+    useState(initialArticle?.slug !== slug);
 
   const [
     errorMessage,
@@ -358,80 +362,85 @@ function ArticleDetails() {
     useState("idle");
 
   useEffect(() => {
-    let isCurrentRequest = true;
+    if (initialArticle?.slug === slug) {
+      // Hydrated article already includes its complete content.
+      return undefined;
+    }
 
-    const loadArticleData = async () => {
+    let isCurrentRequest = true;
+    const frame = window.requestAnimationFrame(() => {
+      setRequestedSlug(slug);
       setIsLoading(true);
       setErrorMessage("");
       setArticles([]);
 
-      try {
-        const loadedArticles =
-          await getPublishedArticles();
-
-        if (!isCurrentRequest) {
-          return;
-        }
-
-        setArticles(loadedArticles);
-      } catch (error) {
-        console.error(
-          "Der Artikel konnte nicht geladen werden:",
-          error,
-        );
-
-        if (!isCurrentRequest) {
-          return;
-        }
-
-        setErrorMessage(
-          "Der Artikel konnte nicht aus Supabase geladen werden.",
-        );
-      } finally {
-        if (isCurrentRequest) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    loadArticleData();
+      getPublishedArticleBySlug(slug)
+        .then((loadedArticle) => {
+          if (isCurrentRequest) {
+            setArticles(loadedArticle ? [loadedArticle] : []);
+          }
+        })
+        .catch((error) => {
+          console.error("Der Artikel konnte nicht geladen werden:", error);
+          if (isCurrentRequest) {
+            setErrorMessage("Der Artikel konnte nicht aus Supabase geladen werden.");
+          }
+        })
+        .finally(() => {
+          if (isCurrentRequest) setIsLoading(false);
+        });
+    });
 
     return () => {
       isCurrentRequest = false;
+      window.cancelAnimationFrame(frame);
     };
-  }, [slug]);
+  }, [slug, initialArticle]);
+
+  useEffect(() => {
+    let isCurrentRequest = true;
+    // Needed only for previous/next article navigation and related-article cards.
+    // This query transfers metadata, never full article bodies.
+    const frame = window.requestAnimationFrame(() => {
+      getPublishedArticleSummaries()
+        .then((items) => {
+          if (isCurrentRequest) setArticleSummaries(items);
+        })
+        .catch((error) => {
+          console.error("Artikelübersicht konnte nicht geladen werden:", error);
+        });
+    });
+    return () => {
+      isCurrentRequest = false;
+      window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   const article = useMemo(() => {
-    return (
-      articles.find(
-        (entry) => entry.slug === slug,
-      ) || null
-    );
-  }, [
-    articles,
-    slug,
-  ]);
+    if (initialArticle?.slug === slug) return initialArticle;
+    return articles.find((entry) => entry.slug === slug) || null;
+  }, [articles, slug, initialArticle]);
 
   const currentArticleIndex =
     useMemo(() => {
-      return articles.findIndex(
+      return articleSummaries.findIndex(
         (entry) => entry.slug === slug,
       );
     }, [
-      articles,
+      articleSummaries,
       slug,
     ]);
 
   const previousArticle =
     currentArticleIndex > 0
-      ? articles[currentArticleIndex - 1]
+      ? articleSummaries[currentArticleIndex - 1]
       : null;
 
   const nextArticle =
     currentArticleIndex >= 0 &&
     currentArticleIndex <
-      articles.length - 1
-      ? articles[currentArticleIndex + 1]
+      articleSummaries.length - 1
+      ? articleSummaries[currentArticleIndex + 1]
       : null;
 
   const seo = useMemo(
@@ -450,7 +459,7 @@ function ArticleDetails() {
       (article.tags || []).map((tag) => String(tag).toLowerCase()),
     );
     const category = String(article.category || "").toLowerCase();
-    return articles
+    return articleSummaries
       .filter((entry) => entry.slug && entry.slug !== article.slug)
       .map((entry) => ({
         ...entry,
@@ -461,14 +470,16 @@ function ArticleDetails() {
       .filter((entry) => entry.relevance > 0)
       .sort((a, b) => b.relevance - a.relevance)
       .slice(0, 4);
-  }, [article, articles, initialArticle?.slug, initialRelated]);
+  }, [article, articleSummaries, initialArticle?.slug, initialRelated]);
 
   const articleContent = useMemo(() => {
-    return parseArticleContent(
-      article?.contentHtml,
-      initialServerContent,
-    );
-  }, [article?.contentHtml, initialServerContent]);
+    // Use the exact server-sanitized structure during hydration.
+    // New articles opened through client-side navigation are parsed in the browser.
+    if (initialArticle?.slug === article?.slug && initialServerContent) {
+      return initialServerContent;
+    }
+    return parseArticleContent(article?.contentHtml);
+  }, [article?.slug, article?.contentHtml, initialArticle?.slug, initialServerContent]);
 
   const tableOfContents =
     useMemo(() => {
@@ -704,7 +715,7 @@ function ArticleDetails() {
     }, 2200);
   };
 
-  if (isLoading) {
+  if (initialArticle?.slug !== slug && (isLoading || requestedSlug !== slug)) {
     return (
       <ArticleStatePage
         code="..."

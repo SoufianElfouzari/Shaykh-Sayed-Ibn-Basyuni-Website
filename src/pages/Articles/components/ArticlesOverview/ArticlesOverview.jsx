@@ -187,8 +187,11 @@ function formatDate(value) {
 }
 
 function ArticlesOverview() {
-  const { articles: initialArticles } = useSsrData();
-  const [articles, setArticles] = useState(initialArticles || []);
+  const { articles: initialArticles, __ssrPath } = useSsrData();
+  // Home SSR carries metadata-only cards. The archive needs its full-text
+  // dataset to retain full-text search and accurate reading-time sorting.
+  const archiveArticles = __ssrPath === "/artikel" ? initialArticles : undefined;
+  const [articles, setArticles] = useState(archiveArticles || []);
 
   const [searchTerm, setSearchTerm] =
     useState("");
@@ -212,7 +215,7 @@ function ArticlesOverview() {
   ] = useState(12);
 
   const [isLoading, setIsLoading] =
-    useState(!initialArticles);
+    useState(!archiveArticles);
 
   const [
     errorMessage,
@@ -247,9 +250,10 @@ function ArticlesOverview() {
   );
 
   useEffect(() => {
+    if (Array.isArray(archiveArticles)) return undefined;
     const frame = window.requestAnimationFrame(() => { void loadArticles(); });
     return () => window.cancelAnimationFrame(frame);
-  }, [loadArticles]);
+  }, [archiveArticles, loadArticles]);
 
   const categories = useMemo(() => {
     return [

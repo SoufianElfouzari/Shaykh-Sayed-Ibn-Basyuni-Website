@@ -294,6 +294,7 @@ function DuruusArchive() {
   ] = useState("");
 
   useEffect(() => {
+    if (Array.isArray(initialDuruus)) return undefined;
     let isCurrentRequest = true;
 
     async function loadRecordings() {
@@ -340,7 +341,7 @@ function DuruusArchive() {
     return () => {
       isCurrentRequest = false;
     };
-  }, []);
+  }, [initialDuruus]);
 
   const categories = useMemo(() => {
     return [
