@@ -94,7 +94,7 @@ export async function renderPage(pathname, options = {}) {
     <StaticRouter location={path}>
       <SsrDataContext.Provider value={data}>
         <div className="app">
-          {status === 404 ? <NotFound /> : <PageRoutes />}
+          {status === 404 && data.__notFoundPath ? <NotFound /> : <PageRoutes />}
         </div>
       </SsrDataContext.Provider>
     </StaticRouter>
