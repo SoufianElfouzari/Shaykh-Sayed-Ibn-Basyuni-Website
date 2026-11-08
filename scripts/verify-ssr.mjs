@@ -305,7 +305,7 @@ if (articles.length > 0) {
     "published article: metadata description missing");
   assert.ok(response.body.includes('property="og:type" content="article"'),
     "published article: missing Article Open Graph type");
-  assert.ok(response.body.includes('<title>' + seo.title.replace(/&/g, "&amp;"),
+  assert.ok(response.body.includes('<title>' + seo.title.replace(/&/g, "&amp;")),
     "published article: title not generated from article metadata");
   const sourceHeadings = (first.contentHtml.match(/<h[1-3]\b/gi) || []).length;
   if (sourceHeadings > 0) {
