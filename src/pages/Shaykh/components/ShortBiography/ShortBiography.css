@@ -275,14 +275,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.sib-short-biography-visible
-  .sib-short-biography-header {
-  animation:
-    sibShortBiographyHeaderIn
-    0.9s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    forwards;
-}
+
 
 .sib-short-biography-header-top {
   display: flex;
@@ -394,15 +387,7 @@
   padding-left: 36px;
 }
 
-.sib-short-biography-visible
-  .sib-short-biography-lead {
-  animation:
-    sibShortBiographyLeadIn
-    0.85s
-    0.18s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    forwards;
-}
+
 
 .sib-short-biography-lead-mark {
   position: absolute;
@@ -447,22 +432,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.sib-short-biography-visible
-  .sib-short-biography-chapter {
-  animation:
-    sibShortBiographyChapterIn
-    0.85s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    forwards;
-  animation-delay:
-    calc(
-      0.34s +
-        (
-          var(--sib-biography-chapter-index) *
-            0.13s
-        )
-    );
-}
+
 
 .sib-short-biography-chapter:last-child {
   padding-bottom: 35px;
@@ -553,15 +523,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.sib-short-biography-visible
-  .sib-short-biography-footer {
-  animation:
-    sibShortBiographyFooterIn
-    0.8s
-    0.86s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    forwards;
-}
+
 
 .sib-short-biography-footer-heading {
   display: flex;
