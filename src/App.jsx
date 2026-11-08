@@ -22,8 +22,8 @@ function RouteSeo({ notFoundPath }) {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const path = pathname === "/" ? "/" : pathname.replace(/\\/+$/, "");
-    const isArticle = /^\\/artikel\\/[^/]+$/.test(path);
+    const path = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
+    const isArticle = /^\/artikel\/[^/]+$/.test(path);
     const metadata = staticMetadata[path];
     const isNotFound = notFoundPath === path || (!metadata && !isArticle);
     const canonical = document.head.querySelector('link[rel="canonical"]');
