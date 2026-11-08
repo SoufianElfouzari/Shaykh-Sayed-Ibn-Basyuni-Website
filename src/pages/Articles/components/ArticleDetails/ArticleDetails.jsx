@@ -453,6 +453,21 @@ function ArticleDetails() {
     [article],
   );
 
+  useEffect(() => {
+    // The HTTP status is authoritative on a direct request. During SPA
+    // navigation, a missing published article must also lose its canonical.
+    if (isLoading || requestedSlug !== slug || article) return;
+    document.head.querySelector('link[rel="canonical"]')?.remove();
+    let robots = document.head.querySelector('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement("meta");
+      robots.setAttribute("name", "robots");
+      document.head.appendChild(robots);
+    }
+    robots.setAttribute("content", "noindex, follow");
+    document.title = "Artikel nicht gefunden | Shaykh Sayed";
+  }, [article, isLoading, requestedSlug, slug]);
+
   const relatedArticles = useMemo(() => {
     if (!article) return [];
     if (initialArticle?.slug === article.slug &&
