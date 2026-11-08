@@ -7,7 +7,7 @@ test("server-rendered homepage, article archive and detail remain readable witho
     ["/", "Islam lernen"],
     ["/artikel", "Islamische Artikel"],
     ["/artikel/fiqh-grundlagen", "Fiqh Grundlagen"],
-    ["/shaykh", "Shaykh Sayed"],
+    ["/shaykh", "Sayed Ibn Basyuni"],
   ];
 
   for (const [path, expectedHeading] of pages) {
