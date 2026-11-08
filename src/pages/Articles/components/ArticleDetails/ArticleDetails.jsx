@@ -1001,11 +1001,11 @@ function ArticleDetails() {
 
             <footer className="sib-article-details-footer">
               {seo?.tags.length > 0 && (
-                <div className="sib-article-details-topics" aria-label="Themen des Artikels">
-                  <span>Themen</span>
+                <div className="sib-article-details-tags" aria-label="Themen des Artikels">
+                  <p>Themen</p>
                   <div>
                     {seo.tags.map((tag) => (
-                      <span key={tag} className="sib-article-details-topic">{tag}</span>
+                      <span key={tag} >{tag}</span>
                     ))}
                   </div>
                 </div>
