@@ -79,6 +79,7 @@ export function queryFixture(input) {
     const sign = direction === "asc" ? 1 : -1;
     data.sort((a, b) => sign * String(a[field] || "").localeCompare(String(b[field] || "")));
   }
+  const totalCount = data.length;
   const offset = Number(url.searchParams.get("offset") || 0);
   const limit = Number(url.searchParams.get("limit") || 1000);
   data = data.slice(offset, offset + limit);
@@ -89,7 +90,7 @@ export function queryFixture(input) {
       keys.filter((key) => Object.hasOwn(row, key)).map((key) => [key, row[key]]),
     ));
   }
-  return { status: 200, body: data };
+  return { status: 200, body: data, totalCount, offset };
 }
 
 export function fixtureResponse(input) {
@@ -101,7 +102,7 @@ export function fixtureResponse(input) {
       "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": "*",
       "access-control-expose-headers": "content-range",
-      "content-range": "0-1/2",
+      "content-range": `${result.offset || 0}-${Math.max(result.offset || 0, (result.offset || 0) + result.body.length - 1)}/${result.totalCount || 0}`,
     },
   });
 }
