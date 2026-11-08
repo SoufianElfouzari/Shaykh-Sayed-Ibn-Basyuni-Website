@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react'
 // the serverless function otherwise.
 export default defineConfig({
   plugins: [react()],
+  build: { manifest: true },
   ssr: {
     noExternal: ['react-router', 'react-router-dom'],
   },
