@@ -40,7 +40,7 @@ export async function renderPage(pathname, options = {}) {
     data.articles = await getPublishedArticleSummaries(6);
   } else if (path === "/artikel") {
     const requestedPage = String(options.page ?? "1");
-    if (!/^[1-9]\\d{0,5}$/.test(requestedPage)) {
+    if (!/^[1-9]\d{0,5}$/.test(requestedPage)) {
       status = 404;
       data.__notFoundPath = path;
     } else {
