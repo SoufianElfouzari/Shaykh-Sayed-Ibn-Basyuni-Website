@@ -68,6 +68,12 @@ export async function getPublishedArticlePage(requestedPage = 1) {
     .order("publishedAt", { ascending: false, nullsFirst: false })
     .range(offset, offset + ARTICLE_PAGE_SIZE - 1);
 
+  // PostgREST returns PGRST103 when an offset starts beyond the final row.
+  // This is a nonexistent archive page, not an application/server failure.
+  // Keep unexpected database errors visible instead of swallowing them.
+  if (error?.code === "PGRST103") {
+    return { articles: [], page, total: 0, totalPages: 0 };
+  }
   if (error) throw error;
   const articles = (data || [])
     .filter((row) => row.slug && row.title)
