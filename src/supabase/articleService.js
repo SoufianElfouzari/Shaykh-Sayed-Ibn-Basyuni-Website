@@ -23,7 +23,10 @@ const mapArticle = (row) => {
     status: row.status,
     publishedAt: row.publishedAt || null,
     updatedAt: row.updated_at,
-    readingTime: Math.max(1, Math.ceil(contentText.split(/\s+/).filter(Boolean).length / 200)),
+    // A listing intentionally omits contentHtml, so never invent a reading time.
+    readingTime: Object.hasOwn(row, "contentHtml")
+      ? Math.max(1, Math.ceil(contentText.split(/\s+/).filter(Boolean).length / 200))
+      : null,
     author: row.author || "Redaktion Shaykh Sayed",
     category: row.category || "Artikel",
     language: row.language || "Deutsch",
@@ -31,6 +34,20 @@ const mapArticle = (row) => {
     tags: Array.isArray(row.tags) ? row.tags : [],
   };
 };
+
+// Lightweight public metadata for homepage cards and article navigation.
+// Full texts are fetched only for the archive's full-text search or detail pages.
+export async function getPublishedArticleSummaries() {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("id,slug,title,seoTitle,seoDescription,excerpt,coverImageUrl,status,publishedAt,updated_at,author,category,language,featured,tags")
+    .eq("status", "published")
+    .order("publishedAt", { ascending: false, nullsFirst: false })
+    .range(0, 999);
+
+  if (error) throw error;
+  return (data || []).filter((row) => row.slug && row.title).map(mapArticle);
+}
 
 export async function getPublishedArticles() {
   const { data, error } = await supabase
