@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import "./ShortBiography.css";
 
 const biographySections = [
@@ -53,45 +52,8 @@ const biographySections = [
 ];
 
 function ShortBiography() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-
-    if (!section) {
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        section.classList.add(
-          "sib-short-biography-visible",
-        );
-
-        observer.unobserve(section);
-      },
-      {
-        // The section is far taller than the mobile viewport. A 10% threshold
-        // can never be reached on smaller screens, so trigger at first contact.
-        threshold: 0,
-        rootMargin: "0px 0px -40px 0px",
-      },
-    );
-
-    observer.observe(section);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
       className="sib-short-biography"
       id="kurzbiografie"
     >
