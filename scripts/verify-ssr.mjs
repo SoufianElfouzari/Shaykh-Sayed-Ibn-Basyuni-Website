@@ -117,7 +117,16 @@ for (const [path, title] of pages) {
     assert.ok(archivePreload.articles.every((item) => !item.contentHtml && !item.contentText),
       "archive: full article bodies must not be in the SSR payload");
     assert.equal(archivePreload.archivePagination.page, 1);
-    assert.equal(archivePreload.archivePagination.total, 2);
+    assert.ok(
+      Number.isSafeInteger(archivePreload.archivePagination.total) &&
+        archivePreload.archivePagination.total >= archivePreload.articles.length,
+      "archive: total must be a valid count at least as large as the returned page",
+    );
+    assert.equal(
+      archivePreload.archivePagination.totalPages,
+      Math.max(1, Math.ceil(archivePreload.archivePagination.total / 12)),
+      "archive: totalPages must match the current published article count",
+    );
   }
   if (path === "/shaykh") {
     assert.ok(
