@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router";
 import PageRoutes from "./PageRoutes";
@@ -46,6 +47,13 @@ export async function renderPage(pathname) {
       }
     }
   } else if (path === "/durous") {
+    // Vite copies the editable public JSON into dist/data at build time.
+    // Read the same schedule for SSR that clients load after navigation.
+    const schedule = JSON.parse(readFileSync(new URL("../dist/data/durus-schedule.json", import.meta.url), "utf8"));
+    if (!Array.isArray(schedule.lessons)) throw new Error("Invalid Durous schedule JSON");
+    data.lessons = schedule.lessons.filter((lesson) =>
+      lesson.enabled !== false && lesson.day && lesson.time && lesson.subject,
+    );
     const [duruus, notices] = await Promise.all([
       getPublishedDuruus(),
       getActivePublishedNotices().catch((error) => {
