@@ -112,8 +112,12 @@ for (const [path, title] of pages) {
   if (path === "/artikel") {
     const dataMatch = response.body.match(/<script>window\.__SSR_DATA__=([\s\S]*?);<\/script>/);
     assert.ok(dataMatch, "archive: SSR preload missing");
-    assert.equal(JSON.parse(dataMatch[1]).__ssrPath, "/artikel",
-      "archive: full-text dataset should be scoped to its original route");
+    const archiveData = JSON.parse(dataMatch[1]);
+    assert.equal(archiveData.__ssrPath, "/artikel", "archive: wrong SSR route");
+    assert.equal(archiveData.__ssrPage, 1, "archive: missing page number");
+    assert.ok(archiveData.articles.every((entry) => !entry.contentHtml && !entry.contentText),
+      "archive: full article bodies must not be serialized to the listing");
+    assert.ok(archiveData.pagination?.pageCount >= 1, "archive: pagination metadata missing");
   }
   if (path === "/shaykh") {
     assert.ok(
@@ -334,7 +338,11 @@ if (articles.length > 0) {
   assert.equal(articleSchema?.headline, first.title, "published article: incorrect headline schema");
   assert.ok(graph.some((item) => item["@type"] === "BreadcrumbList"), "published article: breadcrumb missing");
   assert.ok(response.body.includes('name="robots" content="index'), "published article: should be indexable");
-  const seo = articleSeo(first);
+  const detailDataMatch = response.body.match(/<script>window\.__SSR_DATA__=([\s\S]*?);<\/script>/);
+  assert.ok(detailDataMatch, "published article: complete SSR detail payload missing");
+  const fullArticle = JSON.parse(detailDataMatch[1]).article;
+  assert.ok(fullArticle?.contentHtml, "published article: detail must contain its own content");
+  const seo = articleSeo(fullArticle);
   assert.equal(articleSchema.description, seo.description,
     "published article: description must match the editorial excerpt");
   assert.equal(articleSchema.inLanguage, seo.language,
@@ -376,9 +384,9 @@ if (articles.length > 0) {
     "published article: missing Article Open Graph type");
   assert.ok(response.body.includes('<title>' + seo.title.replace(/&/g, "&amp;")),
     "published article: title not generated from article metadata");
-  const sourceHeadings = (first.contentHtml.match(/<h[1-3]\b/gi) || []).length;
+  const sourceHeadings = (fullArticle.contentHtml.match(/<h[1-6]\b/gi) || []).length;
   if (sourceHeadings > 0) {
-    const renderedHeadings = (response.body.match(/<h2\b/gi) || []).length;
+    const renderedHeadings = (response.body.match(/<h[2-6]\b/gi) || []).length;
     assert.ok(renderedHeadings >= sourceHeadings,
       "published article: authored section headings were flattened during SSR");
   }
