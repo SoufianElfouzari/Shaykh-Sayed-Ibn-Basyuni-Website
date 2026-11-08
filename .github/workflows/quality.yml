@@ -86,3 +86,14 @@ jobs:
       - run: npm run build
       - name: Lighthouse on local SSR
         run: npm run test:lighthouse
+      - name: Lighthouse scores and SEO findings
+        if: always()
+        run: node scripts/report-lighthouse.mjs
+      - name: Store Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lighthouse-reports
+          path: lighthouse-reports/
+          if-no-files-found: ignore
+          retention-days: 7
