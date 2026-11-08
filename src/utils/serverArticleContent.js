@@ -47,7 +47,7 @@ function headingText(value) {
 
 export function parseServerArticleContent(contentHtml, createSectionId) {
   const sanitized = sanitizeHtml(String(contentHtml || ""), options).trim();
-  const headings = /<(h[1-3])\b[^>]*>([\s\S]*?)<\/\1\s*>/gi;
+  const headings = /<(h[1-6])\b[^>]*>([\s\S]*?)<\/\1\s*>/gi;
   const sections = [];
   const usedIds = new Set();
   let introductionHtml = "";
@@ -64,7 +64,7 @@ export function parseServerArticleContent(contentHtml, createSectionId) {
 
     const title = headingText(match[2]) || "Abschnitt " + (sections.length + 1);
     const sectionId = createSectionId(title, sections.length, usedIds);
-    sections.push({ id: sectionId, title, html: "" });
+    sections.push({ id: sectionId, title, level: Math.max(2, Number(match[1][1])), html: "" });
     cursor = headings.lastIndex;
   }
 
@@ -72,7 +72,7 @@ export function parseServerArticleContent(contentHtml, createSectionId) {
   if (sections.length > 0) {
     sections[sections.length - 1].html += remainingHtml;
   } else if (remainingHtml) {
-    sections.push({ id: "artikelinhalt", title: "Artikelinhalt", html: remainingHtml });
+    sections.push({ id: "artikelinhalt", title: "Artikelinhalt", level: 2, html: remainingHtml });
   }
 
   return { introductionHtml, sections };
