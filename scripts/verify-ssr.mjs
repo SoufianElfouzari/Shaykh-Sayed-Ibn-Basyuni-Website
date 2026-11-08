@@ -112,8 +112,12 @@ for (const [path, title] of pages) {
   if (path === "/artikel") {
     const dataMatch = response.body.match(/<script>window\.__SSR_DATA__=([\s\S]*?);<\/script>/);
     assert.ok(dataMatch, "archive: SSR preload missing");
-    assert.equal(JSON.parse(dataMatch[1]).__ssrPath, "/artikel",
-      "archive: full-text dataset should be scoped to its original route");
+    const archivePreload = JSON.parse(dataMatch[1]);
+    assert.equal(archivePreload.__ssrPath, "/artikel", "archive: SSR route mismatch");
+    assert.ok(archivePreload.articles.every((item) => !item.contentHtml && !item.contentText),
+      "archive: full article bodies must not be in the SSR payload");
+    assert.equal(archivePreload.archivePagination.page, 1);
+    assert.equal(archivePreload.archivePagination.total, 2);
   }
   if (path === "/shaykh") {
     assert.ok(
@@ -403,3 +407,15 @@ assert.ok(!sitemap.includes("/artikel/die-bedeutung-von-wissen-und-aufrichtigem-
 assert.ok(sitemap.includes("/artikel/die-unterscheidung-zwischen-konsens-und-uebereinstimmung-der-gelehrten-in-der-islamischen-rechtsmethodik"), "sitemap: known published article missing");
 console.log("PASS: canonical host matches sitemap and robots.txt");
 console.log("SSR smoke tests passed.");
+
+for (const path of ["/artikel?page=2", "/artikel?page=0", "/artikel?page=invalid"]) {
+  const response = await request(path);
+  assert.equal(response.statusCode, 404, "invalid archive pagination should return 404: " + path);
+  assert.ok(response.body.includes('name="robots" content="noindex'));
+  assert.ok(!response.body.includes('rel="canonical"'));
+}
+const firstArchivePage = await request("/artikel?page=1");
+assert.equal(firstArchivePage.statusCode, 200);
+assert.ok(firstArchivePage.body.includes('rel="canonical" href="https://www.shaykh-sayed.de/artikel"'));
+assert.ok(!firstArchivePage.body.includes('rel="canonical" href="https://www.shaykh-sayed.de/artikel?page=1"'));
+console.log("PASS: archive query parameters, canonical normalization and invalid-page 404");
