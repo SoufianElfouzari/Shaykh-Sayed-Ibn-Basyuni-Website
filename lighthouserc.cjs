@@ -9,6 +9,9 @@ module.exports = {
         "http://127.0.0.1:4179/durous",
         "http://127.0.0.1:4179/artikel",
         "http://127.0.0.1:4179/artikel/fiqh-grundlagen",
+        "http://127.0.0.1:4179/kontakt",
+        "http://127.0.0.1:4179/impressum",
+        "http://127.0.0.1:4179/datenschutz",
       ],
       numberOfRuns: 2,
       settings: {
