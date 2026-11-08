@@ -3,13 +3,18 @@ import { StaticRouter } from "react-router";
 import PageRoutes from "./PageRoutes";
 import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
-import { getPublishedArticles, getPublishedArticleBySlug } from "./supabase/articleService";
+import { getPublishedArticles, getPublishedArticleBySlug, getPublishedArticleIndex } from "./supabase/articleService";
 import { getPublishedDuruus } from "./supabase/duruusService";
 import { getActivePublishedNotices } from "./supabase/noticesService";
 
 const pages = new Set([
   "/", "/shaykh", "/durous", "/artikel", "/kontakt", "/impressum", "/datenschutz"
 ]);
+
+// Used by the production sitemap endpoint. Shares the same published-only RLS client.
+export async function getSitemapArticles() {
+  return getPublishedArticleIndex();
+}
 
 export async function renderPage(pathname) {
   const path = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
