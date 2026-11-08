@@ -38,3 +38,17 @@ test("metadata query hides draft content", () => {
   assert.ok(result.body.every((row) => !Object.hasOwn(row, "contentHtml")));
   assert.ok(result.body.every((row) => row.slug !== "geheimer-entwurf"));
 });
+
+test("server article parser keeps nested heading levels without introducing another H1", () => {
+  const html = "<h2>Hauptabschnitt</h2><p>Einleitung</p><h3>Unterabschnitt</h3><p>Details</p><h4>Vertiefung</h4><p>Mehr Details</p><h1>Weitere Überschrift</h1>";
+  const parsed = parseServerArticleContent(html, createSectionId);
+  assert.deepEqual(parsed.sections.map((section) => section.level), [2, 3, 4, 2]);
+  assert.deepEqual(parsed.sections.map((section) => section.title), [
+    "Hauptabschnitt",
+    "Unterabschnitt",
+    "Vertiefung",
+    "Weitere Überschrift",
+  ]);
+  assert.match(parsed.sections[0].html, /Einleitung/);
+  assert.match(parsed.sections[1].html, /Details/);
+});
