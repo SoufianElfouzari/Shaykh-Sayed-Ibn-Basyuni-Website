@@ -1336,3 +1336,131 @@
     transform: none;
   }
 }
+
+/* Encyclopedic navigation: visible trail, real subject links and author context. */
+.sib-article-details-breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  max-width: 100%;
+  margin-bottom: 19px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.sib-article-details-breadcrumbs a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, 0.48);
+}
+
+.sib-article-details-breadcrumbs a:hover {
+  text-decoration-color: #ffffff;
+}
+
+.sib-article-details-breadcrumbs [aria-current="page"] {
+  max-width: min(100%, 380px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sib-article-details-author-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sib-article-details-author-link:hover {
+  text-decoration-color: #d8ceb2;
+}
+
+.sib-article-details-hero h1,
+.sib-article-details-related-card h3 {
+  overflow-wrap: anywhere;
+}
+
+.sib-article-details-related {
+  width: 100%;
+  max-width: 1180px;
+  margin: 70px auto 0;
+}
+
+.sib-article-details-related > h2 {
+  margin: 0 0 24px;
+  color: var(--sib-color-primary-dark, #084c3c);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.sib-article-details-related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.sib-article-details-related-card {
+  min-width: 0;
+  padding: 25px 27px;
+  background: #ffffff;
+  border: 1px solid rgba(13, 106, 82, 0.15);
+  border-radius: 18px;
+  box-shadow: 0 14px 35px rgba(15, 41, 36, 0.05);
+}
+
+.sib-article-details-related-card > p:first-child {
+  margin: 0 0 12px;
+  color: var(--sib-color-primary, #0d6a52);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sib-article-details-related-card h3 {
+  margin: 0;
+  font-size: clamp(18px, 2vw, 23px);
+  line-height: 1.35;
+}
+
+.sib-article-details-related-card h3 a {
+  color: var(--sib-color-text, #151b19);
+  text-decoration: none;
+}
+
+.sib-article-details-related-card h3 a:hover {
+  color: var(--sib-color-primary, #0d6a52);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sib-article-details-related-card > p:last-child:not(:first-child) {
+  margin: 13px 0 0;
+  color: #4e5a55;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.sib-article-details-breadcrumbs a:focus-visible,
+.sib-article-details-related-card a:focus-visible,
+.sib-article-details-author-link:focus-visible {
+  outline: 2px solid var(--sib-color-accent, #aa9767);
+  outline-offset: 4px;
+}
+
+@media (max-width: 720px) {
+  .sib-article-details-related-grid {
+    grid-template-columns: 1fr;
+  }
+  .sib-article-details-related-card {
+    padding: 22px;
+  }
+  .sib-article-details-breadcrumbs {
+    font-size: 12px;
+  }
+  .sib-article-details-breadcrumbs [aria-current="page"] {
+    max-width: 170px;
+  }
+}
