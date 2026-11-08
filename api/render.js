@@ -25,19 +25,65 @@ function safeJson(value) {
     .replace(/\u2029/g, "\\u2029");
 }
 
-function getAssets() {
+const routeModulePaths = {
+  "/shaykh": "src/pages/Shaykh/Shaykh.jsx",
+  "/durous": "src/pages/Duruus/Duruus.jsx",
+  "/artikel": "src/pages/Articles/Articles.jsx",
+  "/kontakt": "src/pages/Contact/Contact.jsx",
+  "/datenschutz": "src/pages/Datenschutz/Datenschutz.jsx",
+  "/impressum": "src/pages/Impressum/Impressum.jsx",
+};
+
+let clientManifest;
+
+function getAssets(pathname) {
   if (assetTags === undefined) {
     const template = readFileSync(templatePath, "utf8");
-    assetTags = (template.match(/<(?:script|link)\b[^>]*>/gi) || [])
-      .filter((tag) => /(?:src|href)="\/assets\//.test(tag))
-      // A script opening tag without </script> swallows following HTML.
-      .map((tag) => /^<script\b/i.test(tag) ? tag + "</script>" : tag)
-      .join("\n");
-    if (!assetTags.includes("/assets/")) {
+    assetTags = (template.match(/<(?:script|link)\\b[^>]*>/gi) || [])
+      .filter((tag) => /(?:src|href)="\\/assets\\//.test(tag))
+      .map((tag) => /^<script\\b/i.test(tag) ? tag + "</script>" : tag);
+    if (!assetTags.some((tag) => tag.includes("/assets/"))) {
       throw new Error("The Vite client assets were not found in dist/index.html");
     }
   }
-  return assetTags;
+
+  const styles = assetTags.filter((tag) => /^<link\\b/i.test(tag));
+  const scripts = assetTags.filter((tag) => /^<script\\b/i.test(tag));
+  const routeEntry = pathname.startsWith("/artikel/")
+    ? "src/pages/Articles/components/ArticleDetails/ArticleDetails.jsx"
+    : routeModulePaths[pathname];
+
+  if (routeEntry) {
+    if (!clientManifest) {
+      clientManifest = JSON.parse(readFileSync(
+        fileURLToPath(new URL("../dist/.vite/manifest.json", import.meta.url)),
+        "utf8",
+      ));
+    }
+
+    const seenChunks = new Set();
+    const cssFiles = new Set();
+    function addChunkStyles(key) {
+      if (seenChunks.has(key)) return;
+      seenChunks.add(key);
+      const chunk = clientManifest[key];
+      if (!chunk) throw new Error("Client manifest is missing route chunk: " + key);
+      for (const cssFile of chunk.css || []) cssFiles.add(cssFile);
+      for (const imported of chunk.imports || []) addChunkStyles(imported);
+    }
+    addChunkStyles(routeEntry);
+    for (const cssFile of cssFiles) {
+      const href = "/" + cssFile;
+      if (!styles.some((tag) => tag.includes('href="' + href + '"'))) {
+        styles.push('<link rel="stylesheet" href="' + escapeHtml(href) + '">');
+      }
+    }
+  }
+
+  return {
+    head: styles.join("\n"),
+    body: scripts.join("\n"),
+  };
 }
 
 function absoluteImage(source) {
@@ -249,6 +295,7 @@ function buildHtml(result) {
   const description = escapeHtml(meta.description);
   const canonical = escapeHtml(url);
   const ld = structuredData(pathname, meta, data.article, status, data);
+  const assets = getAssets(pathname);
   const articleDetails = data.article && status === 200 ? articleSeo(data.article) : null;
   const pageLanguage = articleDetails?.language || "de";
   const ogLocale = pageLanguage === "ar" ? "ar_AR" : pageLanguage === "en" ? "en_US" : "de_DE";
@@ -283,11 +330,12 @@ function buildHtml(result) {
     articleDetails?.author?.profileUrl ? '<link rel="author" href="' + escapeHtml(articleDetails.author.profileUrl) + '">' : "",
     '<meta name="theme-color" content="#084c3c">',
     '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
+    assets.head,
     ld,
     "</head><body>",
     '<div id="root">' + markup + "</div>",
     "<script>window.__SSR_DATA__=" + safeJson(data) + ";</script>",
-    getAssets(),
+    assets.body,
     "</body></html>"
   ].join("\n");
 }
