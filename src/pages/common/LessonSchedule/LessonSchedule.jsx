@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSsrData } from "../../../SsrDataContext";
 import "./LessonSchedule.css";
 
-const fallbackLessons = [
-  { id: 1, day: "Dienstag", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
-  { id: 2, day: "Mittwoch", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
-  { id: 3, day: "Donnerstag", time: "Nach Maghrib bis Ishaa", subject: "Fiqh (Mulakhas al-Fiqhi von Shaykh al-Fawzan)" },
-  { id: 4, day: "Sonntag", time: "Nach Asr", subject: "Fiqh" },
-];
 
 function ArrowIcon() {
   return (
@@ -36,9 +31,14 @@ function ArrowIcon() {
 }
 
 function LessonSchedule() {
-  const [weeklyLessons, setWeeklyLessons] = useState(fallbackLessons);
+  const { lessons: initialLessons } = useSsrData();
+  const serverLessons = Array.isArray(initialLessons) ? initialLessons : null;
+  const [weeklyLessons, setWeeklyLessons] = useState(serverLessons || []);
 
   useEffect(() => {
+    // Initial SSR has the deployed JSON already. Avoid a redundant fetch
+    // and a client-side overwrite that could change the server-rendered table.
+    if (serverLessons) return undefined;
     const controller = new AbortController();
 
     async function loadSchedule() {
@@ -63,7 +63,7 @@ function LessonSchedule() {
 
     loadSchedule();
     return () => controller.abort();
-  }, []);
+  }, [serverLessons]);
 
   return (
     <section className="sib-schedule">
