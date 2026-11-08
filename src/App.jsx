@@ -47,12 +47,15 @@ function updateMeta(attribute, key, value) {
 }
 
 function RouteSeo({ notFoundPath }) {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   useEffect(() => {
     const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
-    const canonicalUrl = "https://www.shaykh-sayed.de" + normalizedPath;
+    const rawPage = normalizedPath === "/artikel" ? new URLSearchParams(search).get("page") : null;
+    const invalidPage = rawPage !== null && (!/^[1-9]\d*$/.test(rawPage) || !Number.isSafeInteger(Number(rawPage)));
+    const pageQuery = rawPage !== null && !invalidPage && Number(rawPage) > 1 ? "?page=" + Number(rawPage) : "";
+    const canonicalUrl = "https://www.shaykh-sayed.de" + normalizedPath + pageQuery;
     const knownRoute = Object.hasOwn(routeMetadata, normalizedPath) || /^\/artikel\/[^/]+$/.test(normalizedPath);
-    const isNotFound = normalizedPath === notFoundPath || !knownRoute;
+    const isNotFound = normalizedPath + search === notFoundPath || !knownRoute || invalidPage;
     let canonical = document.querySelector('link[rel="canonical"]');
     if (isNotFound) {
       canonical?.remove();
@@ -81,13 +84,13 @@ function RouteSeo({ notFoundPath }) {
       updateMeta("name", "twitter:description", metadata.description);
       updateMeta("property", "og:type", "website");
     }
-  }, [pathname, notFoundPath]);
+  }, [pathname, search, notFoundPath]);
   return null;
 }
 
 function ClientRoutes({ notFoundPath }) {
-  const { pathname } = useLocation();
-  if (notFoundPath && pathname === notFoundPath) {
+  const { pathname, search } = useLocation();
+  if (notFoundPath && pathname + search === notFoundPath) {
     return <NotFound />;
   }
   return <PageRoutes />;
