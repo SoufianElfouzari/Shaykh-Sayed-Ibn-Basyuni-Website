@@ -275,17 +275,19 @@ function buildHtml(result) {
   const canonical = escapeHtml(url);
   const ld = structuredData(pathname, meta, data.article, status, data);
   const articleDetails = data.article && status === 200 ? articleSeo(data.article) : null;
+  const pageLanguage = articleDetails?.language || "de";
+  const ogLocale = pageLanguage === "ar" ? "ar_AR" : pageLanguage === "en" ? "en_US" : "de_DE";
 
   return [
     "<!doctype html>",
-    '<html lang="de" dir="ltr"><head>',
+    '<html lang="' + pageLanguage + '" dir="' + (pageLanguage === "ar" ? "rtl" : "ltr") + '"><head>',
     '<meta charset="UTF-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">',
     "<title>" + title + "</title>",
     '<meta name="description" content="' + description + '">',
     '<meta name="robots" content="' + robots + '">',
     status === 404 ? "" : '<link rel="canonical" href="' + canonical + '">',
-    '<meta property="og:locale" content="de_DE">',
+    '<meta property="og:locale" content="' + ogLocale + '">',
     '<meta property="og:site_name" content="' + escapeHtml(siteName) + '">',
     '<meta property="og:type" content="' + (meta.type || "website") + '">',
     '<meta property="og:title" content="' + title + '">',
