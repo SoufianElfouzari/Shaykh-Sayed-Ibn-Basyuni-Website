@@ -1,3 +1,5 @@
+import ContactForm from "../common/ContactForm/ContactForm";
+import DuruusArchive from "../Duruus/components/DuruusArchive/DuruusArchive";
 import AboutShaykh from "./components/AboutShaykh/AboutShaykh";
 import Footer from "../common/Footer/Footer";
 import Header from "../common/Header/Header";
@@ -16,7 +18,9 @@ function Home() {
             <AboutShaykh />
             <LatestArticles />
             <OfficialChannels />
+            <DuruusArchive />
             <LessonSchedule />
+            <ContactForm />
         </main>
 
         <Footer />
