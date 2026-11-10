@@ -1152,3 +1152,92 @@
     transform: none;
   }
 }
+
+/* Formatted lesson descriptions and accessible expand/collapse control */
+.sib-duruus-lesson-description-text {
+  overflow-wrap: anywhere;
+}
+
+.sib-duruus-lesson-description-text p {
+  margin: 0 0 10px;
+}
+
+.sib-duruus-lesson-description-text p:last-child {
+  margin-bottom: 0;
+}
+
+.sib-duruus-lesson-description-text strong {
+  color: #263b32;
+  font-weight: 750;
+}
+
+.sib-duruus-description-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 5px 0;
+  border: 0;
+  background: transparent;
+  color: var(--sib-color-primary, #0d6a52);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.sib-duruus-description-toggle:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sib-duruus-description-toggle:focus-visible {
+  outline: 2px solid var(--sib-color-primary, #0d6a52);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+@media (max-width: 700px) {
+  .sib-duruus-lesson-description {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .sib-duruus-lesson-description-text p {
+    margin-bottom: 8px;
+  }
+
+  .sib-duruus-description-toggle {
+    min-height: 36px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 430px) {
+  .sib-duruus-lesson {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .sib-duruus-lesson-play {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .sib-duruus-lesson-content {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .sib-duruus-lesson-content h4 {
+    font-size: 21px;
+    line-height: 1.3;
+  }
+
+  .sib-duruus-lesson-actions {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
