@@ -234,6 +234,57 @@ function getDateTimestamp(value) {
   return timestamp;
 }
 
+function DescriptionText({ text }) {
+  const paragraphs = String(text || "").replace(/\r\n?/g, "\n").split(/\n\s*\n/);
+  return paragraphs.map((paragraph, paragraphIndex) => (
+    <p key={paragraphIndex}>
+      {paragraph.split("\n").map((line, lineIndex) => (
+        <span key={lineIndex}>
+          {lineIndex > 0 && <br />}
+          {line.split(/(\*\*[^*\n]+\*\*)/g).map((part, partIndex) =>
+            part.startsWith("**") && part.endsWith("**") ? (
+              <strong key={partIndex}>{part.slice(2, -2)}</strong>
+            ) : (
+              <span key={partIndex}>{part}</span>
+            ),
+          )}
+        </span>
+      ))}
+    </p>
+  ));
+}
+
+function LessonDescription({ description }) {
+  const [expanded, setExpanded] = useState(false);
+  const fullText = String(description || "").trim();
+  const plainText = fullText.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
+  const needsExpansion = plainText.length > 190 || fullText.includes("\n");
+  const preview = plainText.length > 190
+    ? plainText.slice(0, 190).replace(/\s+\S*$/, "") + "…"
+    : plainText;
+
+  return (
+    <div className="sib-duruus-lesson-description">
+      <div className="sib-duruus-lesson-description-text">
+        {expanded || !needsExpansion
+          ? <DescriptionText text={fullText} />
+          : <p>{preview}</p>}
+      </div>
+      {needsExpansion && (
+        <button
+          type="button"
+          className="sib-duruus-description-toggle"
+          aria-expanded={expanded}
+          onClick={() => setExpanded((value) => !value)}
+        >
+          {expanded ? "Weniger anzeigen" : "Mehr anzeigen"}
+          <span aria-hidden="true">{expanded ? " ↑" : " ↓"}</span>
+        </button>
+      )}
+    </div>
+  );
+}
+
 function DuruusArchive() {
   const { duruus: initialDuruus } = useSsrData();
   const audioRef = useRef(null);
@@ -1152,11 +1203,7 @@ function DuruusArchive() {
                                     </h4>
 
                                     {recording.description && (
-                                      <p className="sib-duruus-lesson-description">
-                                        {
-                                          recording.description
-                                        }
-                                      </p>
+                                      <LessonDescription description={recording.description} />
                                     )}
 
                                     <div className="sib-duruus-lesson-meta">
