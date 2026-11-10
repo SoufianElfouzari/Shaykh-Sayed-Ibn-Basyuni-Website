@@ -8,8 +8,8 @@ import { SITE_FALLBACK_IMAGE } from "./utils/articleSeo";
 
 const routeMetadata = {
   "/": {
-    title: "Islam lernen auf Deutsch | Shaykh Sayed Ibn Basyuni",
-    description: "Islam lernen auf Deutsch: Unterrichte und Artikel von Shaykh Sayed Ibn Basyuni zu Fiqh, Aqidah und weiteren islamischen Wissenschaften.",
+    title: "Islam lernen auf Deutsch für Anfänger | Shaykh Sayed",
+    description: "Islam lernen auf Deutsch für Anfänger und Fortgeschrittene: Entdecke Unterrichte und Artikel über Quran, Sunnah, Fiqh, Hadith und islamische Wissenschaften.",
   },
   "/shaykh": {
     title: "Shaykh Sayed Ibn Basyuni | Biografie und Werdegang",
