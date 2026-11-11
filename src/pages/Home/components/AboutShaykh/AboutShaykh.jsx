@@ -105,7 +105,7 @@ function AboutShaykh() {
             to="/shaykh"
             className="sib-about-link"
           >
-            <span>Mehr über den Shaykh erfahren</span>
+            <span>Biografie lesen</span>
             <ArrowIcon />
           </Link>
         </div>
