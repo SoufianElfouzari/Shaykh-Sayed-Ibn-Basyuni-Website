@@ -109,6 +109,14 @@ for (const [path, title] of pages) {
       "home: missing learning focus in server-rendered hero",
     );
     assert.ok(
+      response.body.includes('Islam lernen mit Quran und Sunnah:'),
+      "home: H1 wording must appear naturally in explanatory copy",
+    );
+    assert.ok(
+      !response.body.includes('<strong>Fiqh (Mulakhas al-Fiqhi'),
+      "home: repeated lesson titles must not be strong tags",
+    );
+    assert.ok(
       response.body.includes('fundierte Artikel über Quran, Sunnah, Fiqh, Hadith'),
       "home: H1 topic terms must appear naturally in the paragraph",
     );
@@ -158,6 +166,14 @@ for (const [path, title] of pages) {
     assert.equal(page?.mainEntity?.["@id"], "https://www.shaykh-sayed.de/#person", "shaykh: wrong main entity");
   }
   if (path === "/durous") {
+    assert.ok(
+      response.body.includes('Islamische Unterrichte von Shaykh Sayed Ibn Basyuni:'),
+      "durous: H1 wording must appear naturally in explanatory copy",
+    );
+    assert.ok(
+      !response.body.includes('<strong>Fiqh (Mulakhas al-Fiqhi'),
+      "durous: repeated lesson titles must not be strong tags",
+    );
     assert.ok(
       response.body.includes('name="description" content="Islamische Unterrichte von Shaykh Sayed'),
       "durous: incorrect SEO description",

@@ -424,11 +424,9 @@ function NoticesBanner() {
                     {notice.affectedDars && (
                       <p>
                         Betroffener Unterricht:{" "}
-                        <strong>
-                          {
-                            notice.affectedDars
-                          }
-                        </strong>
+                        <span className="sib-notices-banner-affected-dars">
+                          {notice.affectedDars}
+                        </span>
                       </p>
                     )}
                   </div>

@@ -328,7 +328,7 @@
     background-color 180ms ease;
 }
 
-.sib-duruus-archive-category strong {
+.sib-duruus-archive-category-count {
   min-width: 23px;
   height: 23px;
   padding: 0 6px;
@@ -353,7 +353,7 @@
   color: #ffffff;
 }
 
-.sib-duruus-archive-category-active strong {
+.sib-duruus-archive-category-active .sib-duruus-archive-category-count {
   background: rgba(255, 255, 255, 0.16);
   color: #ffffff;
 }
@@ -384,7 +384,7 @@
   font-weight: 500;
 }
 
-.sib-duruus-archive-result-info strong {
+.sib-duruus-archive-result-count {
   color: #151b19;
   font-weight: 750;
 }
@@ -893,7 +893,7 @@
   white-space: nowrap;
 }
 
-.sib-duruus-player-information strong {
+.sib-duruus-player-recording-title {
   display: block;
   margin-top: 5px;
   overflow: hidden;

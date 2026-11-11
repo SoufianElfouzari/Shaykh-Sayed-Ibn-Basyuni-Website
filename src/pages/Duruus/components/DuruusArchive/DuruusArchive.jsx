@@ -1013,9 +1013,9 @@ function DuruusArchive() {
                           {category}
                         </span>
 
-                        <strong>
+                        <span className="sib-duruus-archive-category-count">
                           {count}
-                        </strong>
+                        </span>
                       </button>
                     );
                   },
@@ -1024,11 +1024,9 @@ function DuruusArchive() {
 
               <div className="sib-duruus-archive-result-info">
                 <p>
-                  <strong>
-                    {
-                      filteredRecordings.length
-                    }
-                  </strong>{" "}
+                  <span className="sib-duruus-archive-result-count">
+                    {filteredRecordings.length}
+                  </span>{" "}
                   {filteredRecordings.length ===
                   1
                     ? "Aufnahme"
@@ -1344,9 +1342,9 @@ function DuruusArchive() {
                 {activeRecording.series}
               </span>
 
-              <strong>
+              <span className="sib-duruus-player-recording-title">
                 {activeRecording.title}
-              </strong>
+              </span>
             </div>
 
             {audioUrl ? (

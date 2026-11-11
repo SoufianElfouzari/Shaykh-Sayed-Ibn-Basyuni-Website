@@ -29,10 +29,10 @@ function DuruusHero() {
         </h1>
 
         <p className="sib-duruus-page-hero-description">
-          Islam lernen mit den Unterrichten von Dr. Shaykh Sayed
-          Ibn Basyuni: Hier findest du den Fiqh-Unterrichtsplan
-          in Kassel, aktuelle Hinweise und veröffentlichte
-          Audioaufnahmen der Durous.
+          Islamische Unterrichte von Shaykh Sayed Ibn Basyuni:
+          Entdecke den Fiqh-Unterrichtsplan in Kassel, aktuelle
+          Terminänderungen und veröffentlichte Audioaufnahmen.
+          Die Durous vermitteln islamisches Wissen auf Deutsch.
         </p>
       </div>
     </section>

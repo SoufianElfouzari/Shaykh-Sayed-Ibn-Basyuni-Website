@@ -9,22 +9,27 @@ import "./Header.css";
 const navigationItems = [
   {
     label: "Startseite",
+    mobileLabel: "Start",
     path: "/",
   },
   {
     label: "Der Shaykh",
+    mobileLabel: "Biografie und Werdegang",
     path: "/shaykh",
   },
   {
     label: "Durous",
+    mobileLabel: "Audio und Unterrichte",
     path: "/durous",
   },
   {
     label: "Veröffentlichungen",
+    mobileLabel: "Artikel lesen",
     path: "/artikel",
   },
   {
     label: "Kontakt",
+    mobileLabel: "Kontaktformular",
     path: "/kontakt",
   },
 ];
@@ -276,7 +281,7 @@ function Header() {
               onClick={closeMenu}
             >
               <span className="sib-mobile-nav-label">
-                {item.label}
+                {item.mobileLabel || item.label}
               </span>
 
               <svg

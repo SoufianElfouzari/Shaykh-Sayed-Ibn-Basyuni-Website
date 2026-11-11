@@ -14,6 +14,24 @@ test("homepage hydrates without JavaScript errors", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("home and Durous copy uses H1 keywords with descriptive link labels", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".sib-home-hero-description"))
+    .toContainText("Islam lernen mit Quran und Sunnah");
+  await expect(page.locator(".sib-articles-all-link"))
+    .toContainText("Alle Artikel ansehen");
+  await expect(page.locator(".sib-articles-mobile-link"))
+    .toContainText("Zur Artikelübersicht");
+  await expect(page.locator(".sib-schedule-subject strong")).toHaveCount(0);
+
+  await page.goto("/durous");
+  await expect(page.locator(".sib-duruus-page-hero-description"))
+    .toContainText("Islamische Unterrichte von Shaykh Sayed");
+  await expect(page.locator(".sib-notices-banner-affected-dars strong"))
+    .toHaveCount(0);
+  await expect(page.locator(".sib-schedule-subject strong")).toHaveCount(0);
+});
+
 test("SPA navigation preserves article archive search and loads the article", async ({ page }) => {
   await page.goto("/");
   let documentRequests = 0;

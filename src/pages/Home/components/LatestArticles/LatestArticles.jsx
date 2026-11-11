@@ -367,7 +367,7 @@ function LatestArticles() {
           to="/artikel"
           className="sib-articles-mobile-link"
         >
-          <span>Alle Artikel ansehen</span>
+          <span>Zur Artikelübersicht</span>
           <ArrowIcon />
         </Link>
       </div>

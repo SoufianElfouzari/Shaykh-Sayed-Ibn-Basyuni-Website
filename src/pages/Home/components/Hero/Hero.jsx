@@ -29,10 +29,10 @@ function Hero() {
         </h1>
 
         <p className="sib-home-hero-description">
-          Islam lernen auf Deutsch, für Anfänger und Fortgeschrittene.
-          Entdecke islamische Unterrichte, verständliche Grundlagen und
-          fundierte Artikel über Quran, Sunnah, Fiqh, Hadith und weitere
-          islamische Wissenschaften.
+          Islam lernen mit Quran und Sunnah: Auf Deutsch findest du
+          hier verständliche Grundlagen für Anfänger und Fortgeschrittene,
+          islamische Unterrichte sowie fundierte Artikel zu Fiqh, Hadith
+          und weiteren islamischen Wissenschaften.
         </p>
       </div>
     </section>

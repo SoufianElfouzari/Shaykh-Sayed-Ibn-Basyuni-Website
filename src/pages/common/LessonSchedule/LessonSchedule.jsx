@@ -140,7 +140,7 @@ function LessonSchedule() {
                       Unterricht
                     </span>
 
-                    <strong>{lesson.subject}</strong>
+                    <span className="sib-schedule-subject-name">{lesson.subject}</span>
                   </div>
                 </div>
               ))}

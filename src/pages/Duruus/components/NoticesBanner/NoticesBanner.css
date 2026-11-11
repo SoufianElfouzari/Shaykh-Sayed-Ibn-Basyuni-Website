@@ -432,3 +432,9 @@
     transform: none;
   }
 }
+/* Preserve the notice typography without overly long semantic bold tags. */
+.sib-notices-banner-affected-dars {
+  color: #ffffff;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
