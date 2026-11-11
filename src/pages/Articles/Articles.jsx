@@ -1,3 +1,4 @@
+import ExploreContent from "../common/ExploreContent/ExploreContent";
 import ContactForm from "../common/ContactForm/ContactForm";
 import Footer from "../common/Footer/Footer";
 import Header from "../common/Header/Header";
@@ -14,6 +15,7 @@ function Articles() {
           <ArticlesHero />
           <ArticlesOverview />
           <OfficialChannels />
+          <ExploreContent page="articles" />
           <ContactForm />
         </main>
 
