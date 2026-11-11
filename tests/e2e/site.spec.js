@@ -205,3 +205,28 @@ test("article detail title uses its own headline, not a site-name suffix", async
   await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", "Fiqh Grundlagen: ein Testartikel");
   await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Grundlagen des Fiqh/);
 });
+
+
+test("latest articles use the editorial two-column layout with live preview links", async ({ page }) => {
+  const response = await page.goto("/");
+  expect(response.status()).toBe(200);
+  const section = page.locator(".sib-articles");
+  await expect(section.getByRole("heading", { level: 2 })).toContainText("Islam lernen.");
+  await expect(section.locator(".sib-articles-content .sib-articles-secondary")).toHaveCount(2);
+  await expect(section.locator(".sib-articles-secondary").first()).toHaveAttribute("href", "/artikel/fiqh-grundlagen");
+  await expect(section.getByRole("link", { name: "Alle Artikel ansehen" })).toHaveAttribute("href", "/artikel");
+  await expect(section.locator(".sib-articles-featured h3")).toContainText("Fiqh");
+});
+
+test("latest article preview remains readable and navigable on small screens", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const section = page.locator(".sib-articles");
+  const link = section.getByRole("link", { name: "Alle Artikel ansehen" });
+  await expect(link).toBeVisible();
+  await expect(section.locator(".sib-articles-secondary").first()).toBeVisible();
+  const hasHorizontalOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  );
+  expect(hasHorizontalOverflow).toBe(false);
+});
