@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./ContactForm.css";
 
 const CONTACT_ENDPOINT = "https://shaykhsayeddev.pythonanywhere.com/api/contact";
@@ -59,9 +59,14 @@ function CheckIcon() {
 
 function ContactForm({ headingLevel = 2 }) {
   const HeadingTag = headingLevel === 1 ? "h1" : "h2";
+  const location = useLocation();
+  const isFatwaRequest = new URLSearchParams(location.search).get("anliegen") === "fatwa";
   const sectionRef = useRef(null);
 
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(() => ({ ...initialFormData, subject: isFatwaRequest ? "fatwa" : "" }));
+  useEffect(() => {
+    if (isFatwaRequest) setFormData((current) => ({ ...current, subject: "fatwa" }));
+  }, [isFatwaRequest]);
   const [submitStatus, setSubmitStatus] = useState("idle");
   const [submitMessage, setSubmitMessage] = useState("");
 
@@ -146,7 +151,7 @@ function ContactForm({ headingLevel = 2 }) {
       setSubmitMessage(
         "Deine Nachricht wurde erfolgreich übermittelt.",
       );
-      setFormData(initialFormData);
+      setFormData({ ...initialFormData, subject: isFatwaRequest ? "fatwa" : "" });
     } catch (error) {
       console.error(error);
 
@@ -201,14 +206,12 @@ function ContactForm({ headingLevel = 2 }) {
           </div>
 
           <HeadingTag className="sib-contact-form-title">
-            Eine Nachricht
-            <span>übermitteln.</span>
+            {isFatwaRequest ? "Fatwa" : "Eine Nachricht"}
+            <span>{isFatwaRequest ? "anfragen." : "übermitteln."}</span>
           </HeadingTag>
 
           <p className="sib-contact-form-description">
-            Über dieses Formular können allgemeine Anfragen,
-            Hinweise und organisatorische Anliegen übermittelt
-            werden.
+            {isFatwaRequest ? "Hier kannst du eine religiöse Frage einreichen. Bitte beschreibe dein Anliegen möglichst klar. Eine persönliche Antwort kann nicht garantiert werden." : "Über dieses Formular können allgemeine Anfragen, Hinweise und organisatorische Anliegen übermittelt werden."}
           </p>
         </header>
 
@@ -327,6 +330,8 @@ function ContactForm({ headingLevel = 2 }) {
                     <option value="" disabled>
                       Bitte ein Anliegen auswählen
                     </option>
+
+                    <option value="fatwa">Fatwa-Anfrage (religiöse Frage)</option>
 
                     <option value="allgemeine-anfrage">
                       Allgemeine Frage
