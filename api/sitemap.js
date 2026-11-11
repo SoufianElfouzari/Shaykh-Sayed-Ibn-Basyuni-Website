@@ -51,12 +51,12 @@ export default async function handler(request, response) {
     for (const article of articles) {
       if (typeof article.slug !== "string") continue;
       const slug = article.slug.trim();
-      if (!slug || slug.includes("/") || slug.includes("\\") || /[\\x00-\\x1F]/.test(slug)) continue;
+      if (!slug || slug.includes("/") || slug.includes("\\") || /[\x00-\x1F\x7F]/.test(slug)) continue;
 
       const url = origin + "/artikel/" + encodeURIComponent(slug);
       if (seen.has(url)) continue;
       seen.add(url);
-      urls.push(renderUrl(url, validLastModified(article.lastModified)));
+      urls.push(renderUrl(url, validLastModified(article.lastModified || article.updatedAt || article.publishedAt)));
     }
 
     const xml = [
