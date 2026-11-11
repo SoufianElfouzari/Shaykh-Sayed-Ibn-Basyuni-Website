@@ -583,3 +583,32 @@
     transition: none;
   }
 }
+/* Compact editorial grid: consistent cards without oversized empty space. */
+.sib-articles { padding-block: 64px; }
+.sib-articles-header { margin-bottom: 28px; gap: 32px; }
+.sib-articles-title { font-size: clamp(28px, 3vw, 42px); }
+.sib-articles-layout { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.sib-articles-layout .sib-articles-secondary {
+  min-height: 0; padding: 25px; display: block; border-radius: 18px;
+  box-shadow: none; transform: none;
+}
+.sib-articles-layout .sib-articles-secondary:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(15,41,36,.07); }
+.sib-articles-layout .sib-articles-secondary-content { height: 100%; display: flex; flex-direction: column; }
+.sib-articles-layout .sib-articles-secondary-top { flex-wrap: wrap; gap: 8px 16px; }
+.sib-articles-layout .sib-articles-secondary h3 { margin-top: 16px; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.28; overflow-wrap: anywhere; }
+.sib-articles-layout .sib-articles-secondary p { margin-top: 12px; font-size: 13px; line-height: 1.6; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.sib-articles-card-footer { margin-top: auto; padding-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--sib-color-text-muted, #626b65); font-size: 11px; font-weight: 600; }
+.sib-articles-card-footer .sib-articles-secondary-arrow { width: 34px; height: 34px; flex: 0 0 34px; }
+.sib-articles-card-footer .sib-articles-secondary-arrow svg { width: 16px; height: 16px; }
+.sib-articles-empty { padding: 32px; border: 1px solid var(--sib-color-border, #ddd9cf); border-radius: 18px; background: var(--sib-color-surface, #fffefa); }
+.sib-articles-empty svg { width: 25px; height: 25px; color: var(--sib-color-primary, #0d6a52); }
+.sib-articles-empty h3 { margin: 12px 0 8px; font-size: 20px; }
+.sib-articles-empty p { color: var(--sib-color-text-soft, #656d69); font-size: 14px; }
+@media (max-width: 1050px) { .sib-articles-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 680px) {
+  .sib-articles { padding: 48px 20px; }
+  .sib-articles-header { margin-bottom: 24px; }
+  .sib-articles-layout { grid-template-columns: 1fr; gap: 12px; }
+  .sib-articles-layout .sib-articles-secondary { padding: 22px; }
+  .sib-articles-layout .sib-articles-secondary h3 { font-size: 20px; }
+}
