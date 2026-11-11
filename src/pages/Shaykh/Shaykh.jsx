@@ -1,3 +1,4 @@
+import ExploreContent from "../common/ExploreContent/ExploreContent";
 import ContactForm from "../common/ContactForm/ContactForm";
 import Footer from "../common/Footer/Footer";
 import Header from "../common/Header/Header";
@@ -16,6 +17,7 @@ function Shaykh() {
             <ShortBiography />
             <LessonSchedule />
             <OfficialChannels />
+          <ExploreContent page="shaykh" />
             <ContactForm />
         </main>
 
