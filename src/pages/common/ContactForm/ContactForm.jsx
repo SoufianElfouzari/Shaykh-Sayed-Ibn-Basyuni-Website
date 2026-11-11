@@ -65,7 +65,13 @@ function ContactForm({ headingLevel = 2 }) {
 
   const [formData, setFormData] = useState(() => ({ ...initialFormData, subject: isFatwaRequest ? "fatwa" : "" }));
   useEffect(() => {
-    if (isFatwaRequest) setFormData((current) => ({ ...current, subject: "fatwa" }));
+    if (!isFatwaRequest) return undefined;
+    // Update a mounted form when navigating to the Fatwa CTA without
+    // synchronously scheduling React state updates inside an effect.
+    const frame = window.requestAnimationFrame(() => {
+      setFormData((current) => ({ ...current, subject: "fatwa" }));
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [isFatwaRequest]);
   const [submitStatus, setSubmitStatus] = useState("idle");
   const [submitMessage, setSubmitMessage] = useState("");

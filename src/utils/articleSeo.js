@@ -80,8 +80,8 @@ export function articleSeo(article) {
   // fields may still contain a templated brand prefix/suffix; strip only that
   // boilerplate without changing the author's actual headline.
   const title = (explicitTitle || headline)
-    .replace(/^(?:Dr\\.?\\s*)?Shaykh Sayed(?: Ibn Basyuni)?\\s*\\|\\s*/i, "")
-    .replace(/\\s*\\|\\s*(?:Dr\\.?\\s*)?Shaykh Sayed(?: Ibn Basyuni)?$/i, "")
+    .replace(/^(?:Dr\.?\s*)?Shaykh Sayed(?: Ibn Basyuni)?\s*\|\s*/i, "")
+    .replace(/\s*\|\s*(?:Dr\.?\s*)?Shaykh Sayed(?: Ibn Basyuni)?$/i, "")
     .trim() || headline;
   const rawDescription = article?.seoDescription || article?.excerpt ||
     article?.contentText || headline;
