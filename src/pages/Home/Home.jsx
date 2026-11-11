@@ -1,3 +1,4 @@
+import ExploreContent from "../common/ExploreContent/ExploreContent";
 import ContactForm from "../common/ContactForm/ContactForm";
 import DuruusArchive from "../Duruus/components/DuruusArchive/DuruusArchive";
 import AboutShaykh from "./components/AboutShaykh/AboutShaykh";
@@ -20,6 +21,7 @@ function Home() {
             <OfficialChannels />
             <DuruusArchive />
             <LessonSchedule />
+          <ExploreContent page="home" />
             <ContactForm />
         </main>
 
