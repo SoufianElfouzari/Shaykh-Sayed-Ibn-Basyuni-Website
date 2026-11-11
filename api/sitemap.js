@@ -51,7 +51,11 @@ export default async function handler(request, response) {
     for (const article of articles) {
       if (typeof article.slug !== "string") continue;
       const slug = article.slug.trim();
-      if (!slug || slug.includes("/") || slug.includes("\\") || /[\x00-\x1F\x7F]/.test(slug)) continue;
+      if (!slug || slug.includes("/") || slug.includes("\\") ||
+          Array.from(slug).some((char) => {
+            const code = char.codePointAt(0);
+            return code <= 31 || code === 127;
+          })) continue;
 
       const url = origin + "/artikel/" + encodeURIComponent(slug);
       if (seen.has(url)) continue;
