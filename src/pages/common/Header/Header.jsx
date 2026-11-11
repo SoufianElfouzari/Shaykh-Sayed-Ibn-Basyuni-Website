@@ -18,7 +18,7 @@ const navigationItems = [
     path: "/shaykh",
   },
   {
-    label: "Durous",
+    label: "Durus",
     mobileLabel: "Audio und Unterrichte",
     path: "/durous",
   },
@@ -26,6 +26,11 @@ const navigationItems = [
     label: "Veröffentlichungen",
     mobileLabel: "Artikel lesen",
     path: "/artikel",
+  },
+  {
+    label: "Fatwa",
+    mobileLabel: "Fatwa anfragen",
+    path: "/kontakt?anliegen=fatwa",
   },
   {
     label: "Kontakt",
@@ -185,7 +190,13 @@ function Header() {
           </nav>
 
           <div className="sib-header-actions">
-            
+            <a className="sib-header-search" href="https://www.google.com/search?q=site%3Ashaykh-sayed.de" aria-label="Website über Google durchsuchen" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" stroke="currentColor" strokeWidth="2" /><path d="m16 16 4.5 4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+            </a>
+            <Link to="/kontakt?anliegen=fatwa#kontaktformular" className="sib-header-fatwa-cta" onClick={closeMenu}>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4.5h14v15H5zM8 8.5h8M8 12h8M8 15.5h5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              <span>Fatwa anfragen</span>
+            </Link>
 
             <button
               type="button"
@@ -309,6 +320,7 @@ function Header() {
           ))}
         </nav>
 
+        <Link to="/kontakt?anliegen=fatwa#kontaktformular" className="sib-mobile-fatwa-cta" onClick={closeMenu}>Fatwa anfragen <span aria-hidden="true">→</span></Link>
         <div className="sib-mobile-menu-footer">
 
 
