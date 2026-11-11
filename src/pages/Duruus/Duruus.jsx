@@ -1,3 +1,4 @@
+import ExploreContent from "../common/ExploreContent/ExploreContent";
 import Footer from "../common/Footer/Footer";
 import Header from "../common/Header/Header";
 import LessonSchedule from "../common/LessonSchedule/LessonSchedule";
@@ -20,6 +21,7 @@ function Duruus() {
             <ArchiveIntroduction />
             <LessonSchedule />
             <OfficialChannels />
+          <ExploreContent page="durous" />
             <ContactForm />
         </main>
 
