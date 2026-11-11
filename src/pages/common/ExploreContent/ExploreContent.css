@@ -1,0 +1,14 @@
+.sib-explore { padding: clamp(48px, 6vw, 88px) 20px; background: #f5f4ef; color: #153e35; }
+.sib-explore-inner { max-width: 1120px; margin: 0 auto; }
+.sib-explore-kicker { margin: 0 0 12px; color: #8c7044; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.sib-explore h2 { font-size: clamp(24px, 3.5vw, 39px); line-height: 1.2; margin: 0 0 12px; font-weight: 650; }
+.sib-explore-intro { max-width: 630px; margin: 0 0 28px; font-size: 15px; line-height: 1.75; color: #52665d; }
+.sib-explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 14px; }
+.sib-explore-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 118px; padding: 23px; background: #fff; border: 1px solid #dedfd7; border-radius: 13px; color: #153e35; text-decoration: none; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+.sib-explore-card:hover { border-color: #b29a6d; box-shadow: 0 10px 26px rgba(20, 50, 39, .08); transform: translateY(-2px); }
+.sib-explore-card:focus-visible { outline: 3px solid #9a7b46; outline-offset: 3px; }
+.sib-explore-card-text { display: flex; flex-direction: column; gap: 8px; }
+.sib-explore-card strong { font-size: 16px; font-weight: 650; }
+.sib-explore-card-text > span { color: #617168; font-size: 12px; line-height: 1.5; }
+.sib-explore-card svg { width: 20px; height: 20px; flex-shrink: 0; color: #96794b; }
+@media (prefers-reduced-motion: reduce) { .sib-explore-card { transition: none; } .sib-explore-card:hover { transform: none; } }
