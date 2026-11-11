@@ -842,3 +842,50 @@
   .sib-header-fatwa-cta .sib-fatwa-icon svg,
   .sib-fatwa-arrow { transition:none!important; transform:none!important; }
 }
+
+
+/* Refined compact Fatwa CTA: remove clutter, preserve subtle animation */
+.sib-header-fatwa-cta {
+  min-height:42px;
+  padding:0 10px 0 13px;
+  gap:9px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(110deg,#004632 0%,#006148 58%,#00513c 100%);
+  box-shadow:0 4px 12px rgba(0,67,47,.15),inset 0 1px 0 rgba(255,255,255,.12);
+  font-size:12px;
+  letter-spacing:0;
+}
+.sib-header-fatwa-cta:hover {
+  background:linear-gradient(110deg,#00523c 0%,#08765a 58%,#00634b 100%);
+  border-color:rgba(255,255,255,.22);
+  box-shadow:0 7px 17px rgba(0,67,47,.23),inset 0 1px 0 rgba(255,255,255,.15);
+}
+.sib-header-fatwa-cta::after { opacity:.4; }
+.sib-fatwa-icon {
+  width:23px;
+  height:26px;
+  flex:0 0 23px;
+  background:transparent;
+  box-shadow:none;
+  border-radius:0;
+  color:#e2c17e;
+}
+.sib-header-fatwa-cta .sib-fatwa-icon svg { width:23px; height:23px; }
+.sib-header-fatwa-cta:hover .sib-fatwa-icon svg { transform:translateY(-1px) rotate(-3deg); color:#f4d99b; }
+.sib-fatwa-divider { display:none; }
+.sib-fatwa-label { font-size:12px; font-weight:750; }
+.sib-fatwa-arrow {
+  width:22px;
+  height:22px;
+  flex:0 0 22px;
+  margin-left:3px;
+  border:0;
+  border-radius:7px;
+  background:rgba(255,255,255,.1);
+}
+.sib-header-fatwa-cta .sib-fatwa-arrow svg { width:14px; height:14px; }
+@media(max-width:1240px) {
+ .sib-header-fatwa-cta { padding:0 9px; gap:7px; }
+ .sib-fatwa-arrow { margin-left:0; }
+}
