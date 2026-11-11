@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Footer.css";
 
 const footerNavigation = [
@@ -69,6 +69,12 @@ function ArrowIcon() {
 function Footer() {
   const footerRef = useRef(null);
   const currentYear = new Date().getFullYear();
+  const { pathname, search } = useLocation();
+  const shareUrl = "https://www.shaykh-sayed.de" + pathname + search;
+  const shareText = "Islamische Unterrichte und Artikel auf Shaykh Sayed";
+  const whatsappUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(shareText + ": " + shareUrl);
+  const telegramUrl = "https://t.me/share/url?url=" + encodeURIComponent(shareUrl) + "&text=" + encodeURIComponent(shareText);
+  const emailUrl = "mailto:?subject=" + encodeURIComponent(shareText) + "&body=" + encodeURIComponent(shareUrl);
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -240,6 +246,13 @@ function Footer() {
             </div>
           </div>
         </div>
+
+        <nav className="sib-footer-sharing" aria-label="Diese Seite teilen">
+          <span className="sib-footer-sharing-label">Diese Seite teilen</span>
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Diese Seite über WhatsApp teilen">WhatsApp</a>
+          <a href={telegramUrl} target="_blank" rel="noopener noreferrer" aria-label="Diese Seite über Telegram teilen">Telegram</a>
+          <a href={emailUrl} aria-label="Diese Seite per E-Mail teilen">E-Mail</a>
+        </nav>
 
         <div className="sib-footer-divider">
           <span></span>
