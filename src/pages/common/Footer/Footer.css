@@ -907,3 +907,28 @@
     transform: scaleX(1);
   }
 }
+/* Accessible social sharing links */
+.sib-footer-sharing {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.1rem;
+  padding: 1.25rem 0;
+}
+.sib-footer-sharing-label {
+  font-weight: 600;
+  color: inherit;
+  margin-right: 0.25rem;
+}
+.sib-footer-sharing a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 160ms ease;
+}
+.sib-footer-sharing a:hover { opacity: 0.75; }
+.sib-footer-sharing a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
