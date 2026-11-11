@@ -195,14 +195,12 @@ function Header() {
             </a>
             <Link to="/kontakt?anliegen=fatwa#kontaktformular" className="sib-header-fatwa-cta" onClick={closeMenu}>
               <span className="sib-fatwa-icon" aria-hidden="true">
-                <svg viewBox="0 0 40 40" fill="none" focusable="false">
-                  <path d="M10 7.5h15l5 5v20H10a3 3 0 0 1-3-3v-19a3 3 0 0 1 3-3Z" stroke="currentColor" strokeWidth="2.6" strokeLinejoin="round"/>
-                  <path d="M25 8v6h5M13 18h12M13 23h9" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M17 32c7-11 12-13 17-16-1 7-5 13-15 18" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="m18 34 10-12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <svg viewBox="0 0 32 32" fill="none" focusable="false">
+                  <path d="M9 4.5h11l4 4V27H9a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3Z" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round"/>
+                  <path d="M20 4.5V9h4M11 14h9M11 19h8" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="m17 25 9-10 2 2-9 10-4 1 2-3Z" fill="var(--sib-fatwa-pen-fill,#d9b979)" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
                 </svg>
               </span>
-              <span className="sib-fatwa-divider" aria-hidden="true"></span>
               <span className="sib-fatwa-label">Fatwa anfragen</span>
               <span className="sib-fatwa-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
