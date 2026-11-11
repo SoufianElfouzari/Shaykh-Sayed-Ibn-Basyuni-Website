@@ -687,8 +687,8 @@
 
 /* Screenshot-inspired header redesign */
 :root { --sib-header-height: 68px; --sib-container-width: 1580px; --sib-container-padding: 4%; }
-.sib-header { background: rgba(255,253,250,.95); border-bottom: 1px solid rgba(17,53,43,.08); }
-.sib-header-scrolled { background: rgba(255,253,250,.98); box-shadow: 0 8px 28px rgba(15,41,36,.07); }
+.sib-header { background: var(--sib-color-background, #f5f4ef); border-bottom: 1px solid transparent; }
+.sib-header-scrolled { background: var(--sib-color-background, #f5f4ef); border-bottom-color: var(--sib-color-border); box-shadow: 0 8px 28px rgba(15,41,36,.05); }
 .sib-header-container { display:flex; justify-content:space-between; gap:clamp(16px,2vw,32px); }
 .sib-header-brand { flex-shrink:0; gap:14px; }
 .sib-header-brand-line { width:2px; flex-basis:2px; min-height:42px; background:#c38a36; }
