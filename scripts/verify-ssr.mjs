@@ -92,7 +92,7 @@ for (const [path, title] of pages) {
   assert.ok(response.body.includes('property="og:image:type" content="image/png"'), path + ": missing fallback image type");
 
   if (path === "/") {
-    const dataMatch = response.body.match(/<template id="ssr-data">([\\s\\S]*?)<\\/template>/);
+    const dataMatch = response.body.match(/<template id="ssr-data">([\s\S]*?)<\/template>/);
     assert.ok(dataMatch, "home: SSR preload data missing");
     const preload = JSON.parse(dataMatch[1]);
     assert.equal(preload.__ssrPath, "/", "home: SSR route identifier missing");
@@ -118,7 +118,7 @@ for (const [path, title] of pages) {
     );
   }
   if (path === "/artikel") {
-    const dataMatch = response.body.match(/<template id="ssr-data">([\\s\\S]*?)<\\/template>/);
+    const dataMatch = response.body.match(/<template id="ssr-data">([\s\S]*?)<\/template>/);
     assert.ok(dataMatch, "archive: SSR preload missing");
     const archivePreload = JSON.parse(dataMatch[1]);
     assert.equal(archivePreload.__ssrPath, "/artikel", "archive: SSR route mismatch");
@@ -222,7 +222,7 @@ for (const [path, title] of pages) {
     const breadcrumbs = graph.find((item) => item["@type"] === "BreadcrumbList");
     assert.equal(breadcrumbs?.itemListElement?.length, 2, "artikel: wrong breadcrumb navigation");
 
-    const initialDataMatch = response.body.match(/<template id="ssr-data">([\\s\\S]*?)<\\/template>/);
+    const initialDataMatch = response.body.match(/<template id="ssr-data">([\s\S]*?)<\/template>/);
     assert.ok(initialDataMatch, "artikel: missing SSR data");
     const publishedArticles = JSON.parse(initialDataMatch[1]).articles || [];
     const publishedItemList = graph.find((item) => item["@type"] === "ItemList");
@@ -334,7 +334,7 @@ const sitemapUrls = Array.from(sitemapResponse.body.matchAll(/<loc>(.*?)<\/loc>/
 assert.equal(sitemapUrls.length, new Set(sitemapUrls).size, "dynamic sitemap: duplicate URLs");
 
 const articleIndexResponse = await request("/artikel");
-const articleDataMatch = articleIndexResponse.body.match(/<template id="ssr-data">([\\s\\S]*?)<\\/template>/);
+const articleDataMatch = articleIndexResponse.body.match(/<template id="ssr-data">([\s\S]*?)<\/template>/);
 const articles = articleDataMatch ? JSON.parse(articleDataMatch[1]).articles || [] : [];
 
 for (const article of articles) {
@@ -355,7 +355,7 @@ if (articles.length > 0) {
   assert.equal(articleSchema?.headline, first.title, "published article: incorrect headline schema");
   assert.ok(graph.some((item) => item["@type"] === "BreadcrumbList"), "published article: breadcrumb missing");
   assert.ok(response.body.includes('name="robots" content="index'), "published article: should be indexable");
-  const detailDataMatch = response.body.match(/<template id="ssr-data">([\\s\\S]*?)<\\/template>/);
+  const detailDataMatch = response.body.match(/<template id="ssr-data">([\s\S]*?)<\/template>/);
   assert.ok(detailDataMatch, "published article: SSR detail data missing");
   const detailArticle = JSON.parse(detailDataMatch[1]).article;
   const seo = articleSeo(detailArticle);
