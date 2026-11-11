@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Footer.css";
 
@@ -68,12 +68,23 @@ function ArrowIcon() {
 
 function Footer() {
   const footerRef = useRef(null);
+  const [copyStatus, setCopyStatus] = useState("");
   const currentYear = new Date().getFullYear();
   const { pathname, search } = useLocation();
   const shareUrl = "https://www.shaykh-sayed.de" + pathname + search;
   const shareText = "Islamische Unterrichte und Artikel auf Shaykh Sayed";
   const whatsappUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(shareText + ": " + shareUrl);
   const telegramUrl = "https://t.me/share/url?url=" + encodeURIComponent(shareUrl) + "&text=" + encodeURIComponent(shareText);
+  const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareUrl);
+  const xUrl = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(shareUrl) + "&text=" + encodeURIComponent(shareText);
+  const copyShareLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopyStatus("Link kopiert!");
+    } catch {
+      setCopyStatus("Kopieren nicht möglich. Bitte die URL aus der Adresszeile kopieren.");
+    }
+  };
   const emailUrl = "mailto:?subject=" + encodeURIComponent(shareText) + "&body=" + encodeURIComponent(shareUrl);
 
   useEffect(() => {
@@ -264,7 +275,11 @@ function Footer() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="m3.5 6.5 8.5 6.7 8.5-6.7"/></svg>
               <span>E-Mail</span>
             </a>
+            <a className="sib-footer-sharing-action sib-footer-sharing-facebook" href={facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Diese Seite auf Facebook teilen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.19 2.23.19v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.89h-2.33v6.99A10 10 0 0 0 22 12Z"/></svg><span>Facebook</span></a>
+            <a className="sib-footer-sharing-action sib-footer-sharing-x" href={xUrl} target="_blank" rel="noopener noreferrer" aria-label="Diese Seite auf X teilen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.77L23.2 22h-6.26l-4.9-7.43L5.54 22H2.4l7.28-8.32L1.8 2h6.42l4.43 6.77L18.9 2Zm-1.1 18h1.73L7.28 3.9H5.42L17.8 20Z"/></svg><span>X</span></a>
+            <button className="sib-footer-sharing-action sib-footer-sharing-copy" type="button" onClick={copyShareLink} aria-label="Link dieser Seite kopieren"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Link kopieren</span></button>
           </div>
+          <span className="sib-footer-sharing-feedback" role="status" aria-live="polite">{copyStatus}</span>
         </nav>
 
         <div className="sib-footer-divider">
