@@ -684,3 +684,61 @@
     transition: none;
   }
 }
+
+/* Screenshot-inspired header redesign */
+:root { --sib-header-height: 68px; --sib-container-width: 1580px; --sib-container-padding: 4%; }
+.sib-header { background: rgba(255,253,250,.95); border-bottom: 1px solid rgba(17,53,43,.08); }
+.sib-header-scrolled { background: rgba(255,253,250,.98); box-shadow: 0 8px 28px rgba(15,41,36,.07); }
+.sib-header-container { display:flex; justify-content:space-between; gap:clamp(16px,2vw,32px); }
+.sib-header-brand { flex-shrink:0; gap:14px; }
+.sib-header-brand-line { width:2px; flex-basis:2px; min-height:42px; background:#c38a36; }
+.sib-header-brand-copy { gap:5px; }
+.sib-header-brand-name { gap:5px; }
+.sib-header-brand-title { font-size:13px; color:#222; font-weight:500; }
+.sib-header-brand-person { font-size:17px; letter-spacing:-.65px; color:#00523d; }
+.sib-header-brand-meta { font-size:8px; letter-spacing:2px; color:#454545; }
+.sib-header-navigation { flex:1; gap:clamp(13px,2.1vw,32px); min-width:0; justify-content:center; }
+.sib-header-nav-link { font-size:12px; font-weight:700; color:#242424; }
+.sib-header-nav-link::before { bottom:15px; height:2px; }
+.sib-header-nav-link-active { color:#00573e; }
+.sib-header-actions { flex-shrink:0; gap:14px; }
+.sib-header-search { width:43px; height:40px; border:1px solid #e3e1dc; background:#fff; border-radius:13px; color:#00533c; box-shadow:0 3px 12px rgba(20,34,29,.08); }
+.sib-header-search:hover { background:#f5faf7; border-color:#b3d0c3; transform:translateY(-1px); }
+.sib-header-search svg { width:19px; height:19px; }
+.sib-header-fatwa-cta { min-height:40px; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:0 18px; color:#fff; background:#00533d; border-radius:12px; text-decoration:none; font-weight:700; font-size:12px; white-space:nowrap; box-shadow:0 4px 12px rgba(0,64,46,.17); transition:background .2s ease,transform .2s ease,box-shadow .2s ease; }
+.sib-header-fatwa-cta svg { width:18px; height:18px; }
+.sib-header-fatwa-cta:hover { background:#08745a; transform:translateY(-1px); box-shadow:0 7px 18px rgba(0,64,46,.22); }
+.sib-mobile-fatwa-cta { display:flex; align-items:center; justify-content:space-between; padding:16px 19px; margin:0 0 20px; border-radius:12px; background:#fff; color:#084c3c; font-size:16px; font-weight:750; text-decoration:none; }
+.sib-mobile-fatwa-cta span { font-size:21px; }
+@media(max-width:1240px) {
+ .sib-header-navigation { gap:15px; }
+ .sib-header-nav-link { font-size:11px; }
+ .sib-header-brand-person { font-size:15px; }
+ .sib-header-fatwa-cta { padding:0 13px; }
+ .sib-header-actions { gap:8px; }
+}
+@media(max-width:1080px) {
+ :root { --sib-header-height:72px; }
+ .sib-header-navigation { display:none; }
+ .sib-header-container { display:flex; }
+ .sib-header-actions { margin-left:auto; }
+ .sib-header-menu-button { display:block; }
+}
+@media(max-width:680px) {
+ :root { --sib-header-height:68px; --sib-container-padding:18px; }
+ .sib-header-brand-line { min-height:38px; }
+ .sib-header-brand-person { font-size:14px; }
+ .sib-header-search { width:39px; height:39px; }
+ .sib-header-fatwa-cta { min-height:39px; padding:0 10px; }
+ .sib-header-fatwa-cta svg { display:none; }
+}
+@media(max-width:540px) {
+ .sib-header-fatwa-cta { display:none; }
+ .sib-header-search { display:inline-flex; }
+ .sib-header-actions { gap:8px; }
+}
+@media(max-width:360px) {
+ .sib-header-brand-person { max-width:163px; font-size:12px; }
+ .sib-header-search { width:35px; }
+}
+@media(prefers-reduced-motion:reduce) { .sib-header-fatwa-cta, .sib-header-search { transition:none; } }
