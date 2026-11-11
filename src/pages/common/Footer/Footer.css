@@ -989,3 +989,9 @@
   .sib-footer-sharing-action { transition: none; }
   .sib-footer-sharing-action:hover { transform: none; }
 }
+
+.sib-footer-sharing-action { cursor: pointer; font-family: inherit; }
+.sib-footer-sharing-facebook svg { color: #1877f2; }
+.sib-footer-sharing-x svg { color: currentColor; }
+.sib-footer-sharing-copy svg { color: currentColor; }
+.sib-footer-sharing-feedback { display: block; min-height: 1.5em; margin-top: 12px; font-size: 12px; opacity: 0.9; }
