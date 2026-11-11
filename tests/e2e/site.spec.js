@@ -170,3 +170,38 @@ test("static development fallback never flashes unstyled text", async ({ page })
   await page.goto("/shaykh", { waitUntil: "domcontentloaded" });
   await expect(page.locator(".seo-initial-content")).toHaveCount(0);
 });
+
+
+test("all static routes expose unique crawlable titles and descriptions", async ({ page }) => {
+  const expected = [
+    ["/", "Islam lernen mit Quran und Sunnah | Unterrichte & Artikel"],
+    ["/shaykh", "Islamischer Lehrer in Kassel | Biografie & Ausbildung"],
+    ["/durous", "Islamische Unterrichte auf Deutsch | Fiqh & Hadith"],
+    ["/artikel", "Islamische Artikel lesen | Fiqh, Aqidah & Hadith"],
+    ["/kontakt", "Fragen zum Islam stellen | Kontakt & Fatwa-Anfrage"],
+    ["/impressum", "Impressum | Rechtliche Informationen"],
+    ["/datenschutz", "Datenschutz | Informationen zur Datenverarbeitung"],
+  ];
+  const descriptions = new Set();
+  for (const [path, title] of expected) {
+    const response = await page.goto(path);
+    expect(response.status()).toBe(200);
+    await expect(page).toHaveTitle(title);
+    const description = await page.locator('meta[name="description"]').getAttribute("content");
+    expect(description?.length).toBeGreaterThan(60);
+    expect(descriptions.has(description)).toBe(false);
+    descriptions.add(description);
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", title);
+    await expect(page.locator('meta[name="twitter:description"]')).toHaveAttribute("content", description);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://www.shaykh-sayed.de" + path);
+    expect(await page.locator('meta[name="description"]').count()).toBe(1);
+  }
+});
+
+test("article detail title uses its own headline, not a site-name suffix", async ({ page }) => {
+  const response = await page.goto("/artikel/fiqh-grundlagen");
+  expect(response.status()).toBe(200);
+  await expect(page).toHaveTitle("Fiqh Grundlagen: ein Testartikel");
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", "Fiqh Grundlagen: ein Testartikel");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Grundlagen des Fiqh/);
+});

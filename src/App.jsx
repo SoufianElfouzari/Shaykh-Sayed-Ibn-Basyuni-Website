@@ -5,37 +5,7 @@ import PageRoutes from "./PageRoutes";
 import NotFound from "./pages/NotFound/NotFound";
 import { SsrDataContext } from "./SsrDataContext";
 import { SITE_FALLBACK_IMAGE } from "./utils/articleSeo";
-
-const routeMetadata = {
-  "/": {
-    title: "Islam lernen auf Deutsch | Shaykh Sayed Ibn Basyuni",
-    description: "Islam lernen auf Deutsch: Unterrichte und Artikel von Shaykh Sayed Ibn Basyuni zu Fiqh, Aqidah und weiteren islamischen Wissenschaften.",
-  },
-  "/shaykh": {
-    title: "Shaykh Sayed Ibn Basyuni | Biografie und Werdegang",
-    description: "Biografie von Dr. Shaykh Sayed Ibn Basyuni: Ausbildung an der Al-Azhar-Universität, Lehrer, Forschung und islamische Unterrichte in Kassel.",
-  },
-  "/durous": {
-    title: "Islamische Unterrichte und Durous | Shaykh Sayed",
-    description: "Islamische Unterrichte von Shaykh Sayed Ibn Basyuni: Fiqh-Unterrichtszeiten in Kassel, aktuelle Hinweise und veröffentlichte Durous als Audioaufnahmen.",
-  },
-  "/artikel": {
-    title: "Islamische Artikel auf Deutsch | Shaykh Sayed Ibn Basyuni",
-    description: "Islamische Artikel auf Deutsch von Shaykh Sayed Ibn Basyuni. Entdecke veröffentlichte Beiträge zu islamischen Wissenschaften und vertiefe dein Wissen.",
-  },
-  "/kontakt": {
-    title: "Kontakt | Shaykh Sayed Ibn Basyuni",
-    description: "Kontaktmöglichkeiten und Informationen zur offiziellen Website von Shaykh Sayed Ibn Basyuni.",
-  },
-  "/impressum": {
-    title: "Impressum | Shaykh Sayed Ibn Basyuni",
-    description: "Impressum und rechtliche Angaben zur Website von Shaykh Sayed Ibn Basyuni.",
-  },
-  "/datenschutz": {
-    title: "Datenschutz | Shaykh Sayed Ibn Basyuni",
-    description: "Datenschutzhinweise und Informationen über den Umgang mit personenbezogenen Daten auf shaykh-sayed.de.",
-  },
-};
+import { getRouteMetadata, notFoundMetadata, routeMetadata } from "./utils/routeSeo";
 
 function updateMeta(attribute, key, value) {
   let element = document.head.querySelector(`meta[${attribute}="${key}"]`);
@@ -63,12 +33,12 @@ function RouteSeo({ notFoundPath }) {
       document.documentElement.dir = "ltr";
       canonical?.remove();
       updateMeta("name", "robots", "noindex, follow");
-      document.title = "Seite nicht gefunden | Shaykh Sayed";
-      updateMeta("name", "description", "Die gesuchte Seite oder der Artikel ist nicht verfügbar.");
-      updateMeta("property", "og:title", "Seite nicht gefunden | Shaykh Sayed");
-      updateMeta("property", "og:description", "Die gesuchte Seite oder der Artikel ist nicht verfügbar.");
-      updateMeta("name", "twitter:title", "Seite nicht gefunden | Shaykh Sayed");
-      updateMeta("name", "twitter:description", "Die gesuchte Seite oder der Artikel ist nicht verfügbar.");
+      document.title = notFoundMetadata.title;
+      updateMeta("name", "description", notFoundMetadata.description);
+      updateMeta("property", "og:title", notFoundMetadata.title);
+      updateMeta("property", "og:description", notFoundMetadata.description);
+      updateMeta("name", "twitter:title", notFoundMetadata.title);
+      updateMeta("name", "twitter:description", notFoundMetadata.description);
       return;
     }
     updateMeta("name", "robots", "index, follow, max-image-preview:large");
@@ -81,7 +51,7 @@ function RouteSeo({ notFoundPath }) {
 
     updateMeta("property", "og:url", canonicalUrl);
 
-    const metadata = routeMetadata[normalizedPath];
+    const metadata = getRouteMetadata(normalizedPath, rawPage === null ? 1 : Number(rawPage));
     if (metadata) {
       document.documentElement.lang = "de";
       document.documentElement.dir = "ltr";

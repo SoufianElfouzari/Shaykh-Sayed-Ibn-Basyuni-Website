@@ -5,6 +5,7 @@ import sitemapHandler from "../api/sitemap.js";
 import { parseServerArticleContent } from "../src/utils/serverArticleContent.js";
 import { articleSeo, conciseDescription, articleLanguage, SITE_ORIGIN } from "../src/utils/articleSeo.js";
 import { createSectionId } from "../src/utils/articleSections.js";
+import { routeMetadata } from "../src/utils/routeSeo.js";
 
 async function request(path, pageHandler = handler, method = "GET") {
   const response = {
@@ -49,14 +50,9 @@ assert.ok(htmlTemplate.includes('name="description"'), "HTML fallback needs a de
 assert.ok(htmlTemplate.includes('name="twitter:card"'), "HTML fallback needs Twitter metadata");
 console.log("PASS: obsolete and duplicate meta tags removed from HTML fallback");
 
-const pages = [
-  ["/", "Islam lernen auf Deutsch"],
-  ["/shaykh", "Shaykh Sayed Ibn Basyuni | Biografie und Werdegang"],
-  ["/durous", "Islamische Unterrichte und Durous"],
-  ["/artikel", "Islamische Artikel auf Deutsch"],
-  ["/kontakt", "Kontakt"],
-  ["/impressum", "Impressum"],
-];
+const pages = Object.entries(routeMetadata).map(([path, metadata]) => [path, metadata.title]);
+assert.equal(new Set(pages.map(([, title]) => title)).size, pages.length, "every static URL needs its own title");
+assert.equal(new Set(Object.values(routeMetadata).map((entry) => entry.description)).size, pages.length, "every static URL needs its own description");
 
 for (const [path, title] of pages) {
   const response = await request(path);
@@ -67,7 +63,11 @@ for (const [path, title] of pages) {
     1,
     path + ": expected exactly one main H1; shared sections should use H2",
   );
-  assert.ok(response.body.includes("<title>" + title), path + ": wrong title");
+  assert.ok(response.body.includes("<title>" + title.replace(/&/g, "&amp;")), path + ": wrong title");
+  assert.ok(response.body.includes('name="description" content="' + routeMetadata[path].description.replace(/&/g, "&amp;") + '"'), path + ": route-specific description missing");
+  assert.ok(response.body.includes('property="og:title" content="' + title.replace(/&/g, "&amp;") + '"'), path + ": route-specific social title missing");
+  assert.ok(response.body.includes('name="twitter:description" content="' + routeMetadata[path].description.replace(/&/g, "&amp;") + '"'), path + ": route-specific social description missing");
+  assert.equal((response.body.match(/<meta name="description" /g) || []).length, 1, path + ": exactly one description meta tag required");
   assert.ok(response.body.includes('<html lang="de" dir="ltr">'), path + ": default language must be German");
   assert.ok(!/rel="alternate"[^>]*hreflang=/i.test(response.body), path + ": do not emit single-language hreflang");
   assert.ok(response.body.includes('rel="canonical" href="https://www.shaykh-sayed.de' + path + '"'), path + ": wrong canonical");
@@ -101,7 +101,7 @@ for (const [path, title] of pages) {
       "home: full article bodies must not be serialized to the client");
 
     assert.ok(
-      response.body.includes('name="description" content="Islam lernen auf Deutsch:'),
+      response.body.includes('name="description" content="Islam lernen mit Quran und Sunnah:'),
       "home: missing keyword in SSR description",
     );
     assert.ok(
@@ -121,7 +121,7 @@ for (const [path, title] of pages) {
       "home: H1 topic terms must appear naturally in the paragraph",
     );
     assert.ok(
-      response.body.includes('property="og:title" content="Islam lernen auf Deutsch'),
+      response.body.includes('property="og:title" content="Islam lernen mit Quran und Sunnah'),
       "home: Open Graph title does not match",
     );
   }
@@ -146,11 +146,11 @@ for (const [path, title] of pages) {
   }
   if (path === "/shaykh") {
     assert.ok(
-      response.body.includes('name="description" content="Biografie von Dr. Shaykh Sayed Ibn Basyuni:'),
+      response.body.includes('name="description" content="Islam lernen beim Lehrer:'),
       "shaykh: missing biography-specific SSR description",
     );
     assert.ok(
-      response.body.includes('property="og:title" content="Shaykh Sayed Ibn Basyuni | Biografie und Werdegang"'),
+      response.body.includes('property="og:title" content="Islamischer Lehrer in Kassel | Biografie &amp; Ausbildung"'),
       "shaykh: wrong social title",
     );
     assert.ok(
@@ -175,11 +175,11 @@ for (const [path, title] of pages) {
       "durous: repeated lesson titles must not be strong tags",
     );
     assert.ok(
-      response.body.includes('name="description" content="Islamische Unterrichte von Shaykh Sayed'),
+      response.body.includes('name="description" content="Islam lernen durch deutschsprachige Durus:'),
       "durous: incorrect SEO description",
     );
     assert.ok(
-      response.body.includes('property="og:title" content="Islamische Unterrichte und Durous'),
+      response.body.includes('property="og:title" content="Islamische Unterrichte auf Deutsch'),
       "durous: missing social title",
     );
     assert.ok(
@@ -220,11 +220,11 @@ for (const [path, title] of pages) {
   }
   if (path === "/artikel") {
     assert.ok(
-      response.body.includes('name="description" content="Islamische Artikel auf Deutsch'),
+      response.body.includes('name="description" content="Islam lernen durch fundierte Artikel'),
       "artikel: missing index-specific description",
     );
     assert.ok(
-      response.body.includes('property="og:title" content="Islamische Artikel auf Deutsch'),
+      response.body.includes('property="og:title" content="Islamische Artikel lesen'),
       "artikel: missing social metadata",
     );
     assert.ok(response.body.includes("Islamische Artikel"), "artikel: missing article-related H1");
@@ -312,7 +312,8 @@ const exampleSeo = articleSeo({
   updatedAt: null,
   contentText: "Fiqh ist islamisches Wissen.",
 });
-assert.equal(exampleSeo.title, "Was ist Fiqh? | Shaykh Sayed");
+assert.equal(exampleSeo.title, "Was ist Fiqh?");
+assert.equal(articleSeo({ title: "Was ist Fiqh?", seoTitle: "Was ist Fiqh? | Shaykh Sayed Ibn Basyuni" }).title, "Was ist Fiqh?", "legacy SEO suffix must be removed");
 assert.equal(exampleSeo.description, "Eine kurze Erklärung der Grundlagen & Begriffe.");
 assert.equal(exampleSeo.author.type, "Organization", "editorial authors are not fake people");
 assert.equal(exampleSeo.author.profileUrl, null, "editorial team has no invented personal profile");
@@ -434,13 +435,10 @@ assert.ok(vercel.functions["api/sitemap.js"], "dynamic sitemap: server bundle in
 console.log("PASS: dynamic sitemap indexes published articles and has correct routing");
 
 const robots = readFileSync(new URL("../public/robots.txt", import.meta.url), "utf8");
-const sitemap = readFileSync(new URL("../public/sitemap.xml", import.meta.url), "utf8");
 assert.ok(robots.includes("Sitemap: https://www.shaykh-sayed.de/sitemap.xml"));
-assert.ok(sitemap.includes("<loc>https://www.shaykh-sayed.de/durous</loc>"));
-assert.ok(!sitemap.includes("https://shaykh-sayed.de/"), "sitemap: non-www host contradicts redirects and canonicals");
-assert.ok(!sitemap.includes("/artikel/mondsichtung-ramadan"), "sitemap: unpublished article still indexed");
-assert.ok(!sitemap.includes("/artikel/die-bedeutung-von-wissen-und-aufrichtigem-lernen"), "sitemap: missing article still indexed");
-assert.ok(sitemap.includes("/artikel/die-unterscheidung-zwischen-konsens-und-uebereinstimmung-der-gelehrten-in-der-islamischen-rechtsmethodik"), "sitemap: known published article missing");
+assert.ok(sitemapResponse.body.includes("<loc>https://www.shaykh-sayed.de/durous</loc>"));
+assert.ok(!sitemapResponse.body.includes("https://shaykh-sayed.de/"), "sitemap: non-www host contradicts redirects and canonicals");
+assert.ok(!sitemapResponse.body.includes("/artikel/geheimer-entwurf"), "sitemap: unpublished article indexed");
 console.log("PASS: canonical host matches sitemap and robots.txt");
 console.log("SSR smoke tests passed.");
 

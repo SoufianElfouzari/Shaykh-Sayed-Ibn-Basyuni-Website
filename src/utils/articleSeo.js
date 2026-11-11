@@ -76,10 +76,13 @@ export function articleAuthor(article) {
 export function articleSeo(article) {
   const headline = cleanSeoText(article?.title) || "Islamischer Artikel";
   const explicitTitle = cleanSeoText(article?.seoTitle);
-  // Longer scholarly titles remain intact, rather than being cut mid-meaning.
-  const title = explicitTitle || (
-    headline.length <= 72 ? headline + " | Shaykh Sayed" : headline
-  );
+  // Never append site branding to a scholarly article's title. Older SEO
+  // fields may still contain a templated brand prefix/suffix; strip only that
+  // boilerplate without changing the author's actual headline.
+  const title = (explicitTitle || headline)
+    .replace(/^(?:Dr\\.?\\s*)?Shaykh Sayed(?: Ibn Basyuni)?\\s*\\|\\s*/i, "")
+    .replace(/\\s*\\|\\s*(?:Dr\\.?\\s*)?Shaykh Sayed(?: Ibn Basyuni)?$/i, "")
+    .trim() || headline;
   const rawDescription = article?.seoDescription || article?.excerpt ||
     article?.contentText || headline;
   const description = conciseDescription(rawDescription) || headline;

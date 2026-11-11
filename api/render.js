@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { articleSeo, SITE_FALLBACK_IMAGE } from "../src/utils/articleSeo.js";
+import { getRouteMetadata, notFoundMetadata } from "../src/utils/routeSeo.js";
 
 const origin = "https://www.shaykh-sayed.de";
 const siteName = "Shaykh Sayed Ibn Basyuni";
@@ -54,43 +55,9 @@ function absoluteImage(source) {
   return SITE_FALLBACK_IMAGE;
 }
 
-const staticMetadata = {
-  "/": {
-    title: "Islam lernen auf Deutsch | Shaykh Sayed Ibn Basyuni",
-    description: "Islam lernen auf Deutsch: Unterrichte und Artikel von Shaykh Sayed Ibn Basyuni zu Fiqh, Aqidah und weiteren islamischen Wissenschaften."
-  },
-  "/shaykh": {
-    title: "Shaykh Sayed Ibn Basyuni | Biografie und Werdegang",
-    description: "Biografie von Dr. Shaykh Sayed Ibn Basyuni: Ausbildung an der Al-Azhar-Universität, Lehrer, Forschung und islamische Unterrichte in Kassel."
-  },
-  "/durous": {
-    title: "Islamische Unterrichte und Durous | Shaykh Sayed",
-    description: "Islamische Unterrichte von Shaykh Sayed Ibn Basyuni: Fiqh-Unterrichtszeiten in Kassel, aktuelle Hinweise und veröffentlichte Durous als Audioaufnahmen."
-  },
-  "/artikel": {
-    title: "Islamische Artikel auf Deutsch | Shaykh Sayed Ibn Basyuni",
-    description: "Islamische Artikel auf Deutsch von Shaykh Sayed Ibn Basyuni. Entdecke veröffentlichte Beiträge zu islamischen Wissenschaften und vertiefe dein Wissen."
-  },
-  "/kontakt": {
-    title: "Kontakt | Shaykh Sayed Ibn Basyuni",
-    description: "Kontaktmöglichkeiten und Informationen zur offiziellen Website von Shaykh Sayed Ibn Basyuni."
-  },
-  "/impressum": {
-    title: "Impressum | Shaykh Sayed Ibn Basyuni",
-    description: "Impressum und rechtliche Angaben zur Website von Shaykh Sayed Ibn Basyuni."
-  },
-  "/datenschutz": {
-    title: "Datenschutz | Shaykh Sayed Ibn Basyuni",
-    description: "Datenschutzhinweise und Informationen über den Umgang mit personenbezogenen Daten auf shaykh-sayed.de."
-  }
-};
-
-function metadataFor(pathname, article, status) {
+function metadataFor(pathname, article, status, data) {
   if (status === 404) {
-    return {
-      title: "Seite nicht gefunden | Shaykh Sayed",
-      description: "Die gesuchte Seite oder der Artikel ist nicht verfügbar."
-    };
+    return notFoundMetadata;
   }
   if (article) {
     const seo = articleSeo(article);
@@ -101,7 +68,7 @@ function metadataFor(pathname, article, status) {
       type: "article"
     };
   }
-  return staticMetadata[pathname] || staticMetadata["/"];
+  return getRouteMetadata(pathname, data?.archivePagination?.page) || getRouteMetadata("/");
 }
 
 function structuredData(pathname, metadata, article, status, data) {
@@ -273,7 +240,7 @@ function structuredData(pathname, metadata, article, status, data) {
 
 function buildHtml(result) {
   const { markup, data, status, pathname } = result;
-  const meta = metadataFor(pathname, data.article, status);
+  const meta = metadataFor(pathname, data.article, status, data);
   const url = origin + pathname + (data.archivePagination?.page > 1 ? "?page=" + data.archivePagination.page : "");
   const image = absoluteImage(meta.image);
   const imageIsFallback = !meta.image;
