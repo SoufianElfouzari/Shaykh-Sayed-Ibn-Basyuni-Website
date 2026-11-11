@@ -109,7 +109,7 @@ for (const [path, title] of pages) {
       "home: missing learning focus in server-rendered hero",
     );
     assert.ok(
-      response.body.includes('über islamische Wissenschaften, Quran und Sunnah'),
+      response.body.includes('fundierte Artikel über Quran, Sunnah, Fiqh, Hadith'),
       "home: H1 topic terms must appear naturally in the paragraph",
     );
     assert.ok(
