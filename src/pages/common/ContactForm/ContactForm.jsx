@@ -273,7 +273,6 @@ function ContactForm({ headingLevel = 2 }) {
             <div className="sib-contact-form-fields">
               <div
                 className="sib-contact-field"
-                style={{ "--sib-contact-field-index": 0 }}
               >
                 <label htmlFor="contact-name">
                   Name <span>*</span>
@@ -293,7 +292,6 @@ function ContactForm({ headingLevel = 2 }) {
 
               <div
                 className="sib-contact-field"
-                style={{ "--sib-contact-field-index": 1 }}
               >
                 <label htmlFor="contact-email">
                   E-Mail-Adresse <span>*</span>
@@ -313,7 +311,6 @@ function ContactForm({ headingLevel = 2 }) {
 
               <div
                 className="sib-contact-field sib-contact-field-full"
-                style={{ "--sib-contact-field-index": 2 }}
               >
                 <label htmlFor="contact-subject">
                   Anliegen <span>*</span>
@@ -365,7 +362,6 @@ function ContactForm({ headingLevel = 2 }) {
 
               <div
                 className="sib-contact-field sib-contact-field-full"
-                style={{ "--sib-contact-field-index": 3 }}
               >
                 <div className="sib-contact-textarea-heading">
                   <label htmlFor="contact-message">

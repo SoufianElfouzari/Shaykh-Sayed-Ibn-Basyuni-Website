@@ -5,8 +5,11 @@ import App from "./App.jsx";
 import "./a11y-contrast.css";
 
 const root = document.getElementById("root");
-const hasServerData = Object.prototype.hasOwnProperty.call(window, "__SSR_DATA__");
-const initialData = hasServerData ? window.__SSR_DATA__ : {};
+const ssrDataElement = document.getElementById("ssr-data");
+const hasServerData = Boolean(ssrDataElement);
+const initialData = hasServerData
+  ? JSON.parse(ssrDataElement.content.textContent || "{}")
+  : {};
 const app = (
   <StrictMode>
     <App initialData={initialData} />

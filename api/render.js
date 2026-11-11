@@ -5,7 +5,7 @@ import { articleSeo, SITE_FALLBACK_IMAGE } from "../src/utils/articleSeo.js";
 const origin = "https://www.shaykh-sayed.de";
 const siteName = "Shaykh Sayed Ibn Basyuni";
 const templatePath = fileURLToPath(new URL("../dist/index.html", import.meta.url));
-let assetTags;
+let assetResources;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -18,6 +18,7 @@ function escapeHtml(value) {
 
 function safeJson(value) {
   return JSON.stringify(value)
+    .replace(/&/g, "\\u0026")
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/\u2028/g, "\\u2028")
@@ -25,18 +26,22 @@ function safeJson(value) {
 }
 
 function getAssets() {
-  if (assetTags === undefined) {
+  if (assetResources === undefined) {
     const template = readFileSync(templatePath, "utf8");
-    assetTags = (template.match(/<(?:script|link)\b[^>]*>/gi) || [])
-      .filter((tag) => /(?:src|href)="\/assets\//.test(tag))
-      // A script opening tag without </script> swallows following HTML.
-      .map((tag) => /^<script\b/i.test(tag) ? tag + "</script>" : tag)
-      .join("\n");
-    if (!assetTags.includes("/assets/")) {
-      throw new Error("The Vite client assets were not found in dist/index.html");
+    const tags = (template.match(/<(?:script|link)\b[^>]*>/gi) || [])
+      .filter((tag) => /(?:src|href)="\/assets\//.test(tag));
+    assetResources = {
+      head: tags.filter((tag) => /^<link\b/i.test(tag)).join("\n"),
+      scripts: tags.filter((tag) => /^<script\b/i.test(tag))
+        .map((tag) => tag + "</script>")
+        .join("\n"),
+    };
+    if (!assetResources.head.includes("/assets/") ||
+        !assetResources.scripts.includes("/assets/")) {
+      throw new Error("The Vite CSS and JavaScript assets were not found in dist/index.html");
     }
   }
-  return assetTags;
+  return assetResources;
 }
 
 function absoluteImage(source) {
@@ -280,6 +285,7 @@ function buildHtml(result) {
   const canonical = escapeHtml(url);
   const ld = structuredData(pathname, meta, data.article, status, data);
   const articleDetails = data.article && status === 200 ? articleSeo(data.article) : null;
+  const assets = getAssets();
   const pageLanguage = articleDetails?.language || "de";
   const ogLocale = pageLanguage === "ar" ? "ar_AR" : pageLanguage === "en" ? "en_US" : "de_DE";
 
@@ -313,11 +319,13 @@ function buildHtml(result) {
     articleDetails?.author?.profileUrl ? '<link rel="author" href="' + escapeHtml(articleDetails.author.profileUrl) + '">' : "",
     '<meta name="theme-color" content="#084c3c">',
     '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
+    '<link rel="apple-touch-icon" sizes="180x180" href="/ShaykhSayedLogo.png">',
+    assets.head,
     ld,
     "</head><body>",
     '<div id="root">' + markup + "</div>",
-    "<script>window.__SSR_DATA__=" + safeJson(data) + ";</script>",
-    getAssets(),
+    '<template id="ssr-data">' + safeJson(data) + "</template>",
+    assets.scripts,
     "</body></html>"
   ].join("\n");
 }

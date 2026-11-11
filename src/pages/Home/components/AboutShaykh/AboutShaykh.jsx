@@ -57,6 +57,19 @@ function AboutShaykh() {
             Ein kurzer Einblick in seinen wissenschaftlichen
             Werdegang und seine Tätigkeit.
           </h2>
+
+          <figure className="sib-about-brand">
+            <img
+              src="/ShaykhSayedLogo.png"
+              alt="Offizielles Logo von Shaykh Sayed Ibn Basyuni"
+              width="80"
+              height="80"
+              loading="lazy"
+              decoding="async"
+              className="sib-about-brand-image"
+            />
+            <figcaption>Offizielle Website des Lehrers</figcaption>
+          </figure>
         </div>
 
         <div className="sib-about-content">

@@ -65,6 +65,14 @@ export default function ExploreContent({ page }) {
             </Link>
           ))}
         </div>
+        {page === "home" && (
+          <p className="sib-explore-resources">
+            Weiterführende Quellen:
+            {" "}<a href="https://quran.com/" target="_blank" rel="noopener noreferrer">Quran lesen</a>
+            {" "}und{" "}
+            <a href="https://sunnah.com/" target="_blank" rel="noopener noreferrer">Hadith-Sammlungen nachschlagen</a>.
+          </p>
+        )}
       </div>
     </section>
   );

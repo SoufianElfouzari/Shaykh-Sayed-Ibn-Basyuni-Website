@@ -12,3 +12,17 @@
 .sib-explore-card-text > span { color: #617168; font-size: 12px; line-height: 1.5; }
 .sib-explore-card svg { width: 20px; height: 20px; flex-shrink: 0; color: #96794b; }
 @media (prefers-reduced-motion: reduce) { .sib-explore-card { transition: none; } .sib-explore-card:hover { transform: none; } }
+
+.sib-explore-resources {
+  margin: 24px 0 0;
+  color: #52665d;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.sib-explore-resources a {
+  color: #0d604c;
+  font-weight: 650;
+  text-underline-offset: 3px;
+}
+.sib-explore-resources a:hover { color: #084c3c; }
+.sib-explore-resources a:focus-visible { outline: 2px solid #9a7b46; outline-offset: 3px; }

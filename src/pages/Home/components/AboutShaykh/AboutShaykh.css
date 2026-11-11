@@ -252,3 +252,37 @@
     font-size: 34px;
   }
 }
+/* A real HTML image with fixed intrinsic dimensions prevents image-induced CLS. */
+.sib-about-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 28px 0 0;
+}
+
+.sib-about-brand-image {
+  display: block;
+  width: 80px;
+  height: 80px;
+  flex: 0 0 80px;
+  border-radius: 16px;
+  object-fit: contain;
+}
+
+.sib-about-brand figcaption {
+  color: var(--sib-color-text-muted, #626b65);
+  font-family: var(--sib-font-main, Arial, sans-serif);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 620px) {
+  .sib-about-brand {
+    margin-top: 22px;
+  }
+  .sib-about-brand-image {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+  }
+}

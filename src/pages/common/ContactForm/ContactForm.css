@@ -599,6 +599,22 @@
   gap: 30px 26px;
 }
 
+.sib-contact-form-fields > .sib-contact-field:nth-child(1) {
+  --sib-contact-field-index: 0;
+}
+
+.sib-contact-form-fields > .sib-contact-field:nth-child(2) {
+  --sib-contact-field-index: 1;
+}
+
+.sib-contact-form-fields > .sib-contact-field:nth-child(3) {
+  --sib-contact-field-index: 2;
+}
+
+.sib-contact-form-fields > .sib-contact-field:nth-child(4) {
+  --sib-contact-field-index: 3;
+}
+
 .sib-contact-field {
   min-width: 0;
   opacity: 0;
