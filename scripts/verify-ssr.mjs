@@ -117,7 +117,7 @@ for (const [path, title] of pages) {
       "home: repeated lesson titles must not be strong tags",
     );
     assert.ok(
-      response.body.includes('fundierte Artikel über Quran, Sunnah, Fiqh, Hadith'),
+      response.body.includes('fundierte Artikel zu Fiqh, Hadith'),
       "home: H1 topic terms must appear naturally in the paragraph",
     );
     assert.ok(
