@@ -4,40 +4,31 @@ import "./Footer.css";
 
 const footerNavigation = [
   {
-    label: "Startseite",
+    label: "Zur Startseite",
     to: "/",
   },
   {
-    label: "Der Shaykh",
+    label: "Biografie",
     to: "/shaykh",
   },
   {
-    label: "Durous",
+    label: "Unterrichtsarchiv",
     to: "/durous",
   },
   {
-    label: "Artikel",
+    label: "Artikelübersicht",
     to: "/artikel",
   },
   {
-    label: "Kontakt",
+    label: "Kontaktseite",
     to: "/kontakt",
   },
 ];
 
 const footerContentLinks = [
-  {
-    label: "Neueste Durous",
-    to: "/durous",
-  },
-  {
-    label: "Unterrichtsreihen",
-    to: "/durous",
-  },
-  {
-    label: "Aktuelle Artikel",
-    to: "/artikel",
-  },
+  { label: "Islamische Artikel", to: "/artikel" },
+  { label: "Fiqh und Hadith", to: "/durous" },
+  { label: "Über den Lehrer", to: "/shaykh" },
 ];
 
 function ArrowIcon() {
@@ -287,9 +278,14 @@ function Footer() {
         </div>
 
         <div className="sib-footer-bottom">
-          <p className="sib-footer-copyright">
-            © {currentYear} Shaykh Sayed Ibn Basyuni
-          </p>
+          <div className="sib-footer-credit">
+            <p className="sib-footer-copyright">
+              © {currentYear} Shaykh Sayed Ibn Basyuni
+            </p>
+            <p className="sib-footer-developer">
+              Website entwickelt von <a href="https://elfouzari.de/" target="_blank" rel="noopener noreferrer">Soufian El-Fouzari</a>
+            </p>
+          </div>
 
           <div className="sib-footer-legal-links">
             <Link to="/impressum">
