@@ -228,30 +228,7 @@ function LatestArticles() {
     );
   }, [articles]);
 
-  const featuredArticle = useMemo(() => {
-    if (latestArticles.length === 0) {
-      return null;
-    }
-
-    return (
-      latestArticles.find(
-        (article) => article.featured,
-      ) || latestArticles[0]
-    );
-  }, [latestArticles]);
-
-  const secondaryArticles = useMemo(() => {
-    if (!featuredArticle) {
-      return [];
-    }
-
-    return latestArticles
-      .filter(
-        (article) =>
-          article.id !== featuredArticle.id,
-      )
-      .slice(0, 2);
-  }, [latestArticles, featuredArticle]);
+  const visibleArticles = useMemo(() => latestArticles.slice(0, 9), [latestArticles]);
 
   return (
     <section
@@ -351,152 +328,40 @@ function LatestArticles() {
           </div>
         )}
 
-        {!isLoading &&
-          !errorMessage &&
-          !featuredArticle && (
-            <div className="sib-articles-featured">
-              <div className="sib-articles-featured-top">
-                <span className="sib-articles-icon">
-                  <EmptyIcon />
-                </span>
+        {!isLoading && !errorMessage && visibleArticles.length === 0 && (
+          <div className="sib-articles-empty">
+            <EmptyIcon />
+            <h3>Aktuell gibt es keine Artikel.</h3>
+            <p>Derzeit wurden noch keine Artikel veröffentlicht.</p>
+          </div>
+        )}
 
-                <span className="sib-articles-category">
-                  Artikel
-                </span>
-              </div>
-
-              <div className="sib-articles-featured-content">
-                <h3>
-                  Aktuell gibt es keine Artikel.
-                </h3>
-
-                <p>
-                  Derzeit wurden noch keine Artikel
-                  veröffentlicht.
-                </p>
-              </div>
-            </div>
-          )}
-
-        {!isLoading &&
-          !errorMessage &&
-          featuredArticle && (
-            <div className="sib-articles-layout">
+        {!isLoading && !errorMessage && visibleArticles.length > 0 && (
+          <div className="sib-articles-layout">
+            {visibleArticles.map((article) => (
               <Link
-                to={getArticlePath(
-                  featuredArticle,
-                )}
-                className="sib-articles-featured"
+                key={article.id || article.slug}
+                to={getArticlePath(article)}
+                className="sib-articles-secondary"
               >
-                <div className="sib-articles-featured-top">
-                  <span className="sib-articles-icon">
-                    <DocumentIcon />
-                  </span>
-
-                  <span className="sib-articles-category">
-                    {featuredArticle.category ||
-                      "Artikel"}
-                  </span>
-                </div>
-
-                <div className="sib-articles-featured-content">
-                  <div className="sib-articles-meta">
-                    <time
-                      dateTime={
-                        featuredArticle.publishedAt ||
-                        undefined
-                      }
-                    >
-                      {formatDate(
-                        featuredArticle.publishedAt,
-                      )}
+                <div className="sib-articles-secondary-content">
+                  <div className="sib-articles-secondary-top">
+                    <span className="sib-articles-category">{article.category || "Artikel"}</span>
+                    <time className="sib-articles-date" dateTime={article.publishedAt || undefined}>
+                      {formatDate(article.publishedAt)}
                     </time>
-
-                    <span aria-hidden="true">
-                      ·
-                    </span>
-
-                    <span>
-                      {formatReadingTime(
-                        featuredArticle.readingTime,
-                      )}
-                    </span>
                   </div>
-
-                  <h3>
-                    {featuredArticle.title}
-                  </h3>
-
-                  {featuredArticle.excerpt && (
-                    <p>
-                      {featuredArticle.excerpt}
-                    </p>
-                  )}
-                </div>
-
-                <div className="sib-articles-featured-footer">
-                  <span>Artikel lesen</span>
-
-                  <span className="sib-articles-arrow">
-                    <ArrowIcon />
-                  </span>
+                  <h3>{article.title}</h3>
+                  {article.excerpt && <p>{article.excerpt}</p>}
+                  <div className="sib-articles-card-footer">
+                    <span>{formatReadingTime(article.readingTime)}</span>
+                    <span className="sib-articles-secondary-arrow"><ArrowIcon /></span>
+                  </div>
                 </div>
               </Link>
-
-              {secondaryArticles.length > 0 && (
-                <div className="sib-articles-secondary-list">
-                  {secondaryArticles.map(
-                    (article) => (
-                      <Link
-                        key={article.id}
-                        to={getArticlePath(article)}
-                        className="sib-articles-secondary"
-                      >
-                        <div className="sib-articles-secondary-content">
-                          <div className="sib-articles-secondary-top">
-                            <span className="sib-articles-category">
-                              {article.category ||
-                                "Artikel"}
-                            </span>
-
-                            <time
-                              className="sib-articles-date"
-                              dateTime={
-                                article.publishedAt ||
-                                undefined
-                              }
-                            >
-                              {formatDate(
-                                article.publishedAt,
-                              )}
-                            </time>
-                          </div>
-
-                          <h3>{article.title}</h3>
-
-                          {article.excerpt && (
-                            <p>
-                              {article.excerpt}
-                            </p>
-                          )}
-
-                          <span className="sib-articles-reading-time">
-                            {formatReadingTime(
-                              article.readingTime,
-                            )}
-                          </span>
-                        </div>
-
-                        <span className="sib-articles-secondary-arrow">
-                          <ArrowIcon />
-                        </span>
-                      </Link>
-                    ),
-                  )}
-                </div>
-              )}
-            </div>
-          )}
+            ))}
+          </div>
+        )}
 
         <Link
           to="/artikel"
