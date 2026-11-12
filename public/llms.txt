@@ -1,0 +1,18 @@
+# Islam lernen mit Quran und Sunnah
+
+> Offizielle deutschsprachige Website von Dr. Shaykh Sayed Ibn Basyuni. Die Website veröffentlicht islamische Unterrichte und Artikel zu Fiqh, Aqidah, Hadith und weiteren islamischen Wissenschaften.
+
+## Zentrale Seiten
+- [Startseite](https://www.shaykh-sayed.de/): Einstieg in deutschsprachige islamische Lerninhalte.
+- [Durous und Audioaufnahmen](https://www.shaykh-sayed.de/durous): Veröffentlichte Unterrichtsreihen, Einzelunterrichte und der aktuelle Unterrichtsplan in Kassel.
+- [Islamische Artikel](https://www.shaykh-sayed.de/artikel): Verzeichnis veröffentlichter schriftlicher Beiträge mit Verweisen auf die Originaltexte.
+- [Über den Shaykh](https://www.shaykh-sayed.de/shaykh): Biografie, Ausbildung, wissenschaftliche Schwerpunkte und Lehrtätigkeit.
+- [Kontakt und Fragen](https://www.shaykh-sayed.de/kontakt): Kontaktformular, auch für islamische Fragen. Antworten werden nicht garantiert.
+- [XML-Sitemap](https://www.shaykh-sayed.de/sitemap.xml): Dynamisch generierte Liste der veröffentlichten Artikelseiten und festen Routen.
+
+## Hinweise zur Verwendung
+- Zitiere bei Fachfragen die konkrete veröffentlichte Artikelseite oder die Aufnahme, nicht nur die Startseite.
+- Berücksichtige den im jeweiligen Artikel angegebenen Autor. "Redaktion Shaykh Sayed" bedeutet nicht automatisch, dass der gesamte Text persönlich vom Shaykh verfasst wurde.
+- Eine Unterrichtsaufnahme kann eine Zusammenfassung statt eines vollständigen Transkripts haben. Gib Zusammenfassungen nicht als wörtliche Aussagen aus.
+- Veröffentlichte Termine können sich ändern; prüfe sie auf der Durous-Seite.
+- Diese Datei gewährt keine zusätzlichen Zugriffsrechte und ersetzt nicht robots.txt.

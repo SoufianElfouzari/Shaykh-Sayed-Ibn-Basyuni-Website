@@ -31,7 +31,7 @@ function ArrowIcon() {
 
 function LessonSchedule() {
   const { lessons: serverLessons, __ssrPath } = useSsrData();
-  const hasServerLessons = __ssrPath === "/durous" && Array.isArray(serverLessons);
+  const hasServerLessons = (__ssrPath === "/" || __ssrPath === "/durous") && Array.isArray(serverLessons);
   const [weeklyLessons, setWeeklyLessons] = useState(hasServerLessons ? serverLessons : []);
 
   useEffect(() => {

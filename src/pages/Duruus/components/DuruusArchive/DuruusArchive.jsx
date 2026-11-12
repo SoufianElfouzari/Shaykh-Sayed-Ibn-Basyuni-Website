@@ -259,16 +259,13 @@ function LessonDescription({ description }) {
   const fullText = String(description || "").trim();
   const plainText = fullText.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
   const needsExpansion = plainText.length > 190 || fullText.includes("\n");
-  const preview = plainText.length > 190
-    ? plainText.slice(0, 190).replace(/\s+\S*$/, "") + "…"
-    : plainText;
-
   return (
     <div className="sib-duruus-lesson-description">
-      <div className="sib-duruus-lesson-description-text">
-        {expanded || !needsExpansion
-          ? <DescriptionText text={fullText} />
-          : <p>{preview}</p>}
+      <div
+        className="sib-duruus-lesson-description-text"
+        style={needsExpansion && !expanded ? { maxHeight: "4.5em", overflow: "hidden" } : undefined}
+      >
+        <DescriptionText text={fullText} />
       </div>
       {needsExpansion && (
         <button
@@ -1134,6 +1131,7 @@ function DuruusArchive() {
                                   key={
                                     recording.id
                                   }
+                                  id={`aufnahme-${recording.id}`}
                                   className={`sib-duruus-lesson ${
                                     isActive
                                       ? "sib-duruus-lesson-active"
@@ -1203,6 +1201,15 @@ function DuruusArchive() {
                                     {recording.description && (
                                       <LessonDescription description={recording.description} />
                                     )}
+
+                                    <a
+                                      className="sib-duruus-lesson-permalink"
+                                      href={`/durous#aufnahme-${encodeURIComponent(String(recording.id))}`}
+                                      style={{ display: "inline-block", marginTop: "8px", fontSize: "0.82rem", textDecoration: "underline", textUnderlineOffset: "3px" }}
+                                      aria-label={`Direktlink zum Unterricht: ${recording.title}`}
+                                    >
+                                      Direktlink zum Unterricht
+                                    </a>
 
                                     <div className="sib-duruus-lesson-meta">
                                       <span>

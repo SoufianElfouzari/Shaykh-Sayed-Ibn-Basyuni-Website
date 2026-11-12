@@ -26,7 +26,12 @@ export async function renderPage(pathname) {
   let status = 200;
 
   if (path === "/") {
-    data.articles = await getPublishedArticleSummaries();
+    // The homepage displays recordings too. Serve the actual published content
+    // in the initial HTML instead of a loading placeholder for non-JS crawlers.
+    [data.articles, data.duruus] = await Promise.all([
+      getPublishedArticleSummaries(),
+      getPublishedDuruus(),
+    ]);
   } else if (path === "/artikel") {
     const rawPage = requestedUrl.searchParams.get("page");
     const requestedPage = rawPage === null ? 1 : Number(rawPage);
@@ -47,13 +52,6 @@ export async function renderPage(pathname) {
       }
     }
   } else if (path === "/durous") {
-    // Vite copies the editable public JSON into dist/data at build time.
-    // Read the same schedule for SSR that clients load after navigation.
-    const schedule = JSON.parse(readFileSync(new URL("../dist/data/durus-schedule.json", import.meta.url), "utf8"));
-    if (!Array.isArray(schedule.lessons)) throw new Error("Invalid Durous schedule JSON");
-    data.lessons = schedule.lessons.filter((lesson) =>
-      lesson.enabled !== false && lesson.day && lesson.time && lesson.subject,
-    );
     const [duruus, notices] = await Promise.all([
       getPublishedDuruus(),
       getActivePublishedNotices().catch((error) => {
@@ -80,6 +78,16 @@ export async function renderPage(pathname) {
     }
   } else if (!pages.has(path)) {
     status = 404;
+  }
+
+  if (path === "/" || path === "/durous") {
+    // The schedule also appears on the homepage. Keep both pages and crawlers
+    // consistent with the published JSON used by the client.
+    const schedule = JSON.parse(readFileSync(new URL("../dist/data/durus-schedule.json", import.meta.url), "utf8"));
+    if (!Array.isArray(schedule.lessons)) throw new Error("Invalid Durous schedule JSON");
+    data.lessons = schedule.lessons.filter((lesson) =>
+      lesson.enabled !== false && lesson.day && lesson.time && lesson.subject,
+    );
   }
 
   if (status === 404) {

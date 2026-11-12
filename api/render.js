@@ -71,7 +71,7 @@ function metadataFor(pathname, article, status, data) {
   return getRouteMetadata(pathname, data?.archivePagination?.page) || getRouteMetadata("/");
 }
 
-function structuredData(pathname, metadata, article, status, data) {
+export function structuredData(pathname, metadata, article, status, data) {
   if (status === 404) return "";
   const url = origin + pathname + (data?.archivePagination?.page > 1 ? "?page=" + data.archivePagination.page : "");
   const graph = [
@@ -80,13 +80,26 @@ function structuredData(pathname, metadata, article, status, data) {
       "@id": origin + "/#website",
       url: origin + "/",
       name: siteName,
-      inLanguage: "de"
+      inLanguage: "de",
+      description: "Islamische Unterrichte und Fachartikel zu Quran, Sunnah, Fiqh und weiteren islamischen Wissenschaften.",
+      publisher: { "@id": origin + "/#redaktion" }
     },
     {
       "@type": "Person",
       "@id": origin + "/#person",
       url: origin + "/shaykh",
-      name: siteName
+      name: siteName,
+      description: "Dr. Shaykh Sayed Ibn Basyuni ist Imam, Khatib und Lehrer islamischer Wissenschaften in Kassel.",
+      jobTitle: ["Imam", "Khatib", "Lehrer für islamische Wissenschaften"],
+      alumniOf: { "@type": "CollegeOrUniversity", name: "Al-Azhar-Universität" },
+      knowsAbout: ["Fiqh", "Aqidah", "Hadith", "islamische Wissenschaften"]
+    },
+    {
+      "@type": "Organization",
+      "@id": origin + "/#redaktion",
+      name: "Redaktion Shaykh Sayed",
+      url: origin + "/",
+      description: "Redaktionelle Veröffentlichung der Artikel und Unterrichte auf der offiziellen Website."
     },
     {
       "@type": "WebPage",
@@ -99,55 +112,75 @@ function structuredData(pathname, metadata, article, status, data) {
     }
   ];
   if (pathname === "/shaykh") {
-    Object.assign(graph[1], {
-      description: "Dr. Shaykh Sayed Ibn Basyuni ist Imam, Khatib und Lehrer islamischer Wissenschaften in Kassel.",
-      jobTitle: ["Imam", "Khatib", "Lehrer für islamische Wissenschaften"],
-      alumniOf: {
-        "@type": "CollegeOrUniversity",
-        name: "Al-Azhar-Universität"
-      },
-      knowsAbout: ["Fiqh", "Aqidah", "Hadith", "Tafsir", "islamische Wissenschaften"]
-    });
-    graph[2].about = { "@id": origin + "/#person" };
-    graph[2].mainEntity = { "@id": origin + "/#person" };
+    graph[3].about = { "@id": origin + "/#person" };
+    graph[3].mainEntity = { "@id": origin + "/#person" };
   }
-  if (pathname === "/durous") {
-    Object.assign(graph[2], {
-      "@type": "CollectionPage",
-      about: { "@id": origin + "/#person" }
-    });
-
-    const recordings = Array.isArray(data?.duruus)
-      ? data.duruus.filter((recording) => recording?.title && recording?.series)
-      : [];
-
+  // All recordings have canonical, public anchor URLs, even before individual
+  // transcript pages exist. Never expose short-lived signed audio URLs in JSON-LD.
+  const recordings = Array.isArray(data?.duruus)
+    ? data.duruus.filter((recording) => recording?.id && recording?.title && recording?.series)
+    : [];
+  if (pathname === "/" || pathname === "/durous") {
+    if (pathname === "/durous") {
+      Object.assign(graph[3], {
+        "@type": "CollectionPage",
+        about: { "@type": "Thing", name: "Islamische Unterrichte" }
+      });
+    }
     if (recordings.length > 0) {
-      graph[2].mainEntity = { "@id": url + "#aufnahmen" };
+      const listId = pathname === "/" ? url + "#start-aufnahmen" : url + "#aufnahmen";
+      if (pathname === "/durous") graph[3].mainEntity = { "@id": listId };
+      else graph[3].hasPart = [{ "@id": listId }];
       graph.push({
         "@type": "ItemList",
-        "@id": url + "#aufnahmen",
+        "@id": listId,
         name: "Veröffentlichte Durous und Unterrichtsreihen",
         numberOfItems: recordings.length,
-        itemListElement: recordings.slice(0, 20).map((recording, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          item: {
-            "@type": "CreativeWork",
+        itemListElement: recordings.slice(0, 20).map((recording, index) => {
+          const lessonUrl = origin + "/durous#aufnahme-" + encodeURIComponent(String(recording.id));
+          const language = String(recording.language || "").toLowerCase();
+          const audio = {
+            "@type": "AudioObject",
+            "@id": lessonUrl,
+            url: lessonUrl,
             name: recording.title,
             description: recording.description || undefined,
-            inLanguage: recording.language || undefined,
-            isPartOf: {
-              "@type": "CreativeWorkSeries",
-              name: recording.series
-            },
-            author: { "@id": origin + "/#person" }
-          }
+            inLanguage: language.includes("arab") ? "ar" : language.includes("engl") ? "en" : "de",
+            creator: { "@id": origin + "/#person" },
+            isPartOf: { "@type": "CreativeWorkSeries", name: recording.series },
+            isAccessibleForFree: true
+          };
+          if (recording.durationSeconds > 0) audio.duration = "PT" + Math.floor(recording.durationSeconds) + "S";
+          if (recording.date) audio.dateCreated = recording.date;
+          if (recording.publishedAt) audio.datePublished = recording.publishedAt;
+          return { "@type": "ListItem", position: index + 1, url: lessonUrl, item: audio };
+        })
+      });
+    }
+  }
+  if (pathname === "/") {
+    const latest = Array.isArray(data?.articles)
+      ? data.articles.filter((entry) => entry?.slug && !entry.slug.includes("/") && entry.title).slice(0, 9)
+      : [];
+    if (latest.length) {
+      const id = url + "#start-artikel";
+      graph[3].hasPart = [...(graph[3].hasPart || []), { "@id": id }];
+      graph.push({
+        "@type": "ItemList",
+        "@id": id,
+        name: "Neueste islamische Artikel",
+        numberOfItems: latest.length,
+        itemListElement: latest.map((entry, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: entry.title,
+          url: origin + "/artikel/" + encodeURIComponent(entry.slug)
         }))
       });
     }
   }
   if (pathname === "/artikel") {
-    Object.assign(graph[2], {
+    Object.assign(graph[3], {
       "@type": "CollectionPage",
       about: { "@type": "Thing", name: "Islamische Wissenschaften" }
     });
@@ -162,7 +195,7 @@ function structuredData(pathname, metadata, article, status, data) {
       .slice(0, 12);
 
     if (visibleArticles.length > 0) {
-      graph[2].mainEntity = { "@id": url + "#artikelliste" };
+      graph[3].mainEntity = { "@id": url + "#artikelliste" };
       graph.push({
         "@type": "ItemList",
         "@id": url + "#artikelliste",
@@ -198,13 +231,13 @@ function structuredData(pathname, metadata, article, status, data) {
       "@id": url + "#breadcrumbs",
       itemListElement: breadcrumbs
     });
-    graph[2].breadcrumb = { "@id": url + "#breadcrumbs" };
+    graph[3].breadcrumb = { "@id": url + "#breadcrumbs" };
   }
 
   if (article) {
     const seo = articleSeo(article);
-    graph[2].mainEntity = { "@id": url + "#article" };
-    graph[2].inLanguage = seo.language;
+    graph[3].mainEntity = { "@id": url + "#article" };
+    graph[3].inLanguage = seo.language;
 
     const author = {
       "@type": seo.author.type,
@@ -221,7 +254,7 @@ function structuredData(pathname, metadata, article, status, data) {
       description: seo.description,
       inLanguage: seo.language,
       author,
-      publisher: { "@id": origin + "/#person" },
+      publisher: { "@id": origin + "/#redaktion" },
       isAccessibleForFree: true,
       timeRequired: "PT" + seo.readingTime + "M"
     };
@@ -231,6 +264,8 @@ function structuredData(pathname, metadata, article, status, data) {
     if (seo.image) schema.image = seo.image;
     if (seo.category) schema.articleSection = seo.category;
     if (seo.tags.length) schema.keywords = seo.tags.join(", ");
+    const topics = [...new Set([seo.category, ...seo.tags].filter(Boolean))];
+    if (topics.length) schema.about = topics.map((name) => ({ "@type": "Thing", name }));
     graph.push(schema);
   }
   return '<script type="application/ld+json">' +
