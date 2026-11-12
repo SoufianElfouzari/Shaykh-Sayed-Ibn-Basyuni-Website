@@ -1,5 +1,3 @@
-import React from "react";
-
 function MosqueSkyline() {
   return (
     <g fill="#C6B386" opacity=".46">
