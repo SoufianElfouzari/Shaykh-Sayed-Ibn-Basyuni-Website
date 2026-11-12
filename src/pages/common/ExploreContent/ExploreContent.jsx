@@ -6,41 +6,41 @@ const contentByPage = {
     heading: "Islamische Wissenschaften entdecken",
     description: "Vertiefe dein Wissen mit Artikeln, Unterrichtsaufnahmen und Informationen über den Lehrer.",
     links: [
-      { to: "/artikel", title: "Islamische Artikel lesen", detail: "Wissenschaftliche Beiträge auf Deutsch" },
-      { to: "/durous", title: "Durous anhören", detail: "Unterrichtsaufnahmen und Reihen" },
-      { to: "/shaykh", title: "Werdegang des Lehrers", detail: "Ausbildung und wissenschaftliche Tätigkeit" },
+      { to: "/artikel", title: "Artikel zu islamischen Themen", detail: "Wissenschaftliche Beiträge auf Deutsch" },
+      { to: "/durous", title: "Islamische Unterrichte", detail: "Unterrichtsaufnahmen und Reihen" },
+      { to: "/shaykh", title: "Biografie des Lehrers", detail: "Ausbildung und wissenschaftliche Tätigkeit" },
     ],
   },
   shaykh: {
     heading: "Die Unterrichte kennenlernen",
     description: "Entdecke die wissenschaftlichen Inhalte und Unterrichtsangebote.",
     links: [
-      { to: "/durous", title: "Unterrichtsarchiv öffnen", detail: "Aufzeichnungen und Unterrichtsreihen" },
-      { to: "/artikel", title: "Veröffentlichte Beiträge", detail: "Artikel zu islamischen Themen" },
+      { to: "/durous", title: "Aufzeichnungen der Unterrichte", detail: "Aufzeichnungen und Unterrichtsreihen" },
+      { to: "/artikel", title: "Islamische Fachartikel", detail: "Artikel zu islamischen Themen" },
     ],
   },
   durous: {
     heading: "Wissen weiter vertiefen",
     description: "Ergänzend zu den Unterrichten findest du schriftliche Beiträge und Informationen zum Lehrer.",
     links: [
-      { to: "/artikel", title: "Begleitende Artikel", detail: "Islamische Themen schriftlich vertiefen" },
-      { to: "/shaykh", title: "Den Lehrer kennenlernen", detail: "Biografie und wissenschaftlicher Werdegang" },
+      { to: "/artikel", title: "Artikel zum Islam", detail: "Islamische Themen schriftlich vertiefen" },
+      { to: "/shaykh", title: "Wissenschaftlicher Werdegang", detail: "Biografie und wissenschaftlicher Werdegang" },
     ],
   },
   articles: {
     heading: "Weitere Lernmöglichkeiten",
     description: "Neben den Artikeln stehen auch Unterrichtsaufnahmen und Informationen zu den Unterrichten bereit.",
     links: [
-      { to: "/durous", title: "Audio-Unterrichte entdecken", detail: "Durous und Unterrichtsreihen" },
-      { to: "/shaykh", title: "Über den Verfasser", detail: "Werdegang und Lehrtätigkeit" },
+      { to: "/durous", title: "Audio-Unterrichte und Reihen", detail: "Durous und Unterrichtsreihen" },
+      { to: "/shaykh", title: "Biografie des Verfassers", detail: "Werdegang und Lehrtätigkeit" },
     ],
   },
   contact: {
     heading: "Weitere Bereiche der Website",
     description: "Du kannst direkt zu den veröffentlichten Inhalten oder den Unterrichtsinformationen wechseln.",
     links: [
-      { to: "/artikel", title: "Artikelverzeichnis", detail: "Schriftliche Veröffentlichungen" },
-      { to: "/durous", title: "Unterrichtsinformationen", detail: "Aufnahmen und Termine" },
+      { to: "/artikel", title: "Islamische Veröffentlichungen", detail: "Schriftliche Veröffentlichungen" },
+      { to: "/durous", title: "Unterrichtstermine und Aufnahmen", detail: "Aufnahmen und Termine" },
     ],
   },
 };
