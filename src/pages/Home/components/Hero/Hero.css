@@ -253,26 +253,26 @@
   display: flex;
   align-items: stretch;
   justify-content: center;
-  gap: clamp(14px, 1.8vw, 24px);
-  margin-top: 39px;
+  gap: clamp(12px, 1.5vw, 18px);
+  margin-top: 30px;
 }
 
 .sib-home-hero-action {
   position: relative;
   display: grid;
-  grid-template-columns: 62px minmax(0, 1fr) 53px;
+  grid-template-columns: 43px minmax(0, 1fr) 35px;
   align-items: center;
-  gap: 13px;
-  flex: 1 1 0;
-  width: 0;
-  max-width: 470px;
-  min-height: 105px;
-  padding: 14px 23px;
+  gap: 9px;
+  flex: 0 1 330px;
+  width: min(100%, 330px);
+  max-width: 330px;
+  min-height: 73px;
+  padding: 10px 15px;
   overflow: hidden;
-  border: 4px solid transparent;
+  border: 3px solid transparent;
   border-radius: 999px;
   font-family: var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
-  font-size: clamp(18px, 2.1vw, 25px);
+  font-size: clamp(16px, 1.45vw, 19px);
   font-weight: 760;
   line-height: 1.15;
   letter-spacing: -0.7px;
@@ -288,7 +288,7 @@
 .sib-home-hero-action::before {
   content: "";
   position: absolute;
-  inset: 5px;
+  inset: 4px;
   z-index: -1;
   border: 1px solid rgba(255, 255, 255, .23);
   border-radius: inherit;
@@ -323,8 +323,8 @@
 
 .sib-home-hero-action-icon svg {
   display: block;
-  width: 62px;
-  height: 62px;
+  width: 43px;
+  height: 43px;
   flex-shrink: 0;
   transition: transform 350ms cubic-bezier(.2, .85, .25, 1);
 }
@@ -336,14 +336,14 @@
 }
 
 .sib-home-hero-action-arrow {
-  height: 50px;
+  height: 35px;
   transition: transform 350ms cubic-bezier(.2, .85, .25, 1);
 }
 
 .sib-home-hero-action-arrow svg {
   display: block;
-  width: 38px;
-  height: 38px;
+  width: 27px;
+  height: 27px;
 }
 
 .sib-home-hero-action-primary {
@@ -353,14 +353,14 @@
     linear-gradient(125deg, #ffedac 0%, #d6a436 34%, #fff0a5 60%, #ba8425 100%) border-box;
   color: #fffef9;
   box-shadow:
-    0 19px 30px -12px rgba(0, 82, 52, .38),
-    0 10px 20px -14px rgba(202, 162, 60, .65),
+    0 13px 23px -10px rgba(0, 82, 52, .34),
+    0 7px 14px -10px rgba(202, 162, 60, .55),
     inset 0 2px 0 rgba(255, 255, 255, .16);
 }
 
 .sib-home-hero-action-primary .sib-home-hero-action-label {
-  min-height: 50px;
-  padding: 0 8px 0 15px;
+  min-height: 36px;
+  padding: 0 3px 0 9px;
   border-left: 1px solid rgba(244, 226, 158, .32);
 }
 
@@ -373,7 +373,7 @@
 }
 
 .sib-home-hero-action-primary:hover {
-  transform: translateY(-5px) scale(1.015);
+  transform: translateY(-3px) scale(1.012);
   color: #fff;
   box-shadow:
     0 26px 37px -12px rgba(0, 83, 50, .42),
@@ -388,7 +388,7 @@
     linear-gradient(135deg, #064c35, #00603f) border-box;
   color: #063f2f;
   box-shadow:
-    0 18px 26px -14px rgba(0, 77, 48, .34),
+    0 12px 21px -12px rgba(0, 77, 48, .28),
     0 6px 12px -10px rgba(0, 73, 47, .35);
 }
 
@@ -430,70 +430,70 @@
   .sib-home-hero-actions {
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    margin-top: 33px;
+    gap: 12px;
+    margin-top: 27px;
   }
 
   .sib-home-hero-action {
     flex: none;
-    width: min(100%, 500px);
-    max-width: 500px;
+    width: min(100%, 340px);
+    max-width: 340px;
   }
 }
 
 @media (max-width: 600px) {
   .sib-home-hero-actions {
-    gap: 14px;
-    margin-top: 29px;
+    gap: 12px;
+    margin-top: 25px;
   }
 
   .sib-home-hero-action {
-    grid-template-columns: 48px minmax(0, 1fr) 35px;
-    min-height: 82px;
-    gap: 8px;
-    padding: 12px 17px;
+    grid-template-columns: 39px minmax(0, 1fr) 28px;
+    min-height: 67px;
+    gap: 7px;
+    padding: 9px 13px;
     border-width: 3px;
-    font-size: clamp(17px, 4.5vw, 22px);
+    font-size: clamp(15px, 4vw, 18px);
     letter-spacing: -.45px;
   }
 
   .sib-home-hero-action-icon svg {
-    width: 48px;
-    height: 48px;
+    width: 39px;
+    height: 39px;
   }
 
   .sib-home-hero-action-primary .sib-home-hero-action-label {
-    min-height: 40px;
-    padding-left: 9px;
+    min-height: 32px;
+    padding-left: 7px;
     padding-right: 0;
   }
 
   .sib-home-hero-action-arrow {
-    height: 40px;
+    height: 32px;
   }
 
   .sib-home-hero-action-arrow svg {
-    width: 29px;
-    height: 29px;
+    width: 24px;
+    height: 24px;
   }
 }
 
 @media (max-width: 365px) {
   .sib-home-hero-action {
-    grid-template-columns: 40px minmax(0, 1fr) 28px;
+    grid-template-columns: 35px minmax(0, 1fr) 24px;
     gap: 5px;
-    padding-inline: 13px;
-    font-size: 16px;
+    padding-inline: 11px;
+    font-size: 15px;
   }
 
   .sib-home-hero-action-icon svg {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
   }
 
   .sib-home-hero-action-arrow svg {
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
   }
 }
 
