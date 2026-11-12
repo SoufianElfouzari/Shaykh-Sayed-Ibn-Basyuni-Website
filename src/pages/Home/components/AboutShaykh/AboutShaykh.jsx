@@ -85,8 +85,8 @@ function AboutShaykh() {
           </p>
 
           <h2 className="sib-about-title" id="sib-about-title">
-            Ein kurzer Einblick in seinen wissenschaftlichen{" "}
-            <span>Werdegang und seine Tätigkeit.</span>
+            Lerne deinen{" "}
+            <span>Lehrer kennen.</span>
           </h2>
 
           <div className="sib-about-title-underline" aria-hidden="true" />
