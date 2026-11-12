@@ -4,31 +4,31 @@ import "./Footer.css";
 
 const footerNavigation = [
   {
-    label: "Zur Startseite",
+    label: "Startseite",
     to: "/",
   },
   {
-    label: "Biografie",
+    label: "Biografie des Shaykhs",
     to: "/shaykh",
   },
   {
-    label: "Unterrichtsarchiv",
+    label: "Audio-Unterrichtsarchiv",
     to: "/durous",
   },
   {
-    label: "Artikelübersicht",
+    label: "Artikel und Veröffentlichungen",
     to: "/artikel",
   },
   {
-    label: "Kontaktseite",
+    label: "Kontakt",
     to: "/kontakt",
   },
 ];
 
 const footerContentLinks = [
   { label: "Islamische Artikel", to: "/artikel" },
-  { label: "Fiqh und Hadith", to: "/durous" },
-  { label: "Über den Lehrer", to: "/shaykh" },
+  { label: "Fiqh- und Hadith-Unterricht", to: "/durous" },
+  { label: "Biografie und Lehrtätigkeit", to: "/shaykh" },
 ];
 
 function ArrowIcon() {
