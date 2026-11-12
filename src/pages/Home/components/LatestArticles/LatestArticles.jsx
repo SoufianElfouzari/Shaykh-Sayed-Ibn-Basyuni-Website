@@ -246,7 +246,7 @@ function LatestArticles() {
               id="sib-latest-articles-title"
               className="sib-articles-title"
             >
-              Die neuesten Artikel des Shaykh.
+              Islamische Artikel und wissenschaftliche Beiträge.
             </h2>
           </div>
 
