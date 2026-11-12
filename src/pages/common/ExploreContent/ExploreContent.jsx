@@ -4,11 +4,11 @@ import "./ExploreContent.css";
 const contentByPage = {
   home: {
     heading: "Islamische Wissenschaften entdecken",
-    description: "Vertiefe dein Wissen mit Artikeln, Unterrichtsaufnahmen und Informationen über den Lehrer.",
+    description: "Entdecke die Fachgebiete Fiqh, Aqidah und Hadith durch deutschsprachige Artikel und Unterrichte.",
     links: [
-      { to: "/artikel", title: "Artikel zu islamischen Themen", detail: "Wissenschaftliche Beiträge auf Deutsch" },
-      { to: "/durous", title: "Islamische Unterrichte", detail: "Unterrichtsaufnahmen und Reihen" },
-      { to: "/shaykh", title: "Biografie des Lehrers", detail: "Ausbildung und wissenschaftliche Tätigkeit" },
+      { to: "/artikel", title: "Fiqh und Usul al-Fiqh", detail: "Wissenschaftliche Beiträge und Erklärungen" },
+      { to: "/durous", title: "Aqidah und Hadith", detail: "Islamische Unterrichte und Aufnahmen" },
+      { to: "/shaykh", title: "Deinen Lehrer kennenlernen", detail: "Biografie und wissenschaftliche Tätigkeit" },
     ],
   },
   shaykh: {
