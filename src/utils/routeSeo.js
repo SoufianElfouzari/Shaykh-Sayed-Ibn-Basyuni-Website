@@ -3,8 +3,8 @@
 // structured data and og:site_name, not to a repeated title suffix.
 export const routeMetadata = {
   "/": {
-    title: "Islam lernen mit Quran und Sunnah | Unterrichte & Artikel",
-    description: "Islam lernen mit Quran und Sunnah: Entdecke deutschsprachige Unterrichte und Artikel zu Fiqh, Aqidah, Hadith und weiteren islamischen Wissenschaften.",
+    title: "Islam lernen mit Quran & Sunnah | Unterricht & Fatwa",
+    description: "Islam lernen auf Deutsch: Entdecke Unterrichte zu Fiqh, Aqidah und Hadith, lies islamische Artikel und stelle deine Fragen an einen Shaykh.",
   },
   "/shaykh": {
     title: "Islamischer Lehrer in Kassel | Biografie & Ausbildung",
