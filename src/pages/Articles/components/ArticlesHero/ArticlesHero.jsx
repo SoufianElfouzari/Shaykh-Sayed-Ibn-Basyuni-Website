@@ -35,10 +35,11 @@ function ArticlesHero() {
         </h1>
 
         <p className="sib-articles-page-hero-description">
-          Islam lernen und Wissen vertiefen: Entdecke
-          veröffentlichte Artikel und wissenschaftliche Beiträge
-          von Dr. Shaykh Sayed Ibn Basyuni über Themen der
-          islamischen Wissenschaften.
+          Islamische Artikel auf Deutsch lesen und Wissen vertiefen:
+          Entdecke veröffentlichte Beiträge von Dr. Shaykh Sayed
+          Ibn Basyuni zu Themen der islamischen Wissenschaften.
+          Die Artikel helfen dir dabei, den Islam zu lernen und
+          wissenschaftliche Inhalte besser zu verstehen.
         </p>
       </div>
     </section>
