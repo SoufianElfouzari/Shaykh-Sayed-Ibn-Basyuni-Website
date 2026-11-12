@@ -119,38 +119,33 @@
 }
 
 .sib-home-hero-title-accent {
+  position: relative;
   display: block;
-  width: fit-content;
+  width: max-content;
   max-width: 100%;
   margin: 3px auto 0;
-  padding-bottom: 12px;
+  padding-bottom: 15px;
   white-space: nowrap;
-  /* Safari cannot reliably clip a background through nested text spans.
-     Use a solid emerald fill so "Sunnah." never becomes transparent. */
-  background: none;
   color: #087858;
-  -webkit-text-fill-color: #087858;
-  font-size: clamp(25px, 4.3vw, 61px);
+  font-size: clamp(18px, 6vw, 76px);
   font-weight: 850;
   letter-spacing: -.058em;
   line-height: 1.1;
-  filter: drop-shadow(0 12px 9px rgba(20, 146, 78, .16));
+  background: linear-gradient(165deg, #087b58 0%, #078f60 32%, #006b4b 72%, #0c7952 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 10px 8px rgba(20, 146, 78, .16));
 }
 
-.sib-home-hero-title-sunnah {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-  color: #087858;
-  -webkit-text-fill-color: #087858;
-}
-
-.sib-home-hero-title-sunnah::after {
+/* A single text node avoids Safari clipping issues with nested gradient spans.
+   The underline is drawn independently, directly under the last word. */
+.sib-home-hero-title-accent::after {
   content: "";
   position: absolute;
-  right: 4%;
-  bottom: -7px;
-  left: 0;
+  right: 1%;
+  bottom: 0;
+  left: 65%;
   height: clamp(4px, .48vw, 7px);
   border-radius: 90% 60% 60% 45%;
   background: linear-gradient(95deg, #dc9700, #f3c75e 70%, rgba(245, 208, 116, 0));
@@ -217,10 +212,6 @@
     font-size: clamp(48px, 6.3vw, 76px);
   }
 
-  .sib-home-hero-title-accent {
-    font-size: clamp(25px, 4.3vw, 52px);
-  }
-
   .sib-home-hero-description {
     max-width: 750px;
   }
@@ -239,9 +230,6 @@
     font-size: clamp(44px, 7vw, 66px);
   }
 
-  .sib-home-hero-title-accent {
-    font-size: clamp(24px, 5vw, 43px);
-  }
 }
 
 @media (max-width: 600px) {
@@ -274,15 +262,13 @@
     letter-spacing: -.06em;
   }
 
+
   .sib-home-hero-title-accent {
-    font-size: clamp(19px, 5.5vw, 31px);
-    line-height: 1.15;
-    letter-spacing: -.058em;
-    padding-bottom: 8px;
+    font-size: clamp(18px, 5.8vw, 35px);
+    padding-bottom: 10px;
   }
 
-  .sib-home-hero-title-sunnah::after {
-    bottom: -5px;
+  .sib-home-hero-title-accent::after {
     height: 4px;
   }
 
@@ -325,8 +311,9 @@
     font-size: clamp(34px, 9.3vw, 40px);
   }
 
+
   .sib-home-hero-title-accent {
-    font-size: clamp(18px, 5.3vw, 23px);
+    font-size: clamp(17px, 5.7vw, 22px);
   }
 
   .sib-home-hero-description {

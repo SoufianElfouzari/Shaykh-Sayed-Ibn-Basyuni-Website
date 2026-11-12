@@ -104,9 +104,7 @@ function Hero() {
 
         <h1 id="sib-home-hero-title" className="sib-home-hero-title">
           <span className="sib-home-hero-title-main">Islam lernen</span>
-          <span className="sib-home-hero-title-accent">
-            mit Quran und <span className="sib-home-hero-title-sunnah">Sunnah.</span>
-          </span>
+          <span className="sib-home-hero-title-accent">mit Quran und Sunnah.</span>
         </h1>
 
         <div className="sib-home-hero-divider" aria-hidden="true">
