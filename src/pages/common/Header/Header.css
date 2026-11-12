@@ -685,235 +685,620 @@
   }
 }
 
-/* Screenshot-inspired header redesign */
-:root { --sib-header-height: 68px; --sib-container-width: 1580px; --sib-container-padding: 4%; }
-.sib-header { background: var(--sib-color-background, #f5f4ef); border-bottom: 1px solid transparent; }
-.sib-header-scrolled { background: var(--sib-color-background, #f5f4ef); border-bottom-color: var(--sib-color-border); box-shadow: 0 8px 28px rgba(15,41,36,.05); }
-.sib-header-container { display:flex; justify-content:space-between; gap:clamp(16px,2vw,32px); }
-.sib-header-brand { flex-shrink:0; gap:14px; }
-.sib-header-brand-line { width:2px; flex-basis:2px; min-height:42px; background:#c38a36; }
-.sib-header-brand-copy { gap:5px; }
-.sib-header-brand-name { gap:5px; }
-.sib-header-brand-title { font-size:13px; color:#222; font-weight:500; }
-.sib-header-brand-person { font-size:17px; letter-spacing:-.65px; color:#00523d; }
-.sib-header-brand-meta { font-size:8px; letter-spacing:2px; color:#454545; }
-.sib-header-navigation { flex:1; gap:clamp(13px,2.1vw,32px); min-width:0; justify-content:center; }
-.sib-header-nav-link { font-size:12px; font-weight:700; color:#242424; }
-.sib-header-nav-link::before { bottom:15px; height:2px; }
-.sib-header-nav-link-active { color:#00573e; }
-.sib-header-actions { flex-shrink:0; gap:14px; }
-.sib-header-search { width:43px; height:40px; border:1px solid #e3e1dc; background:#fff; border-radius:13px; color:#00533c; box-shadow:0 3px 12px rgba(20,34,29,.08); }
-.sib-header-search:hover { background:#f5faf7; border-color:#b3d0c3; transform:translateY(-1px); }
-.sib-header-search svg { width:19px; height:19px; }
-.sib-header-fatwa-cta { min-height:40px; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:0 18px; color:#fff; background:#00533d; border-radius:12px; text-decoration:none; font-weight:700; font-size:12px; white-space:nowrap; box-shadow:0 4px 12px rgba(0,64,46,.17); transition:background .2s ease,transform .2s ease,box-shadow .2s ease; }
-.sib-header-fatwa-cta svg { width:18px; height:18px; }
-.sib-header-fatwa-cta:hover { background:#08745a; transform:translateY(-1px); box-shadow:0 7px 18px rgba(0,64,46,.22); }
-.sib-mobile-fatwa-cta { display:flex; align-items:center; justify-content:space-between; padding:16px 19px; margin:0 0 20px; border-radius:12px; background:#fff; color:#084c3c; font-size:16px; font-weight:750; text-decoration:none; }
-.sib-mobile-fatwa-cta span { font-size:21px; }
-@media(max-width:1240px) {
- .sib-header-navigation { gap:15px; }
- .sib-header-nav-link { font-size:11px; }
- .sib-header-brand-person { font-size:15px; }
- .sib-header-fatwa-cta { padding:0 13px; }
- .sib-header-actions { gap:8px; }
+/* Floating capsule header design, visually aligned with the hero buttons. */
+:root {
+  --sib-header-height: 108px;
+  --sib-container-width: 1588px;
+  --sib-container-padding: 4%;
 }
-@media(max-width:1080px) {
- :root { --sib-header-height:72px; }
- .sib-header-navigation { display:none; }
- .sib-header-container { display:flex; }
- .sib-header-actions { margin-left:auto; }
- .sib-header-menu-button { display:block; }
-}
-@media(max-width:680px) {
- :root { --sib-header-height:68px; --sib-container-padding:18px; }
- .sib-header-brand-line { min-height:38px; }
- .sib-header-brand-person { font-size:14px; }
- .sib-header-search { width:39px; height:39px; }
- .sib-header-fatwa-cta { min-height:39px; padding:0 10px; }
- .sib-header-fatwa-cta svg { display:none; }
-}
-@media(max-width:540px) {
- .sib-header-fatwa-cta { display:none; }
- .sib-header-search { display:inline-flex; }
- .sib-header-actions { gap:8px; }
-}
-@media(max-width:360px) {
- .sib-header-brand-person { max-width:163px; font-size:12px; }
- .sib-header-search { width:35px; }
-}
-@media(prefers-reduced-motion:reduce) { .sib-header-fatwa-cta, .sib-header-search { transition:none; } }
 
+.sib-header,
+.sib-header-scrolled {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--sib-header-height);
+  background: linear-gradient(180deg, #f7f5ef 0%, #f5f4ef 100%);
+  border: 0;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
 
-/* Fatwa CTA: hand-drawn vector, rich green layers and accessible motion */
+.sib-header-container {
+  position: relative;
+  top: 13px;
+  display: grid;
+  grid-template-columns: minmax(290px, 1fr) auto minmax(290px, 1fr);
+  align-items: center;
+  column-gap: clamp(10px, 1.35vw, 24px);
+  width: min(var(--sib-container-width), 92%);
+  height: 88px;
+  margin: 0 auto;
+  padding: 0 clamp(22px, 2.45vw, 42px);
+  border: 1px solid rgba(255, 255, 255, .86);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 255, 253, .98), rgba(255, 254, 249, .94));
+  box-shadow:
+    0 12px 44px -24px rgba(38, 49, 37, .26),
+    0 5px 20px -15px rgba(80, 60, 28, .16),
+    inset 0 1px 0 rgba(255, 255, 255, .98);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  transition: box-shadow 280ms ease, background-color 280ms ease;
+}
+
+.sib-header-scrolled .sib-header-container {
+  box-shadow:
+    0 15px 44px -20px rgba(26, 56, 38, .28),
+    0 4px 18px -12px rgba(20, 48, 34, .16),
+    inset 0 1px 0 rgba(255, 255, 255, .96);
+}
+
+/* Identity at the left of the floating pill. */
+.sib-header-brand {
+  display: inline-flex;
+  width: fit-content;
+  min-width: 0;
+  align-items: stretch;
+  gap: 16px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.sib-header-brand-line {
+  width: 3px;
+  min-height: 55px;
+  flex: 0 0 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e6b54c 0%, #ba7907 100%);
+  box-shadow: 0 0 0 1px rgba(220, 162, 46, .06);
+}
+
+.sib-header-brand:hover .sib-header-brand-line {
+  background: linear-gradient(180deg, #f1c460, #bc890c);
+  transform: scaleY(.93);
+}
+
+.sib-header-brand-copy {
+  gap: 9px;
+}
+
+.sib-header-brand-name {
+  gap: 5px;
+  line-height: 1;
+}
+
+.sib-header-brand-title {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -.35px;
+  color: #202b28;
+}
+
+.sib-header-brand-person {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -.85px;
+  color: #064c37;
+}
+
+.sib-header-brand-meta {
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 2.7px;
+  color: #4b514b;
+}
+
+/* Active navigation appears as a separate soft pill with a short green line. */
+.sib-header-navigation {
+  display: flex;
+  min-width: 0;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.sib-header-nav-link {
+  position: relative;
+  display: inline-flex;
+  height: 51px;
+  padding: 0 14px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 19px;
+  color: #1e2926;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 620;
+  letter-spacing: -.3px;
+  white-space: nowrap;
+  transition: color 200ms ease, background 200ms ease, transform 200ms ease;
+}
+
+.sib-header-nav-link::before {
+  position: absolute;
+  right: 12px;
+  bottom: 1px;
+  left: 12px;
+  height: 2px;
+  border-radius: 999px;
+  background: #006d50;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 230ms ease;
+}
+
+.sib-header-nav-link:hover {
+  color: #00543f;
+  background: rgba(7, 94, 68, .045);
+}
+
+.sib-header-nav-link:hover::before {
+  transform: scaleX(.4);
+}
+
+.sib-header-nav-link-active,
+.sib-header-nav-link-active:hover {
+  color: #004a37;
+  background: linear-gradient(180deg, #f0f4ee, #f5f6f0);
+  font-weight: 770;
+}
+
+.sib-header-nav-link-active::before,
+.sib-header-nav-link-active:hover::before {
+  transform: scaleX(1);
+}
+
+/* Separate circular search control. Keep the existing site-search destination. */
+.sib-header-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.sib-header-search {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  place-items: center;
+  border: 1px solid rgba(17, 67, 50, .075);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fffefb, #f7f8f4);
+  color: #064d3a;
+  text-decoration: none;
+  box-shadow:
+    0 5px 12px rgba(28, 40, 30, .075),
+    inset 0 1px 0 rgba(255, 255, 255, .9);
+  transition: transform 250ms ease, box-shadow 250ms ease, background 250ms ease;
+}
+
+.sib-header-search svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+.sib-header-search:hover,
+.sib-header-search-active {
+  color: #004b37;
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 77, 49, .13);
+}
+
+/* Smaller matching version of the primary green/gold hero CTA. */
 .sib-header-fatwa-cta {
-  position:relative;
-  isolation:isolate;
-  overflow:hidden;
-  min-height:46px;
-  padding:0 10px 0 11px;
-  gap:10px;
-  border:1px solid rgba(105,226,178,.3);
-  border-radius:13px;
-  color:#fff;
-  background:linear-gradient(125deg,#003e30 0%,#006047 52%,#003c2e 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -2px 0 rgba(2,33,26,.45),0 6px 15px rgba(0,61,43,.18);
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.05px;
-  transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s ease,border-color .32s ease;
+  position: relative;
+  display: inline-flex;
+  isolation: isolate;
+  min-height: 59px;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  padding: 0 23px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background:
+    radial-gradient(ellipse at 40% 0%, rgba(34, 146, 95, .75), transparent 58%) padding-box,
+    linear-gradient(115deg, #00513b, #006a4c 56%, #004833) padding-box,
+    linear-gradient(120deg, #ffecac, #c89729 37%, #fff0b1 66%, #c28d22) border-box;
+  color: #fffefb;
+  font-family: var(--sib-font-main);
+  font-size: 15px;
+  font-weight: 770;
+  letter-spacing: -.3px;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow:
+    0 7px 18px rgba(0, 90, 57, .22),
+    0 0 12px rgba(220, 176, 67, .24),
+    inset 0 1px 0 rgba(255, 255, 255, .16);
+  transition: transform 300ms cubic-bezier(.2, .85, .25, 1), box-shadow 300ms ease;
 }
+
 .sib-header-fatwa-cta::before {
-  content:"";
-  position:absolute;
-  inset:-100% auto -100% -75%;
-  width:55%;
-  z-index:-1;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
-  transform:skewX(-22deg);
-  transition:left .65s cubic-bezier(.2,.8,.2,1);
+  content: "";
+  position: absolute;
+  inset: 4px;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: inherit;
+  pointer-events: none;
 }
+
 .sib-header-fatwa-cta::after {
-  content:"";
-  position:absolute;
-  inset:auto -20% -90% 38%;
-  height:110%;
-  z-index:-1;
-  border-radius:50%;
-  background:radial-gradient(ellipse at center,rgba(39,196,145,.38),transparent 70%);
-  pointer-events:none;
-  transition:transform .5s ease,opacity .5s ease;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(circle, currentColor 1px, transparent 2px) 0 0 / 20px 20px;
+  opacity: .055;
+  mask-image: linear-gradient(90deg, transparent 45%, #000 100%);
+  pointer-events: none;
 }
+
 .sib-header-fatwa-cta:hover {
-  background:linear-gradient(125deg,#004c38 0%,#087c5c 52%,#004a38 100%);
-  border-color:rgba(218,187,108,.75);
-  transform:translateY(-2px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 9px 23px rgba(0,61,43,.28),0 0 0 2px rgba(201,168,90,.08);
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 25px rgba(0, 83, 54, .28),
+    0 0 16px rgba(223, 177, 65, .4),
+    inset 0 1px 0 rgba(255, 255, 255, .18);
 }
-.sib-header-fatwa-cta:hover::before { left:140%; }
-.sib-header-fatwa-cta:hover::after { transform:translate(-10%,-20%); }
-.sib-header-fatwa-cta:active { transform:translateY(0) scale(.98); }
+
 .sib-fatwa-icon {
-  display:grid;
-  place-items:center;
-  width:31px;
-  height:31px;
-  flex:0 0 31px;
-  color:#e8c67c;
-  border-radius:9px;
-  background:linear-gradient(145deg,rgba(235,207,139,.15),rgba(0,30,24,.18));
-  box-shadow:inset 0 1px 0 rgba(255,235,187,.18);
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  place-items: center;
+  color: #e9b634;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
 }
+
 .sib-header-fatwa-cta .sib-fatwa-icon svg {
-  display:block;
-  width:26px;
-  height:26px;
-  transition:transform .4s cubic-bezier(.2,.8,.2,1),color .3s ease;
+  display: block;
+  width: 31px;
+  height: 31px;
+  transition: transform 300ms ease;
 }
-.sib-header-fatwa-cta:hover .sib-fatwa-icon svg { transform:rotate(-7deg) scale(1.12); color:#ffdf9b; }
-.sib-fatwa-divider { height:22px; width:1px; flex:0 0 1px; background:linear-gradient(transparent,rgba(237,210,146,.65),transparent); }
-.sib-fatwa-label { position:relative; white-space:nowrap; text-shadow:0 1px 2px rgba(0,28,20,.3); }
+
+.sib-header-fatwa-cta:hover .sib-fatwa-icon svg {
+  transform: rotate(-6deg) scale(1.09);
+}
+
+.sib-fatwa-label {
+  color: #fffef8;
+  font-size: inherit;
+  font-weight: inherit;
+  text-shadow: 0 1px 1px rgba(0, 37, 26, .1);
+}
+
 .sib-fatwa-arrow {
-  width:27px;
-  height:27px;
-  flex:0 0 27px;
-  display:grid;
-  place-items:center;
-  margin-left:2px;
-  border-radius:9px;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.1);
-  transition:background .3s ease,transform .3s ease;
-}
-.sib-header-fatwa-cta .sib-fatwa-arrow svg { width:16px; height:16px; }
-.sib-header-fatwa-cta:hover .sib-fatwa-arrow { background:rgba(244,212,144,.22); transform:translateX(2px); }
-@media(max-width:1240px) {
-  .sib-header-fatwa-cta { padding:0 8px; gap:7px; }
-  .sib-fatwa-arrow { width:23px; height:23px; flex-basis:23px; }
-}
-@media(max-width:680px) {
-  .sib-header-fatwa-cta { padding:0 8px; min-height:42px; }
-  .sib-header-fatwa-cta .sib-fatwa-icon svg { display:block; }
-}
-@media(max-width:540px) { .sib-header-fatwa-cta { display:none; } }
-@media(prefers-reduced-motion:reduce) {
-  .sib-header-fatwa-cta,
-  .sib-header-fatwa-cta::before,
-  .sib-header-fatwa-cta::after,
-  .sib-header-fatwa-cta .sib-fatwa-icon svg,
-  .sib-fatwa-arrow { transition:none!important; transform:none!important; }
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  place-items: center;
+  margin-left: 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  transition: transform 300ms cubic-bezier(.2, .85, .25, 1);
 }
 
-
-/* Refined compact Fatwa CTA: remove clutter, preserve subtle animation */
-.sib-header-fatwa-cta {
-  min-height:42px;
-  padding:0 10px 0 13px;
-  gap:9px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.12);
-  background:linear-gradient(110deg,#004632 0%,#006148 58%,#00513c 100%);
-  box-shadow:0 4px 12px rgba(0,67,47,.15),inset 0 1px 0 rgba(255,255,255,.12);
-  font-size:12px;
-  letter-spacing:0;
-}
-.sib-header-fatwa-cta:hover {
-  background:linear-gradient(110deg,#00523c 0%,#08765a 58%,#00634b 100%);
-  border-color:rgba(255,255,255,.22);
-  box-shadow:0 7px 17px rgba(0,67,47,.23),inset 0 1px 0 rgba(255,255,255,.15);
-}
-.sib-header-fatwa-cta::after { opacity:.4; }
-.sib-fatwa-icon {
-  width:23px;
-  height:26px;
-  flex:0 0 23px;
-  background:transparent;
-  box-shadow:none;
-  border-radius:0;
-  color:#e2c17e;
-}
-.sib-header-fatwa-cta .sib-fatwa-icon svg { width:23px; height:23px; }
-.sib-header-fatwa-cta:hover .sib-fatwa-icon svg { transform:translateY(-1px) rotate(-3deg); color:#f4d99b; }
-.sib-fatwa-divider { display:none; }
-.sib-fatwa-label { font-size:12px; font-weight:750; }
-.sib-fatwa-arrow {
-  width:22px;
-  height:22px;
-  flex:0 0 22px;
-  margin-left:3px;
-  border:0;
-  border-radius:7px;
-  background:rgba(255,255,255,.1);
-}
-.sib-header-fatwa-cta .sib-fatwa-arrow svg { width:14px; height:14px; }
-@media(max-width:1240px) {
- .sib-header-fatwa-cta { padding:0 9px; gap:7px; }
- .sib-fatwa-arrow { margin-left:0; }
+.sib-header-fatwa-cta .sib-fatwa-arrow svg {
+  display: block;
+  width: 23px;
+  height: 23px;
 }
 
-/* Larger, readable desktop header without sacrificing mobile layout. */
-@media (min-width: 1081px) {
-  :root { --sib-header-height: 92px; }
-  .sib-header-container { gap: clamp(18px, 2vw, 36px); }
-  .sib-header-brand-line { min-height: 53px; }
-  .sib-header-brand-title { font-size: 15px; }
-  .sib-header-brand-person { font-size: 20px; }
-  .sib-header-brand-meta { font-size: 10px; letter-spacing: 1.7px; }
-  .sib-header-navigation { gap: clamp(13px, 1.65vw, 28px); }
-  .sib-header-nav-link { font-size: 15px; font-weight: 700; }
-  .sib-header-nav-link::before { bottom: 22px; }
-  .sib-header-search { width: 49px; height: 49px; }
-  .sib-header-search svg { width: 22px; height: 22px; }
-  .sib-header-fatwa-cta { min-height: 50px; padding: 0 15px; gap: 11px; }
-  .sib-fatwa-label { font-size: 14px; }
-  .sib-header-fatwa-cta .sib-fatwa-icon svg { width:26px; height:26px; }
-  .sib-fatwa-icon { width: 27px; height: 29px; flex-basis: 27px; }
-  .sib-fatwa-arrow { width: 26px; height: 26px; flex-basis: 26px; }
+.sib-header-fatwa-cta:hover .sib-fatwa-arrow {
+  transform: translateX(5px);
 }
-@media (min-width: 1081px) and (max-width: 1350px) {
-  .sib-header-brand-title { font-size: 13px; }
-  .sib-header-brand-person { font-size: 17px; }
-  .sib-header-nav-link { font-size: 13px; }
-  .sib-header-navigation { gap: 12px; }
-  .sib-header-fatwa-cta { padding: 0 10px; gap: 7px; }
-  .sib-fatwa-label { font-size: 12px; }
+
+/* Desktop widths: preserve the full navigation until it no longer fits. */
+@media (max-width: 1500px) {
+  .sib-header-container {
+    column-gap: 12px;
+    padding-inline: 26px;
+  }
+
+  .sib-header-nav-link {
+    padding-inline: 10px;
+    font-size: 14px;
+  }
+
+  .sib-header-brand {
+    gap: 12px;
+  }
+
+  .sib-header-brand-title {
+    font-size: 14px;
+  }
+
+  .sib-header-brand-person {
+    font-size: 17px;
+  }
+
+  .sib-header-brand-meta {
+    letter-spacing: 2.2px;
+  }
+
+  .sib-header-actions {
+    gap: 11px;
+  }
+
+  .sib-header-fatwa-cta {
+    padding-inline: 17px;
+    font-size: 13px;
+  }
+
+  .sib-header-search {
+    width: 51px;
+    height: 51px;
+    flex-basis: 51px;
+  }
+}
+
+@media (max-width: 1360px) {
+  .sib-header-container {
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+  }
+
+  .sib-header-navigation {
+    display: none;
+  }
+
+  .sib-header-actions {
+    grid-column: 2;
+  }
+
+  .sib-header-menu-button {
+    display: block;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    border: 1px solid rgba(15, 75, 50, .12);
+    border-radius: 50%;
+    background: #fffefa;
+    box-shadow: 0 3px 12px rgba(10, 50, 33, .06);
+  }
+
+  .sib-header-menu-button span {
+    left: 13px;
+  }
+
+  .sib-header-menu-button span:first-child {
+    top: 19px;
+  }
+
+  .sib-header-menu-button span:last-child {
+    top: 28px;
+  }
+
+  .sib-header-menu-button-open span:first-child,
+  .sib-header-menu-button-open span:last-child {
+    top: 23px;
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --sib-header-height: 94px;
+  }
+
+  .sib-header-container {
+    top: 10px;
+    width: calc(100% - 28px);
+    height: 74px;
+    padding: 0 20px;
+    gap: 10px;
+  }
+
+  .sib-header-brand {
+    gap: 10px;
+  }
+
+  .sib-header-brand-line {
+    min-height: 41px;
+  }
+
+  .sib-header-brand-title {
+    font-size: 12px;
+  }
+
+  .sib-header-brand-person {
+    font-size: 15px;
+  }
+
+  .sib-header-brand-meta {
+    font-size: 8px;
+    letter-spacing: 1.6px;
+  }
+
+  .sib-header-search {
+    width: 43px;
+    height: 43px;
+    flex-basis: 43px;
+  }
+
+  .sib-header-search svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .sib-header-actions {
+    gap: 8px;
+  }
+
+  .sib-header-fatwa-cta {
+    min-height: 44px;
+    gap: 6px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .sib-fatwa-icon {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+  }
+
+  .sib-header-fatwa-cta .sib-fatwa-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sib-fatwa-arrow {
+    width: 18px;
+    height: 18px;
+    flex-basis: 18px;
+  }
+
+  .sib-header-fatwa-cta .sib-fatwa-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sib-header-menu-button {
+    width: 43px;
+    height: 43px;
+    flex-basis: 43px;
+  }
+
+  .sib-header-menu-button span {
+    left: 10px;
+  }
+
+  .sib-header-menu-button span:first-child {
+    top: 16px;
+  }
+
+  .sib-header-menu-button span:last-child {
+    top: 25px;
+  }
+
+  .sib-header-menu-button-open span:first-child,
+  .sib-header-menu-button-open span:last-child {
+    top: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sib-header-fatwa-cta {
+    display: none;
+  }
+
+  .sib-header-brand-name {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .sib-header-brand-title {
+    font-size: 11px;
+  }
+
+  .sib-header-brand-person {
+    font-size: 15px;
+  }
+
+  .sib-header-brand-meta {
+    display: block;
+    font-size: 7px;
+    letter-spacing: 1.5px;
+  }
+
+  .sib-header-search {
+    display: grid;
+  }
+}
+
+@media (max-width: 400px) {
+  .sib-header-container {
+    padding-inline: 14px;
+  }
+
+  .sib-header-brand-person {
+    max-width: 170px;
+    font-size: 13px;
+  }
+
+  .sib-header-brand-meta {
+    display: none;
+  }
+
+  .sib-header-search {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .sib-header-menu-button {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+
+  .sib-header-actions {
+    gap: 6px;
+  }
+}
+
+/* Mobile drawer keeps all routes, search remains available on the capsule. */
+.sib-mobile-fatwa-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 20px;
+  padding: 16px 19px;
+  border: 1px solid rgba(226, 190, 113, .55);
+  border-radius: 14px;
+  background: #fffefa;
+  color: #064b38;
+  font-size: 16px;
+  font-weight: 750;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(0, 22, 14, .1);
+}
+
+.sib-mobile-fatwa-cta span {
+  font-size: 21px;
+}
+
+.sib-header a:focus-visible,
+.sib-header button:focus-visible,
+.sib-mobile-menu a:focus-visible,
+.sib-mobile-menu button:focus-visible {
+  outline: 3px solid #c99b37;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sib-header,
+  .sib-header-container,
+  .sib-header a,
+  .sib-header button,
+  .sib-header svg,
+  .sib-mobile-menu {
+    transition: none !important;
+  }
+
+  .sib-header a:hover,
+  .sib-header button:hover,
+  .sib-header svg:hover {
+    transform: none !important;
+  }
 }

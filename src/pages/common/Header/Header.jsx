@@ -190,10 +190,20 @@ function Header() {
             </a>
             <Link to="/kontakt?anliegen=fatwa#kontaktformular" className="sib-header-fatwa-cta" onClick={closeMenu}>
               <span className="sib-fatwa-icon" aria-hidden="true">
-                <svg viewBox="0 0 32 32" fill="none" focusable="false">
-                  <path d="M9 4.5h11l4 4V27H9a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3Z" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round"/>
-                  <path d="M20 4.5V9h4M11 14h9M11 19h8" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="m17 25 9-10 2 2-9 10-4 1 2-3Z" fill="var(--sib-fatwa-pen-fill,#d9b979)" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+                <svg viewBox="0 0 40 40" fill="none" focusable="false">
+                  <path
+                    d="M20 5.7C11.8 5.7 5.2 12.1 5.2 20c0 3.2 1.1 6.2 3 8.6L6.9 34l6.1-2.5a15.3 15.3 0 0 0 7 1.7c8.2 0 14.8-6.4 14.8-14.2S28.2 5.7 20 5.7Z"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M16.4 15.4c.2-2 1.7-3.3 3.7-3.3 2.2 0 3.6 1.2 3.6 3.1 0 1.6-.9 2.4-2.4 3.4-1.2.8-1.3 1.5-1.3 2.8"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                  <circle cx="20" cy="26.3" r="1.4" fill="currentColor" />
                 </svg>
               </span>
               <span className="sib-fatwa-label">Fatwa anfragen</span>
