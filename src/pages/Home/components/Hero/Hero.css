@@ -248,83 +248,267 @@
     letter-spacing: -2px;
   }
 }
-/* Primary paths from the hero to lessons and the existing Fatwa form. */
+/* Custom illustrated hero buttons, matching the green/gold reference. */
 .sib-home-hero-actions {
   display: flex;
+  align-items: stretch;
   justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 32px;
+  gap: clamp(14px, 1.8vw, 24px);
+  margin-top: 39px;
 }
 
 .sib-home-hero-action {
-  display: inline-flex;
-  justify-content: center;
+  position: relative;
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr) 53px;
   align-items: center;
-  gap: 14px;
-  min-height: 50px;
-  padding: 13px 23px;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.3;
+  gap: 13px;
+  flex: 1 1 0;
+  width: 0;
+  max-width: 470px;
+  min-height: 105px;
+  padding: 14px 23px;
+  overflow: hidden;
+  border: 4px solid transparent;
+  border-radius: 999px;
+  font-family: var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  font-size: clamp(18px, 2.1vw, 25px);
+  font-weight: 760;
+  line-height: 1.15;
+  letter-spacing: -0.7px;
   text-decoration: none;
-  transition: transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease, border-color 200ms ease;
+  isolation: isolate;
+  transition:
+    transform 320ms cubic-bezier(.18, .8, .22, 1),
+    box-shadow 320ms ease,
+    filter 320ms ease;
+  will-change: transform;
 }
 
-.sib-home-hero-action:hover {
-  transform: translateY(-3px);
+.sib-home-hero-action::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, .23);
+  border-radius: inherit;
+  pointer-events: none;
 }
 
-.sib-home-hero-action:focus-visible {
-  outline: 3px solid #aa9767;
-  outline-offset: 4px;
+.sib-home-hero-action::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 8px, currentColor 9px, transparent 10px)
+      0 0 / 29px 29px,
+    radial-gradient(circle at 50% 50%, transparent 8px, currentColor 9px, transparent 10px)
+      14px 14px / 29px 29px;
+  opacity: .055;
+  mask-image: linear-gradient(90deg, transparent 48%, #000 100%);
+  pointer-events: none;
+}
+
+.sib-home-hero-action-icon,
+.sib-home-hero-action-label,
+.sib-home-hero-action-arrow {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sib-home-hero-action-icon svg {
+  display: block;
+  width: 62px;
+  height: 62px;
+  flex-shrink: 0;
+  transition: transform 350ms cubic-bezier(.2, .85, .25, 1);
+}
+
+.sib-home-hero-action-label {
+  min-width: 0;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.sib-home-hero-action-arrow {
+  height: 50px;
+  transition: transform 350ms cubic-bezier(.2, .85, .25, 1);
+}
+
+.sib-home-hero-action-arrow svg {
+  display: block;
+  width: 38px;
+  height: 38px;
 }
 
 .sib-home-hero-action-primary {
-  background: #075b45;
-  color: #fff;
-  box-shadow: 0 8px 22px rgba(7, 91, 69, 0.17);
+  background:
+    radial-gradient(ellipse at 28% 0%, rgba(33, 141, 91, .78) 0%, transparent 58%) padding-box,
+    linear-gradient(145deg, #086542 0%, #004b36 48%, #003f30 100%) padding-box,
+    linear-gradient(125deg, #ffedac 0%, #d6a436 34%, #fff0a5 60%, #ba8425 100%) border-box;
+  color: #fffef9;
+  box-shadow:
+    0 19px 30px -12px rgba(0, 82, 52, .38),
+    0 10px 20px -14px rgba(202, 162, 60, .65),
+    inset 0 2px 0 rgba(255, 255, 255, .16);
+}
+
+.sib-home-hero-action-primary .sib-home-hero-action-label {
+  min-height: 50px;
+  padding: 0 8px 0 15px;
+  border-left: 1px solid rgba(244, 226, 158, .32);
+}
+
+.sib-home-hero-action-primary .sib-home-hero-action-arrow {
+  border-left: 1px solid rgba(244, 226, 158, .24);
+}
+
+.sib-home-hero-action-primary::before {
+  border-color: rgba(255, 255, 255, .26);
 }
 
 .sib-home-hero-action-primary:hover {
-  background: #064735;
+  transform: translateY(-5px) scale(1.015);
   color: #fff;
-  box-shadow: 0 12px 28px rgba(7, 91, 69, 0.23);
+  box-shadow:
+    0 26px 37px -12px rgba(0, 83, 50, .42),
+    0 9px 22px rgba(185, 143, 48, .2),
+    inset 0 2px 0 rgba(255, 255, 255, .2);
 }
 
 .sib-home-hero-action-secondary {
-  background: rgba(255, 254, 250, 0.86);
-  color: #075b45;
-  border-color: rgba(7, 91, 69, 0.25);
+  background:
+    radial-gradient(ellipse at 72% 85%, rgba(224, 207, 164, .23), transparent 54%) padding-box,
+    linear-gradient(145deg, #fffefb, #faf7f0) padding-box,
+    linear-gradient(135deg, #064c35, #00603f) border-box;
+  color: #063f2f;
+  box-shadow:
+    0 18px 26px -14px rgba(0, 77, 48, .34),
+    0 6px 12px -10px rgba(0, 73, 47, .35);
+}
+
+.sib-home-hero-action-secondary::before {
+  border-color: rgba(255, 255, 255, .85);
 }
 
 .sib-home-hero-action-secondary:hover {
-  background: #fff;
-  color: #064735;
-  border-color: #075b45;
-  box-shadow: 0 8px 22px rgba(7, 91, 69, 0.08);
+  transform: translateY(-5px) scale(1.015);
+  color: #063f2f;
+  box-shadow:
+    0 24px 32px -14px rgba(0, 77, 48, .35),
+    0 8px 20px -12px rgba(185, 143, 48, .24);
+}
+
+.sib-home-hero-action:hover .sib-home-hero-action-icon svg {
+  transform: scale(1.09) rotate(-3deg);
+}
+
+.sib-home-hero-action-primary:hover .sib-home-hero-action-arrow {
+  transform: translateX(7px);
+}
+
+.sib-home-hero-action-secondary:hover .sib-home-hero-action-arrow {
+  transform: translate(5px, -5px);
+}
+
+.sib-home-hero-action:active {
+  transform: translateY(-1px) scale(.985);
+}
+
+.sib-home-hero-action:focus-visible {
+  outline: 3px solid #c39d39;
+  outline-offset: 5px;
+}
+
+/* One column before the labels become cramped, while preserving large tap targets. */
+@media (max-width: 900px) {
+  .sib-home-hero-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 33px;
+  }
+
+  .sib-home-hero-action {
+    flex: none;
+    width: min(100%, 500px);
+    max-width: 500px;
+  }
 }
 
 @media (max-width: 600px) {
   .sib-home-hero-actions {
-    gap: 10px;
-    margin-top: 26px;
+    gap: 14px;
+    margin-top: 29px;
   }
 
   .sib-home-hero-action {
-    width: 100%;
-    max-width: 330px;
+    grid-template-columns: 48px minmax(0, 1fr) 35px;
+    min-height: 82px;
+    gap: 8px;
+    padding: 12px 17px;
+    border-width: 3px;
+    font-size: clamp(17px, 4.5vw, 22px);
+    letter-spacing: -.45px;
+  }
+
+  .sib-home-hero-action-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .sib-home-hero-action-primary .sib-home-hero-action-label {
+    min-height: 40px;
+    padding-left: 9px;
+    padding-right: 0;
+  }
+
+  .sib-home-hero-action-arrow {
+    height: 40px;
+  }
+
+  .sib-home-hero-action-arrow svg {
+    width: 29px;
+    height: 29px;
+  }
+}
+
+@media (max-width: 365px) {
+  .sib-home-hero-action {
+    grid-template-columns: 40px minmax(0, 1fr) 28px;
+    gap: 5px;
+    padding-inline: 13px;
+    font-size: 16px;
+  }
+
+  .sib-home-hero-action-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sib-home-hero-action-arrow svg {
+    width: 25px;
+    height: 25px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sib-home-hero-action {
+  .sib-home-hero-action,
+  .sib-home-hero-action-icon svg,
+  .sib-home-hero-action-arrow {
     transition: none;
+    will-change: auto;
   }
-  .sib-home-hero-action:hover {
+
+  .sib-home-hero-action:hover,
+  .sib-home-hero-action:active,
+  .sib-home-hero-action:hover .sib-home-hero-action-icon svg,
+  .sib-home-hero-action:hover .sib-home-hero-action-arrow {
     transform: none;
   }
 }
