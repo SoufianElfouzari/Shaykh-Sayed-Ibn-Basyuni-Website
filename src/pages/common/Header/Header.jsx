@@ -32,11 +32,6 @@ const navigationItems = [
     mobileLabel: "Fatwa anfragen",
     path: "/kontakt?anliegen=fatwa",
   },
-  {
-    label: "Kontaktseite",
-    mobileLabel: "Kontaktformular",
-    path: "/kontakt",
-  },
 ];
 
 function Header() {
