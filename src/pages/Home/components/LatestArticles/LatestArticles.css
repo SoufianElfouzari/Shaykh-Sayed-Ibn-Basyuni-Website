@@ -71,7 +71,7 @@
   align-items: center;
   gap: 20px;
   margin: 0 0 34px;
-  color: var(--articles-gold);
+  color: #8d682f;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
   font-weight: 750;
@@ -331,7 +331,7 @@
 }
 
 .sib-articles-date {
-  color: #8c857a;
+  color: #716a60;
   font-size: 10px;
   line-height: 1.45;
 }
