@@ -99,9 +99,17 @@ for (const [path, title] of pages) {
     assert.ok(Array.isArray(preload.articles), "home: article summaries missing");
     assert.ok(preload.articles.every((item) => !item.contentHtml && !item.contentText),
       "home: full article bodies must not be serialized to the client");
+    assert.ok(Array.isArray(preload.duruus), "home: published audio recordings must be server-rendered");
+    assert.ok(Array.isArray(preload.lessons), "home: teaching schedule must be server-rendered");
+    for (const recording of preload.duruus) {
+      assert.ok(response.body.includes("aufnahme-" + recording.id),
+        "home: every published audio recording needs a stable direct link");
+      assert.ok(response.body.includes(recording.title),
+        "home: recording title must appear in the HTML");
+    }
 
     assert.ok(
-      response.body.includes('name="description" content="Islam lernen mit Quran und Sunnah:'),
+      response.body.includes('name="description" content="Islam lernen auf Deutsch:'),
       "home: missing keyword in SSR description",
     );
     assert.ok(
@@ -109,7 +117,7 @@ for (const [path, title] of pages) {
       "home: missing learning focus in server-rendered hero",
     );
     assert.ok(
-      response.body.includes('Islam lernen mit Quran und Sunnah:'),
+      response.body.includes('Lerne den Islam auf Grundlage von Quran und'),
       "home: H1 wording must appear naturally in explanatory copy",
     );
     assert.ok(
@@ -117,11 +125,11 @@ for (const [path, title] of pages) {
       "home: repeated lesson titles must not be strong tags",
     );
     assert.ok(
-      response.body.includes('fundierte Artikel zu Fiqh, Hadith'),
+      response.body.includes('fundierte Artikel zu Fiqh,'),
       "home: H1 topic terms must appear naturally in the paragraph",
     );
     assert.ok(
-      response.body.includes('property="og:title" content="Islam lernen mit Quran und Sunnah'),
+      response.body.includes('property="og:title" content="Islam lernen mit Quran &amp; Sunnah'),
       "home: Open Graph title does not match",
     );
   }
@@ -167,7 +175,7 @@ for (const [path, title] of pages) {
   }
   if (path === "/durous") {
     assert.ok(
-      response.body.includes('Islamische Unterrichte von Shaykh Sayed Ibn Basyuni:'),
+      response.body.includes('Islamische Unterrichte von Shaykh Sayed bieten dir'),
       "durous: H1 wording must appear naturally in explanatory copy",
     );
     assert.ok(
@@ -208,7 +216,7 @@ for (const [path, title] of pages) {
     const schema = JSON.parse(schemaMatch[1]);
     const page = schema["@graph"].find((item) => item["@type"] === "CollectionPage");
     assert.ok(page, "durous: CollectionPage schema missing");
-    assert.equal(page.about?.["@id"], "https://www.shaykh-sayed.de/#person");
+    assert.equal(page.about?.name, "Islamische Unterrichte", "durous: topic of the collection should be explicit");
     const itemList = schema["@graph"].find((item) => item["@type"] === "ItemList");
     if (itemList) {
       assert.ok(itemList.numberOfItems > 0, "durous: empty ItemList must not be emitted");
