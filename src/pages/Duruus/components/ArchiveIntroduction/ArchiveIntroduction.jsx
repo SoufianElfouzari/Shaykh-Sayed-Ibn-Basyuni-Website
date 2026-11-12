@@ -127,7 +127,7 @@ function ArchiveIntroduction() {
               nach ihrer Veröffentlichung ergänzt. Erfahre mehr
               über den <Link to="/shaykh">Shaykh und seinen
               wissenschaftlichen Werdegang</Link> oder lies die
-              <Link to="/artikel"> islamischen Artikel</Link>.
+              <Link to="/artikel"> schriftlichen Fachbeiträge</Link>.
             </p>
           </div>
         </div>
