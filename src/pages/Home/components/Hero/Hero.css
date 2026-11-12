@@ -1,11 +1,16 @@
+/* Reference-matched typography and ornamentation for the home hero. */
 .sib-home-hero {
   position: relative;
-  width: 100%;
-  padding: 70px 5% 135px;
-  overflow: hidden;
-  background: var(--sib-color-background, #f5f4ef);
-  color: var(--sib-color-text, #151b19);
   isolation: isolate;
+  width: 100%;
+  padding: clamp(37px, 4vw, 66px) 5% clamp(85px, 8vw, 132px);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 85% 66% at 50% 47%, rgba(255, 255, 251, .95), transparent 85%),
+    radial-gradient(ellipse 42% 55% at 0% 6%, rgba(233, 217, 181, .22), transparent 85%),
+    radial-gradient(ellipse 42% 55% at 100% 6%, rgba(233, 217, 181, .19), transparent 85%),
+    var(--sib-color-background, #f5f4ef);
+  color: var(--sib-color-text, #151b19);
 }
 
 .sib-home-hero-decoration {
@@ -18,11 +23,11 @@
 
 .sib-home-hero-decoration-circle {
   position: absolute;
-  top: 50%;
+  top: 47%;
   left: 50%;
-  width: 610px;
-  height: 610px;
-  border: 1px solid rgba(13, 106, 82, 0.16);
+  width: min(125vw, 1340px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(203, 157, 68, .19);
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
@@ -30,224 +35,308 @@
 .sib-home-hero-decoration-circle::before {
   content: "";
   position: absolute;
-  inset: 85px;
-  border: 1px solid rgba(170, 151, 103, 0.19);
-  border-radius: 50%;
-}
-
-.sib-home-hero-decoration-line {
-  position: absolute;
-  top: 50%;
-  height: 1px;
-  background: rgba(13, 106, 82, 0.16);
-}
-
-.sib-home-hero-decoration-line-left {
-  left: 0;
-  width: calc(50% - 305px);
-}
-
-.sib-home-hero-decoration-line-right {
-  right: 0;
-  width: calc(50% - 305px);
-}
-
-.sib-home-hero-decoration-dot {
-  position: absolute;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  border: 2px solid var(--sib-color-background, #f5f4ef);
-  border-radius: 50%;
-  background: var(--sib-color-accent, #aa9767);
-  box-shadow:
-    0 0 0 5px rgba(170, 151, 103, 0.1),
-    0 4px 12px rgba(15, 41, 36, 0.15);
-  transform: translateY(-50%);
-}
-
-.sib-home-hero-decoration-dot-left {
-  left: calc(50% - 309px);
-}
-
-.sib-home-hero-decoration-dot-right {
-  right: calc(50% - 309px);
+  inset: 13%;
+  border: 1px solid rgba(199, 164, 100, .15);
+  border-radius: inherit;
 }
 
 .sib-home-hero-container {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1050px;
+  max-width: 1200px;
   margin: 0 auto;
   text-align: center;
 }
 
+/* White badge and small golden mosque from the supplied image. */
 .sib-home-hero-label {
-  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 9px 15px;
-  border: 1px solid rgba(13, 106, 82, 0.2);
+  padding: 10px 18px 10px 13px;
+  border: 1px solid rgba(80, 76, 57, .11);
   border-radius: 999px;
-  background: rgba(255, 254, 250, 0.86);
-  color: #0d5f4b;
-  font-family:
-    var(
-      --sib-font-main,
-      Inter,
-      "Segoe UI",
-      Arial,
-      sans-serif
-    );
-  font-size: 11px;
-  line-height: 1.2;
-  font-weight: 650;
+  background: linear-gradient(145deg, rgba(255, 255, 253, .98), rgba(253, 250, 243, .96));
+  color: #164e3f;
   box-shadow:
-    0 8px 22px rgba(15, 41, 36, 0.05),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(8px);
+    0 10px 23px rgba(23, 46, 30, .12),
+    0 2px 5px rgba(47, 50, 35, .035),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  font-family: var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  font-size: clamp(11px, 1.03vw, 14px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -.24px;
+  text-align: center;
 }
 
-.sib-home-hero-title {
-  max-width: 1000px;
-  margin: 29px auto 0;
-  color: var(--sib-color-text, #151b19);
-  font-family:
-    var(
-      --sib-font-main,
-      Inter,
-      "Segoe UI",
-      Arial,
-      sans-serif
-    );
-  font-size: clamp(52px, 6vw, 88px);
-  line-height: 1.02;
-  font-weight: 650;
-  letter-spacing: clamp(
-    -4.5px,
-    -0.32vw,
-    -2.5px
-  );
+.sib-home-hero-label strong {
+  color: #064837;
+  font-weight: 790;
 }
 
-.sib-home-hero-title span {
+.sib-home-hero-label-icon {
+  display: inline-grid;
+  width: 25px;
+  height: 25px;
+  flex: 0 0 25px;
+  place-items: center;
+  color: #c58c13;
+}
+
+.sib-home-hero-label-icon svg {
   display: block;
-  color: #0d6a52;
-  font-weight: 700;
-  text-shadow: 0 12px 32px rgba(13, 106, 82, 0.11);
+  width: 24px;
+  height: 24px;
+}
+
+/* One semantic H1, fixed two-row visual hierarchy on desktop. */
+.sib-home-hero-title {
+  max-width: 1180px;
+  margin: clamp(24px, 2.7vw, 39px) auto 0;
+  font-family: var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  font-size: clamp(49px, 6.25vw, 94px);
+  font-weight: 850;
+  line-height: 1.02;
+  letter-spacing: -.058em;
+  text-wrap: balance;
+}
+
+.sib-home-hero-title-main {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #19362f 4%, #061d18 74%, #0c2b22 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: #0a2921;
+  -webkit-text-fill-color: transparent;
+}
+
+.sib-home-hero-title-accent {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 3px auto 0;
+  padding-bottom: 12px;
+  background: linear-gradient(165deg, #047f5c 0%, #078c60 34%, #006546 72%, #096846 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: #087858;
+  -webkit-text-fill-color: transparent;
+  font-size: .88em;
+  font-weight: 850;
+  letter-spacing: -.058em;
+  line-height: 1.1;
+  filter: drop-shadow(0 12px 9px rgba(20, 146, 78, .16));
+}
+
+.sib-home-hero-title-sunnah {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.sib-home-hero-title-sunnah::after {
+  content: "";
+  position: absolute;
+  right: 4%;
+  bottom: -7px;
+  left: 0;
+  height: clamp(4px, .48vw, 7px);
+  border-radius: 90% 60% 60% 45%;
+  background: linear-gradient(95deg, #dc9700, #f3c75e 70%, rgba(245, 208, 116, 0));
+  transform: rotate(-1.4deg);
+  clip-path: polygon(0 42%, 14% 4%, 48% 0, 76% 22%, 100% 75%, 100% 100%, 65% 63%, 30% 52%, 0 100%);
+  pointer-events: none;
+}
+
+/* The gold book and hairline divider from the screenshot. */
+.sib-home-hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: min(440px, 65%);
+  margin: clamp(4px, .9vw, 11px) auto 0;
+  color: #d39a18;
+}
+
+.sib-home-hero-divider svg {
+  display: block;
+  width: 39px;
+  height: 35px;
+  flex: 0 0 39px;
+}
+
+.sib-home-hero-divider-line {
+  position: relative;
+  display: block;
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, #dcae4e 90%);
+}
+
+.sib-home-hero-divider-line::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #cf9a28;
+}
+
+.sib-home-hero-divider-line:last-child {
+  transform: scaleX(-1);
 }
 
 .sib-home-hero-description {
-  max-width: 680px;
-  margin: 28px auto 0;
-  color: var(--sib-color-text-soft, #656d69);
-  font-family:
-    var(
-      --sib-font-main,
-      Inter,
-      "Segoe UI",
-      Arial,
-      sans-serif
-    );
-  font-size: 18px;
-  line-height: 1.7;
-  font-weight: 400;
-  letter-spacing: -0.2px;
+  max-width: 855px;
+  margin: clamp(17px, 1.75vw, 26px) auto 0;
+  color: #565e5c;
+  font-family: var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  font-size: clamp(16px, 1.32vw, 19px);
+  line-height: 1.53;
+  font-weight: 450;
+  letter-spacing: -.28px;
+  text-wrap: pretty;
 }
 
 @media (max-width: 1100px) {
-  .sib-home-hero-decoration-circle {
-    width: 540px;
-    height: 540px;
+  .sib-home-hero-title {
+    font-size: clamp(48px, 6.3vw, 76px);
   }
 
-  .sib-home-hero-decoration-line-left,
-  .sib-home-hero-decoration-line-right {
-    width: calc(50% - 270px);
+  .sib-home-hero-title-accent {
+    font-size: .86em;
   }
 
-  .sib-home-hero-decoration-dot-left {
-    left: calc(50% - 274px);
-  }
-
-  .sib-home-hero-decoration-dot-right {
-    right: calc(50% - 274px);
+  .sib-home-hero-description {
+    max-width: 750px;
   }
 }
 
 @media (max-width: 900px) {
   .sib-home-hero {
-    padding: 105px 5% 115px;
-  }
-
-  .sib-home-hero-title {
-    font-size: clamp(48px, 8vw, 70px);
-    letter-spacing: -3px;
+    padding: 56px 5% 105px;
   }
 
   .sib-home-hero-decoration-circle {
-    width: 470px;
-    height: 470px;
+    width: 120vw;
   }
 
-  .sib-home-hero-decoration-line-left,
-  .sib-home-hero-decoration-line-right,
-  .sib-home-hero-decoration-dot {
-    display: none;
+  .sib-home-hero-title {
+    font-size: clamp(44px, 7vw, 66px);
+  }
+
+  .sib-home-hero-title-accent {
+    font-size: .82em;
   }
 }
 
 @media (max-width: 600px) {
   .sib-home-hero {
-    padding: 80px 20px 90px;
-  }
-
-  .sib-home-hero-decoration-circle {
-    top: 48%;
-    width: 390px;
-    height: 390px;
-  }
-
-  .sib-home-hero-decoration-circle::before {
-    inset: 56px;
+    padding: 42px 18px 86px;
   }
 
   .sib-home-hero-label {
-    max-width: 310px;
-    padding: 8px 13px;
-    font-size: 10px;
+    max-width: min(100%, 380px);
+    gap: 7px;
+    padding: 9px 12px 9px 9px;
+    font-size: 10.5px;
     line-height: 1.4;
   }
 
+  .sib-home-hero-label-icon {
+    width: 21px;
+    height: 21px;
+    flex-basis: 21px;
+  }
+
+  .sib-home-hero-label-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
   .sib-home-hero-title {
-    margin-top: 23px;
-    font-size: clamp(40px, 12vw, 54px);
-    line-height: 1.05;
-    letter-spacing: -2.3px;
+    margin-top: 28px;
+    font-size: clamp(37px, 10vw, 55px);
+    letter-spacing: -.06em;
+  }
+
+  .sib-home-hero-title-accent {
+    font-size: clamp(24px, 7.4vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -.058em;
+    padding-bottom: 8px;
+  }
+
+  .sib-home-hero-title-sunnah::after {
+    bottom: -5px;
+    height: 4px;
+  }
+
+  .sib-home-hero-divider {
+    width: min(290px, 85%);
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .sib-home-hero-divider svg {
+    width: 30px;
+    height: 27px;
+    flex-basis: 30px;
   }
 
   .sib-home-hero-description {
-    margin-top: 22px;
-    font-size: 16px;
-    line-height: 1.65;
-  }
-}
-
-@media (max-width: 400px) {
-  .sib-home-hero {
-    padding: 70px 18px 80px;
+    max-width: 450px;
+    margin-top: 20px;
+    font-size: 15.5px;
+    line-height: 1.58;
+    letter-spacing: -.15px;
   }
 
   .sib-home-hero-decoration-circle {
-    width: 330px;
-    height: 330px;
+    width: 160vw;
+    top: 45%;
+  }
+
+  .sib-home-hero-decoration-circle::before {
+    inset: 18%;
+  }
+}
+
+@media (max-width: 380px) {
+  .sib-home-hero {
+    padding-inline: 15px;
   }
 
   .sib-home-hero-title {
-    font-size: 39px;
-    letter-spacing: -2px;
+    font-size: clamp(34px, 9.3vw, 40px);
+  }
+
+  .sib-home-hero-title-accent {
+    font-size: clamp(22px, 7.1vw, 28px);
+  }
+
+  .sib-home-hero-description {
+    font-size: 14.5px;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .sib-home-hero-title-accent {
+    filter: none;
+  }
+}
+
 /* Custom illustrated hero buttons, matching the green/gold reference. */
 .sib-home-hero-actions {
   display: flex;

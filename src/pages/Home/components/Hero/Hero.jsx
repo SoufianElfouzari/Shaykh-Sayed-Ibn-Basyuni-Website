@@ -67,26 +67,53 @@ function ArrowUpRightIcon() {
 }
 
 
+function MosqueBadgeIcon() {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" focusable="false" aria-hidden="true">
+      <path d="M5.2 25.5h21.6M8 25.5V14.8h16v10.7M11 14.8c0-5 2.2-7.6 5-9.2 2.8 1.6 5 4.2 5 9.2M16 5.6V2.8M11.6 25.5v-6.3a4.4 4.4 0 0 1 8.8 0v6.3M4.5 25.5v2.4m23-2.4v2.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5.2 28h21.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function DividerBookIcon() {
+  return (
+    <svg viewBox="0 0 46 38" fill="none" focusable="false" aria-hidden="true">
+      <path d="M23 11.3C17 6.7 9.7 6.2 4.5 7.4v22c6.8-1.1 13-.2 18.5 4.4 5.5-4.6 11.7-5.5 18.5-4.4v-22C36.3 6.2 29 6.7 23 11.3Z" stroke="currentColor" strokeWidth="2.1" strokeLinejoin="round" />
+      <path d="M23 11.3V33.8M8 12c5.4-.7 10.4.7 15 4.5M38 12c-5.4-.7-10.4.7-15 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function Hero() {
   return (
     <section className="sib-home-hero" aria-labelledby="sib-home-hero-title">
       <div className="sib-home-hero-decoration" aria-hidden="true">
-        <span className="sib-home-hero-decoration-circle"></span>
-        <span className="sib-home-hero-decoration-line sib-home-hero-decoration-line-left"></span>
-        <span className="sib-home-hero-decoration-line sib-home-hero-decoration-line-right"></span>
-        <span className="sib-home-hero-decoration-dot sib-home-hero-decoration-dot-left"></span>
-        <span className="sib-home-hero-decoration-dot sib-home-hero-decoration-dot-right"></span>
+        <span className="sib-home-hero-decoration-circle" />
       </div>
 
       <div className="sib-home-hero-container">
         <p className="sib-home-hero-label">
-          Offizielle Website von Dr. Shaykh Sayed Ibn Basyuni
+          <span className="sib-home-hero-label-icon" aria-hidden="true">
+            <MosqueBadgeIcon />
+          </span>
+          <span>
+            Offizielle Website von <strong>Dr. Shaykh Sayed Ibn Basyuni</strong>
+          </span>
         </p>
 
         <h1 id="sib-home-hero-title" className="sib-home-hero-title">
-          Islam lernen{" "}
-          <span>mit Quran und Sunnah.</span>
+          <span className="sib-home-hero-title-main">Islam lernen</span>
+          <span className="sib-home-hero-title-accent">
+            mit Quran und <span className="sib-home-hero-title-sunnah">Sunnah.</span>
+          </span>
         </h1>
+
+        <div className="sib-home-hero-divider" aria-hidden="true">
+          <span className="sib-home-hero-divider-line" />
+          <DividerBookIcon />
+          <span className="sib-home-hero-divider-line" />
+        </div>
 
         <p className="sib-home-hero-description">
           Entdecke islamische Unterrichte und fundierte Artikel zu Fiqh,
