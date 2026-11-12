@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Hero.css";
+import { HeroBackdrop, HeroFeature } from "./HeroArtwork";
+import "./HeroArtwork.css";
 
 function BookIcon() {
   return (
@@ -89,7 +91,7 @@ function Hero() {
   return (
     <section className="sib-home-hero" aria-labelledby="sib-home-hero-title">
       <div className="sib-home-hero-decoration" aria-hidden="true">
-        <span className="sib-home-hero-decoration-circle" />
+        <HeroBackdrop />
       </div>
 
       <div className="sib-home-hero-container">
@@ -146,6 +148,12 @@ function Hero() {
               <ArrowUpRightIcon />
             </span>
           </Link>
+        </div>
+
+        <div className="sib-home-hero-features" aria-label="Besonderheiten des Angebots">
+          <HeroFeature kind="knowledge" title="Authentisches Wissen" subtitle="auf Quran und Sunnah" />
+          <HeroFeature kind="lessons" title="Strukturierte Inhalte" subtitle="für Einsteiger und Fortgeschrittene" />
+          <HeroFeature kind="trust" title="Vertrauenswürdige Quelle" subtitle="unter der Leitung des Shaykh" />
         </div>
       </div>
     </section>
