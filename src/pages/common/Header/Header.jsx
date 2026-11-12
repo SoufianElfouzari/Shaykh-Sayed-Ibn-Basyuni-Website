@@ -28,12 +28,12 @@ const navigationItems = [
     path: "/artikel",
   },
   {
-    label: "Fatwa",
+    label: "Fatwa-Fragen",
     mobileLabel: "Fatwa anfragen",
     path: "/kontakt?anliegen=fatwa",
   },
   {
-    label: "Kontakt",
+    label: "Kontaktseite",
     mobileLabel: "Kontaktformular",
     path: "/kontakt",
   },
