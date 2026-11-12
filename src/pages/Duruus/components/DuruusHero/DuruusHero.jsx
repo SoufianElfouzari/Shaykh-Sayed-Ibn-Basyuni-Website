@@ -29,10 +29,10 @@ function DuruusHero() {
         </h1>
 
         <p className="sib-duruus-page-hero-description">
-          Islamische Unterrichte von Shaykh Sayed Ibn Basyuni:
-          Entdecke den Fiqh-Unterrichtsplan in Kassel, aktuelle
-          Terminänderungen und veröffentlichte Audioaufnahmen.
-          Die Durous vermitteln islamisches Wissen auf Deutsch.
+          Islamische Unterrichte von Shaykh Sayed bieten dir einen
+          Zugang zu islamischem Wissen auf Deutsch. Entdecke die
+          Audioaufnahmen von Shaykh Sayed Ibn Basyuni, den
+          Fiqh-Unterrichtsplan in Kassel und aktuelle Terminänderungen.
         </p>
       </div>
     </section>
