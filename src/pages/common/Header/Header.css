@@ -889,3 +889,31 @@
  .sib-header-fatwa-cta { padding:0 9px; gap:7px; }
  .sib-fatwa-arrow { margin-left:0; }
 }
+
+/* Larger, readable desktop header without sacrificing mobile layout. */
+@media (min-width: 1081px) {
+  :root { --sib-header-height: 92px; }
+  .sib-header-container { gap: clamp(18px, 2vw, 36px); }
+  .sib-header-brand-line { min-height: 53px; }
+  .sib-header-brand-title { font-size: 15px; }
+  .sib-header-brand-person { font-size: 20px; }
+  .sib-header-brand-meta { font-size: 10px; letter-spacing: 1.7px; }
+  .sib-header-navigation { gap: clamp(13px, 1.65vw, 28px); }
+  .sib-header-nav-link { font-size: 15px; font-weight: 700; }
+  .sib-header-nav-link::before { bottom: 22px; }
+  .sib-header-search { width: 49px; height: 49px; }
+  .sib-header-search svg { width: 22px; height: 22px; }
+  .sib-header-fatwa-cta { min-height: 50px; padding: 0 15px; gap: 11px; }
+  .sib-fatwa-label { font-size: 14px; }
+  .sib-header-fatwa-cta .sib-fatwa-icon svg { width:26px; height:26px; }
+  .sib-fatwa-icon { width: 27px; height: 29px; flex-basis: 27px; }
+  .sib-fatwa-arrow { width: 26px; height: 26px; flex-basis: 26px; }
+}
+@media (min-width: 1081px) and (max-width: 1350px) {
+  .sib-header-brand-title { font-size: 13px; }
+  .sib-header-brand-person { font-size: 17px; }
+  .sib-header-nav-link { font-size: 13px; }
+  .sib-header-navigation { gap: 12px; }
+  .sib-header-fatwa-cta { padding: 0 10px; gap: 7px; }
+  .sib-fatwa-label { font-size: 12px; }
+}
