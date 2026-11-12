@@ -6,18 +6,32 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 
-import { getPublishedArticleSummaries } from "../../../../supabase/articleService";
+import {
+  getPublishedArticleSummaries,
+} from "../../../../supabase/articleService";
 import { useSsrData } from "../../../../SsrDataContext";
 
 import "./LatestArticles.css";
 
 function ArrowIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <path
-        d="M4.5 12h15m-6-6 6 6-6 6"
+        d="M5 12H19"
         stroke="currentColor"
-        strokeWidth="1.9"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M15 8L19 12L15 16"
+        stroke="currentColor"
+        strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -25,265 +39,338 @@ function ArrowIcon() {
   );
 }
 
-function BookIcon() {
+function DocumentIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <path
-        d="M12 6.5c-2.4-1.7-5-2.1-8-1.6v13.4c3-.5 5.6-.1 8 1.6m0-13.4c2.4-1.7 5-2.1 8-1.6v13.4c-3-.5-5.6-.1-8 1.6m0-13.4v13.4"
+        d="M7 3.75H14.5L19 8.25V19C19 20.1 18.1 21 17 21H7C5.9 21 5 20.1 5 19V5.75C5 4.65 5.9 3.75 7 3.75Z"
         stroke="currentColor"
-        strokeWidth="1.65"
-        strokeLinecap="round"
+        strokeWidth="1.6"
         strokeLinejoin="round"
+      />
+
+      <path
+        d="M14 4V8.75H18.75"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+
+      <path
+        d="M8.5 12H15.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M8.5 15.5H15.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
       />
     </svg>
   );
 }
 
-function ArticleIcon({ variant = 0 }) {
-  const paths = [
-    <path
-      key="book"
-      d="M3.75 5.5c3-.7 5.6-.25 8.25 1.8 2.65-2.05 5.25-2.5 8.25-1.8v12.8c-3-.7-5.6-.25-8.25 1.8-2.65-2.05-5.25-2.5-8.25-1.8V5.5Zm8.25 1.8v12.8"
-    />,
-    <path
-      key="pages"
-      d="M7.5 3.75h8.1L19 7.2V20H7.5V3.75Zm8.1 0V7.2H19M5 7.5H4.25V22H16m-5.5-10.5h5m-5 3.5h5"
-    />,
-    <path
-      key="layers"
-      d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"
-    />,
-    <path
-      key="study"
-      d="M8 3.75h9.25A2.75 2.75 0 0 1 20 6.5v13.75H8a4 4 0 0 1-4-4V7.75a4 4 0 0 1 4-4Zm0 0v12.5a4 4 0 0 0-4 4m4-4h12M11 8.5h5m-5 3.25h4"
-    />,
-  ];
-
+function EmptyIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <g
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <rect
+        x="5"
+        y="4"
+        width="14"
+        height="16"
+        rx="3"
         stroke="currentColor"
-        strokeWidth="1.65"
+        strokeWidth="1.7"
+      />
+
+      <path
+        d="M9 9H15"
+        stroke="currentColor"
+        strokeWidth="1.7"
         strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {paths[variant % paths.length]}
-      </g>
+      />
+
+      <path
+        d="M9 13H15"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M9 17H13"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 function getDateTimestamp(value) {
-  if (!value) return 0;
+  if (!value) {
+    return 0;
+  }
+
   const timestamp = new Date(value).getTime();
-  return Number.isFinite(timestamp) ? timestamp : 0;
+
+  if (Number.isNaN(timestamp)) {
+    return 0;
+  }
+
+  return timestamp;
 }
 
 function formatDate(value) {
-  if (!value || !getDateTimestamp(value)) return null;
+  if (!value) {
+    return "Datum offen";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Datum offen";
+  }
 
   return new Intl.DateTimeFormat("de-DE", {
     day: "2-digit",
-    month: "short",
+    month: "long",
     year: "numeric",
-  }).format(new Date(value));
+  }).format(date);
+}
+
+function formatReadingTime(value) {
+  const readingTime = Number(value);
+
+  if (
+    !Number.isFinite(readingTime) ||
+    readingTime <= 0
+  ) {
+    return "Lesezeit offen";
+  }
+
+  return `${readingTime} Min. Lesezeit`;
 }
 
 function getArticlePath(article) {
-  return article?.slug ? "/artikel/" + encodeURIComponent(article.slug) : "/artikel";
+  if (!article?.slug) {
+    return "/artikel";
+  }
+
+  return `/artikel/${article.slug}`;
 }
 
 function LatestArticles() {
   const { articles: initialArticles } = useSsrData();
   const [articles, setArticles] = useState(initialArticles || []);
-  const [isLoading, setIsLoading] = useState(!initialArticles);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] =
+    useState(!initialArticles);
+  const [errorMessage, setErrorMessage] =
+    useState("");
 
   const loadArticles = useCallback(async () => {
     setIsLoading(true);
     setErrorMessage("");
 
     try {
-      const loadedArticles = await getPublishedArticleSummaries();
-      setArticles(Array.isArray(loadedArticles) ? loadedArticles : []);
+      const loadedArticles =
+        await getPublishedArticleSummaries();
+
+      setArticles(
+        Array.isArray(loadedArticles)
+          ? loadedArticles
+          : [],
+      );
     } catch (error) {
-      console.error("Neueste Artikel konnten nicht geladen werden:", error);
+      console.error(
+        "Neueste Artikel konnten nicht geladen werden:",
+        error,
+      );
+
       setArticles([]);
-      setErrorMessage("Die neuesten Artikel konnten nicht geladen werden.");
+      setErrorMessage(
+        "Die neuesten Artikel konnten nicht geladen werden.",
+      );
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    // Published article summaries are already present in production SSR.
+    // SSR already supplied the first page of public articles.
     if (Array.isArray(initialArticles)) return undefined;
-    const frame = window.requestAnimationFrame(() => {
-      void loadArticles();
-    });
+    const frame = window.requestAnimationFrame(() => { void loadArticles(); });
     return () => window.cancelAnimationFrame(frame);
   }, [initialArticles, loadArticles]);
 
-  const visibleArticles = useMemo(
-    () => [...articles]
-      .filter((article) => article?.slug && article?.title)
-      .sort(
-        (first, second) =>
-          getDateTimestamp(second.publishedAt) -
-          getDateTimestamp(first.publishedAt),
-      )
-      .slice(0, 6),
-    [articles],
-  );
+  const latestArticles = useMemo(() => {
+    return [...articles].sort(
+      (firstArticle, secondArticle) =>
+        getDateTimestamp(
+          secondArticle.publishedAt,
+        ) -
+        getDateTimestamp(
+          firstArticle.publishedAt,
+        ),
+    );
+  }, [articles]);
+
+  const visibleArticles = useMemo(() => latestArticles.slice(0, 9), [latestArticles]);
 
   return (
     <section
       className="sib-articles"
       aria-labelledby="sib-latest-articles-title"
     >
-      <div className="sib-articles-decoration" aria-hidden="true">
-        <span className="sib-articles-decoration-arch" />
-        <span className="sib-articles-decoration-pattern" />
-      </div>
-
       <div className="sib-articles-container">
-        <header className="sib-articles-heading-panel">
-          <p className="sib-articles-label">
-            <span>Wissen und Erkenntnis</span>
-            <span className="sib-articles-label-rule" aria-hidden="true" />
-          </p>
-
-          <h2 id="sib-latest-articles-title" className="sib-articles-title">
-            Islam lernen.
-            <span> Wissen verstehen und vertiefen.</span>
-          </h2>
-
-          <p className="sib-articles-heading-copy">
-            Entdecke islamische Artikel auf Deutsch und erweitere dein Wissen
-            über Fiqh, Aqidah, Hadith und weitere Wissenschaften.
-          </p>
-
-          <div className="sib-articles-identity">
-            <span className="sib-articles-identity-icon">
-              <BookIcon />
-            </span>
-            <span className="sib-articles-identity-divider" aria-hidden="true" />
-            <p>
-              <strong>Islamische Wissenschaften</strong>
-              <span>Auf Grundlage von Quran und Sunnah</span>
+        <header className="sib-articles-header">
+          <div className="sib-articles-heading">
+            <p className="sib-articles-label">
+              Neueste Artikel
             </p>
+
+            <h2
+              id="sib-latest-articles-title"
+              className="sib-articles-title"
+            >
+              Die neuesten Artikel des Shaykh.
+            </h2>
           </div>
 
-          <Link to="/artikel" className="sib-articles-all-link">
-            <BookIcon />
-            <span>Alle Artikel ansehen</span>
-            <ArrowIcon />
-          </Link>
+          <div className="sib-articles-header-side">
+            <p>
+              Ausgewählte Artikel, wissenschaftliche
+              Beiträge und schriftliche Hinweise des
+              Shaykh.
+            </p>
+
+            <Link
+              to="/artikel"
+              className="sib-articles-all-link"
+            >
+              <span>Alle Artikel ansehen</span>
+              <ArrowIcon />
+            </Link>
+          </div>
         </header>
 
-        <div className="sib-articles-content">
-          <div className="sib-articles-introduction">
-            <p>
-              <strong>Wissen, das zum Nachdenken anregt.</strong> Hier findest
-              du schriftliche Beiträge zu wichtigen Fragen des Islam, zu
-              den Grundlagen des Fiqh und zu weiteren islamischen Themen.
-            </p>
-            <p>
-              Wähle einen Artikel aus und lies die vollständige
-              Veröffentlichung in Ruhe.
-            </p>
+        {isLoading && (
+          <div
+            className="sib-articles-featured"
+            aria-live="polite"
+            aria-busy="true"
+          >
+            <div className="sib-articles-featured-top">
+              <span className="sib-articles-icon">
+                <DocumentIcon />
+              </span>
+
+              <span className="sib-articles-category">
+                Artikel
+              </span>
+            </div>
+
+            <div className="sib-articles-featured-content">
+              <h3>Artikel werden geladen</h3>
+
+              <p>
+                Die neuesten veröffentlichten Artikel
+                werden gerade abgerufen.
+              </p>
+            </div>
           </div>
+        )}
 
-          {isLoading && (
-            <div className="sib-articles-status" aria-live="polite" aria-busy="true">
-              <span className="sib-articles-status-icon"><BookIcon /></span>
-              <div>
-                <h3>Artikel werden geladen</h3>
-                <p>Die neuesten Veröffentlichungen werden abgerufen.</p>
-              </div>
+        {!isLoading && errorMessage && (
+          <div
+            className="sib-articles-featured"
+            role="alert"
+          >
+            <div className="sib-articles-featured-top">
+              <span className="sib-articles-icon">
+                <EmptyIcon />
+              </span>
+
+              <span className="sib-articles-category">
+                Fehler
+              </span>
             </div>
-          )}
 
-          {!isLoading && errorMessage && (
-            <div className="sib-articles-status" role="alert">
-              <span className="sib-articles-status-icon"><BookIcon /></span>
-              <div>
-                <h3>Artikel konnten nicht geladen werden</h3>
-                <p>{errorMessage}</p>
-                <button type="button" onClick={loadArticles}>
-                  Erneut versuchen
-                </button>
-              </div>
+            <div className="sib-articles-featured-content">
+              <h3>
+                Artikel konnten nicht geladen werden
+              </h3>
+
+              <p>{errorMessage}</p>
             </div>
-          )}
 
-          {!isLoading && !errorMessage && visibleArticles.length === 0 && (
-            <div className="sib-articles-status">
-              <span className="sib-articles-status-icon"><BookIcon /></span>
-              <div>
-                <h3>Noch keine Artikel veröffentlicht</h3>
-                <p>Neue islamische Artikel werden hier angezeigt, sobald sie veröffentlicht sind.</p>
-              </div>
+            <div className="sib-articles-featured-footer">
+              <button
+                type="button"
+                onClick={loadArticles}
+              >
+                Erneut versuchen
+              </button>
             </div>
-          )}
+          </div>
+        )}
 
-          {!isLoading && !errorMessage && visibleArticles.length > 0 && (
-            <div className="sib-articles-layout">
-              {visibleArticles.map((article, index) => {
-                const date = formatDate(article.publishedAt);
+        {!isLoading && !errorMessage && visibleArticles.length === 0 && (
+          <div className="sib-articles-empty">
+            <EmptyIcon />
+            <h3>Aktuell gibt es keine Artikel.</h3>
+            <p>Derzeit wurden noch keine Artikel veröffentlicht.</p>
+          </div>
+        )}
 
-                return (
-                  <Link
-                    key={article.id || article.slug}
-                    to={getArticlePath(article)}
-                    className={
-                      "sib-articles-secondary" +
-                      (index === 0 ? " sib-articles-featured" : "")
-                    }
-                  >
-                    <span className="sib-articles-card-icon" aria-hidden="true">
-                      <ArticleIcon variant={index} />
-                    </span>
+        {!isLoading && !errorMessage && visibleArticles.length > 0 && (
+          <div className="sib-articles-layout">
+            {visibleArticles.map((article) => (
+              <Link
+                key={article.id || article.slug}
+                to={getArticlePath(article)}
+                className="sib-articles-secondary"
+              >
+                <div className="sib-articles-secondary-content">
+                  <div className="sib-articles-secondary-top">
+                    <span className="sib-articles-category">{article.category || "Artikel"}</span>
+                    <time className="sib-articles-date" dateTime={article.publishedAt || undefined}>
+                      {formatDate(article.publishedAt)}
+                    </time>
+                  </div>
+                  <h3>{article.title}</h3>
+                  {article.excerpt && <p>{article.excerpt}</p>}
+                  <div className="sib-articles-card-footer">
+                    <span>{formatReadingTime(article.readingTime)}</span>
+                    <span className="sib-articles-secondary-arrow"><ArrowIcon /></span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
 
-                    <div className="sib-articles-secondary-content">
-                      <div className="sib-articles-secondary-top">
-                        <span className="sib-articles-category">
-                          {article.category || "Islamischer Artikel"}
-                        </span>
-                        {date && (
-                          <time dateTime={article.publishedAt} className="sib-articles-date">
-                            {date}
-                          </time>
-                        )}
-                      </div>
-
-                      <h3>{article.title}</h3>
-
-                      {article.excerpt && (
-                        <p className="sib-articles-excerpt">{article.excerpt}</p>
-                      )}
-
-                      <span className="sib-articles-card-footer">
-                        <span>Artikel lesen</span>
-                        <span className="sib-articles-secondary-arrow">
-                          <ArrowIcon />
-                        </span>
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          )}
-
-          <Link to="/artikel" className="sib-articles-mobile-link">
-            <span>Zur Artikelübersicht</span>
-            <ArrowIcon />
-          </Link>
-        </div>
+        <Link
+          to="/artikel"
+          className="sib-articles-mobile-link"
+        >
+          <span>Zur Artikelübersicht</span>
+          <ArrowIcon />
+        </Link>
       </div>
-
-      <span className="sib-articles-bottom-wave" aria-hidden="true" />
     </section>
   );
 }
