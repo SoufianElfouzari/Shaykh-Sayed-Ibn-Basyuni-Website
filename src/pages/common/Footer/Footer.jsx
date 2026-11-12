@@ -20,13 +20,13 @@ const footerNavigation = [
     to: "/artikel",
   },
   {
-    label: "Kontakt",
+    label: "Kontakt und Anfragen",
     to: "/kontakt",
   },
 ];
 
 const footerContentLinks = [
-  { label: "Islamische Artikel", to: "/artikel" },
+  { label: "Artikel zu Glauben und Fiqh", to: "/artikel" },
   { label: "Fiqh- und Hadith-Unterricht", to: "/durous" },
   { label: "Biografie und Lehrtätigkeit", to: "/shaykh" },
 ];
