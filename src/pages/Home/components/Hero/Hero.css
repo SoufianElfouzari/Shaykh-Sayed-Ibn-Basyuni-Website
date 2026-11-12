@@ -124,12 +124,12 @@
   max-width: 100%;
   margin: 3px auto 0;
   padding-bottom: 12px;
-  background: linear-gradient(165deg, #047f5c 0%, #078c60 34%, #006546 72%, #096846 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
+  /* Safari cannot reliably clip a background through nested text spans.
+     Use a solid emerald fill so "Sunnah." never becomes transparent. */
+  background: none;
   color: #087858;
-  -webkit-text-fill-color: transparent;
-  font-size: .88em;
+  -webkit-text-fill-color: #087858;
+  font-size: clamp(27px, 5.25vw, 76px);
   font-weight: 850;
   letter-spacing: -.058em;
   line-height: 1.1;
@@ -140,6 +140,8 @@
   position: relative;
   display: inline-block;
   white-space: nowrap;
+  color: #087858;
+  -webkit-text-fill-color: #087858;
 }
 
 .sib-home-hero-title-sunnah::after {
@@ -215,7 +217,7 @@
   }
 
   .sib-home-hero-title-accent {
-    font-size: .86em;
+    font-size: clamp(27px, 5.25vw, 58px);
   }
 
   .sib-home-hero-description {
@@ -237,7 +239,7 @@
   }
 
   .sib-home-hero-title-accent {
-    font-size: .82em;
+    font-size: clamp(26px, 5.8vw, 48px);
   }
 }
 
