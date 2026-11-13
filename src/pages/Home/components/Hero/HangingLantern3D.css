@@ -1,0 +1,179 @@
+.sib-hanging-lantern {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: clamp(48px, 8.5vw, 165px);
+  width: 118px;
+  height: 300px;
+  pointer-events: none;
+  perspective: 850px;
+  transform-origin: 50% 0;
+}
+.sib-hanging-lantern-rope {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: 106px;
+  background: repeating-linear-gradient(to bottom,#72551b 0 3px,#f2d58b 3px 5px,#997022 5px 8px);
+  box-shadow: 1px 0 2px #3c2b0b55;
+  animation: sib-lantern-rope-drop 1.4s cubic-bezier(.18,.75,.28,1) both;
+}
+.sib-hanging-lantern-swing {
+  position: absolute;
+  top: 96px;
+  left: 50%;
+  width: 94px;
+  height: 176px;
+  transform-origin: 50% -94px;
+  transform-style: preserve-3d;
+  animation: sib-lantern-drop 1.5s cubic-bezier(.2,.8,.22,1) both, sib-lantern-swing 7s ease-in-out 1.5s infinite alternate;
+  filter: drop-shadow(5px 9px 7px rgba(67,43,9,.24));
+}
+.sib-hanging-lantern-ring {
+  position: absolute;
+  top: -10px;
+  left: 41px;
+  width: 12px;
+  height: 15px;
+  border: 3px solid #a67b26;
+  border-radius: 50%;
+  box-shadow: inset 1px 0 #f6d67d,1px 0 #6d4a11;
+}
+.sib-hanging-lantern-roof {
+  position: absolute;
+  top: 4px;
+  left: 7px;
+  width: 80px;
+  height: 40px;
+  z-index: 3;
+  filter: drop-shadow(0 3px 2px #39290b77);
+}
+.sib-hanging-lantern-finial {
+  position: absolute;
+  top: -4px;
+  left: 37px;
+  width: 7px;
+  height: 15px;
+  border-radius: 60% 60% 20% 20%;
+  background: linear-gradient(90deg,#70480e,#f4cf6a,#886017);
+}
+.sib-hanging-lantern-dome {
+  position: absolute;
+  inset: 7px 9px 1px;
+  border: 2px solid #6e4d16;
+  border-radius: 50% 50% 18% 18%;
+  background: repeating-linear-gradient(90deg,transparent 0 12px,#5b481b88 13px 15px,transparent 16px 20px),linear-gradient(115deg,#76521c,#e8c76d 40%,#37513a 65%,#8b681d);
+  clip-path: polygon(50% 0,73% 12%,91% 48%,100% 100%,0 100%,9% 48%,27% 12%);
+}
+.sib-hanging-lantern-crown {
+  position: absolute;
+  bottom: 0;
+  width: 80px;
+  height: 7px;
+  border: 1px solid #66460d;
+  border-radius: 4px;
+  background: linear-gradient(#f5d67d,#88621c,#c99a3c);
+}
+.sib-hanging-lantern-body {
+  position: absolute;
+  top: 43px;
+  left: 11px;
+  width: 72px;
+  height: 95px;
+  transform-style: preserve-3d;
+  transform: rotateY(-17deg);
+  background: radial-gradient(ellipse,#ffefab 0%,#ffca53 32%,transparent 74%);
+  box-shadow: 0 0 23px 8px rgba(255,189,50,.27),0 0 54px 15px rgba(255,204,87,.13);
+}
+.sib-hanging-lantern-panel {
+  position: absolute;
+  top: 0;
+  left: 13px;
+  width: 46px;
+  height: 95px;
+  box-sizing: border-box;
+  border: 3px solid #705018;
+  border-top: 5px solid #d4a94e;
+  border-bottom: 6px solid #8c631b;
+  background: linear-gradient(100deg,#7c571e,#e3bd62 12%,#fff3c5 27%,#ffdd7e 65%,#73511c 100%);
+  transform: rotateY(calc(var(--panel) * 60deg)) translateZ(40px);
+  box-shadow: inset 0 0 9px #765010aa,0 0 3px #e8c46c;
+  backface-visibility: visible;
+}
+.sib-hanging-lantern-window {
+  position: absolute;
+  inset: 8px 4px 8px;
+  border: 2px solid #ae8028;
+  border-radius: 44% 44% 5px 5px;
+  background: radial-gradient(ellipse at 50% 60%,#fffef0,#ffe4a0 45%,#e5a832 100%);
+  box-shadow: inset 0 0 12px #ffef9a,0 0 8px #ffdf7b;
+}
+.sib-hanging-lantern-tracery {
+  position: absolute;
+  inset: 3px 2px;
+  background: linear-gradient(90deg,transparent 47%,#966d27 48% 52%,transparent 53%),linear-gradient(0deg,transparent 66%,#a77929 67% 70%,transparent 71%);
+  clip-path: polygon(50% 0,100% 20%,100% 100%,0 100%,0 20%);
+  opacity: .85;
+}
+.sib-hanging-lantern-flame {
+  position: absolute;
+  top: 25px;
+  left: 28px;
+  width: 17px;
+  height: 44px;
+  border-radius: 55% 55% 50% 50%;
+  background: #fffbe1;
+  filter: blur(5px) drop-shadow(0 0 15px #ffc34b);
+  animation: sib-lantern-flicker 2.7s ease-in-out infinite alternate;
+}
+.sib-hanging-lantern-base {
+  position: absolute;
+  top: 137px;
+  left: 9px;
+  width: 76px;
+  height: 23px;
+  border: 2px solid #6f4d17;
+  background: linear-gradient(115deg,#704f17,#edc66a 40%,#76501a);
+  clip-path: polygon(0 0,100% 0,85% 40%,50% 100%,15% 40%);
+  filter: drop-shadow(0 2px 2px #5e421a77);
+}
+.sib-hanging-lantern-tip {
+  position: absolute;
+  left: 35px;
+  bottom: 0;
+  width: 6px;
+  height: 8px;
+  background: #e8bf58;
+}
+@keyframes sib-lantern-drop {
+  0% {transform: translate(-50%,-240px) rotate(8deg);}
+  65% {transform: translate(-50%,10px) rotate(-5deg);}
+  82% {transform: translate(-50%,-5px) rotate(3deg);}
+  100% {transform: translate(-50%,0) rotate(0);}
+}
+@keyframes sib-lantern-rope-drop {
+  from {height: 0;opacity: 0;}
+  to {height: 106px;opacity: 1;}
+}
+@keyframes sib-lantern-swing {
+  0% {transform: translateX(-50%) rotate(-2.2deg) rotateY(-7deg);}
+  100% {transform: translateX(-50%) rotate(2.2deg) rotateY(7deg);}
+}
+@keyframes sib-lantern-flicker {
+  from {opacity: .83;transform: scale(.95);}
+  to {opacity: 1;transform: scale(1.08);}
+}
+@media (max-width: 1100px) {
+  .sib-hanging-lantern {right: 22px;transform: scale(.83);transform-origin: top right;}
+}
+@media (max-width: 760px) {
+  .sib-hanging-lantern {right: 4px;transform: scale(.58);opacity: .74;}
+}
+@media (max-width: 480px) {
+  .sib-hanging-lantern {right: -10px;transform: scale(.43);opacity: .5;}
+}
+@media (prefers-reduced-motion: reduce) {
+  .sib-hanging-lantern-rope,.sib-hanging-lantern-swing,.sib-hanging-lantern-flame {animation: none;}
+  .sib-hanging-lantern-swing {transform: translateX(-50%);}
+}

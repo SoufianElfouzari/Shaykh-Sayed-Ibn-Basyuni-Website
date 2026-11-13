@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Hero.css";
 import { HeroBackdrop, HeroFeature } from "./HeroArtwork";
+import HangingLantern3D from "./HangingLantern3D";
 import "./HeroArtwork.css";
 
 function BookIcon() {
@@ -92,6 +93,7 @@ function Hero() {
     <section className="sib-home-hero" aria-labelledby="sib-home-hero-title">
       <div className="sib-home-hero-decoration" aria-hidden="true">
         <HeroBackdrop />
+        <HangingLantern3D />
         <div className="sib-home-hero-ornament">
           <span className="sib-home-hero-ornament-image" />
         </div>
