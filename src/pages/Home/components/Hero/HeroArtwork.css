@@ -217,12 +217,12 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Reference alignment: shift the decorative arch left and slightly down.
-   The header stays over the hero background; only the ornament moves. */
+/* Extend the ornament beyond the hero's upper edge so its texture reaches
+   the viewport top behind the floating header, as in the reference. */
 .sib-home-hero-ornament {
   position: absolute;
   z-index: 1;
-  top: 24px;
+  top: -105px;
   left: -72px;
   width: clamp(650px, 60vw, 1050px);
   aspect-ratio: 1;
@@ -266,7 +266,7 @@
 
 @media (max-width: 900px) {
   .sib-home-hero-ornament {
-    top: 24px;
+    top: -90px;
     left: -65px;
     width: clamp(500px, 72vw, 760px);
     filter:
@@ -277,7 +277,7 @@
 
 @media (max-width: 600px) {
   .sib-home-hero-ornament {
-    top: 18px;
+    top: -64px;
     left: -45px;
     width: clamp(360px, 105vw, 520px);
     filter:
