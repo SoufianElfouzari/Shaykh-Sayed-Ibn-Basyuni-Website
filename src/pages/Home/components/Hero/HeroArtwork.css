@@ -216,3 +216,23 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Decorative asset in public/assets, anchored to the hero's top-left edge. */
+.sib-home-hero-decoration::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(135px, 19vw, 310px);
+  height: clamp(135px, 19vw, 310px);
+  background: url("/assets/ornament-texture.png") top left / contain no-repeat;
+  opacity: .36;
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  .sib-home-hero-decoration::before {
+    width: 135px;
+    height: 135px;
+    opacity: .25;
+  }
+}
