@@ -227,6 +227,8 @@
   aspect-ratio: 1;
   height: auto;
   background: url("/assets/ornament-texture.png") top left / contain no-repeat;
+  /* The PNG has a baked-in checkerboard. Clip the interior away so it never appears. */
+  clip-path: polygon(0 0, 79% 0, 71% 3%, 62% 7%, 53% 12%, 45% 19%, 38% 29%, 34% 37%, 28% 38%, 27% 46%, 20% 48%, 12% 53%, 5% 60%, 0 66%);
   opacity: .9;
   filter: drop-shadow(9px 13px 12px rgba(25, 49, 36, .22));
   pointer-events: none;
