@@ -1,5 +1,6 @@
 .app {
   min-height: 100vh;
-  padding: 12px;
-  background-color: #f5f4ef;
+  width: 100%;
+  padding: 0;
+  background-color: #fbf9f3;
 }
