@@ -222,9 +222,9 @@
 .sib-home-hero-ornament {
   position: absolute;
   z-index: 1;
-  top: 36px;
-  left: -68px;
-  width: clamp(390px, 42vw, 700px);
+  top: 24px;
+  left: -72px;
+  width: clamp(650px, 60vw, 1050px);
   aspect-ratio: 1;
   pointer-events: none;
   filter:
@@ -266,9 +266,9 @@
 
 @media (max-width: 900px) {
   .sib-home-hero-ornament {
-    top: 32px;
-    left: -60px;
-    width: clamp(350px, 52vw, 490px);
+    top: 24px;
+    left: -65px;
+    width: clamp(500px, 72vw, 760px);
     filter:
       drop-shadow(4px 7px 3px rgba(9, 49, 32, .40))
       drop-shadow(11px 16px 13px rgba(8, 43, 29, .22));
@@ -277,9 +277,9 @@
 
 @media (max-width: 600px) {
   .sib-home-hero-ornament {
-    top: 26px;
-    left: -42px;
-    width: clamp(270px, 75vw, 360px);
+    top: 18px;
+    left: -45px;
+    width: clamp(360px, 105vw, 520px);
     filter:
       drop-shadow(3px 5px 3px rgba(9, 49, 32, .37))
       drop-shadow(8px 12px 11px rgba(8, 43, 29, .22));
