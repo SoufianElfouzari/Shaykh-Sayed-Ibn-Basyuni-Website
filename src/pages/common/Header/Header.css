@@ -698,7 +698,7 @@
   top: 0;
   z-index: 1000;
   height: var(--sib-header-height);
-  background: linear-gradient(180deg, #f7f5ef 0%, #f5f4ef 100%);
+  background: #fbf9f3;
   border: 0;
   box-shadow: none;
   -webkit-backdrop-filter: none;
