@@ -60,9 +60,6 @@ export function HeroBackdrop() {
       </defs>
       <circle cx="800" cy="396" r="580" stroke="#C69E54" strokeOpacity=".21" fill="none" />
       <circle cx="800" cy="396" r="435" stroke="#C69E54" strokeOpacity=".12" fill="none" />
-      <path d="M0 0h280c-80 56-100 91-100 151h-53v60C80 227 32 256 0 294z" fill="url(#sib-art-green)" opacity=".14" />
-      <path d="M0 0h280c-80 56-100 91-100 151h-53v60C80 227 32 256 0 294" stroke="url(#sib-art-gold)" strokeWidth="6" fill="none" />
-      <path d="M0 0h212v240H0z" fill="url(#sib-art-geom)" opacity=".43" />
       <HangingLantern />
       <MosqueSkyline />
       <path d="M0 663q90-63 167-17t143 90q-77 10-154 45H0z" fill="url(#sib-art-cloud)" opacity=".72" />
