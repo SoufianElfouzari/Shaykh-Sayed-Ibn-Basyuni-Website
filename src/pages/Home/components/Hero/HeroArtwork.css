@@ -217,22 +217,24 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Decorative asset in public/assets, anchored to the hero's top-left edge. */
+/* Large edge-to-edge upper-left ornament with a soft, natural shadow. */
 .sib-home-hero-decoration::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: clamp(135px, 19vw, 310px);
-  height: clamp(135px, 19vw, 310px);
+  width: clamp(400px, 43vw, 760px);
+  aspect-ratio: 1;
+  height: auto;
   background: url("/assets/ornament-texture.png") top left / contain no-repeat;
-  opacity: .36;
+  opacity: .9;
+  filter: drop-shadow(9px 13px 12px rgba(25, 49, 36, .22));
   pointer-events: none;
 }
 @media (max-width: 600px) {
   .sib-home-hero-decoration::before {
-    width: 135px;
-    height: 135px;
-    opacity: .25;
+    width: 380px;
+    opacity: .85;
+    filter: drop-shadow(6px 9px 9px rgba(25, 49, 36, .24));
   }
 }
