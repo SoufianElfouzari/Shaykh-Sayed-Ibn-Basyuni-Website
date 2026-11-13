@@ -217,13 +217,13 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* The ornament begins with the hero background at the viewport top,
-   behind the floating header. No negative offsets or cropped top edge. */
+/* Reference alignment: shift the decorative arch left and slightly down.
+   The header stays over the hero background; only the ornament moves. */
 .sib-home-hero-ornament {
   position: absolute;
   z-index: 1;
-  top: 0;
-  left: 0;
+  top: 36px;
+  left: -68px;
   width: clamp(390px, 42vw, 700px);
   aspect-ratio: 1;
   pointer-events: none;
@@ -266,8 +266,8 @@
 
 @media (max-width: 900px) {
   .sib-home-hero-ornament {
-    top: 0;
-    left: 0;
+    top: 32px;
+    left: -60px;
     width: clamp(350px, 52vw, 490px);
     filter:
       drop-shadow(4px 7px 3px rgba(9, 49, 32, .40))
@@ -277,8 +277,8 @@
 
 @media (max-width: 600px) {
   .sib-home-hero-ornament {
-    top: 0;
-    left: 0;
+    top: 26px;
+    left: -42px;
     width: clamp(270px, 75vw, 360px);
     filter:
       drop-shadow(3px 5px 3px rgba(9, 49, 32, .37))
