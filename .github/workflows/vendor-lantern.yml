@@ -1,0 +1,62 @@
+name: Vendor CC0 hanging lantern model
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/vendor-lantern.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  vendor-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download CC0 model from the original Poly Haven GLB mirror
+        env:
+          GLB_URL: https://files.innerscene.com/library/brass-diya-lantern-5bcf5825/847983add09e9aa080a4/polyhaven-brass-diya-lantern.glb
+        run: |
+          set -euo pipefail
+          mkdir -p public/models
+          curl --fail --show-error --silent --location \
+            --connect-timeout 15 --max-time 180 --retry 3 \
+            "$GLB_URL" --output public/models/brass-diya-lantern.glb.tmp
+
+          python3 - <<'PY'
+          import os
+          import struct
+          from pathlib import Path
+
+          file = Path("public/models/brass-diya-lantern.glb.tmp")
+          size = file.stat().st_size
+          with file.open("rb") as source:
+              header = source.read(12)
+
+          if size < 100_000 or size > 25_000_000:
+              raise SystemExit(f"Unexpected GLB size: {size}")
+
+          magic, version, byte_length = struct.unpack("<4sII", header)
+          if magic != b"glTF" or version != 2 or byte_length != size:
+              raise SystemExit("Download is not a complete glTF v2 binary")
+
+          print(f"Validated CC0 glTF v2 file ({size} bytes)")
+          os.replace(file, "public/models/brass-diya-lantern.glb")
+          PY
+
+      - name: Commit the verified GLB asset
+        run: |
+          set -euo pipefail
+          git add public/models/brass-diya-lantern.glb
+          if git diff --cached --quiet; then
+            echo "Asset already tracked and unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "assets: vendor CC0 Poly Haven brass diya lantern GLB"
+          git push origin HEAD:main
