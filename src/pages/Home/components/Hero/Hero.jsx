@@ -92,6 +92,9 @@ function Hero() {
     <section className="sib-home-hero" aria-labelledby="sib-home-hero-title">
       <div className="sib-home-hero-decoration" aria-hidden="true">
         <HeroBackdrop />
+        <div className="sib-home-hero-ornament">
+          <span className="sib-home-hero-ornament-image" />
+        </div>
       </div>
 
       <div className="sib-home-hero-container">
