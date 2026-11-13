@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/immutability -- Three.js, React Three Fiber and Rapier require imperative mutation of scene objects, rays and canvas cursor. */
 /* Real Poly Haven PBR model + React Three Fiber / Rapier rope physics.
    Interaction approach follows the Bubarando Services/Lanyard component. */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
