@@ -217,19 +217,20 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Edge-aligned ornament: clip only the image, not its shadow-casting parent. */
+/* Keep the ornament entirely below the header. The hero's overflow clipping
+   previously cut off its top edge when a negative offset was used. */
 .sib-home-hero-ornament {
   position: absolute;
   z-index: 1;
-  top: -26px;
-  left: clamp(-66px, -3.8vw, -34px);
-  width: clamp(435px, 46vw, 800px);
+  top: 24px;
+  left: 0;
+  width: clamp(390px, 42vw, 700px);
   aspect-ratio: 1;
   pointer-events: none;
   filter:
-    drop-shadow(5px 8px 3px rgba(9, 49, 32, .42))
-    drop-shadow(13px 20px 14px rgba(8, 43, 29, .27))
-    drop-shadow(23px 28px 27px rgba(17, 49, 33, .14));
+    drop-shadow(3px 6px 3px rgba(9, 49, 32, .38))
+    drop-shadow(11px 16px 12px rgba(8, 43, 29, .27))
+    drop-shadow(17px 24px 24px rgba(17, 49, 33, .14));
 }
 
 .sib-home-hero-ornament-image {
@@ -265,9 +266,9 @@
 
 @media (max-width: 900px) {
   .sib-home-hero-ornament {
-    top: -20px;
-    left: -42px;
-    width: clamp(390px, 58vw, 540px);
+    top: 20px;
+    left: 0;
+    width: clamp(350px, 52vw, 490px);
     filter:
       drop-shadow(4px 7px 3px rgba(9, 49, 32, .40))
       drop-shadow(11px 16px 13px rgba(8, 43, 29, .22));
@@ -276,9 +277,9 @@
 
 @media (max-width: 600px) {
   .sib-home-hero-ornament {
-    top: -14px;
-    left: -47px;
-    width: clamp(315px, 93vw, 420px);
+    top: 14px;
+    left: 0;
+    width: clamp(270px, 75vw, 360px);
     filter:
       drop-shadow(3px 5px 3px rgba(9, 49, 32, .37))
       drop-shadow(8px 12px 11px rgba(8, 43, 29, .22));
