@@ -217,12 +217,12 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Keep the ornament entirely below the header. The hero's overflow clipping
-   previously cut off its top edge when a negative offset was used. */
+/* The ornament begins with the hero background at the viewport top,
+   behind the floating header. No negative offsets or cropped top edge. */
 .sib-home-hero-ornament {
   position: absolute;
   z-index: 1;
-  top: 24px;
+  top: 0;
   left: 0;
   width: clamp(390px, 42vw, 700px);
   aspect-ratio: 1;
@@ -266,7 +266,7 @@
 
 @media (max-width: 900px) {
   .sib-home-hero-ornament {
-    top: 20px;
+    top: 0;
     left: 0;
     width: clamp(350px, 52vw, 490px);
     filter:
@@ -277,7 +277,7 @@
 
 @media (max-width: 600px) {
   .sib-home-hero-ornament {
-    top: 14px;
+    top: 0;
     left: 0;
     width: clamp(270px, 75vw, 360px);
     filter:
