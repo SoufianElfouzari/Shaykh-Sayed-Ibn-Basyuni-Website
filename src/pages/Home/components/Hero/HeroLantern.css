@@ -1,0 +1,107 @@
+/*
+ * User-reference lantern: real 2D asset with restrained 2.5D movement.
+ * Position, width and animation can be adjusted here independently of
+ * the hero artwork and floating navigation.
+ */
+.sib-hero-lantern {
+  --sib-lantern-angle: 0deg;
+  --sib-lantern-depth: 0deg;
+  --sib-lantern-drop: 0px;
+  position: absolute;
+  z-index: 1;
+  top: clamp(35px, 4vw, 58px);
+  right: clamp(18px, 8vw, 150px);
+  width: clamp(66px, 5.3vw, 90px);
+  aspect-ratio: 72 / 213;
+  perspective: 560px;
+  transform-origin: 50% 0%;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sib-hero-lantern[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.sib-hero-lantern-arrival,
+.sib-hero-lantern-pivot,
+.sib-hero-lantern-idle {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 0%;
+}
+
+.sib-hero-lantern-arrival {
+  animation: sib-hero-lantern-arrive 1.35s cubic-bezier(.17,.76,.27,1) both;
+}
+
+.sib-hero-lantern-pivot {
+  transform:
+    translateY(var(--sib-lantern-drop))
+    rotateZ(var(--sib-lantern-angle))
+    rotateY(var(--sib-lantern-depth));
+  transition: transform 950ms cubic-bezier(.17,1.38,.3,1);
+  will-change: transform;
+}
+
+.sib-hero-lantern[data-dragging="true"] .sib-hero-lantern-pivot {
+  transition: none;
+}
+
+.sib-hero-lantern-idle {
+  animation: sib-hero-lantern-breathe 6.7s ease-in-out 1.4s infinite alternate;
+}
+
+.sib-hero-lantern:is(:hover, [data-dragging="true"]) .sib-hero-lantern-idle {
+  animation-play-state: paused;
+}
+
+.sib-hero-lantern-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter:
+    drop-shadow(2px 6px 4px rgba(59, 43, 15, .23))
+    drop-shadow(0 0 8px rgba(255, 190, 65, .21));
+}
+
+@keyframes sib-hero-lantern-arrive {
+  0% {transform: translateY(-135px) rotate(-4deg); opacity: 0;}
+  65% {transform: translateY(8px) rotate(2deg); opacity: 1;}
+  83% {transform: translateY(-4px) rotate(-1deg); opacity: 1;}
+  100% {transform: translateY(0) rotate(0); opacity: 1;}
+}
+
+@keyframes sib-hero-lantern-breathe {
+  from {transform: rotateZ(-1.3deg) rotateY(-1deg);}
+  to {transform: rotateZ(1.3deg) rotateY(1deg);}
+}
+
+@media (max-width: 900px) {
+  .sib-hero-lantern {
+    top: 33px;
+    right: 14px;
+    width: clamp(58px, 8vw, 74px);
+  }
+}
+
+@media (max-width: 600px) {
+  .sib-hero-lantern {
+    top: 25px;
+    right: 2px;
+    width: clamp(48px, 12vw, 62px);
+  }
+  .sib-hero-lantern-image {
+    filter: drop-shadow(1px 4px 3px rgba(59,43,15,.20));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sib-hero-lantern-arrival,
+  .sib-hero-lantern-idle {animation: none;}
+  .sib-hero-lantern-pivot {transition: none; will-change: auto;}
+}

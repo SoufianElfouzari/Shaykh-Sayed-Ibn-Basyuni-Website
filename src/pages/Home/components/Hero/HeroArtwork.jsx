@@ -10,23 +10,6 @@ function MosqueSkyline() {
   );
 }
 
-function HangingLantern() {
-  return (
-    <g className="sib-art-lantern">
-      <path d="M1400 0v91" stroke="#97711D" strokeWidth="2" strokeDasharray="3 3" />
-      <path d="M1400 79v21m-16 13h32m-16-13-16 13 16 8 16-8-16-13z" fill="#D5B050" stroke="#85641B" strokeWidth="2" />
-      <path d="M1380 122 1369 137v78l16 18h30l16-18v-78l-11-15z" fill="url(#sib-lantern-gold)" stroke="#785516" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M1385 138h30v75h-30z" fill="#FFF9DB" />
-      <path d="M1400 147c-10 14-13 30 0 50 13-20 10-36 0-50z" fill="#F9C64B" opacity=".85" />
-      <path d="M1384 138v78m32-78v78m-47-1h62M1369 137h62m-46 96 15 13 15-13" fill="none" stroke="#785516" strokeWidth="3" />
-      <path d="M1375 163h50m-50 28h50" stroke="#BD8F27" strokeWidth="2" />
-      <path d="M1400 245v17" stroke="#785516" strokeWidth="3" strokeLinecap="round" />
-      <circle cx="1400" cy="263" r="4" fill="#B38220" />
-      <ellipse cx="1400" cy="175" rx="48" ry="65" fill="url(#sib-lantern-glow)" opacity=".37" />
-    </g>
-  );
-}
-
 export function HeroBackdrop() {
   return (
     <svg className="sib-home-hero-artwork" viewBox="0 0 1600 850" preserveAspectRatio="xMidYMid slice" role="presentation" focusable="false" aria-hidden="true">
@@ -45,22 +28,12 @@ export function HeroBackdrop() {
           <stop stopColor="#D9CEB9" stopOpacity=".22" />
           <stop offset="1" stopColor="#C9B68C" stopOpacity=".03" />
         </linearGradient>
-        <linearGradient id="sib-lantern-gold" x1="0" x2="1" y1="0" y2="1">
-          <stop stopColor="#7F5D19" />
-          <stop offset=".45" stopColor="#E9C261" />
-          <stop offset="1" stopColor="#846419" />
-        </linearGradient>
-        <radialGradient id="sib-lantern-glow">
-          <stop stopColor="#FFC849" stopOpacity=".78" />
-          <stop offset="1" stopColor="#FFC849" stopOpacity="0" />
-        </radialGradient>
         <pattern id="sib-art-geom" width="46" height="46" patternUnits="userSpaceOnUse">
           <path d="M23 1 34 12 45 23 34 34 23 45 12 34 1 23 12 12ZM23 8l15 15-15 15L8 23zM23 0v46M0 23h46" fill="none" stroke="#F2CE7B" strokeOpacity=".24" strokeWidth="1.05" />
         </pattern>
       </defs>
       <circle cx="800" cy="396" r="580" stroke="#C69E54" strokeOpacity=".21" fill="none" />
       <circle cx="800" cy="396" r="435" stroke="#C69E54" strokeOpacity=".12" fill="none" />
-      <HangingLantern />
       <MosqueSkyline />
       <path d="M0 663q90-63 167-17t143 90q-77 10-154 45H0z" fill="url(#sib-art-cloud)" opacity=".72" />
       <path d="M1300 674q94-69 166-19t134 75v110h-300z" fill="url(#sib-art-cloud)" opacity=".68" />
