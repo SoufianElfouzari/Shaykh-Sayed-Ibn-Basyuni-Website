@@ -1,7 +1,7 @@
 /* Hanging PBR lantern: overlay the hero, without moving the header/content. */
 .sib-lantern-host {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   top: 0;
   right: clamp(15px, 6.3vw, 120px);
   width: clamp(145px, 16vw, 250px);
