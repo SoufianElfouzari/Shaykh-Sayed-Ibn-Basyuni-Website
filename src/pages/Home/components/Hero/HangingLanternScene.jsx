@@ -104,24 +104,44 @@ function LanternModel({ onModelReady }) {
   );
 }
 
-function setRodBetween(mesh, first, second) {
-  if (!mesh) return;
+/* The reference has a detailed hanging chain, not three plain metal rods.
+   Small alternating linked rings follow the same Rapier joint positions. */
+const LINKS_PER_SEGMENT = 6;
+const CHAIN_LINK_COUNT = LINKS_PER_SEGMENT * 3;
 
-  const direction = new THREE.Vector3().subVectors(second, first);
-  const length = direction.length();
-  if (length < 0.001) return;
+function updateGoldChain(linkMeshes, points) {
+  for (let index = 0; index < CHAIN_LINK_COUNT; index += 1) {
+    const link = linkMeshes[index];
+    if (!link) continue;
 
-  mesh.position.copy(first).addScaledVector(direction, 0.5);
-  mesh.quaternion.setFromUnitVectors(UP, direction.normalize());
-  mesh.scale.set(1, length, 1);
+    const segment = Math.floor(index / LINKS_PER_SEGMENT);
+    const first = points[segment];
+    const last = points[segment + 1];
+    const direction = new THREE.Vector3().subVectors(last, first);
+    const distance = direction.length();
+    if (distance < 0.001) continue;
+
+    const t = ((index % LINKS_PER_SEGMENT) + 0.5) / LINKS_PER_SEGMENT;
+    link.position.copy(first).addScaledVector(direction, t);
+    link.quaternion.setFromUnitVectors(UP, direction.normalize());
+    link.rotateY(index % 2 ? Math.PI / 2 : 0);
+  }
 }
 
-function GoldenLink({ rodRef }) {
+function GoldenChain({ links }) {
   return (
-    <mesh ref={rodRef}>
-      <cylinderGeometry args={[0.012, 0.012, 1, 7]} />
-      <meshStandardMaterial color="#d6ab4b" metalness={0.91} roughness={0.24} />
-    </mesh>
+    <group>
+      {Array.from({ length: CHAIN_LINK_COUNT }, (_, index) => (
+        <mesh
+          key={index}
+          ref={(node) => { links.current[index] = node; }}
+          scale={[1, 1.45, 1]}
+        >
+          <torusGeometry args={[0.026, 0.0078, 8, 12]} />
+          <meshStandardMaterial color="#e4b84e" metalness={0.92} roughness={0.19} />
+        </mesh>
+      ))}
+    </group>
   );
 }
 
@@ -130,9 +150,7 @@ function SuspendedLantern({ onModelReady, reducedMotion }) {
   const first = useRef(null);
   const second = useRef(null);
   const lantern = useRef(null);
-  const rope1 = useRef(null);
-  const rope2 = useRef(null);
-  const rope3 = useRef(null);
+  const chainLinks = useRef([]);
   const dragging = useRef(null);
   const [isDragged, setIsDragged] = useState(false);
   const { gl, camera } = useThree();
@@ -185,9 +203,7 @@ function SuspendedLantern({ onModelReady, reducedMotion }) {
       .applyQuaternion(new THREE.Quaternion(q.x, q.y, q.z, q.w))
       .add(new THREE.Vector3(p3.x, p3.y, p3.z));
 
-    setRodBetween(rope1.current, fixedPoint, a);
-    setRodBetween(rope2.current, a, b);
-    setRodBetween(rope3.current, b, top);
+    updateGoldChain(chainLinks.current, [fixedPoint, a, b, top]);
 
     if (dragging.current && isDragged) {
       raycaster.setFromCamera(state.pointer, camera);
@@ -211,9 +227,7 @@ function SuspendedLantern({ onModelReady, reducedMotion }) {
       <RigidBody ref={second} {...rigidBodyProps} position={[0, 1.47, 0]}>
         <BallCollider args={[0.035]} />
       </RigidBody>
-      <GoldenLink rodRef={rope1} />
-      <GoldenLink rodRef={rope2} />
-      <GoldenLink rodRef={rope3} />
+      <GoldenChain links={chainLinks} />
 
       <RigidBody
         ref={lantern}
