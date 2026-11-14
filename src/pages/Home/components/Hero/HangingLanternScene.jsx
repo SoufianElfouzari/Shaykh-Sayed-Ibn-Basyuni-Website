@@ -50,17 +50,41 @@ function LanternModel({ onModelReady }) {
   const gltf = useGLTF(MODEL_URL);
   const instance = useMemo(() => {
     const model = gltf.scene.clone(true);
+
+    /* The source scan includes a long, photogrammetry-scanned cord. Hide it:
+       Rapier already renders the physically accurate segmented golden chain. */
+    const scannedCord = model.getObjectByName("brass_diya_lantern_connection");
+    if (scannedCord?.parent) scannedCord.parent.remove(scannedCord);
+
+    /* Keep original PBR textures and genuine modeled filigree. Fine-tune the
+       brass specular response to harmonize with the website's gold palette. */
+    model.traverse((object) => {
+      if (!object.isMesh) return;
+
+      object.castShadow = false;
+      object.receiveShadow = false;
+      const adjustMaterial = (source) => {
+        const material = source.clone();
+        if (material.name === "brass_diya_lantern") {
+          material.color.lerp(new THREE.Color("#ebca76"), 0.16);
+          material.metalness = Math.max(0.74, material.metalness);
+          material.roughness = Math.min(0.43, material.roughness);
+        }
+        if (material.name === "brass_diya_lantern_flame") {
+          material.emissive = new THREE.Color("#ffc35c");
+          material.emissiveIntensity = 0.85;
+        }
+        return material;
+      };
+      object.material = Array.isArray(object.material)
+        ? object.material.map(adjustMaterial)
+        : adjustMaterial(object.material);
+    });
+
     const bounds = new THREE.Box3().setFromObject(model);
     const dimensions = bounds.getSize(new THREE.Vector3());
     const center = bounds.getCenter(new THREE.Vector3());
     const scale = dimensions.y > 0 ? 2.25 / dimensions.y : 1;
-
-    model.traverse((object) => {
-      if (object.isMesh) {
-        object.castShadow = false;
-        object.receiveShadow = false;
-      }
-    });
 
     return {
       model,
