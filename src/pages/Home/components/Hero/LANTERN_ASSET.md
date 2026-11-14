@@ -9,3 +9,7 @@ The hanging lantern on the home page uses the real, textured **Brass Diya Lanter
 - Asset origin and reproducibility: `.github/workflows/vendor-lantern.yml` downloads the publicly licensed GLB, verifies the binary file header and size, then commits the asset.
 
 The 3D interaction uses React Three Fiber, Drei, and Rapier, taking the rope joints, model loading and pointer-drag approach from Bubarando's `src/pages/Services/components/Lanyard/Lanyard.jsx`. The scene is lazily loaded after becoming visible and has a licensed preview-image fallback.
+
+## Performance strategy
+
+The licensed local photographic poster appears immediately and animates its drop and gentle sway. The 3D model and Rapier/Three.js physics are deferred until mouse hover, a finger touch, or a pointer down on the lantern area. When the interactive model is ready, it replaces the poster. This progressive enhancement avoids loading a 3MB JavaScript physics bundle and creating a WebGL context during initial page rendering. The original still remains available if 3D cannot start.

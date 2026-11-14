@@ -1,9 +1,8 @@
-import { Component, lazy, Suspense, useEffect, useRef, useState } from "react";
+import { Component, lazy, Suspense, useEffect, useState } from "react";
 import "./HangingLantern.css";
 
 const LanternScene = lazy(() => import("./HangingLanternScene.jsx"));
-
-const PREVIEW = "https://cdn.polyhaven.com/asset_img/primary/brass_diya_lantern.png?height=650&quality=90";
+const PREVIEW = "/assets/brass-diya-lantern-preview.png";
 
 class LanternErrorBoundary extends Component {
   constructor(props) {
@@ -16,70 +15,61 @@ class LanternErrorBoundary extends Component {
   }
 
   componentDidCatch(error) {
-    console.warn("3D lantern could not load. Showing the licensed still image.", error);
+    console.warn("The interactive lantern is unavailable. Its local preview remains visible.", error);
   }
 
   render() {
-    if (this.state.failed) {
-      return (
-        <img
-          className="sib-lantern-still"
-          src={PREVIEW}
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-      );
-    }
+    if (this.state.failed) return null;
     return this.props.children;
   }
 }
 
+/**
+ * The photographic CC0 poster is displayed immediately and animates into place.
+ * Only load Three.js, Rapier and the detailed GLB when a visitor interacts with
+ * this decorative element. This keeps the entire 3D physics engine out of the
+ * critical route, improves LCP and avoids running WebGL before it is needed.
+ */
 export default function HangingLantern() {
-  const hostRef = useRef(null);
-  const [visible, setVisible] = useState(false);
+  const [activated, setActivated] = useState(false);
   const [ready, setReady] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduceMotion(media.matches);
-    update();
-    media.addEventListener?.("change", update);
-
-    const element = hostRef.current;
-    if (!element || typeof IntersectionObserver === "undefined") {
-      setVisible(true);
-      return () => media.removeEventListener?.("change", update);
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "320px 0px" },
-    );
-    observer.observe(element);
-    return () => {
-      observer.disconnect();
-      media.removeEventListener?.("change", update);
-    };
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReducedMotion(query.matches);
+    sync();
+    query.addEventListener?.("change", sync);
+    return () => query.removeEventListener?.("change", sync);
   }, []);
+
+  const activate = () => setActivated(true);
 
   return (
     <div
-      ref={hostRef}
-      className={`sib-lantern-host${ready ? " sib-lantern-host-ready" : ""}${reduceMotion ? " sib-lantern-reduced-motion" : ""}`}
-      aria-label="3D-Laterne: Mit Maus oder Finger ziehen und schwingen lassen"
+      className={`sib-lantern-host${ready ? " sib-lantern-host-ready" : ""}${reducedMotion ? " sib-lantern-reduced-motion" : ""}`}
+      aria-label="Hängende Messinglaterne, mit Maus oder Finger bewegbar"
       role="img"
+      onPointerEnter={activate}
+      onPointerDown={activate}
+      onTouchStart={activate}
     >
-      {visible && (
+      <div className="sib-lantern-preview-wrap" aria-hidden="true">
+        <img
+          className="sib-lantern-poster"
+          src={PREVIEW}
+          alt=""
+          loading="lazy"
+          fetchPriority="low"
+          decoding="async"
+          draggable="false"
+        />
+      </div>
+
+      {activated && (
         <LanternErrorBoundary>
           <Suspense fallback={null}>
-            <LanternScene onModelReady={() => setReady(true)} reducedMotion={reduceMotion} />
+            <LanternScene onModelReady={() => setReady(true)} reducedMotion={reducedMotion} />
           </Suspense>
         </LanternErrorBoundary>
       )}
