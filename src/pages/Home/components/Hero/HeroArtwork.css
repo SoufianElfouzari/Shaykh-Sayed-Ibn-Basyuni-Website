@@ -148,6 +148,14 @@
   font-size:13px;
   line-height:1.3;
 }
+.sib-art-lantern {
+  transform-origin: 1400px 0;
+  animation: sib-art-lantern-sway 7s ease-in-out infinite alternate;
+}
+@keyframes sib-art-lantern-sway {
+  from {transform: rotate(-1.3deg)}
+  to {transform: rotate(1.5deg)}
+}
 @media (max-width: 1200px) {
   .sib-home-hero {min-height: 670px;}
   .sib-home-hero-title-accent {font-size: clamp(29px, 5.4vw, 65px);}
