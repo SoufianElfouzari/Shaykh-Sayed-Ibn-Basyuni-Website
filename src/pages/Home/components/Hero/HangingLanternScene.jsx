@@ -18,9 +18,9 @@ import * as THREE from "three";
 /* CC0 model by Bhargav Kubal, published at
    https://polyhaven.com/a/brass_diya_lantern
    Direct GLB mirror: https://www.innerscene.com/tools/library/3d-parts/brass-diya-lantern-5bcf5825
-   The asset is remote rather than embedded in the JavaScript bundle. */
+   The verified CC0 asset is self-hosted in public/models/. */
 const MODEL_URL =
-  "https://files.innerscene.com/library/brass-diya-lantern-5bcf5825/847983add09e9aa080a4/polyhaven-brass-diya-lantern.glb";
+  "/models/brass-diya-lantern.glb";
 
 const UP = new THREE.Vector3(0, 1, 0);
 const WORLD_PLANE_NORMAL = new THREE.Vector3(0, 0, 1);

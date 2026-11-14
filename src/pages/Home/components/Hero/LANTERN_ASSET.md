@@ -5,7 +5,7 @@ The hanging lantern on the home page uses the real, textured **Brass Diya Lanter
 - License: **CC0 1.0 / public domain**, including commercial use.
 - Model and license: https://polyhaven.com/a/brass_diya_lantern
 - Web GLB mirror: https://www.innerscene.com/tools/library/3d-parts/brass-diya-lantern-5bcf5825
-- GLB currently loaded directly from the Innerscene CDN, not stored in the repository. The model therefore needs network access and an available CDN to render.
-- For a self-hosted deployment, download the CC0 GLB and save it as `public/models/brass-diya-lantern.glb`, then update `MODEL_URL` in `HangingLanternScene.jsx` to `/models/brass-diya-lantern.glb`.
+- The verified **7.17 MB glTF v2 binary** is stored at `public/models/brass-diya-lantern.glb` and served by the same origin as the site. No external model CDN is used at runtime.
+- Asset origin and reproducibility: `.github/workflows/vendor-lantern.yml` downloads the publicly licensed GLB, verifies the binary file header and size, then commits the asset.
 
 The 3D interaction uses React Three Fiber, Drei, and Rapier, taking the rope joints, model loading and pointer-drag approach from Bubarando's `src/pages/Services/components/Lanyard/Lanyard.jsx`. The scene is lazily loaded after becoming visible and has a licensed preview-image fallback.
