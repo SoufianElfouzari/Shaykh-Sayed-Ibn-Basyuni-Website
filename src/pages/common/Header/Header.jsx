@@ -241,45 +241,6 @@ function Header() {
         aria-hidden={!isMenuOpen}
         inert={!isMenuOpen}
       >
-        <div className="sib-mobile-menu-header">
-          <Link
-            to="/"
-            className="sib-mobile-brand"
-            onClick={closeMenu}
-          >
-            <span
-              className="sib-mobile-brand-line"
-              aria-hidden="true"
-            ></span>
-
-            <span className="sib-mobile-brand-copy">
-              <span className="sib-mobile-brand-name">
-                <span className="sib-mobile-brand-title">
-                  Dr. Shaykh
-                </span>
-
-                <span className="sib-mobile-brand-person">
-                  Sayed Ibn Basyuni
-                </span>
-              </span>
-
-              <span className="sib-mobile-brand-meta">
-                Offizielle Website
-              </span>
-            </span>
-          </Link>
-
-          <button
-            type="button"
-            className="sib-mobile-menu-close"
-            aria-label="Menü schließen"
-            onClick={closeMenu}
-          >
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-
         <nav
           className="sib-mobile-navigation"
           aria-label="Mobile Hauptnavigation"
@@ -321,7 +282,7 @@ function Header() {
           ))}
         </nav>
 
-        <Link to="/kontakt?anliegen=fatwa#kontaktformular" className="sib-mobile-fatwa-cta" onClick={closeMenu}>Fatwa anfragen <span aria-hidden="true">→</span></Link>
+        <Link to="/kontakt?anliegen=fatwa#kontaktformular" className="sib-mobile-fatwa-cta" onClick={closeMenu}><span className="sib-mobile-fatwa-symbol" aria-hidden="true">?</span><span>Fatwa anfragen</span><span className="sib-mobile-fatwa-arrow" aria-hidden="true">→</span></Link>
       </aside>
     </>
   );
