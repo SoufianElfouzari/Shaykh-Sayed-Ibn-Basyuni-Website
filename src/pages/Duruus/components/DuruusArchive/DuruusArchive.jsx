@@ -4,6 +4,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 
 import {
   downloadDarsAudio,
@@ -234,50 +235,106 @@ function getDateTimestamp(value) {
   return timestamp;
 }
 
-function DescriptionText({ text }) {
-  const paragraphs = String(text || "").replace(/\r\n?/g, "\n").split(/\n\s*\n/);
-  return paragraphs.map((paragraph, paragraphIndex) => (
-    <p key={paragraphIndex}>
-      {paragraph.split("\n").map((line, lineIndex) => (
-        <span key={lineIndex}>
-          {lineIndex > 0 && <br />}
-          {line.split(/(\*\*[^*\n]+\*\*)/g).map((part, partIndex) =>
-            part.startsWith("**") && part.endsWith("**") ? (
-              <strong key={partIndex}>{part.slice(2, -2)}</strong>
-            ) : (
-              <span key={partIndex}>{part}</span>
-            ),
-          )}
-        </span>
-      ))}
-    </p>
-  ));
+function InfoIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M12 10.75V16" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <circle cx="12" cy="7.5" r="1.15" fill="currentColor" />
+    </svg>
+  );
 }
 
-function LessonDescription({ description }) {
-  const [expanded, setExpanded] = useState(false);
-  const fullText = String(description || "").trim();
-  const plainText = fullText.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
-  const needsExpansion = plainText.length > 190 || fullText.includes("\n");
+function DescriptionInline({ text }) {
+  return String(text || "")
+    .split(/(\*\*[^*\n]+\*\*)/g)
+    .map((part, index) =>
+      part.startsWith("**") && part.endsWith("**") ? (
+        <strong key={index}>{part.slice(2, -2)}</strong>
+      ) : (
+        <span key={index}>{part}</span>
+      ),
+    );
+}
+
+function DescriptionText({ text }) {
+  const lines = String(text || "").replace(/\r\n?/g, "\n").split("\n");
+  const sections = [];
+  let paragraph = [];
+  let list = [];
+  let listType = null;
+
+  function flushParagraph() {
+    if (paragraph.length) {
+      sections.push({ type: "paragraph", lines: paragraph });
+      paragraph = [];
+    }
+  }
+
+  function flushList() {
+    if (list.length) {
+      sections.push({ type: listType, lines: list });
+      list = [];
+      listType = null;
+    }
+  }
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    const heading = line.match(/^(#{1,4})\s+(.+)$/);
+    const bullet = line.match(/^[-*•]\s+(.+)$/);
+    const numbered = line.match(/^\d+[.)]\s+(.+)$/);
+
+    if (heading) {
+      flushParagraph();
+      flushList();
+      sections.push({ type: "heading", text: heading[2] });
+    } else if (bullet || numbered) {
+      flushParagraph();
+      const type = bullet ? "ul" : "ol";
+      if (listType && listType !== type) flushList();
+      listType = type;
+      list.push((bullet || numbered)[1]);
+    } else {
+      flushList();
+      paragraph.push(line);
+    }
+  }
+
+  flushParagraph();
+  flushList();
+
   return (
-    <div className="sib-duruus-lesson-description">
-      <div
-        className="sib-duruus-lesson-description-text"
-        style={needsExpansion && !expanded ? { maxHeight: "4.5em", overflow: "hidden" } : undefined}
-      >
-        <DescriptionText text={fullText} />
-      </div>
-      {needsExpansion && (
-        <button
-          type="button"
-          className="sib-duruus-description-toggle"
-          aria-expanded={expanded}
-          onClick={() => setExpanded((value) => !value)}
-        >
-          {expanded ? "Weniger anzeigen" : "Mehr anzeigen"}
-          <span aria-hidden="true">{expanded ? " ↑" : " ↓"}</span>
-        </button>
-      )}
+    <div className="sib-archive-modal-prose">
+      {sections.map((section, index) => {
+        if (section.type === "heading") {
+          return <h4 key={index}><DescriptionInline text={section.text} /></h4>;
+        }
+        if (section.type === "ul" || section.type === "ol") {
+          const items = section.lines.map((item, itemIndex) => (
+            <li key={itemIndex}><DescriptionInline text={item} /></li>
+          ));
+          return section.type === "ul"
+            ? <ul key={index}>{items}</ul>
+            : <ol key={index}>{items}</ol>;
+        }
+        return (
+          <p key={index}>
+            {section.lines.map((line, lineIndex) => (
+              <span key={lineIndex}>
+                {lineIndex > 0 && <br />}
+                <DescriptionInline text={line} />
+              </span>
+            ))}
+          </p>
+        );
+      })}
     </div>
   );
 }
@@ -285,6 +342,9 @@ function LessonDescription({ description }) {
 function DuruusArchive() {
   const { duruus: initialDuruus } = useSsrData();
   const audioRef = useRef(null);
+  const detailModalRef = useRef(null);
+  const detailCloseRef = useRef(null);
+  const [detailRecording, setDetailRecording] = useState(null);
 
   const [recordings, setRecordings] =
     useState(initialDuruus || []);
@@ -634,6 +694,50 @@ function DuruusArchive() {
     audio.load();
   }, [audioUrl]);
 
+  useEffect(() => {
+    if (!detailRecording) return undefined;
+
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    detailCloseRef.current?.focus();
+
+    const handleModalKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setDetailRecording(null);
+        return;
+      }
+      if (event.key !== "Tab" || !detailModalRef.current) return;
+
+      const focusable = Array.from(
+        detailModalRef.current.querySelectorAll(
+          'button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleModalKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleModalKeyDown);
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus instanceof HTMLElement && previousFocus.isConnected) {
+        previousFocus.focus();
+      }
+    };
+  }, [detailRecording]);
+
   const seriesList = Object.values(groupedRecordings);
   const currentSeries = seriesList.find((group) => group.title === selectedSeries) || seriesList[0] || null;
   const formatClock = (seconds) => {
@@ -824,6 +928,7 @@ function DuruusArchive() {
   };
 
   return (
+    <>
     <section className="sib-duruus-archive sib-duruus-redesign" id="unterrichtsarchiv" aria-labelledby="sib-duruus-archive-title">
       <div className="sib-duruus-archive-container">
         <header className="sib-archive-intro">
@@ -865,12 +970,57 @@ function DuruusArchive() {
                   <div className="sib-archive-recording-list">
                     {[...currentSeries.recordings].sort((a,b) => (Number(a.lessonNumber) || 0) - (Number(b.lessonNumber) || 0)).map((recording) => {
                       const active = activeRecording?.id === recording.id;
-                      return <article className={active ? "sib-archive-recording is-active" : "sib-archive-recording"} key={recording.id} id={`aufnahme-${recording.id}`}>
-                        <button type="button" className="sib-archive-play" disabled={isLoadingAudio} onClick={() => toggleRecording(recording)} aria-label={active && isPlaying ? `${recording.title} pausieren` : `${recording.title} abspielen`}>{active && isPlaying ? <PauseIcon /> : <PlayIcon />}</button>
-                        <span className="sib-archive-number">{String(recording.lessonNumber || "").padStart(2, "0")}</span>
-                        <div className="sib-archive-recording-info"><h4>{recording.title}</h4><span>{formatDate(recording.date)}{recording.duration ? ` · ${recording.duration}` : ""}</span>{recording.description && <details className="sib-archive-description"><summary>Beschreibung</summary><DescriptionText text={recording.description} /></details>}</div>
-                        <button type="button" className="sib-archive-download" onClick={() => handleDownload(recording)} disabled={downloadingRecordingId === recording.id} aria-label={`${recording.title} herunterladen`}><DownloadIcon /></button>
-                      </article>;
+                      return (
+                        <article
+                          className={active ? "sib-archive-recording is-active" : "sib-archive-recording"}
+                          key={recording.id}
+                          id={`aufnahme-${recording.id}`}
+                        >
+                          <button
+                            type="button"
+                            className="sib-archive-recording-open"
+                            onClick={() => setDetailRecording(recording)}
+                            aria-label={`Details zu ${recording.title} anzeigen`}
+                          />
+                          <button
+                            type="button"
+                            className="sib-archive-play"
+                            disabled={isLoadingAudio}
+                            onClick={() => toggleRecording(recording)}
+                            aria-label={active && isPlaying ? `${recording.title} pausieren` : `${recording.title} abspielen`}
+                          >
+                            {active && isPlaying ? <PauseIcon /> : <PlayIcon />}
+                          </button>
+                          <span className="sib-archive-number">
+                            {String(recording.lessonNumber || "").padStart(2, "0")}
+                          </span>
+                          <div className="sib-archive-recording-info">
+                            <h4>{recording.title}</h4>
+                            <span>{formatDate(recording.date)}{recording.duration ? ` · ${recording.duration}` : ""}</span>
+                          </div>
+                          <div className="sib-archive-recording-actions">
+                            <button
+                              type="button"
+                              className="sib-archive-info"
+                              onClick={() => setDetailRecording(recording)}
+                              aria-label={`Informationen zu ${recording.title} öffnen`}
+                              title="Details zur Aufnahme"
+                            >
+                              <InfoIcon />
+                            </button>
+                            <button
+                              type="button"
+                              className="sib-archive-download"
+                              onClick={() => handleDownload(recording)}
+                              disabled={downloadingRecordingId === recording.id}
+                              aria-label={`${recording.title} herunterladen`}
+                              title="Aufnahme herunterladen"
+                            >
+                              {downloadingRecordingId === recording.id ? <span aria-hidden="true">...</span> : <DownloadIcon />}
+                            </button>
+                          </div>
+                        </article>
+                      );
                     })}
                   </div>
                 </div>
@@ -890,6 +1040,80 @@ function DuruusArchive() {
         </div>}
       </div>
     </section>
+    {detailRecording && typeof document !== "undefined" && createPortal(
+      <div
+        className="sib-archive-modal-backdrop"
+        onMouseDown={(event) => {
+          if (event.target === event.currentTarget) setDetailRecording(null);
+        }}
+      >
+        <div
+          className="sib-archive-modal"
+          ref={detailModalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="sib-archive-modal-title"
+          aria-describedby="sib-archive-modal-subtitle"
+        >
+          <div className="sib-archive-modal-top">
+            <p className="sib-archive-modal-eyebrow">Islamisches Wissen · Unterrichtsaufnahme</p>
+            <button
+              ref={detailCloseRef}
+              type="button"
+              className="sib-archive-modal-close"
+              onClick={() => setDetailRecording(null)}
+              aria-label="Details schließen"
+            >
+              <CloseIcon />
+            </button>
+          </div>
+          <div className="sib-archive-modal-content">
+            <p className="sib-archive-modal-series">{detailRecording.series}</p>
+            <h3 id="sib-archive-modal-title">{detailRecording.title}</h3>
+            <p id="sib-archive-modal-subtitle" className="sib-archive-modal-lesson">
+              {detailRecording.lessonNumber != null
+                ? `Unterricht ${String(detailRecording.lessonNumber).padStart(2, "0")}`
+                : "Unterrichtsaufnahme"}
+            </p>
+            <div className="sib-archive-modal-meta">
+              {detailRecording.category && <span><strong>Wissensgebiet</strong>{detailRecording.category}</span>}
+              {detailRecording.date && <span><strong>Datum</strong>{formatDate(detailRecording.date)}</span>}
+              {detailRecording.duration && <span><strong>Dauer</strong>{detailRecording.duration}</span>}
+              {detailRecording.language && <span><strong>Sprache</strong>{detailRecording.language}</span>}
+            </div>
+            <div className="sib-archive-modal-description">
+              <h4>Über diesen Unterricht</h4>
+              {String(detailRecording.description || "").trim()
+                ? <DescriptionText text={detailRecording.description} />
+                : <p className="sib-archive-modal-no-description">Zu dieser Aufnahme wurde noch keine Beschreibung veröffentlicht.</p>}
+            </div>
+          </div>
+          <div className="sib-archive-modal-footer">
+            <button
+              type="button"
+              className="sib-archive-modal-listen"
+              onClick={() => toggleRecording(detailRecording)}
+              disabled={isLoadingAudio}
+            >
+              {activeRecording?.id === detailRecording.id && isPlaying ? <PauseIcon /> : <PlayIcon />}
+              {activeRecording?.id === detailRecording.id && isPlaying ? "Pausieren" : "Unterricht anhören"}
+            </button>
+            <button
+              type="button"
+              className="sib-archive-modal-download"
+              onClick={() => handleDownload(detailRecording)}
+              disabled={downloadingRecordingId !== null}
+            >
+              <DownloadIcon />
+              {downloadingRecordingId === detailRecording.id ? "Wird heruntergeladen..." : "Herunterladen"}
+            </button>
+          </div>
+          {audioErrorMessage && <p className="sib-archive-modal-audio-error" role="alert">{audioErrorMessage}</p>}
+        </div>
+      </div>,
+      document.body,
+    )}
+  </>
   );
 }
 
