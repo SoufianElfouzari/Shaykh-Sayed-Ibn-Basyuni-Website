@@ -362,7 +362,6 @@ function DuruusArchive() {
   const [selectedSeries, setSelectedSeries] = useState(null);
   const [mobileSeriesOpen, setMobileSeriesOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [lessonView, setLessonView] = useState("all");
   const [ascending, setAscending] = useState(true);
   const [progressMap, setProgressMap] = useState({});
   const [bookmarks, setBookmarks] = useState([]);
@@ -723,7 +722,6 @@ function DuruusArchive() {
   const currentSeries = seriesList.find((group) => group.title === selectedSeries) || seriesList[0] || null;
   const seriesRecordings = currentSeries
     ? [...currentSeries.recordings]
-        .filter((recording) => lessonView !== "open" || !progressMap[String(recording.id)]?.complete)
         .sort((first, second) => (ascending ? 1 : -1) *
           ((Number(first.lessonNumber) || 0) - (Number(second.lessonNumber) || 0)))
     : [];
@@ -755,7 +753,6 @@ function DuruusArchive() {
   const resetFilters = () => {
     setSearchTerm("");
     setActiveCategory("Alle");
-    setLessonView("all");
     setFiltersOpen(false);
   };
 
@@ -1010,7 +1007,7 @@ function DuruusArchive() {
                     <span className={mobileSeriesOpen ? "sib-archive-chevron is-open" : "sib-archive-chevron"}><ChevronIcon /></span>
                   </button>
                   <div id="sib-archive-series-options" className={mobileSeriesOpen ? "sib-archive-series-nav is-expanded" : "sib-archive-series-nav"}>
-                    {seriesList.map((group) => <button key={group.title} type="button" className={currentSeries.title === group.title ? "sib-archive-series-button is-active" : "sib-archive-series-button"} onClick={() => { setSelectedSeries(group.title); setMobileSeriesOpen(false); setLessonView("all"); }} aria-pressed={currentSeries.title === group.title}>
+                    {seriesList.map((group) => <button key={group.title} type="button" className={currentSeries.title === group.title ? "sib-archive-series-button is-active" : "sib-archive-series-button"} onClick={() => { setSelectedSeries(group.title); setMobileSeriesOpen(false); }} aria-pressed={currentSeries.title === group.title}>
                       <span className="sib-archive-book" aria-hidden="true"><BookIcon /></span>
                       <span className="sib-archive-series-copy"><strong>{group.title}</strong><small>{group.recordings.length} {group.recordings.length === 1 ? "Aufnahme" : "Aufnahmen"}</small></span>
                       <span aria-hidden="true" className="sib-archive-chevron">›</span>
@@ -1024,10 +1021,6 @@ function DuruusArchive() {
                   </div>
                   <p className="sib-archive-series-summary">{currentSeries.recordings.length} {currentSeries.recordings.length === 1 ? "veröffentlichte Unterrichtseinheit" : "veröffentlichte Unterrichtseinheiten"}</p>
                   <div className="sib-archive-lesson-tabs">
-                    <div className="sib-archive-lesson-tab-options" role="group" aria-label="Lektionen anzeigen">
-                      <button className={lessonView === "all" ? "is-active" : ""} type="button" aria-pressed={lessonView === "all"} onClick={() => setLessonView("all")}>Alle Lektionen</button>
-                      <button className={lessonView === "open" ? "is-active" : ""} type="button" aria-pressed={lessonView === "open"} onClick={() => setLessonView("open")}>Noch offen</button>
-                    </div>
                     <button
                       type="button"
                       className="sib-archive-sort"
@@ -1104,9 +1097,6 @@ function DuruusArchive() {
                       );
                     })}
                   </div>
-                  {seriesRecordings.length === 0 && lessonView === "open" && (
-                    <p className="sib-archive-all-complete">Alle Lektionen dieser Reihe wurden bereits angehört.</p>
-                  )}
                 </div>
               </div>
             ) : <div className="sib-archive-status"><h3>{recordings.length ? "Keine passenden Aufnahmen" : "Noch keine Unterrichte veröffentlicht"}</h3><p>{recordings.length ? "Versuche einen anderen Suchbegriff oder eine andere Kategorie." : "Neue Aufnahmen erscheinen hier, sobald sie veröffentlicht wurden."}</p>{recordings.length > 0 && <button type="button" onClick={resetFilters}>Filter zurücksetzen</button>}</div>}
