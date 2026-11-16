@@ -1020,15 +1020,6 @@ function DuruusArchive() {
                     <span className="sib-archive-series-tag">{currentSeries.category}</span>
                   </div>
                   <p className="sib-archive-series-summary">{currentSeries.recordings.length} {currentSeries.recordings.length === 1 ? "veröffentlichte Unterrichtseinheit" : "veröffentlichte Unterrichtseinheiten"}</p>
-                  <div className="sib-archive-lesson-tabs">
-                    <button
-                      type="button"
-                      className="sib-archive-sort"
-                      aria-label={ascending ? "Lektionen absteigend sortieren" : "Lektionen aufsteigend sortieren"}
-                      title={ascending ? "Neueste Lektion zuerst" : "Erste Lektion zuerst"}
-                      onClick={() => setAscending((value) => !value)}
-                    ><SortIcon /></button>
-                  </div>
                   {continueRecording && (
                     <div className="sib-archive-resume">
                       <div className="sib-archive-resume-copy">
@@ -1039,7 +1030,11 @@ function DuruusArchive() {
                     </div>
                   )}
                   <div className="sib-archive-mobile-lessons-header">
-                    <h3>Lektionen</h3><span>{seriesRecordings.length} {seriesRecordings.length === 1 ? "Aufnahme" : "Aufnahmen"}</span>
+                    <h3>Lektionen</h3>
+                    <div className="sib-archive-mobile-lessons-tools">
+                      <span>{seriesRecordings.length} {seriesRecordings.length === 1 ? "Aufnahme" : "Aufnahmen"}</span>
+                      <button type="button" className="sib-archive-sort" aria-label={ascending ? "Lektionen absteigend sortieren" : "Lektionen aufsteigend sortieren"} title={ascending ? "Neueste Lektion zuerst" : "Erste Lektion zuerst"} onClick={() => setAscending((value) => !value)}><SortIcon /></button>
+                    </div>
                   </div>
                   <div className="sib-archive-recording-list">
                     {seriesRecordings.map((recording) => {
