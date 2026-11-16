@@ -52,7 +52,7 @@ test("server-rendered homepage loads recordings and schedule from the published 
   assert.match(server, /\[data\.articles, data\.duruus\] = await Promise\.all/);
   assert.match(server, /path === "\/" \|\| path === "\/durous"/);
   assert.match(schedule, /__ssrPath === "\/"/);
-  assert.match(archive, /<DescriptionText text=\\{detailRecording\\.description\\} \\/>/);
+  assert.match(archive, /<DescriptionText text=\{detailRecording\.description\} \/>/);
   assert.match(archive, /role="dialog"/);
   assert.match(archive, /className="sib-archive-recording-open"/);
   assert.match(archive, /className="sib-archive-info"/);
