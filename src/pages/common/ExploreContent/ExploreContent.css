@@ -34,3 +34,91 @@
 @media(max-width:720px){.sib-explore{padding:58px 20px 100px}.sib-explore-mosque{width:90%;height:220px;top:0;right:-25%;opacity:.16}.sib-explore-heading{margin-bottom:28px}.sib-explore-kicker{font-size:12px;gap:10px;margin-bottom:16px}.sib-explore-kicker:before{height:23px;width:5px}.sib-explore h2{font-size:clamp(34px,8.2vw,52px)}.sib-explore-intro{font-size:15px;margin-top:28px}.sib-explore-grid{grid-template-columns:1fr;gap:14px}.sib-explore-card{min-height:120px;padding:18px 58px 18px 16px;border-radius:18px}.sib-explore-card strong{font-size:19px}.sib-explore-card-text>span{font-size:13px}.sib-explore-resources{display:grid;grid-template-columns:1fr;gap:12px;padding:18px;border-radius:24px;margin-top:30px}.sib-explore-resources-heading{font-size:17px}.sib-explore-resources a{width:100%;min-height:52px}.sib-explore-bottom-wave{height:55px}}
 @media(max-width:400px){.sib-explore{padding-left:14px;padding-right:14px}.sib-explore-card-icon{flex-basis:45px;width:45px;height:45px}.sib-explore-card-icon svg{width:29px;height:29px}}
 @media(prefers-reduced-motion:reduce){.sib-explore-card{transition:none}.sib-explore-card:hover{transform:none}}
+
+/* Consistent section scale: aligned with the Latest Articles design system. */
+.sib-explore {
+  padding: 64px 5% 65px;
+  background: linear-gradient(180deg, #faf7f0 0%, #fffefa 100%);
+}
+.sib-explore-inner { max-width: var(--sib-container-width, 1460px); }
+.sib-explore-heading { max-width: 820px; margin-bottom: 30px; }
+.sib-explore-kicker {
+  gap: 10px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  letter-spacing: 1.6px;
+}
+.sib-explore-kicker:before { width: 4px; height: 23px; }
+.sib-explore h2 {
+  max-width: 820px;
+  margin-bottom: 15px;
+  font-size: clamp(38px, 4.3vw, 66px);
+  line-height: 1.04;
+  font-weight: 850;
+}
+.sib-explore h2 span:after { bottom: -9px; height: 4px; }
+.sib-explore-intro {
+  max-width: 720px;
+  margin-top: 21px;
+  font-size: clamp(15px, 1.25vw, 18px);
+  line-height: 1.55;
+}
+.sib-explore-grid { gap: 14px; }
+.sib-explore-card {
+  min-height: 125px;
+  gap: 14px;
+  padding: 18px 19px;
+  border-radius: 17px;
+}
+.sib-explore-card-icon {
+  flex-basis: 51px;
+  width: 51px;
+  height: 51px;
+  border-radius: 13px;
+}
+.sib-explore-card-icon svg { width: 32px; height: 32px; }
+.sib-explore-card strong {
+  font-size: clamp(16px, 1.35vw, 20px);
+  line-height: 1.2;
+}
+.sib-explore-card-text { gap: 6px; padding-right: 15px; }
+.sib-explore-card-text > span { font-size: 13px; line-height: 1.4; }
+.sib-explore-card-arrow {
+  width: 33px;
+  height: 33px;
+  right: 14px;
+  bottom: 13px;
+}
+.sib-explore-card-arrow svg { width: 19px; height: 19px; }
+.sib-explore-resources {
+  margin-top: 27px;
+  padding: 10px 20px;
+}
+.sib-explore-resources-heading { font-size: 17px; }
+.sib-explore-resources-book { width: 36px; height: 34px; }
+.sib-explore-resources a {
+  min-height: 46px;
+  padding: 7px 15px;
+  font-size: 13px;
+}
+.sib-explore-resources a svg { width: 23px; height: 23px; }
+.sib-explore-resources a svg:last-child { width: 17px; height: 17px; }
+/* No solid green band at the section boundary. */
+.sib-explore-bottom-wave { display: none; }
+@media (max-width: 720px) {
+  .sib-explore { padding: 48px 20px 55px; }
+  .sib-explore-heading { margin-bottom: 25px; }
+  .sib-explore-kicker { font-size: 11px; margin-bottom: 13px; }
+  .sib-explore-kicker:before { height: 20px; }
+  .sib-explore h2 { font-size: clamp(34px, 8vw, 48px); }
+  .sib-explore-intro { margin-top: 20px; font-size: 14px; }
+  .sib-explore-card { min-height: 100px; padding: 14px 48px 14px 14px; }
+  .sib-explore-card strong { font-size: 17px; }
+  .sib-explore-card-text > span { font-size: 12px; }
+  .sib-explore-card-icon { flex-basis: 43px; width: 43px; height: 43px; }
+  .sib-explore-card-icon svg { width: 28px; height: 28px; }
+  .sib-explore-resources { margin-top: 24px; padding: 14px; }
+}
+@media (max-width: 400px) {
+  .sib-explore { padding-left: 14px; padding-right: 14px; }
+}
