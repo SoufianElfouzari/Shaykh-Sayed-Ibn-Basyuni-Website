@@ -859,3 +859,58 @@
   .sib-articles-layout .sib-articles-secondary h3 { font-size: 19px; }
   .sib-articles-layout .sib-articles-secondary-top { flex-wrap: wrap; }
 }
+
+/* Mobile: balanced introductory block without oversized divider or cramped CTA. */
+@media (max-width: 720px) {
+  .sib-articles-header-side {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 13px;
+    align-items: start;
+    padding: 0;
+  }
+  .sib-articles-side-divider { display: none; }
+  .sib-articles-side-book {
+    grid-column: 1;
+    grid-row: 1;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+  .sib-articles-side-book svg { width: 33px; height: 33px; }
+  .sib-articles-side-content {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+  .sib-articles-header-side p {
+    max-width: none;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .sib-articles-all-link.sib-home-hero-action {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 25px;
+    width: 100%;
+    max-width: 290px;
+    min-height: 48px;
+    margin: 13px 0 0;
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+  .sib-articles-all-link.sib-home-hero-action .sib-home-hero-action-label {
+    white-space: nowrap;
+    min-height: 27px;
+  }
+  .sib-articles-all-link.sib-home-hero-action .sib-home-hero-action-arrow {
+    height: 27px;
+  }
+}
+@media (max-width: 380px) {
+  .sib-articles-header-side { grid-template-columns: 35px minmax(0, 1fr); gap: 10px; }
+  .sib-articles-side-book { width: 35px; height: 35px; }
+  .sib-articles-side-book svg { width: 28px; height: 28px; }
+  .sib-articles-all-link.sib-home-hero-action { font-size: 12px; }
+}
