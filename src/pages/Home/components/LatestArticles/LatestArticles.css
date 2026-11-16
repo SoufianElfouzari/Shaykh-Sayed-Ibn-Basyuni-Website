@@ -983,3 +983,36 @@
     display: none;
   }
 }
+
+/* Desktop article cards: restore comfortable reading sizes and spacing. */
+@media (min-width: 1051px) {
+  .sib-articles-layout { gap: 18px; }
+  .sib-articles-layout .sib-articles-secondary {
+    min-height: 255px;
+    padding: 22px 24px 19px;
+  }
+  .sib-articles-layout .sib-articles-secondary:first-child { padding-left: 21px; }
+  .sib-articles-layout .sib-articles-category {
+    font-size: 11px;
+    padding: 5px 13px;
+  }
+  .sib-articles-layout .sib-articles-date { font-size: 12px; }
+  .sib-articles-layout .sib-articles-secondary h3 {
+    margin-top: 15px;
+    font-size: clamp(19px, 1.55vw, 25px);
+    line-height: 1.22;
+    letter-spacing: -.55px;
+  }
+  .sib-articles-layout .sib-articles-secondary p {
+    margin-top: 12px;
+    font-size: clamp(13px, 1vw, 15px);
+    line-height: 1.55;
+    -webkit-line-clamp: 3;
+  }
+  .sib-articles-layout .sib-articles-card-footer { padding-top: 18px; }
+  .sib-articles-layout .sib-articles-read-link { font-size: 15px; }
+  .sib-articles-layout .sib-articles-card-footer .sib-articles-secondary-arrow {
+    width: 37px;
+    height: 37px;
+  }
+}
