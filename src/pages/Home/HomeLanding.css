@@ -22,40 +22,30 @@
   }
 }
 
-/* Seamless handoff from the illustrated hero to the audio archive.
-   Keep the artwork visible above, then dissolve its lower edge instead of
-   letting the SVG terminate as a rectangular green strip. */
-.home > main > .sib-home-hero .sib-home-hero-artwork {
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 175px), transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 175px), transparent 100%);
-}
 
-.home > main > .sib-duruus-archive {
-  isolation: isolate;
-  overflow: hidden;
-  padding-top: clamp(88px, 8vw, 120px);
-  background: #fffefa;
+/* Home hero: soft ivory ending, asset-based mosque silhouette, no green wedges. */
+.home > main > .sib-home-hero {
+  background: #f9f6ef;
 }
-
-.home > main > .sib-duruus-archive::before {
+.home > main > .sib-home-hero .sib-home-hero-decoration::after {
   content: "";
   position: absolute;
-  z-index: -1;
-  inset: 0 0 auto;
-  height: clamp(160px, 22vw, 300px);
+  z-index: 1;
+  left: 0;
+  bottom: 0;
+  width: clamp(175px, 24vw, 360px);
+  height: clamp(145px, 19vw, 290px);
+  background: url("/assets/masjid-texture.png") left bottom / contain no-repeat;
+  opacity: .72;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 27% 88% at -7% -20%, rgba(5, 103, 71, .13), transparent 95%),
-    radial-gradient(ellipse 27% 88% at 107% -20%, rgba(5, 103, 71, .13), transparent 95%),
-    linear-gradient(to bottom, #f9f6ef 0%, #fffefa 100%);
 }
-
+.home > main > .sib-duruus-archive {
+  background: #fffefa;
+}
 @media (max-width: 600px) {
-  .home > main > .sib-home-hero .sib-home-hero-artwork {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 100px), transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 100px), transparent 100%);
-  }
-  .home > main > .sib-duruus-archive {
-    padding-top: 75px;
+  .home > main > .sib-home-hero .sib-home-hero-decoration::after {
+    width: 185px;
+    height: 165px;
+    opacity: .5;
   }
 }
