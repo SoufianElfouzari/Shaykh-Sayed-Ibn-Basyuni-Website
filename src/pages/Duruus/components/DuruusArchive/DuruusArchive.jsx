@@ -220,6 +220,21 @@ function normalizeText(value) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
+function isIndividualSeries(value) {
+  return /^(einzelunterricht(?:e)?|einzelvortr[aä]ge?)$/i.test(String(value || "").trim());
+}
+
+function seriesIdentity(recording, category) {
+  const name = String(recording.series || "").trim();
+  const subject = String(recording.category || "").trim();
+  // Individual lessons share a label across subjects, but their numbering is local.
+  // "Alle" intentionally combines individual lessons into one browsable collection.
+  if (isIndividualSeries(name)) {
+    return category === "Alle" ? "individual:all" : `individual:${subject}`;
+  }
+  return `series:${subject}:${name}`;
+}
+
 function getDateTimestamp(value) {
   if (!value) {
     return 0;
@@ -563,30 +578,25 @@ function DuruusArchive() {
       activeCategory,
     ]);
 
-  const groupedRecordings =
-    useMemo(() => {
-      return filteredRecordings.reduce(
-        (groups, recording) => {
-          if (!groups[recording.series]) {
-            groups[recording.series] = {
-              title: recording.series,
-              category:
-                recording.category,
-              recordings: [],
-            };
-          }
-
-          groups[
-            recording.series
-          ].recordings.push(
-            recording,
-          );
-
-          return groups;
-        },
-        {},
-      );
-    }, [filteredRecordings]);
+  const groupedRecordings = useMemo(() => {
+    return filteredRecordings.reduce((groups, recording) => {
+      const key = seriesIdentity(recording, activeCategory);
+      if (!groups[key]) {
+        const individual = isIndividualSeries(recording.series);
+        groups[key] = {
+          key,
+          title: individual ? "Einzelunterricht" : recording.series,
+          category: individual && activeCategory === "Alle"
+            ? "Alle Kategorien"
+            : recording.category,
+          isMixedIndividual: individual && activeCategory === "Alle",
+          recordings: [],
+        };
+      }
+      groups[key].recordings.push(recording);
+      return groups;
+    }, {});
+  }, [filteredRecordings, activeCategory]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -719,11 +729,17 @@ function DuruusArchive() {
   }, [detailRecording]);
 
   const seriesList = Object.values(groupedRecordings);
-  const currentSeries = seriesList.find((group) => group.title === selectedSeries) || seriesList[0] || null;
+  const currentSeries = seriesList.find((group) => group.key === selectedSeries) || seriesList[0] || null;
   const seriesRecordings = currentSeries
-    ? [...currentSeries.recordings]
-        .sort((first, second) => (ascending ? 1 : -1) *
-          ((Number(first.lessonNumber) || 0) - (Number(second.lessonNumber) || 0)))
+    ? [...currentSeries.recordings].sort((first, second) => {
+        if (currentSeries.isMixedIndividual) {
+          // The aggregate has no shared lesson numbering: sort by publication date.
+          const byDate = getDateTimestamp(first.date) - getDateTimestamp(second.date);
+          return (ascending ? 1 : -1) * (byDate || String(first.id).localeCompare(String(second.id)));
+        }
+        const byLesson = (Number(first.lessonNumber) || 0) - (Number(second.lessonNumber) || 0);
+        return (ascending ? 1 : -1) * (byLesson || getDateTimestamp(first.date) - getDateTimestamp(second.date));
+      })
     : [];
   const continueRecording = currentSeries?.recordings
     .filter((recording) => {
@@ -1007,7 +1023,7 @@ function DuruusArchive() {
                     <span className={mobileSeriesOpen ? "sib-archive-chevron is-open" : "sib-archive-chevron"}><ChevronIcon /></span>
                   </button>
                   <div id="sib-archive-series-options" className={mobileSeriesOpen ? "sib-archive-series-nav is-expanded" : "sib-archive-series-nav"}>
-                    {seriesList.map((group) => <button key={group.title} type="button" className={currentSeries.title === group.title ? "sib-archive-series-button is-active" : "sib-archive-series-button"} onClick={() => { setSelectedSeries(group.title); setMobileSeriesOpen(false); }} aria-pressed={currentSeries.title === group.title}>
+                    {seriesList.map((group) => <button key={group.key} type="button" className={currentSeries.key === group.key ? "sib-archive-series-button is-active" : "sib-archive-series-button"} onClick={() => { setSelectedSeries(group.key); setMobileSeriesOpen(false); }} aria-pressed={currentSeries.title === group.title}>
                       <span className="sib-archive-book" aria-hidden="true"><BookIcon /></span>
                       <span className="sib-archive-series-copy"><strong>{group.title}</strong><small>{group.recordings.length} {group.recordings.length === 1 ? "Aufnahme" : "Aufnahmen"}</small></span>
                       <span aria-hidden="true" className="sib-archive-chevron">›</span>
@@ -1037,7 +1053,7 @@ function DuruusArchive() {
                     </div>
                   </div>
                   <div className="sib-archive-recording-list">
-                    {seriesRecordings.map((recording) => {
+                    {seriesRecordings.map((recording, recordingIndex) => {
                       const active = activeRecording?.id === recording.id;
                       return (
                         <article
@@ -1061,7 +1077,7 @@ function DuruusArchive() {
                             {active && isPlaying ? <PauseIcon /> : <PlayIcon />}
                           </button>
                           <span className="sib-archive-number">
-                            {String(recording.lessonNumber || "").padStart(2, "0")}
+                            {String(currentSeries.isMixedIndividual ? recordingIndex + 1 : recording.lessonNumber || "").padStart(2, "0")}
                           </span>
                           <div className="sib-archive-recording-info">
                             <h4>{recording.title}</h4>
