@@ -89,22 +89,19 @@ function LessonSchedule() {
 
         <div className="sib-schedule-panel">
           <div className="sib-schedule-panel-header">
-            <div>
+            <div className="sib-schedule-panel-heading">
+              <CalendarIcon />
+              <div>
               <span className="sib-schedule-panel-eyebrow">
                 Wochenplan
               </span>
 
               <h3>Aktuelle Durous</h3>
+              </div>
+              <span className="sib-schedule-heading-divider" aria-hidden="true" />
+              <span className="sib-schedule-status"><span className="sib-schedule-status-dot" aria-hidden="true" />Aktuell</span>
             </div>
 
-            <span className="sib-schedule-status">
-              <span
-                className="sib-schedule-status-dot"
-                aria-hidden="true"
-              ></span>
-
-              Aktuell
-            </span>
           </div>
 
           <div className="sib-schedule-table">
@@ -144,7 +141,7 @@ function LessonSchedule() {
                       Unterricht
                     </span>
 
-                    <span className="sib-schedule-subject-name">{lesson.subject}</span>
+                    <span className="sib-schedule-subject-name">{lesson.subject.startsWith("Fiqh (") && lesson.subject.endsWith(")") ? <><strong>Fiqh</strong><span>{lesson.subject.slice(6, -1)}</span></> : <strong>{lesson.subject}</strong>}</span>
                   </div>
                 </div>
               ))}
@@ -152,9 +149,9 @@ function LessonSchedule() {
           </div>
 
           <footer className="sib-schedule-footer">
-            <p>
+            <p><InfoIcon /><span>
               Änderungen und weitere Hinweise werden auf der
-              Durous-Seite veröffentlicht.
+              Durous-Seite veröffentlicht.</span>
             </p>
 
             <Link
