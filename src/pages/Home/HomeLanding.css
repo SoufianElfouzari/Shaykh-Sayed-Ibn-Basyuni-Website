@@ -21,3 +21,41 @@
     padding-top: calc(var(--sib-header-height) + 33px);
   }
 }
+
+/* Seamless handoff from the illustrated hero to the audio archive.
+   Keep the artwork visible above, then dissolve its lower edge instead of
+   letting the SVG terminate as a rectangular green strip. */
+.home > main > .sib-home-hero .sib-home-hero-artwork {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 175px), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 175px), transparent 100%);
+}
+
+.home > main > .sib-duruus-archive {
+  isolation: isolate;
+  overflow: hidden;
+  padding-top: clamp(88px, 8vw, 120px);
+  background: #fffefa;
+}
+
+.home > main > .sib-duruus-archive::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto;
+  height: clamp(160px, 22vw, 300px);
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 27% 88% at -7% -20%, rgba(5, 103, 71, .13), transparent 95%),
+    radial-gradient(ellipse 27% 88% at 107% -20%, rgba(5, 103, 71, .13), transparent 95%),
+    linear-gradient(to bottom, #f9f6ef 0%, #fffefa 100%);
+}
+
+@media (max-width: 600px) {
+  .home > main > .sib-home-hero .sib-home-hero-artwork {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 100px), transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 100px), transparent 100%);
+  }
+  .home > main > .sib-duruus-archive {
+    padding-top: 75px;
+  }
+}
