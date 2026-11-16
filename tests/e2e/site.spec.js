@@ -79,6 +79,28 @@ test("mobile navigation can be opened and closed with keyboard", async ({ page, 
   await expect(menu).toHaveAttribute("aria-expanded", "false");
 });
 
+test("recording details open from the entire row and the info button", async ({ page }) => {
+  await page.goto("/durous");
+
+  const recording = page.locator("#aufnahme-fixture-dars");
+  await expect(recording).toBeVisible();
+  await expect(recording.locator(".sib-archive-description")).toHaveCount(0);
+
+  await recording.getByRole("button", { name: "Details zu Fiqh Unterricht 1 anzeigen" }).click();
+  const dialog = page.getByRole("dialog", { name: "Fiqh Unterricht 1" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText("Öffentliche Aufnahme.");
+  await expect(dialog).toContainText("Deutsch");
+
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+
+  await recording.getByRole("button", { name: "Informationen zu Fiqh Unterricht 1 öffnen" }).click();
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("button", { name: "Details schließen" }).click();
+  await expect(dialog).toHaveCount(0);
+});
+
 test("archive page parameters keep canonical URL and reject nonexistent pages", async ({ page }) => {
   const first = await page.goto("/artikel?page=1");
   expect(first.status()).toBe(200);
