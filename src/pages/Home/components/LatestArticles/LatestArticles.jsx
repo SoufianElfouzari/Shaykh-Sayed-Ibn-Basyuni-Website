@@ -229,7 +229,7 @@ function LatestArticles() {
     );
   }, [articles]);
 
-  const visibleArticles = useMemo(() => latestArticles.slice(0, 9), [latestArticles]);
+  const visibleArticles = useMemo(() => latestArticles.slice(0, 6), [latestArticles]);
 
   return (
     <section
