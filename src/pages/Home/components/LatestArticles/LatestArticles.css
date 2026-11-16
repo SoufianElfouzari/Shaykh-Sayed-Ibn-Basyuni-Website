@@ -612,3 +612,51 @@
   .sib-articles-layout .sib-articles-secondary { padding: 22px; }
   .sib-articles-layout .sib-articles-secondary h3 { font-size: 20px; }
 }
+
+/* Heading aligned with the homepage hero and teaching archive. */
+.sib-articles-label {
+  position: relative;
+  padding-left: 18px;
+  color: #0b382e;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.sib-articles-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 3px;
+  background: #e5a000;
+}
+.sib-articles-title {
+  font-size: clamp(38px, 4.3vw, 66px);
+  line-height: 1.04;
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  color: #10372e;
+}
+.sib-articles-title span {
+  position: relative;
+  color: #078a64;
+  font-weight: 800;
+  text-shadow: 0 8px 22px rgba(13, 106, 82, 0.09);
+}
+.sib-articles-title span::after {
+  content: "";
+  display: block;
+  width: min(60%, 360px);
+  height: 5px;
+  margin: 14px 0 0 8%;
+  border-radius: 50%;
+  background: #e5a000;
+  transform: rotate(-1.5deg);
+}
+@media (max-width: 680px) {
+  .sib-articles-title { font-size: clamp(34px, 8.5vw, 48px); }
+  .sib-articles-label { font-size: 11px; }
+  .sib-articles-title span::after { height: 3px; margin-top: 10px; }
+}
