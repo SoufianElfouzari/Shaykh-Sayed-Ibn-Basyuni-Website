@@ -475,3 +475,543 @@
   .sib-archive-modal-playback-progress { gap: 8px; }
   .sib-archive-modal-playback-tools { justify-content: center; }
 }
+
+
+/* Reuse the exact open-book illustration shown in the Islam lernen hero CTA. */
+.sib-archive-book {
+  display: grid;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 46px;
+  place-items: center;
+}
+.sib-archive-book svg {
+  display: block;
+  width: 46px;
+  height: 40px;
+}
+.sib-archive-mobile-series-trigger,
+.sib-archive-mobile-filter,
+.sib-archive-lesson-tabs,
+.sib-archive-resume,
+.sib-archive-mobile-lessons-header {
+  display: none;
+}
+.sib-archive-series-button.is-active {
+  border-color: #ebb33b;
+  background: radial-gradient(ellipse at 30% 0%, #088461, transparent 74%), linear-gradient(120deg, #03442f, #087052 62%, #00412f);
+  box-shadow: 0 0 0 2px #fff9e6, 0 0 0 4px #e6ac28, 0 7px 18px rgba(4, 64, 39, .15);
+}
+.sib-archive-chevron {
+  display: grid;
+  place-items: center;
+  flex: 0 0 24px;
+  width: 24px;
+}
+.sib-archive-chevron svg { width: 22px; height: 22px; transform: rotate(-90deg); }
+.sib-archive-recording.is-active {
+  background: linear-gradient(90deg, #e7eddf, #e9eddf);
+}
+
+/* The player is deliberately shared by desktop and mobile. */
+.sib-duruus-redesign .sib-archive-player {
+  position: sticky;
+  bottom: 12px;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(180px, 1.25fr) auto;
+  align-items: center;
+  gap: 22px;
+  margin-top: 32px;
+  padding: 17px 22px;
+  border: 3px double #d6a132;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(10, 145, 97, .24), transparent 50%),
+    repeating-linear-gradient(45deg, transparent 0 26px, rgba(255,255,255,.018) 27px 28px),
+    linear-gradient(115deg, #073e2b, #006646 56%, #00412f);
+  box-shadow: 0 10px 27px rgba(0, 47, 29, .24);
+  color: #fffdf4;
+}
+.sib-archive-player-heading {
+  display: flex;
+  gap: 7px;
+  align-items: start;
+  min-width: 0;
+}
+.sib-archive-player-heading strong {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: clamp(14px, 1.4vw, 18px);
+  font-weight: 800;
+  line-height: 1.36;
+}
+.sib-archive-player-heading .sib-archive-player-close {
+  order: -1;
+  display: grid;
+  place-items: center;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 26px;
+  padding: 2px;
+  border: 0;
+  background: none;
+  color: #d7e7d8;
+}
+.sib-duruus-redesign .sib-archive-player-timeline {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 11px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.sib-duruus-redesign .sib-archive-player-timeline input {
+  width: 100%;
+  min-width: 30px;
+  flex: 1;
+  accent-color: #f0c457;
+  cursor: pointer;
+}
+.sib-archive-player-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.sib-duruus-redesign .sib-archive-player-actions > button {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  min-width: 38px;
+  min-height: 38px;
+  padding: 4px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #fffdf4;
+  cursor: pointer;
+}
+.sib-duruus-redesign .sib-archive-player-actions .sib-archive-rate {
+  min-width: 50px;
+  min-height: 38px;
+  padding: 6px 9px;
+  border: 1px solid #fbf4de;
+  border-radius: 11px;
+  font-weight: 800;
+  font-size: 14px;
+}
+.sib-archive-player-skip svg { width: 34px; height: 34px; }
+.sib-duruus-redesign .sib-archive-player-actions .sib-archive-player-play {
+  width: 53px;
+  height: 53px;
+  min-width: 53px;
+  min-height: 53px;
+  border-radius: 50%;
+  background: #fff9e9;
+  color: #075039;
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+}
+.sib-archive-player-bookmark svg { width: 27px; height: 27px; }
+.sib-archive-player-bookmark.is-active { color: #f3c552 !important; }
+.sib-archive-player-actions > button:focus-visible,
+.sib-archive-mobile-filter:focus-visible,
+.sib-archive-mobile-series-trigger:focus-visible,
+.sib-archive-lesson-tabs button:focus-visible,
+.sib-archive-resume button:focus-visible {
+  outline: 3px solid #edb835;
+  outline-offset: 3px;
+}
+
+@media (max-width: 1050px) {
+  .sib-duruus-redesign .sib-archive-player {
+    grid-template-columns: minmax(100px, .9fr) minmax(140px, 1.1fr) auto;
+    gap: 12px;
+    padding: 13px;
+  }
+  .sib-archive-player-actions { gap: 5px; }
+}
+
+@media (max-width: 800px) {
+  .sib-duruus-redesign {
+    padding: 48px clamp(14px, 4vw, 32px) 75px;
+  }
+  .sib-duruus-redesign .sib-duruus-archive-container { min-width: 0; }
+  .sib-archive-intro { padding: 0 0 19px; }
+  .sib-archive-eyebrow {
+    margin-bottom: 11px;
+    padding-left: 13px;
+    border-left-width: 3px;
+    font-size: clamp(11px, 2.4vw, 15px);
+    letter-spacing: .14em;
+  }
+  .sib-archive-heading {
+    font-size: clamp(38px, 7.7vw, 67px);
+    line-height: .98;
+    letter-spacing: -.052em;
+    overflow-wrap: anywhere;
+  }
+  .sib-archive-heading span {
+    display: block;
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    padding-bottom: 12px;
+  }
+  .sib-archive-heading span::after {
+    content: "";
+    position: absolute;
+    bottom: 3px;
+    right: 0;
+    width: 54%;
+    height: 5px;
+    border-radius: 60% 40%;
+    background: linear-gradient(95deg, transparent, #e4a611 20%, #e4a611 80%, transparent);
+    transform: rotate(-1.6deg);
+  }
+  .sib-archive-subtitle {
+    margin-top: 8px;
+    font-size: clamp(15px, 3.2vw, 21px);
+  }
+  .sib-archive-toolbar {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 55px;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0 18px;
+    border-bottom: 0;
+  }
+  .sib-duruus-redesign .sib-archive-search {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+    height: 55px;
+    border-radius: 999px;
+  }
+  .sib-archive-search > svg { width: 25px; height: 25px; margin-left: 18px; }
+  .sib-archive-search input { font-size: 16px; padding-left: 13px; }
+  .sib-archive-mobile-filter {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1;
+    place-items: center;
+    width: 55px;
+    height: 55px;
+    border: 1px solid #bc9a55;
+    border-radius: 19px;
+    background: #fffaf0;
+    color: #064e37;
+    box-shadow: 0 4px 11px rgba(41, 35, 21, .1);
+    cursor: pointer;
+  }
+  .sib-archive-mobile-filter.is-active { border-color: #046d4d; background: #eaf2e8; }
+  .sib-archive-mobile-filter svg { width: 27px; height: 27px; }
+  .sib-duruus-redesign .sib-archive-categories {
+    display: none;
+    position: absolute;
+    z-index: 7;
+    top: calc(100% - 10px);
+    left: 0;
+    right: 0;
+    padding: 15px;
+    border: 1px solid #d9c89f;
+    border-radius: 20px;
+    background: #fffdfa;
+    box-shadow: 0 17px 35px rgba(23, 39, 27, .16);
+  }
+  .sib-duruus-redesign .sib-archive-categories.is-open {
+    display: flex;
+    gap: 8px;
+  }
+  .sib-duruus-redesign .sib-archive-pill { font-size: 13px; }
+  .sib-duruus-redesign .sib-archive-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding-top: 6px;
+  }
+  .sib-duruus-redesign .sib-archive-sidebar {
+    min-width: 0;
+    padding: 0 0 16px;
+    border-right: 0;
+    border-bottom: 1px solid #d7a946;
+  }
+  .sib-archive-sidebar h3 {
+    margin: 0 0 14px;
+    font-size: clamp(23px, 4.4vw, 31px);
+    letter-spacing: -.04em;
+  }
+  .sib-archive-mobile-series-trigger {
+    display: flex;
+    width: 100%;
+    min-height: 76px;
+    align-items: center;
+    gap: 16px;
+    padding: 14px clamp(14px, 3vw, 24px);
+    border: 2px solid #e6a82a;
+    border-radius: 21px;
+    background: radial-gradient(ellipse at 30% 0%, #088461, transparent 76%), linear-gradient(125deg, #00452e, #047350 60%, #003f2d);
+    box-shadow: 0 0 0 2px #fff9ed, 0 0 0 4px #dfa52a, 0 7px 16px rgba(0, 65, 42, .18);
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+  }
+  .sib-archive-mobile-series-trigger .sib-archive-series-copy strong {
+    font-size: clamp(17px, 3.5vw, 24px);
+    font-weight: 830;
+  }
+  .sib-archive-mobile-series-trigger .sib-archive-series-copy small {
+    font-size: clamp(13px, 2.8vw, 17px);
+  }
+  .sib-archive-mobile-series-trigger .sib-archive-chevron { color: #fff; }
+  .sib-archive-mobile-series-trigger .sib-archive-chevron svg {
+    transform: rotate(0);
+    transition: transform .2s ease;
+  }
+  .sib-archive-mobile-series-trigger .sib-archive-chevron.is-open svg { transform: rotate(180deg); }
+  .sib-duruus-redesign .sib-archive-series-nav {
+    display: none;
+    padding: 12px 0 1px;
+  }
+  .sib-duruus-redesign .sib-archive-series-nav.is-expanded {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+    overflow: visible;
+  }
+  .sib-duruus-redesign .sib-archive-series-button {
+    flex: auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 67px;
+    border: 1px solid #ddcfaf;
+    border-radius: 14px;
+  }
+  .sib-duruus-redesign .sib-archive-series-button.is-active {
+    border-color: #e7ab35;
+  }
+  .sib-archive-series-button .sib-archive-chevron svg { transform: rotate(-90deg); }
+  .sib-duruus-redesign .sib-archive-series-header,
+  .sib-duruus-redesign .sib-archive-series-summary { display: none; }
+  .sib-archive-lesson-tabs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 0 0 15px;
+    border-bottom: 1px solid #d3a24a;
+  }
+  .sib-archive-lesson-tab-options {
+    display: flex;
+    min-width: 0;
+    gap: 9px;
+  }
+  .sib-archive-lesson-tab-options button {
+    min-height: 47px;
+    padding: 9px 16px;
+    border: 1px solid #bda875;
+    border-radius: 999px;
+    background: #fff9ed;
+    color: #154632;
+    font-size: clamp(13px, 2.6vw, 17px);
+    font-weight: 780;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .sib-archive-lesson-tab-options button.is-active {
+    border: 2px solid #dd9b1d;
+    background: linear-gradient(130deg, #006e4b, #004c36);
+    box-shadow: 0 0 0 2px #fffaf0, 0 0 0 3px #dfaa32, 0 4px 10px rgba(0, 72, 50, .18);
+    color: #fff;
+  }
+  .sib-archive-sort {
+    display: grid;
+    place-items: center;
+    flex: 0 0 47px;
+    width: 47px;
+    height: 47px;
+    border: 1px solid #bda875;
+    border-radius: 16px;
+    background: #fff9ed;
+    color: #0b533b;
+    cursor: pointer;
+  }
+  .sib-archive-sort svg { width: 24px; height: 24px; }
+  .sib-archive-resume {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    margin: 16px 0 19px;
+    padding: 13px 15px 13px 18px;
+    border-radius: 17px;
+    background: linear-gradient(105deg, #e6edde, #eaf0df);
+  }
+  .sib-archive-resume-copy { display: grid; flex: 1; min-width: 0; gap: 3px; }
+  .sib-archive-resume-copy strong {
+    font-size: 20px;
+    font-weight: 840;
+    color: #074c34;
+  }
+  .sib-archive-resume-copy span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #435047;
+    font-size: 13px;
+  }
+  .sib-archive-resume button {
+    display: grid;
+    place-items: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    border: 2px solid #07523c;
+    border-radius: 50%;
+    background: #fffefa;
+    color: #07523c;
+    cursor: pointer;
+  }
+  .sib-archive-resume button svg { width: 24px; height: 24px; }
+  .sib-archive-mobile-lessons-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 9px;
+    padding: 0 2px 12px;
+  }
+  .sib-archive-mobile-lessons-header h3 {
+    margin: 0;
+    color: #054630;
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 850;
+    letter-spacing: -.045em;
+  }
+  .sib-archive-mobile-lessons-header span {
+    color: #49564d;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .sib-duruus-redesign .sib-archive-recording-list { width: 100%; }
+  .sib-duruus-redesign .sib-archive-recording {
+    display: grid;
+    grid-template-columns: 44px 30px minmax(0, 1fr) 78px;
+    gap: 10px;
+    align-items: center;
+    min-height: 79px;
+    padding: 12px 3px;
+    border-bottom: 1px solid #ddc9a4;
+    border-radius: 0;
+  }
+  .sib-duruus-redesign .sib-archive-recording.is-active {
+    margin: 0 -4px;
+    padding: 12px 7px;
+    border-radius: 16px;
+  }
+  .sib-duruus-redesign .sib-archive-play {
+    width: 42px;
+    height: 42px;
+    flex-basis: auto;
+  }
+  .sib-archive-number { font-size: 15px; text-align: center; }
+  .sib-archive-recording-info h4 {
+    font-size: clamp(15px, 3.4vw, 20px);
+    font-weight: 840;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+  .sib-archive-recording-info > span {
+    font-size: clamp(11px, 2.65vw, 14px);
+    line-height: 1.3;
+  }
+  .sib-archive-recording-actions { gap: 1px; }
+  .sib-archive-info,
+  .sib-archive-download { width: 36px; height: 41px; padding: 7px; }
+  .sib-archive-info svg,
+  .sib-archive-download svg { width: 22px; height: 22px; }
+  .sib-archive-all-complete {
+    padding: 20px 5px;
+    text-align: center;
+    color: #506353;
+    font-size: 14px;
+  }
+  .sib-duruus-redesign .sib-archive-player {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+    margin: 26px 0 0;
+    padding: 19px 17px 18px;
+    border-radius: 27px;
+    bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .sib-archive-player-heading {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .sib-archive-player-heading strong {
+    display: block;
+    font-size: clamp(18px, 3.9vw, 23px);
+    line-height: 1.22;
+  }
+  .sib-archive-player-heading .sib-archive-player-close {
+    order: 2;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+  }
+  .sib-duruus-redesign .sib-archive-player-timeline {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    font-size: clamp(11px, 2.5vw, 14px);
+  }
+  .sib-archive-player-actions {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    place-items: center;
+    gap: 0;
+  }
+  .sib-duruus-redesign .sib-archive-player-actions > button {
+    justify-self: center;
+    min-width: 37px;
+    min-height: 42px;
+  }
+  .sib-duruus-redesign .sib-archive-player-actions .sib-archive-player-play {
+    width: clamp(56px, 12vw, 72px);
+    height: clamp(56px, 12vw, 72px);
+    min-width: clamp(56px, 12vw, 72px);
+    min-height: clamp(56px, 12vw, 72px);
+  }
+  .sib-archive-player-skip svg { width: 35px; height: 35px; }
+  .sib-archive-player-bookmark svg { width: 29px; height: 29px; }
+}
+@media (max-width: 400px) {
+  .sib-duruus-redesign { padding-right: 13px; padding-left: 13px; }
+  .sib-archive-heading { font-size: clamp(34px, 9vw, 40px); }
+  .sib-archive-lesson-tab-options { gap: 7px; }
+  .sib-archive-lesson-tab-options button { padding: 8px 10px; font-size: 12px; }
+  .sib-archive-sort { flex-basis: 40px; width: 40px; height: 44px; }
+  .sib-duruus-redesign .sib-archive-recording {
+    grid-template-columns: 36px 24px minmax(0, 1fr) 68px;
+    gap: 6px;
+  }
+  .sib-duruus-redesign .sib-archive-play { width: 35px; height: 35px; }
+  .sib-archive-number { font-size: 13px; }
+  .sib-archive-info,
+  .sib-archive-download { width: 32px; height: 36px; padding: 5px; }
+  .sib-archive-book { flex-basis: 41px; width: 41px; }
+  .sib-archive-book svg { width: 39px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sib-archive-mobile-series-trigger .sib-archive-chevron svg,
+  .sib-archive-player-actions button { transition: none; }
+}
