@@ -57,8 +57,26 @@ function CheckIcon() {
   );
 }
 
+function ContactIcon({ kind }) {
+  const paths = {
+    mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></>,
+    user: <><circle cx="12" cy="8" r="4" /><path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2" /></>,
+    layers: <><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5" /></>,
+    question: <><path d="M12 3a9 9 0 0 0-7.5 14L3 21l4.8-2.2A9 9 0 1 0 12 3Z" /><path d="M9 9a3 3 0 0 1 6 1c0 2-3 2-3 4" /><path d="M12 17h.01" /></>,
+    shield: <><path d="m12 2 9 4v6c0 6-4 9-9 11-5-2-9-5-9-11V6l9-4Z" /><path d="m8 12 3 3 5-6" /></>,
+    info: <><circle cx="12" cy="12" r="9" /><path d="M12 11v6M12 7v2" /></>,
+    message: <><path d="M21 11a8 8 0 0 1-8 8H6l-3 2 1-5a8 8 0 1 1 17-5Z" /></>,
+  };
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[kind]}</svg>;
+}
+const fatwaBenefits = [
+  { icon: "question", title: "Fundierte Antwort", text: "auf Grundlage von Quran und Sunnah" },
+  { icon: "layers", title: "Wissenschaftlich geprüft", text: "nach den Prinzipien der Ahl as-Sunnah" },
+  { icon: "shield", title: "Vertraulich & respektvoll", text: "deine Anfrage wird mit Sorgfalt behandelt" },
+];
 function ContactForm({ headingLevel = 2 }) {
   const HeadingTag = headingLevel === 1 ? "h1" : "h2";
+  const homeFatwa = headingLevel !== 1;
   const location = useLocation();
   const isFatwaRequest = new URLSearchParams(location.search).get("anliegen") === "fatwa";
   const sectionRef = useRef(null);
@@ -176,7 +194,7 @@ function ContactForm({ headingLevel = 2 }) {
   return (
     <section
       ref={sectionRef}
-      className="sib-contact-form"
+      className={`sib-contact-form ${homeFatwa ? "sib-contact-form--home-fatwa" : ""}`}
       id="kontaktformular"
     >
       <div
@@ -193,6 +211,7 @@ function ContactForm({ headingLevel = 2 }) {
       </div>
 
       <div className="sib-contact-form-container">
+        {homeFatwa && <div className="sib-contact-form-mosque" aria-hidden="true" />}
         <header className="sib-contact-form-header">
           <div className="sib-contact-form-header-top">
             <div className="sib-contact-form-label-row">
@@ -202,23 +221,22 @@ function ContactForm({ headingLevel = 2 }) {
               ></span>
 
               <p className="sib-contact-form-label">
-                Kontakt
+                {homeFatwa ? "Fatwa anfragen" : "Kontakt"}
               </p>
             </div>
 
-            <span className="sib-contact-form-section-number">
-              01
-            </span>
+            {!homeFatwa && <span className="sib-contact-form-section-number">01</span>}
           </div>
 
           <HeadingTag className="sib-contact-form-title">
-            {isFatwaRequest ? "Fatwa" : "Eine Nachricht"}
-            <span>{isFatwaRequest ? "anfragen." : "übermitteln."}</span>
+            {homeFatwa ? "Stelle deine Frage" : (isFatwaRequest ? "Fatwa" : "Eine Nachricht")}
+            <span>{homeFatwa ? "zum Islam." : (isFatwaRequest ? "anfragen." : "übermitteln.")}</span>
           </HeadingTag>
 
           <p className="sib-contact-form-description">
-            {isFatwaRequest ? "Hier kannst du eine religiöse Frage einreichen. Bitte beschreibe dein Anliegen möglichst klar. Eine persönliche Antwort kann nicht garantiert werden." : "Über dieses Formular können allgemeine Anfragen, Hinweise und organisatorische Anliegen übermittelt werden."}
+            {homeFatwa ? "Du hast eine Frage zum Gebet, Fasten, zur Glaubenslehre oder zu anderen islamischen Angelegenheiten? Reiche deine Frage über das Formular ein." : (isFatwaRequest ? "Hier kannst du eine religiöse Frage einreichen. Bitte beschreibe dein Anliegen möglichst klar. Eine persönliche Antwort kann nicht garantiert werden." : "Über dieses Formular können allgemeine Anfragen, Hinweise und organisatorische Anliegen übermittelt werden.")}
           </p>
+          {homeFatwa && <div className="sib-contact-benefits">{fatwaBenefits.map((item) => <div className="sib-contact-benefit" key={item.title}><span className="sib-contact-benefit-icon"><ContactIcon kind={item.icon} /></span><span className="sib-contact-benefit-copy"><strong>{item.title}</strong><span>{item.text}</span></span></div>)}</div>}
         </header>
 
         {submitStatus === "success" ? (
@@ -260,59 +278,54 @@ function ContactForm({ headingLevel = 2 }) {
             onSubmit={handleSubmit}
           >
             <div className="sib-contact-form-panel-header">
+              {homeFatwa && <span className="sib-contact-panel-icon"><ContactIcon kind="mail" /></span>}
               <div>
-                <p className="sib-contact-form-panel-label">
-                  Kontaktformular
-                </p>
+                {!homeFatwa && <p className="sib-contact-form-panel-label">Kontaktformular</p>}
 
-                <h2>Nachricht verfassen</h2>
+                <h2>{homeFatwa ? "Fatwa anfragen" : "Nachricht verfassen"}</h2>
 
                 <p className="sib-contact-form-panel-subtitle">
-                  Wir antworten ausschließlich per E-Mail an
-                  die von dir angegebene Adresse.
+                  {homeFatwa ? "Fülle das Formular aus und stelle deine Frage." : "Wir antworten ausschließlich per E-Mail an die von dir angegebene Adresse."}
                 </p>
               </div>
 
-              <p className="sib-contact-form-required-note">
-                Mit <span>*</span> markierte Felder sind
-                erforderlich.
-              </p>
+              {!homeFatwa && <p className="sib-contact-form-required-note">Mit <span>*</span> markierte Felder sind erforderlich.</p>}
             </div>
 
             <div className="sib-contact-form-fields">
-              <div
-                className="sib-contact-field"
-              >
+              <div className="sib-contact-field">
                 <label htmlFor="contact-name">
-                  Name <span>*</span>
+                  {homeFatwa ? "Dein Name" : "Name"} <span>*</span>
                 </label>
 
+                <div className="sib-contact-input-wrap"><ContactIcon kind="user" />
                 <input
                   id="contact-name"
                   name="name"
                   type="text"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Vor- und Nachname"
+                  placeholder={homeFatwa ? "z. B. Ahmad" : "Vor- und Nachname"}
                   autoComplete="name"
                   required
-                />
+                /></div>
               </div>
 
               <div
                 className="sib-contact-field"
               >
                 <label htmlFor="contact-email">
-                  E-Mail-Adresse <span>*</span>
+                  {homeFatwa ? "Deine E-Mail-Adresse" : "E-Mail-Adresse"} <span>*</span>
                 </label>
 
+                <div className="sib-contact-input-wrap"><ContactIcon kind="mail" />
                 <input
                   id="contact-email"
                   name="email"
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="name@beispiel.de"
+                  placeholder={homeFatwa ? "z. B. ahmad@example.de" : "name@beispiel.de"}
                   autoComplete="email"
                   required
                 />
@@ -322,10 +335,11 @@ function ContactForm({ headingLevel = 2 }) {
                 className="sib-contact-field sib-contact-field-full"
               >
                 <label htmlFor="contact-subject">
-                  Anliegen <span>*</span>
+                  {homeFatwa ? "Thema deiner Frage" : "Anliegen"} <span>*</span>
                 </label>
 
                 <div className="sib-contact-select-wrapper">
+                  <ContactIcon kind="layers" />
                   <select
                     id="contact-subject"
                     name="subject"
@@ -334,7 +348,7 @@ function ContactForm({ headingLevel = 2 }) {
                     required
                   >
                     <option value="" disabled>
-                      Bitte ein Anliegen auswählen
+                      {homeFatwa ? "Thema auswählen" : "Bitte ein Anliegen auswählen"}
                     </option>
 
                     <option value="fatwa">Fatwa-Anfrage (religiöse Frage)</option>
@@ -376,7 +390,7 @@ function ContactForm({ headingLevel = 2 }) {
               >
                 <div className="sib-contact-textarea-heading">
                   <label htmlFor="contact-message">
-                    Nachricht <span>*</span>
+                    {homeFatwa ? "Deine Frage" : "Nachricht"} <span>*</span>
                   </label>
 
                   <span>
@@ -384,19 +398,21 @@ function ContactForm({ headingLevel = 2 }) {
                   </span>
                 </div>
 
+                <div className="sib-contact-textarea-wrap"><ContactIcon kind="message" />
                 <textarea
                   id="contact-message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Bitte formuliere dein Anliegen möglichst klar und vollständig."
-                  rows="9"
+                  placeholder={homeFatwa ? "Stelle hier deine Frage so klar und detailliert wie möglich ..." : "Bitte formuliere dein Anliegen möglichst klar und vollständig."}
+                  rows={homeFatwa ? 5 : 9}
                   maxLength="2000"
                   required
-                ></textarea>
+                ></textarea></div>
               </div>
             </div>
 
+            {homeFatwa && <div className="sib-contact-notice"><ContactIcon kind="info" /><p><strong>Hinweis</strong><span>Eine persönliche Antwort kann nicht garantiert werden. Ausgewählte Fragen werden auf der Website als Fatwa (Frage und Antwort) veröffentlicht.</span></p></div>}
             <div className="sib-contact-form-bottom">
               <label className="sib-contact-privacy">
                 <input
@@ -431,7 +447,7 @@ function ContactForm({ headingLevel = 2 }) {
                 <span>
                   {submitStatus === "sending"
                     ? "Wird versendet"
-                    : "Nachricht senden"}
+                    : homeFatwa ? "Frage einreichen" : "Nachricht senden"}
                 </span>
 
                 <span
@@ -465,7 +481,7 @@ function ContactForm({ headingLevel = 2 }) {
           </form>
         )}
 
-        <footer className="sib-contact-form-footer">
+        {!homeFatwa && <footer className="sib-contact-form-footer">
           <span
             className="sib-contact-form-footer-line"
             aria-hidden="true"
@@ -475,7 +491,7 @@ function ContactForm({ headingLevel = 2 }) {
             Bitte habe Verständnis dafür, dass nicht jede
             Nachricht persönlich beantwortet werden kann.
           </p>
-        </footer>
+        </footer>}
       </div>
     </section>
   );
