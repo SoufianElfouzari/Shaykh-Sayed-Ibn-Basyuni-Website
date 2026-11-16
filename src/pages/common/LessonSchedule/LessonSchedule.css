@@ -57,3 +57,48 @@
 .sib-schedule-link{transition:filter .2s ease,transform .2s ease}
 .sib-schedule-link:hover{transform:translateY(-2px)}
 @media(prefers-reduced-motion:reduce){.sib-schedule-row,.sib-schedule-link{transition:none}.sib-schedule-row:hover,.sib-schedule-link:hover{transform:none}}
+
+/* Reference fidelity: stronger hierarchy and larger, illustrated schedule rows. */
+@media (min-width: 901px) {
+.sib-schedule-panel-header{min-height:112px;padding:19px 38px;justify-content:flex-start}
+.sib-schedule-panel-heading{gap:24px}
+.sib-schedule-panel-heading>svg{width:52px;height:52px;stroke-width:2.3}
+.sib-schedule-panel-header h3{font-size:clamp(32px,3vw,45px)}
+.sib-schedule-heading-divider{height:42px;width:1px;background:#e3c885;opacity:.85;margin-left:5px}
+.sib-schedule-status{font-size:17px;padding:10px 20px}
+.sib-schedule-table{margin:-5px 18px 0}
+.sib-schedule-table-body{gap:10px}
+.sib-schedule-row{grid-template-columns:1fr 1.25fr 1.8fr;min-height:86px;gap:20px;padding:9px 17px}
+.sib-schedule-day{min-height:61px;padding:7px 20px;font-size:clamp(22px,1.85vw,29px)}
+.sib-schedule-day svg{width:35px;height:35px}
+.sib-schedule-time{font-size:clamp(16px,1.3vw,21px);gap:19px;padding-left:22px}
+.sib-schedule-time svg{width:39px;height:39px}
+.sib-schedule-subject{gap:20px;padding-left:23px}
+.sib-schedule-subject svg{width:44px;height:44px}
+.sib-schedule-subject-name strong{font-size:clamp(21px,1.9vw,29px);line-height:1.1;color:#00523c}
+.sib-schedule-subject-name>span{font-size:clamp(14px,1.18vw,19px);line-height:1.35}
+.sib-schedule-footer{padding:27px 27px 30px}
+.sib-schedule-footer p{font-size:clamp(15px,1.2vw,19px)}
+.sib-schedule-footer p svg{width:40px;height:40px}
+.sib-schedule-link{min-width:330px;min-height:66px;font-size:20px}
+}
+.sib-schedule-subject-name{display:flex;flex-direction:column;gap:2px}
+.sib-schedule-subject-name strong{color:#00523c;font-weight:850}
+.sib-schedule-heading-divider{display:block;flex:none}
+.sib-schedule-panel-heading{flex-wrap:wrap}
+.sib-schedule-footer p svg{display:block}
+@media (max-width:900px){
+.sib-schedule-panel-heading{gap:10px}
+.sib-schedule-heading-divider{height:28px;width:1px;background:#dfbc71}
+.sib-schedule-subject-name strong{font-size:17px}
+.sib-schedule-subject-name>span{font-size:13px}
+}
+@media (max-width:680px){
+.sib-schedule-heading-divider{display:none}
+.sib-schedule-panel-heading{width:100%;gap:9px}
+.sib-schedule-status{margin-left:auto}
+.sib-schedule-panel-header h3{font-size:22px}
+.sib-schedule-subject-name strong{font-size:18px}
+.sib-schedule-subject-name>span{font-size:13px}
+.sib-schedule-footer p svg{width:27px;height:27px}
+}
