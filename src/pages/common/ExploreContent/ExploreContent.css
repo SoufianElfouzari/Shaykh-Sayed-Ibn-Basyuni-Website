@@ -122,3 +122,69 @@
 @media (max-width: 400px) {
   .sib-explore { padding-left: 14px; padding-right: 14px; }
 }
+
+/* Final proportions based on the supplied reference: compact cards, readable type. */
+@media (min-width: 1051px) {
+  .sib-explore--home .sib-explore-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .sib-explore--home .sib-explore-card {
+    min-height: 104px;
+    height: 104px;
+    padding: 12px 48px 12px 14px;
+    gap: 12px;
+  }
+  .sib-explore--home .sib-explore-card-icon {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+  }
+  .sib-explore--home .sib-explore-card-icon svg { width: 30px; height: 30px; }
+  .sib-explore--home .sib-explore-card strong { font-size: 20px; }
+  .sib-explore--home .sib-explore-card-text > span { font-size: 15px; }
+  .sib-explore--home .sib-explore-card-arrow {
+    right: 12px;
+    bottom: 13px;
+    width: 30px;
+    height: 30px;
+  }
+  .sib-explore--home .sib-explore-resources {
+    max-width: 1180px;
+    width: fit-content;
+    min-height: 76px;
+    gap: 18px;
+    padding: 9px 22px;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+  .sib-explore--home .sib-explore-resources-heading {
+    width: auto;
+    gap: 12px;
+    font-size: 18px;
+  }
+  .sib-explore--home .sib-explore-resources-divider {
+    display: block;
+    height: 42px;
+  }
+  .sib-explore--home .sib-explore-resources a {
+    width: auto;
+    min-height: 49px;
+    padding: 8px 17px;
+    gap: 9px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+}
+@media (min-width: 721px) and (max-width: 1050px) {
+  .sib-explore--home .sib-explore-card { min-height: 112px; padding: 13px 42px 13px 13px; }
+  .sib-explore--home .sib-explore-card strong { font-size: 18px; }
+  .sib-explore--home .sib-explore-card-text > span { font-size: 14px; }
+}
+@media (max-width: 720px) {
+  .sib-explore--home .sib-explore-card { min-height: 98px; }
+  .sib-explore--home .sib-explore-card strong { font-size: 18px; }
+  .sib-explore--home .sib-explore-card-text > span { font-size: 14px; }
+  .sib-explore--home .sib-explore-resources { width: 100%; }
+  .sib-explore--home .sib-explore-resources a { font-size: 14px; }
+}
