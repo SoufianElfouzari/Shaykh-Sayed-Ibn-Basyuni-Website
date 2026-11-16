@@ -246,7 +246,7 @@ function LatestArticles() {
               id="sib-latest-articles-title"
               className="sib-articles-title"
             >
-              Islamische Artikel und wissenschaftliche Beiträge.
+              Islamische Artikel und <span>wissenschaftliche Beiträge.</span>
             </h2>
           </div>
 
