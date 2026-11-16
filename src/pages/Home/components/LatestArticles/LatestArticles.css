@@ -914,3 +914,28 @@
   .sib-articles-side-book svg { width: 28px; height: 28px; }
   .sib-articles-all-link.sib-home-hero-action { font-size: 12px; }
 }
+
+/* Center the mobile article introduction and its CTA. */
+@media (max-width: 720px) {
+  .sib-articles-header-side {
+    grid-template-columns: 42px minmax(0, max-content);
+    justify-content: center;
+    width: 100%;
+    max-width: 440px;
+    margin-inline: auto;
+  }
+  .sib-articles-side-content {
+    text-align: center;
+  }
+  .sib-articles-header-side p {
+    text-align: center;
+  }
+  .sib-articles-all-link.sib-home-hero-action {
+    margin: 14px auto 0;
+  }
+}
+@media (max-width: 380px) {
+  .sib-articles-header-side {
+    grid-template-columns: 35px minmax(0, 1fr);
+  }
+}
