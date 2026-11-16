@@ -298,7 +298,7 @@ function ContactForm({ headingLevel = 2 }) {
                   {homeFatwa ? "Dein Name" : "Name"} <span>*</span>
                 </label>
 
-                <div className="sib-contact-input-wrap"><ContactIcon kind="user" />
+                <div className="sib-contact-input-wrap">{homeFatwa && <ContactIcon kind="user" />}
                 <input
                   id="contact-name"
                   name="name"
@@ -318,7 +318,7 @@ function ContactForm({ headingLevel = 2 }) {
                   {homeFatwa ? "Deine E-Mail-Adresse" : "E-Mail-Adresse"} <span>*</span>
                 </label>
 
-                <div className="sib-contact-input-wrap"><ContactIcon kind="mail" />
+                <div className="sib-contact-input-wrap">{homeFatwa && <ContactIcon kind="mail" />}
                 <input
                   id="contact-email"
                   name="email"
@@ -339,7 +339,7 @@ function ContactForm({ headingLevel = 2 }) {
                 </label>
 
                 <div className="sib-contact-select-wrapper">
-                  <ContactIcon kind="layers" />
+                  {homeFatwa && <ContactIcon kind="layers" />}
                   <select
                     id="contact-subject"
                     name="subject"
@@ -398,7 +398,7 @@ function ContactForm({ headingLevel = 2 }) {
                   </span>
                 </div>
 
-                <div className="sib-contact-textarea-wrap"><ContactIcon kind="message" />
+                <div className="sib-contact-textarea-wrap">{homeFatwa && <ContactIcon kind="message" />}
                 <textarea
                   id="contact-message"
                   name="message"
