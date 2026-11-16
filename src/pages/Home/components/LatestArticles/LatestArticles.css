@@ -762,3 +762,100 @@
   .sib-articles-all-link.sib-home-hero-action { display: grid; width: min(100%, 280px); font-size: 13px; }
   .sib-articles-mosque { top: 0; left: 24%; width: 85vw; height: 185px; opacity: .12; }
 }
+
+/* Compact editorial cards based on the supplied six-card reference. */
+.sib-articles-layout {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.sib-articles-layout .sib-articles-secondary {
+  position: relative;
+  min-height: 205px;
+  padding: 17px 21px 15px;
+  border: 1px solid #e9e1d3;
+  border-radius: 17px;
+  background: linear-gradient(155deg, #fffefa 0%, #fffdf8 75%, #faf7f0 100%);
+  box-shadow: 0 3px 9px rgba(46, 46, 27, .035);
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.sib-articles-layout .sib-articles-secondary:first-child {
+  border-left: 4px solid #e5a10d;
+  padding-left: 18px;
+}
+.sib-articles-layout .sib-articles-secondary:hover {
+  transform: translateY(-3px);
+  border-color: #d6bc81;
+  box-shadow: 0 12px 26px rgba(33, 64, 48, .10);
+}
+.sib-articles-layout .sib-articles-secondary-top { gap: 8px; flex-wrap: nowrap; }
+.sib-articles-layout .sib-articles-category {
+  flex: 0 0 auto;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #fff0cf;
+  color: #385c47;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .35px;
+}
+.sib-articles-layout .sib-articles-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #4f5853;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.sib-articles-calendar-icon { color: #aa7d21; font-size: 12px; line-height: 1; }
+.sib-articles-layout .sib-articles-secondary h3 {
+  margin-top: 11px;
+  color: #063e32;
+  font-size: clamp(17px, 1.38vw, 21px);
+  font-weight: 820;
+  line-height: 1.16;
+  letter-spacing: -.65px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.sib-articles-layout .sib-articles-secondary p {
+  margin-top: 8px;
+  color: #48534d;
+  font-size: 12px;
+  line-height: 1.45;
+  -webkit-line-clamp: 2;
+}
+.sib-articles-card-footer {
+  padding-top: 13px;
+  color: #006346;
+}
+.sib-articles-read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #006346;
+  font-size: 13px;
+  font-weight: 800;
+}
+.sib-articles-read-link svg { width: 18px; height: 18px; }
+.sib-articles-card-footer .sib-articles-secondary-arrow {
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  border: 1px solid #e6dfd2;
+  background: #f7f7f0;
+  color: #006346;
+}
+.sib-articles-card-footer .sib-articles-secondary-arrow svg { width: 16px; height: 16px; }
+@media (max-width: 1050px) {
+  .sib-articles-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .sib-articles-layout { grid-template-columns: 1fr; gap: 12px; }
+  .sib-articles-layout .sib-articles-secondary { min-height: 180px; padding: 17px 18px; }
+  .sib-articles-layout .sib-articles-secondary h3 { font-size: 19px; }
+  .sib-articles-layout .sib-articles-secondary-top { flex-wrap: wrap; }
+}
