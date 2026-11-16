@@ -27,11 +27,6 @@ const navigationItems = [
     mobileLabel: "Artikel lesen",
     path: "/artikel",
   },
-  {
-    label: "Fatwa anfragen",
-    mobileLabel: "Fatwa anfragen",
-    path: "/kontakt?anliegen=fatwa",
-  },
 ];
 
 function Header() {
@@ -282,7 +277,7 @@ function Header() {
           ))}
         </nav>
 
-        <Link to="/kontakt?anliegen=fatwa#kontaktformular" className="sib-mobile-fatwa-cta" onClick={closeMenu}><span className="sib-mobile-fatwa-symbol" aria-hidden="true">?</span><span>Fatwa anfragen</span><span className="sib-mobile-fatwa-arrow" aria-hidden="true">→</span></Link>
+        <Link to="/kontakt?anliegen=fatwa#kontaktformular" className="sib-mobile-fatwa-cta" onClick={closeMenu}><span className="sib-fatwa-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" focusable="false"><path d="M20 5.7C11.8 5.7 5.2 12.1 5.2 20c0 3.2 1.1 6.2 3 8.6L6.9 34l6.1-2.5a15.3 15.3 0 0 0 7 1.7c8.2 0 14.8-6.4 14.8-14.2S28.2 5.7 20 5.7Z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/><path d="M16.4 15.4c.2-2 1.7-3.3 3.7-3.3 2.2 0 3.6 1.2 3.6 3.1 0 1.6-.9 2.4-2.4 3.4-1.2.8-1.3 1.5-1.3 2.8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/><circle cx="20" cy="26.3" r="1.4" fill="currentColor"/></svg></span><span>Fatwa anfragen</span><span className="sib-fatwa-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/></svg></span></Link>
       </aside>
     </>
   );
