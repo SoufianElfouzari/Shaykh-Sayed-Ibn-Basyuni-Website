@@ -146,8 +146,8 @@
 .sib-archive-categories{display:flex;order:1;position:static;flex-wrap:nowrap;gap:7px;max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;padding:3px 2px 9px;border:0;border-radius:0;background:transparent;box-shadow:none;-webkit-overflow-scrolling:touch}
 .sib-archive-categories.is-open{display:flex;flex-wrap:nowrap;gap:7px}
 .sib-archive-pill{flex:0 0 auto;min-height:34px;padding:6px 13px;font-size:12px;white-space:nowrap}
-.sib-archive-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:15px;padding-top:4px}
-.sib-archive-sidebar{padding:0 0 12px}
+.sib-archive-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding-top:2px}
+.sib-archive-sidebar{padding:0 0 10px;border-bottom:0}
 .sib-archive-sidebar h3{margin:0 0 9px;font-size:clamp(19px,4vw,23px)}
 .sib-archive-mobile-series-trigger{display:flex;align-items:center;gap:9px;min-height:49px;padding:7px 12px;border-radius:13px;border-width:1px;box-shadow:0 0 0 1px #fff9e6,0 0 0 2px #e6ac28,0 3px 9px #0440271f}
 .sib-archive-mobile-series-trigger .sib-archive-series-copy strong{font-size:clamp(14px,3.3vw,16px);line-height:1.15}
@@ -176,14 +176,17 @@
 .sib-archive-resume-copy span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#435047;font-size:13px}
 .sib-archive-resume button{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border:2px solid #07523c;border-radius:50%;background:#fffefa;color:#07523c;cursor:pointer}
 .sib-archive-resume button svg{width:24px;height:24px}
-.sib-archive-mobile-lessons-header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 12px}
+.sib-archive-mobile-lessons-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 0 10px;margin-top:2px}
+.sib-archive-mobile-lessons-tools{display:flex;align-items:center;gap:9px;min-width:0}
+.sib-archive-mobile-lessons-tools .sib-archive-sort{flex:0 0 35px;width:35px;height:35px;min-height:35px;border-radius:11px}
+.sib-archive-mobile-lessons-tools .sib-archive-sort svg{width:20px;height:20px}
 .sib-archive-mobile-lessons-header h3{margin:0;color:#054630;font-size:clamp(24px,5vw,32px);font-weight:850}
-.sib-archive-mobile-lessons-header span{color:#49564d;font-size:14px;white-space:nowrap}
-.sib-archive-recording{display:grid;grid-template-columns:42px 28px minmax(0,1fr) 75px;gap:9px;align-items:center;min-height:77px;padding:12px 3px;border-radius:0}
+.sib-archive-mobile-lessons-header span{color:#49564d;font-size:12px;white-space:nowrap}
+.sib-archive-recording{display:grid;grid-template-columns:40px 22px minmax(0,1fr) 72px;gap:7px;align-items:center;min-height:72px;padding:11px 2px;border-radius:0}
 .sib-archive-recording.is-active{margin:0 -3px;padding:12px 6px;border-radius:16px}
 .sib-archive-play{width:41px;height:41px;flex-basis:auto}
 .sib-archive-number{font-size:15px;text-align:center}
-.sib-archive-recording-info h4{font-size:clamp(15px,3.4vw,20px);line-height:1.2}
+.sib-archive-recording-info h4{font-size:clamp(14px,3.4vw,18px);line-height:1.24}
 .sib-archive-recording-info>span{font-size:clamp(11px,2.65vw,14px)}
 .sib-archive-recording-actions{gap:1px}
 .sib-archive-info,.sib-archive-download{width:35px;height:39px;flex-basis:35px;padding:6px}
