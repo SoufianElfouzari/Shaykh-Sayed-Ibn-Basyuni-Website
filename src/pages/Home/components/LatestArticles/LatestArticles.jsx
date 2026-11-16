@@ -11,6 +11,7 @@ import {
 } from "../../../../supabase/articleService";
 import { useSsrData } from "../../../../SsrDataContext";
 
+import BookIcon from "../../../common/BookIcon.jsx";
 import "./LatestArticles.css";
 
 function ArrowIcon() {
@@ -235,6 +236,7 @@ function LatestArticles() {
       className="sib-articles"
       aria-labelledby="sib-latest-articles-title"
     >
+      <div className="sib-articles-mosque" aria-hidden="true" />
       <div className="sib-articles-container">
         <header className="sib-articles-header">
           <div className="sib-articles-heading">
@@ -251,19 +253,20 @@ function LatestArticles() {
           </div>
 
           <div className="sib-articles-header-side">
-            <p>
-              Ausgewählte Artikel, wissenschaftliche
-              Beiträge und schriftliche Hinweise des
-              Shaykh.
-            </p>
-
-            <Link
-              to="/artikel"
-              className="sib-articles-all-link"
-            >
-              <span>Alle Artikel ansehen</span>
-              <ArrowIcon />
-            </Link>
+            <span className="sib-articles-side-divider" aria-hidden="true" />
+            <span className="sib-articles-side-book" aria-hidden="true">
+              <BookIcon />
+            </span>
+            <div className="sib-articles-side-content">
+              <p>
+                Ausgewählte Artikel, wissenschaftliche Beiträge
+                und schriftliche Fatwas des Shaykh.
+              </p>
+              <Link to="/artikel" className="sib-articles-all-link sib-home-hero-action sib-home-hero-action-primary">
+                <span className="sib-home-hero-action-label">Alle Artikel ansehen</span>
+                <span className="sib-home-hero-action-arrow" aria-hidden="true"><ArrowIcon /></span>
+              </Link>
+            </div>
           </div>
         </header>
 
