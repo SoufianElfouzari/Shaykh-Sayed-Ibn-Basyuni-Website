@@ -1307,3 +1307,354 @@
 .sib-archive-player-close svg{width:20px;height:20px}
 @media(max-width:950px){.sib-archive-toolbar{align-items:stretch;flex-direction:column}.sib-archive-search{flex:auto;width:100%}.sib-archive-layout{grid-template-columns:1fr;gap:23px}.sib-archive-sidebar{padding-right:0;border-right:0}.sib-archive-series-nav{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px}.sib-archive-series-button{flex:0 0 min(260px,75vw)}.sib-archive-sidebar h3{margin-bottom:12px}}
 @media(max-width:600px){.sib-duruus-redesign{padding:55px 5% 75px}.sib-archive-heading{font-size:clamp(35px,9vw,54px)}.sib-archive-pill{font-size:14px;padding:9px 15px;min-height:41px}.sib-archive-pill.is-active{padding:7px 13px}.sib-archive-recording{gap:10px;padding:13px 5px}.sib-archive-play{width:36px;height:36px;flex-basis:36px}.sib-archive-number{font-size:13px}.sib-archive-recording-info h4{font-size:14px}.sib-archive-player{padding:13px;gap:9px;flex-wrap:wrap;border-radius:17px}.sib-archive-player-controls{flex-basis:calc(100% - 80px)}.sib-archive-player-timeline{gap:5px;font-size:11px}.sib-archive-player-timeline button{padding:5px}.sib-archive-rate{margin-left:auto}}
+
+
+/* Recording details: full row opens a separate, accessible information dialog. */
+.sib-duruus-redesign .sib-archive-recording {
+  position: relative;
+  isolation: isolate;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+.sib-duruus-redesign .sib-archive-recording:hover {
+  background-color: rgba(235, 239, 225, .7);
+}
+.sib-duruus-redesign .sib-archive-recording.is-active {
+  background: linear-gradient(90deg, #e7eedf, #e9ecdf);
+}
+.sib-archive-recording-open {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+.sib-archive-recording-open:focus-visible {
+  outline: 3px solid #d8a129;
+  outline-offset: -3px;
+}
+.sib-archive-recording .sib-archive-play,
+.sib-archive-recording .sib-archive-recording-actions {
+  position: relative;
+  z-index: 2;
+}
+.sib-archive-recording-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+}
+.sib-archive-info,
+.sib-archive-download {
+  display: inline-grid;
+  place-items: center;
+  width: 41px;
+  height: 41px;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: #8b670e;
+  cursor: pointer;
+  transition: color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+.sib-archive-info svg,
+.sib-archive-download svg {
+  width: 23px;
+  height: 23px;
+}
+.sib-archive-info:hover,
+.sib-archive-download:hover {
+  color: #07533d;
+  background: #e7ecdf;
+  transform: translateY(-1px);
+}
+.sib-archive-info:focus-visible,
+.sib-archive-download:focus-visible {
+  outline: 3px solid #d8a129;
+  outline-offset: 2px;
+}
+
+/* Detail dialog is portaled to the document root, outside archive clipping. */
+.sib-archive-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 36px);
+  overflow-y: auto;
+  background: rgba(4, 24, 16, .65);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  animation: sibArchiveBackdropIn 220ms ease both;
+}
+.sib-archive-modal {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: min(100%, 780px);
+  max-height: min(92dvh, 910px);
+  margin: auto;
+  overflow: hidden;
+  border: 1px solid rgba(212, 166, 73, .55);
+  border-radius: clamp(20px, 2.6vw, 30px);
+  background:
+    radial-gradient(ellipse 80% 40% at 55% 0%, #fffef9, transparent),
+    linear-gradient(165deg, #fffefa, #f8f4eb);
+  color: #183327;
+  box-shadow: 0 30px 85px rgba(0, 26, 17, .34), inset 0 1px 0 #fff;
+  animation: sibArchiveModalIn 280ms cubic-bezier(.22, 1, .36, 1) both;
+}
+.sib-archive-modal-top {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 22px clamp(22px, 4vw, 42px) 0;
+}
+.sib-archive-modal-eyebrow {
+  margin: 0;
+  color: #956f15;
+  font-family: var(--sib-font-main, Inter, sans-serif);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+.sib-archive-modal-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #e2dfd5;
+  border-radius: 50%;
+  background: #fffefa;
+  color: #114935;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.sib-archive-modal-close:hover {
+  background: #e9efe6;
+  transform: rotate(90deg);
+}
+.sib-archive-modal-close svg { width: 21px; height: 21px; }
+.sib-archive-modal-content {
+  min-height: 0;
+  padding: 8px clamp(22px, 4vw, 42px) 30px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.sib-archive-modal-series {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 8px;
+  color: #a07a22;
+  font-size: 13px;
+  font-weight: 750;
+}
+.sib-archive-modal-series::before {
+  content: "";
+  width: 20px;
+  height: 2px;
+  border-radius: 99px;
+  background: #d8a129;
+}
+.sib-archive-modal-content h3 {
+  margin: 0;
+  font-family: var(--sib-font-main, Inter, sans-serif);
+  font-size: clamp(28px, 4vw, 49px);
+  font-weight: 850;
+  line-height: 1.12;
+  letter-spacing: -.047em;
+  color: #083b2a;
+  background: linear-gradient(165deg, #173b2d, #005b40 67%, #11835b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  overflow-wrap: anywhere;
+}
+.sib-archive-modal-lesson {
+  margin: 11px 0 0;
+  color: #606960;
+  font-size: 14px;
+  font-weight: 600;
+}
+.sib-archive-modal-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 10px;
+  margin-top: 25px;
+}
+.sib-archive-modal-meta > span {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  padding: 14px 17px;
+  border: 1px solid #e9e2d1;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, .72);
+  color: #123b2b;
+  font-size: 13px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.sib-archive-modal-meta strong {
+  color: #807866;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .075em;
+  text-transform: uppercase;
+}
+.sib-archive-modal-description {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #dfcead;
+}
+.sib-archive-modal-description > h4 {
+  margin: 0 0 15px;
+  color: #0a4631;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+.sib-archive-modal-prose {
+  color: #343e36;
+  font-family: var(--sib-font-main, Inter, sans-serif);
+  font-size: 15px;
+  font-weight: 450;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.sib-archive-modal-prose p,
+.sib-archive-modal-prose ul,
+.sib-archive-modal-prose ol {
+  margin: 0 0 17px;
+}
+.sib-archive-modal-prose p:last-child,
+.sib-archive-modal-prose ul:last-child,
+.sib-archive-modal-prose ol:last-child {
+  margin-bottom: 0;
+}
+.sib-archive-modal-prose h4 {
+  margin: 19px 0 7px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #0a4631;
+}
+.sib-archive-modal-prose strong { color: #0b3d2a; font-weight: 750; }
+.sib-archive-modal-prose ul,
+.sib-archive-modal-prose ol { padding-left: 23px; }
+.sib-archive-modal-prose li { padding-left: 3px; margin-bottom: 7px; }
+.sib-archive-modal-prose li::marker { color: #ac8126; }
+.sib-archive-modal-no-description {
+  color: #667168;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.sib-archive-modal-footer {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 12px;
+  padding: 20px clamp(22px, 4vw, 42px) 24px;
+  border-top: 1px solid #e7dec9;
+  background: rgba(255, 253, 247, .94);
+}
+.sib-archive-modal-listen,
+.sib-archive-modal-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 49px;
+  padding: 11px 22px;
+  border: 2px solid #cca03e;
+  border-radius: 999px;
+  font-family: var(--sib-font-main, Inter, sans-serif);
+  font-size: 14px;
+  font-weight: 780;
+  cursor: pointer;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.sib-archive-modal-listen {
+  background: radial-gradient(ellipse at 35% 0%, #148d63, transparent 70%), linear-gradient(135deg, #075d43, #003f2e);
+  color: #fff;
+  box-shadow: 0 6px 13px rgba(0, 67, 42, .15);
+}
+.sib-archive-modal-download {
+  border-color: #cfc5aa;
+  background: #fffefa;
+  color: #0b4834;
+}
+.sib-archive-modal-listen svg,
+.sib-archive-modal-download svg { width: 21px; height: 21px; }
+.sib-archive-modal-listen:hover,
+.sib-archive-modal-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 50, 30, .14);
+}
+.sib-archive-modal-listen:disabled,
+.sib-archive-modal-download:disabled { opacity: .55; cursor: wait; }
+.sib-archive-modal-close:focus-visible,
+.sib-archive-modal-listen:focus-visible,
+.sib-archive-modal-download:focus-visible {
+  outline: 3px solid #e6a92a;
+  outline-offset: 3px;
+}
+.sib-archive-modal-audio-error {
+  margin: 0;
+  padding: 0 42px 18px;
+  color: #933b2e;
+  font-size: 13px;
+}
+@keyframes sibArchiveBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes sibArchiveModalIn {
+  from { opacity: 0; transform: translateY(18px) scale(.975); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 600px) {
+  .sib-archive-recording-actions { gap: 0; }
+  .sib-archive-info,
+  .sib-archive-download { width: 35px; height: 38px; padding: 7px; }
+  .sib-archive-info svg,
+  .sib-archive-download svg { width: 21px; height: 21px; }
+  .sib-archive-modal-backdrop { padding: 10px; align-items: flex-end; }
+  .sib-archive-modal {
+    max-height: min(91dvh, 860px);
+    width: 100%;
+    margin: auto 0 0;
+    border-radius: 24px 24px 18px 18px;
+  }
+  .sib-archive-modal-top { padding: 18px 21px 0; }
+  .sib-archive-modal-content { padding: 10px 21px 23px; }
+  .sib-archive-modal-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 20px; }
+  .sib-archive-modal-meta > span { padding: 11px 12px; font-size: 12px; }
+  .sib-archive-modal-footer { padding: 15px 19px 20px; }
+  .sib-archive-modal-listen,
+  .sib-archive-modal-download { flex: 1; padding-inline: 10px; font-size: 12px; }
+  .sib-archive-modal-audio-error { padding-inline: 19px; }
+}
+@media (max-width: 370px) {
+  .sib-archive-modal-footer { flex-direction: column; align-items: stretch; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sib-archive-modal-backdrop,
+  .sib-archive-modal,
+  .sib-archive-info,
+  .sib-archive-modal-close,
+  .sib-archive-modal-listen,
+  .sib-archive-modal-download { animation: none; transition: none; }
+}
