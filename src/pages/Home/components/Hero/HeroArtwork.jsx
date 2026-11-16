@@ -1,15 +1,3 @@
-function MosqueSkyline() {
-  return (
-    <g fill="#C6B386" opacity=".46">
-      <path d="M0 745h368v80H0z" />
-      <path d="M55 746v-51h8v-38h7v-10h7v10h7v38h8v51zM150 746v-35h12v-67h8v-21h6v-16h4v16h6v21h8v67h12v35z" />
-      <path d="M98 747v-58c0-40 27-68 61-90 36 22 61 50 61 90v58z" />
-      <path d="M158 595v-23m-6 4q-11-7-4-18m-3 8q8 10 17-1" fill="none" stroke="#C6B386" strokeWidth="3" strokeLinecap="round" />
-      <path d="M225 745v-65h8v-25h5v-16h4v16h5v25h8v65zM280 745v-40h6v-20h4v-10h4v10h4v20h7v40zM315 745v-18q22-43 44 0v18z" />
-    </g>
-  );
-}
-
 export function HeroBackdrop() {
   return (
     <svg className="sib-home-hero-artwork" viewBox="0 0 1600 850" preserveAspectRatio="xMidYMid slice" role="presentation" focusable="false" aria-hidden="true">
@@ -34,16 +22,9 @@ export function HeroBackdrop() {
       </defs>
       <circle cx="800" cy="396" r="580" stroke="#C69E54" strokeOpacity=".21" fill="none" />
       <circle cx="800" cy="396" r="435" stroke="#C69E54" strokeOpacity=".12" fill="none" />
-      <MosqueSkyline />
       <path d="M0 663q90-63 167-17t143 90q-77 10-154 45H0z" fill="url(#sib-art-cloud)" opacity=".72" />
       <path d="M1300 674q94-69 166-19t134 75v110h-300z" fill="url(#sib-art-cloud)" opacity=".68" />
       <path d="M0 740C130 748 230 831 390 842c185 17 286 3 410-19 183 36 339 32 479-34 113-53 220-55 321-26v87H0z" fill="#F6F3ED" opacity=".9" />
-      <path d="M0 738C130 763 233 832 389 850H0z" fill="url(#sib-art-green)" />
-      <path d="M0 738C130 763 233 832 389 850" stroke="url(#sib-art-gold)" strokeWidth="6" fill="none" />
-      <path d="M0 749C120 777 234 843 363 850H0z" fill="url(#sib-art-geom)" opacity=".9" />
-      <path d="M1600 658C1558 718 1540 730 1492 745c-40-20-90-19-132 7-90 53-135 84-202 98h442z" fill="url(#sib-art-green)" />
-      <path d="M1600 658C1558 718 1540 730 1492 745c-40-20-90-19-132 7-90 53-135 84-202 98" stroke="url(#sib-art-gold)" strokeWidth="6" fill="none" />
-      <path d="M1600 679c-30 42-61 60-111 83-40-19-82-15-114 5l-77 83h302z" fill="url(#sib-art-geom)" opacity=".86" />
     </svg>
   );
 }
