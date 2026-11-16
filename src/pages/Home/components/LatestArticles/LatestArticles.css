@@ -660,3 +660,105 @@
   .sib-articles-label { font-size: 11px; }
   .sib-articles-title span::after { height: 3px; margin-top: 10px; }
 }
+
+/* Article introduction: mosque artwork and shared hero button design. */
+.sib-articles {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 85% 62% at 48% 0%, #fffefa 0%, #fbf9f3 62%, transparent 100%),
+    #f9f6ef;
+}
+.sib-articles-mosque {
+  position: absolute;
+  z-index: -1;
+  top: 12px;
+  left: 37%;
+  width: min(44vw, 650px);
+  height: 245px;
+  background: url("/assets/masjid-texture.png") center bottom / contain no-repeat;
+  opacity: .27;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 26%, #000 73%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 26%, #000 73%, transparent 100%);
+}
+.sib-articles-container { position: relative; z-index: 1; }
+.sib-articles-header {
+  grid-template-columns: minmax(0, 1.55fr) minmax(380px, .9fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 70px);
+}
+.sib-articles-header-side {
+  display: grid;
+  grid-template-columns: 2px 64px minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+  padding: 0 0 0 4px;
+}
+.sib-articles-side-divider {
+  display: block;
+  width: 2px;
+  height: 108px;
+  background: linear-gradient(#c18b19, #eacb80);
+}
+.sib-articles-side-book {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: rgba(255, 248, 231, .7);
+  box-shadow: 0 8px 22px rgba(128, 91, 21, .07);
+}
+.sib-articles-side-book svg { width: 43px; height: 43px; }
+.sib-articles-header-side p {
+  max-width: 350px;
+  color: #2c3632;
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 500;
+}
+.sib-articles-all-link.sib-home-hero-action {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px;
+  flex: none;
+  width: min(100%, 280px);
+  max-width: 280px;
+  min-height: 54px;
+  margin-top: 17px;
+  padding: 7px 13px 7px 20px;
+  gap: 8px;
+  border-width: 2px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 750;
+  color: #fffef9;
+  white-space: nowrap;
+}
+.sib-articles-all-link.sib-home-hero-action .sib-home-hero-action-label {
+  padding: 0;
+  min-height: 28px;
+  border: 0;
+}
+.sib-articles-all-link.sib-home-hero-action .sib-home-hero-action-arrow {
+  height: 28px;
+  border-left: 1px solid rgba(244, 226, 158, .24);
+}
+.sib-articles-all-link.sib-home-hero-action .sib-home-hero-action-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+@media (max-width: 1100px) {
+  .sib-articles-header { grid-template-columns: 1fr; gap: 26px; }
+  .sib-articles-mosque { left: 42%; width: 56vw; opacity: .18; }
+}
+@media (max-width: 720px) {
+  .sib-articles-header-side { grid-template-columns: 2px 46px minmax(0, 1fr); gap: 13px; }
+  .sib-articles-side-divider { height: 100%; min-height: 94px; }
+  .sib-articles-side-book { width: 46px; height: 46px; border-radius: 13px; }
+  .sib-articles-side-book svg { width: 34px; height: 34px; }
+  .sib-articles-header-side p { font-size: 13px; }
+  .sib-articles-all-link.sib-home-hero-action { display: grid; width: min(100%, 280px); font-size: 13px; }
+  .sib-articles-mosque { top: 0; left: 24%; width: 85vw; height: 185px; opacity: .12; }
+}
