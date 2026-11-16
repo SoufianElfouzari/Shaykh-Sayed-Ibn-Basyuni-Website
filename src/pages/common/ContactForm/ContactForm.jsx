@@ -76,7 +76,8 @@ const fatwaBenefits = [
 ];
 function ContactForm({ headingLevel = 2 }) {
   const HeadingTag = headingLevel === 1 ? "h1" : "h2";
-  const homeFatwa = headingLevel !== 1;
+  // The same Fatwa design is used on the homepage and the dedicated contact page.
+  const homeFatwa = true;
   const location = useLocation();
   const isFatwaRequest = new URLSearchParams(location.search).get("anliegen") === "fatwa";
   const sectionRef = useRef(null);
