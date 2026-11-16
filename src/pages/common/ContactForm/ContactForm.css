@@ -1178,3 +1178,263 @@
     transform: none;
   }
 }
+/* Homepage Fatwa area: same two-column hierarchy as the supplied design. */
+.sib-contact-form--home-fatwa {
+  padding: 65px 5% 105px;
+  background: radial-gradient(ellipse at 60% 15%, #fffefa, #faf7f0 85%);
+}
+.sib-contact-form--home-fatwa .sib-contact-form-decoration::before,
+.sib-contact-form--home-fatwa .sib-contact-form-decoration-circle,
+.sib-contact-form--home-fatwa .sib-contact-form-decoration-line,
+.sib-contact-form--home-fatwa .sib-contact-form-decoration-dot { display: none; }
+.sib-contact-form--home-fatwa .sib-contact-form-container {
+  max-width: var(--sib-container-width, 1460px);
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr);
+  gap: clamp(25px, 3.5vw, 65px);
+  align-items: start;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-mosque {
+  position: absolute;
+  left: -5%;
+  bottom: -90px;
+  width: min(44vw, 580px);
+  height: 240px;
+  background: url("/assets/masjid-texture.png") left bottom / contain no-repeat;
+  opacity: .38;
+  pointer-events: none;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-header {
+  max-width: none;
+  padding: 0;
+  border: 0;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-label-row { gap: 12px; }
+.sib-contact-form--home-fatwa .sib-contact-form-label-line {
+  width: 6px;
+  height: 29px;
+  flex-basis: 6px;
+  border-radius: 9px;
+  background: #f0b82f;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-label {
+  color: #123a33;
+  font-size: 13px;
+  letter-spacing: 1.7px;
+  font-weight: 850;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-title {
+  max-width: 600px;
+  margin-top: 25px;
+  color: #0b3028;
+  font-size: clamp(38px, 4.3vw, 66px);
+  line-height: 1.05;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-title span {
+  position: relative;
+  width: fit-content;
+  padding-bottom: 10px;
+  color: #078965;
+  font-weight: 850;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-title span::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  border-radius: 50%;
+  background: #eeb536;
+  transform: rotate(-1.5deg);
+}
+.sib-contact-form--home-fatwa .sib-contact-form-description {
+  max-width: 590px;
+  margin-top: 24px;
+  color: #344857;
+  font-size: clamp(16px, 1.25vw, 19px);
+  line-height: 1.55;
+}
+.sib-contact-benefits { display: grid; gap: 18px; margin-top: 26px; }
+.sib-contact-benefit { display: flex; align-items: center; gap: 20px; }
+.sib-contact-benefit-icon {
+  width: 78px;
+  height: 70px;
+  flex: 0 0 78px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: #f8f2e6;
+  color: #00674b;
+  box-shadow: 0 7px 14px #5b4b2212;
+}
+.sib-contact-benefit-icon svg { width: 42px; height: 42px; stroke-width: 1.8; }
+.sib-contact-benefit-copy {
+  display: grid;
+  gap: 3px;
+  padding-left: 22px;
+  border-left: 2px solid #e5b53e;
+}
+.sib-contact-benefit-copy strong {
+  color: #0c4636;
+  font-size: clamp(18px, 1.5vw, 23px);
+  line-height: 1.2;
+  font-weight: 850;
+}
+.sib-contact-benefit-copy > span { color: #2f4753; font-size: clamp(13px, 1.15vw, 17px); line-height: 1.45; }
+.sib-contact-form--home-fatwa .sib-contact-form-panel {
+  margin: 0;
+  padding: clamp(22px, 2.5vw, 36px);
+  border: 1px solid #e9dfd1;
+  border-radius: 28px;
+  background: #fffdfaf2;
+  box-shadow: 0 13px 32px #4034230c;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-panel-header {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  padding: 0 0 24px;
+  border: 0;
+}
+.sib-contact-panel-icon {
+  width: 60px;
+  height: 60px;
+  flex: 0 0 60px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  color: #fff;
+  background: linear-gradient(145deg,#078762,#004d38);
+  box-shadow: 0 7px 15px #04543920;
+}
+.sib-contact-panel-icon svg { width: 34px; height: 34px; }
+.sib-contact-form--home-fatwa .sib-contact-form-panel-header h2 {
+  font-size: clamp(25px, 2.3vw, 35px);
+  line-height: 1.16;
+  font-weight: 850;
+  letter-spacing: -.04em;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-panel-subtitle {
+  color: #344857;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.sib-contact-form--home-fatwa .sib-contact-form-fields {
+  padding: 0;
+  gap: 20px 24px;
+}
+.sib-contact-form--home-fatwa .sib-contact-field label {
+  margin-bottom: 8px;
+  color: #103c31;
+  font-size: 15px;
+  font-weight: 800;
+}
+.sib-contact-form--home-fatwa .sib-contact-field label > span { color: #d55d20; }
+.sib-contact-input-wrap, .sib-contact-textarea-wrap { position: relative; }
+.sib-contact-input-wrap > svg,
+.sib-contact-textarea-wrap > svg,
+.sib-contact-select-wrapper > svg {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  color: #005941;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.sib-contact-textarea-wrap > svg { top: 19px; transform: none; }
+.sib-contact-form--home-fatwa .sib-contact-field input,
+.sib-contact-form--home-fatwa .sib-contact-field select,
+.sib-contact-form--home-fatwa .sib-contact-field textarea {
+  border-radius: 15px;
+  border: 1px solid #ded9d0;
+  background: #fffdf9;
+  font-size: 14px;
+  box-shadow: inset 0 1px 2px #4c41300a;
+}
+.sib-contact-form--home-fatwa .sib-contact-field input,
+.sib-contact-form--home-fatwa .sib-contact-field select { height: 49px; padding-left: 48px; }
+.sib-contact-form--home-fatwa .sib-contact-field textarea {
+  min-height: 126px;
+  padding: 17px 16px 17px 48px;
+  line-height: 1.55;
+}
+.sib-contact-form--home-fatwa .sib-contact-textarea-heading > span { font-size: 10px; }
+.sib-contact-form--home-fatwa .sib-contact-form-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  padding: 14px 0 0;
+  border: none;
+}
+.sib-contact-form--home-fatwa .sib-contact-privacy { max-width: 100%; }
+.sib-contact-form--home-fatwa .sib-contact-privacy-text { font-size: 11px; line-height: 1.45; }
+.sib-contact-notice {
+  display: flex;
+  gap: 15px;
+  margin-top: 22px;
+  padding: 15px 17px;
+  background: #eaf3e7;
+  border: 1px solid #dce9d9;
+  border-radius: 17px;
+}
+.sib-contact-notice > svg { width: 28px; height: 28px; flex: 0 0 28px; color: #006145; }
+.sib-contact-notice p { display: grid; gap: 4px; margin: 0; color: #223e42; font-size: 12px; line-height: 1.45; }
+.sib-contact-notice strong { color: #073f32; font-size: 15px; font-weight: 850; }
+.sib-contact-form--home-fatwa .sib-contact-submit {
+  width: 100%;
+  min-height: 61px;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px 20px;
+  border: 3px solid #eeb735;
+  border-radius: 999px;
+  background: linear-gradient(150deg,#068761,#004a37);
+  box-shadow: 0 0 0 3px #fff6df, 0 9px 21px #064b3621;
+  font-size: 19px;
+  font-weight: 850;
+}
+.sib-contact-form--home-fatwa .sib-contact-submit-icon {
+  order: -1;
+  width: 29px;
+  height: 29px;
+  flex-basis: 29px;
+  background: none;
+}
+.sib-contact-form--home-fatwa .sib-contact-submit-icon svg { width: 29px; height: 29px; }
+.sib-contact-form--home-fatwa .sib-contact-submit:hover:not(:disabled) { background: #005a42; }
+@media (max-width: 1020px) {
+  .sib-contact-form--home-fatwa .sib-contact-form-container { grid-template-columns: 1fr; max-width: 760px; }
+  .sib-contact-form--home-fatwa .sib-contact-form-header { padding-bottom: 5px; }
+  .sib-contact-form--home-fatwa .sib-contact-form-mosque { right: 0; left: auto; bottom: auto; top: 110px; opacity: .12; }
+}
+@media (max-width: 650px) {
+  .sib-contact-form--home-fatwa { padding: 50px 20px 70px; }
+  .sib-contact-form--home-fatwa .sib-contact-form-container { gap: 28px; }
+  .sib-contact-form--home-fatwa .sib-contact-form-title { font-size: clamp(34px, 8.2vw, 48px); }
+  .sib-contact-form--home-fatwa .sib-contact-form-description { font-size: 15px; }
+  .sib-contact-benefits { gap: 12px; }
+  .sib-contact-benefit { gap: 12px; }
+  .sib-contact-benefit-icon { width: 51px; height: 51px; flex-basis: 51px; border-radius: 13px; }
+  .sib-contact-benefit-icon svg { width: 30px; height: 30px; }
+  .sib-contact-benefit-copy { padding-left: 12px; }
+  .sib-contact-benefit-copy strong { font-size: 16px; }
+  .sib-contact-benefit-copy > span { font-size: 12px; }
+  .sib-contact-form--home-fatwa .sib-contact-form-panel { padding: 20px 16px; border-radius: 21px; }
+  .sib-contact-form--home-fatwa .sib-contact-form-panel-header { flex-direction: row; gap: 12px; padding-bottom: 20px; }
+  .sib-contact-panel-icon { width: 47px; height: 47px; flex-basis: 47px; border-radius: 13px; }
+  .sib-contact-panel-icon svg { width: 26px; height: 26px; }
+  .sib-contact-form--home-fatwa .sib-contact-form-panel-header h2 { font-size: 23px; }
+  .sib-contact-form--home-fatwa .sib-contact-form-panel-subtitle { font-size: 12px; }
+  .sib-contact-form--home-fatwa .sib-contact-form-fields { gap: 17px; }
+  .sib-contact-form--home-fatwa .sib-contact-submit { font-size: 16px; min-height: 56px; }
+}
+@media (max-width: 430px) {
+  .sib-contact-form--home-fatwa { padding-left: 14px; padding-right: 14px; }
+}
