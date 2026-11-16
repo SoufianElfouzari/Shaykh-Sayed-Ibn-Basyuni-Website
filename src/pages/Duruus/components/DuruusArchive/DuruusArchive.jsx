@@ -407,9 +407,13 @@ function DuruusArchive() {
   ] = useState("");
 
   useEffect(() => {
-    setProgressMap(readLocalSetting("sib-duruus-progress-v1", {}));
-    const storedBookmarks = readLocalSetting("sib-duruus-bookmarks-v1", []);
-    setBookmarks(Array.isArray(storedBookmarks) ? storedBookmarks : []);
+    // Read browser-only preferences after hydration, preserving SSR markup.
+    const frame = window.requestAnimationFrame(() => {
+      setProgressMap(readLocalSetting("sib-duruus-progress-v1", {}));
+      const storedBookmarks = readLocalSetting("sib-duruus-bookmarks-v1", []);
+      setBookmarks(Array.isArray(storedBookmarks) ? storedBookmarks : []);
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   const rememberProgress = (recordingId, position, duration, complete = false) => {
