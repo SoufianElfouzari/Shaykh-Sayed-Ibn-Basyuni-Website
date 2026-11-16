@@ -1658,3 +1658,53 @@
   .sib-archive-modal-listen,
   .sib-archive-modal-download { animation: none; transition: none; }
 }
+
+.sib-archive-modal-playback {
+  display: grid;
+  gap: 12px;
+  flex: 0 0 auto;
+  padding: 15px clamp(22px, 4vw, 42px);
+  border-top: 1px solid #e9dfcb;
+  background: #f3f1e9;
+}
+.sib-archive-modal-playback-progress {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: #28503c;
+}
+.sib-archive-modal-playback-progress input {
+  flex: 1;
+  min-width: 0;
+  accent-color: #05714e;
+  cursor: pointer;
+}
+.sib-archive-modal-playback-tools {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.sib-archive-modal-playback-tools button {
+  padding: 7px 11px;
+  border: 1px solid #cfbea0;
+  border-radius: 999px;
+  background: #fffefa;
+  color: #12523c;
+  font-family: var(--sib-font-main, Inter, sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sib-archive-modal-playback-tools button:hover { background: #e5eddf; }
+.sib-archive-modal-playback-tools button:focus-visible {
+  outline: 3px solid #e6a92a;
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  .sib-archive-modal-playback { padding: 13px 19px; }
+  .sib-archive-modal-playback-progress { gap: 8px; }
+  .sib-archive-modal-playback-tools { justify-content: center; }
+}
