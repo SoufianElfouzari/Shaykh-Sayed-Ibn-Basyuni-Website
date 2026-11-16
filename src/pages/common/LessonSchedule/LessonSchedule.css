@@ -469,39 +469,23 @@
     transition: none;
   }
 }
-/* Homepage: continue the Shaykh section's green wave into the lesson schedule.
-   The wave remains in AboutShaykh; the schedule provides its matching continuation. */
+/* The Shaykh section owns the single decorative wave.
+   Keep the schedule content clear and use a short, unobtrusive color handoff. */
 .home > main > .sib-schedule {
   position: relative;
-  isolation: isolate;
-  margin-top: -1px;
-  padding-top: 105px;
-  background: linear-gradient(180deg, #00543d 0, #00543d 125px, #f9f6ef 310px, #fffefa 470px);
-  overflow: hidden;
+  margin-top: 0;
+  padding-top: 80px;
+  background: #fffefa;
+  overflow: visible;
 }
 .home > main > .sib-schedule::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  left: -8%;
-  width: 116%;
-  height: 175px;
-  background: #00543d;
-  border-bottom: 5px solid #e7b64b;
-  border-radius: 0 0 50% 50% / 0 0 90% 90%;
-  pointer-events: none;
+  content: none;
 }
 .home > main > .sib-schedule-container {
   position: relative;
-  z-index: 1;
-  padding-top: 120px;
+  padding-top: 0;
 }
 @media (max-width: 760px) {
-  .home > main > .sib-schedule {
-    padding-top: 65px;
-    background: linear-gradient(180deg, #00543d 0, #00543d 80px, #f9f6ef 220px, #fffefa 340px);
-  }
-  .home > main > .sib-schedule::before { height: 110px; }
-  .home > main > .sib-schedule-container { padding-top: 95px; }
+  .home > main > .sib-schedule { padding-top: 60px; }
+  .home > main > .sib-schedule-container { padding-top: 0; }
 }
