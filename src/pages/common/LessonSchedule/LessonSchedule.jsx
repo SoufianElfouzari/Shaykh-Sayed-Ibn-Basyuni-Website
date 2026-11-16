@@ -67,7 +67,8 @@ function LessonSchedule() {
   }, [hasServerLessons]);
 
   return (
-    <section className="sib-schedule">\n      <div className="sib-schedule-mosque" aria-hidden="true" />
+    <section className="sib-schedule">
+      <div className="sib-schedule-mosque" aria-hidden="true" />
       <div className="sib-schedule-container">
         <header className="sib-schedule-header">
           <div>
@@ -123,15 +124,13 @@ function LessonSchedule() {
                   className="sib-schedule-row"
                 >
                   <div className="sib-schedule-day">
-                    <span
-                      className="sib-schedule-row-dot"
-                      aria-hidden="true"
-                    ></span>
+                    <CalendarIcon />
 
                     <span>{lesson.day}</span>
                   </div>
 
-                  <div className="sib-schedule-time">\n                    <ClockIcon />
+                  <div className="sib-schedule-time">
+                    <ClockIcon />
                     <span className="sib-schedule-mobile-label">
                       Uhrzeit
                     </span>
@@ -139,7 +138,8 @@ function LessonSchedule() {
                     <span>{lesson.time}</span>
                   </div>
 
-                  <div className="sib-schedule-subject">\n                    <BookIcon />
+                  <div className="sib-schedule-subject">
+                    <BookIcon />
                     <span className="sib-schedule-mobile-label">
                       Unterricht
                     </span>
