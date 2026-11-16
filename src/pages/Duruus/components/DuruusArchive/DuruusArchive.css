@@ -1,1017 +1,218 @@
-/* Shared audio-archive structure. Legacy list and player styles were retired
-   when the compact series explorer and recording dialog replaced that layout. */
-.sib-duruus-archive {
-  position: relative;
-  width: 100%;
-}
-.sib-duruus-archive-container {
-  width: 100%;
-  margin: 0 auto;
-}
-
-/* Audio library redesign: shares the home hero's deep-green gradient typography. */
-.sib-duruus-redesign{padding:clamp(65px,7vw,108px) 4% 95px;background:radial-gradient(ellipse at 50% 0%,#fffdfa,#faf7f0 72%,#fffefa);color:#152a21}
-.sib-duruus-redesign .sib-duruus-archive-container{max-width:1500px}
-.sib-archive-intro{position:relative;padding:0 0 25px}
-.sib-archive-eyebrow{margin:0 0 12px;padding-left:17px;border-left:4px solid #dca123;color:#193d2c;font-weight:850;letter-spacing:.18em;text-transform:uppercase;font-size:clamp(12px,1.25vw,17px)}
-.sib-archive-heading{margin:0;font-family:var(--sib-font-main,Inter,sans-serif);font-size:clamp(39px,5.7vw,82px);font-weight:850;line-height:1.05;letter-spacing:-.055em;color:#103729;background:linear-gradient(175deg,#193b30 0%,#06261d 65%,#0b4531);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sib-archive-heading span{background:linear-gradient(160deg,#0b7955,#079866 44%,#005b40);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 6px 6px rgba(12,128,80,.12))}
-.sib-archive-subtitle{margin:13px 0 0;color:#50534f;font-size:clamp(16px,1.8vw,24px);line-height:1.5}
-.sib-archive-toolbar{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:15px 0 27px;border-bottom:1px solid #d4a649}
+/* Audioarchiv: ein gemeinsames Layout für Desktop und Mobile. */
+.sib-duruus-archive{position:relative;width:100%;padding:clamp(65px,7vw,108px) 4% 95px;background:radial-gradient(ellipse at 50% 0,#fffdfa,#faf7f0 72%,#fffefa);color:#152a21}
+.sib-duruus-archive *{box-sizing:border-box}
+.sib-duruus-archive-container{width:100%;max-width:1500px;margin:auto}
+.sib-archive-intro{padding-bottom:25px}
+.sib-archive-eyebrow{margin:0 0 12px;padding-left:16px;border-left:4px solid #dca123;color:#143d2c;font-size:clamp(12px,1.2vw,17px);font-weight:850;letter-spacing:.17em;text-transform:uppercase}
+.sib-archive-heading{margin:0;font-size:clamp(39px,5.7vw,82px);line-height:1.04;letter-spacing:-.055em;font-weight:850;background:linear-gradient(170deg,#193b30,#06261d 64%,#0b4531);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sib-archive-heading span{background:linear-gradient(160deg,#0b7955,#079866 44%,#005b40);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 6px 6px #0c80501f)}
+.sib-archive-subtitle{margin:13px 0 0;color:#50534f;font-size:clamp(16px,1.8vw,24px);line-height:1.48}
+.sib-archive-toolbar{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:14px 0 27px;border-bottom:1px solid #d4a649}
 .sib-archive-categories{display:flex;flex-wrap:wrap;gap:10px}
-.sib-archive-pill{padding:11px 23px;min-height:47px;border:1px solid #b4a88d;border-radius:999px;background:linear-gradient(180deg,#fffdf8,#f5efe4);color:#12402e;font:750 16px var(--sib-font-main,Inter,sans-serif);cursor:pointer;box-shadow:0 4px 8px rgba(41,34,14,.07);transition:transform .2s,box-shadow .2s}
-.sib-archive-pill:hover{transform:translateY(-2px)}
-.sib-archive-pill.is-active{border:3px double #eab42b;padding:9px 21px;background:linear-gradient(145deg,#007c55,#004b35);color:#fff;box-shadow:0 5px 11px rgba(6,69,44,.2)}
-.sib-archive-search{position:relative;display:flex;align-items:center;flex:0 1 460px;min-width:240px;height:51px;border:1px solid #b6ae9f;border-radius:999px;background:#fffdf9;box-shadow:0 4px 9px rgba(30,37,22,.07)}
-.sib-archive-search>svg{width:23px;height:23px;margin-left:19px;flex-shrink:0;color:#07523b}
-.sib-archive-search input{width:100%;min-width:0;padding:0 15px;border:0;outline:0;background:transparent;color:#172b22;font:400 16px var(--sib-font-main,Inter,sans-serif)}
-.sib-archive-search button{display:grid;place-items:center;margin-right:10px;width:30px;height:30px;border:0;background:transparent;color:#214636;cursor:pointer}
+.sib-archive-pill,.sib-archive-lesson-tab-options button{min-height:46px;padding:10px 22px;border:1px solid #b4a88d;border-radius:999px;background:linear-gradient(#fffdf8,#f5efe4);color:#12402e;font:750 16px var(--sib-font-main,Inter,sans-serif);box-shadow:0 4px 8px #29220e12;cursor:pointer}
+.sib-archive-pill:hover,.sib-archive-lesson-tab-options button:hover{transform:translateY(-1px)}
+.sib-archive-pill.is-active,.sib-archive-lesson-tab-options button.is-active{border:2px solid #eab42b;background:linear-gradient(145deg,#007c55,#004b35);color:white;box-shadow:0 0 0 2px #fff9e6,0 0 0 3px #e6ac28,0 5px 11px #06452c33}
+.sib-archive-search{display:flex;align-items:center;position:relative;flex:0 1 460px;min-width:230px;height:51px;border:1px solid #b6ae9f;border-radius:999px;background:#fffdf9;box-shadow:0 4px 9px #1e251216}
+.sib-archive-search>svg{width:23px;height:23px;margin-left:18px;flex-shrink:0;color:#07523b}
+.sib-archive-search input{width:100%;min-width:0;padding:0 14px;border:0;outline:none;background:none;color:#172b22;font:400 16px var(--sib-font-main,Inter,sans-serif)}
+.sib-archive-search button{display:grid;place-items:center;flex:0 0 30px;height:30px;margin-right:10px;border:0;background:none;color:#214636;cursor:pointer}
 .sib-archive-search button svg{width:18px;height:18px}
 .sib-archive-layout{display:grid;grid-template-columns:minmax(240px,30%) minmax(0,1fr);gap:28px;padding-top:29px}
-.sib-archive-sidebar{border-right:1px solid #d5b36b;padding-right:23px}
-.sib-archive-sidebar h3{margin:0 0 21px;font-size:clamp(23px,2.6vw,34px);font-weight:830;letter-spacing:-.045em;color:#073d2a}
-.sib-archive-series-nav{display:grid;gap:7px}
-.sib-archive-series-button{display:flex;align-items:center;gap:15px;width:100%;padding:15px 16px;border:1px solid transparent;border-bottom-color:#e1d4bd;border-radius:12px;background:transparent;text-align:left;color:#123a2a;cursor:pointer;transition:background .2s,transform .2s}
+.sib-archive-sidebar{min-width:0;padding-right:23px;border-right:1px solid #d5b36b}
+.sib-archive-sidebar h3{margin:0 0 21px;color:#073d2a;font-size:clamp(23px,2.6vw,34px);font-weight:830;letter-spacing:-.045em}
+.sib-archive-series-nav{display:grid;gap:8px}
+.sib-archive-series-button,.sib-archive-mobile-series-trigger{display:flex;align-items:center;gap:13px;width:100%;padding:14px 15px;border:1px solid transparent;border-bottom-color:#e1d4bd;border-radius:12px;background:transparent;text-align:left;color:#123a2a;cursor:pointer}
 .sib-archive-series-button:hover{background:#f0eee5}
-.sib-archive-series-button.is-active{border:2px solid #e1a62a;background:linear-gradient(120deg,#004a34,#087352 65%,#00452f);color:#fff;box-shadow:0 5px 12px rgba(2,68,44,.17)}
-.sib-archive-book{font-size:34px;line-height:1;color:#c99829}
+.sib-archive-series-button.is-active,.sib-archive-mobile-series-trigger{border:2px solid #e1a62a;background:radial-gradient(ellipse at 30% 0,#088461,transparent 74%),linear-gradient(120deg,#03442f,#087052 62%,#00412f);color:white;box-shadow:0 0 0 2px #fff9e6,0 0 0 4px #e6ac28,0 7px 18px #04402726}
+.sib-archive-book{display:grid;place-items:center;flex:0 0 48px;width:48px;height:44px}
+.sib-archive-book svg{display:block;width:46px;height:40px}
 .sib-archive-series-copy{display:grid;gap:4px;min-width:0;flex:1}
-.sib-archive-series-copy strong{font-size:clamp(15px,1.4vw,20px);font-weight:800;line-height:1.2}
+.sib-archive-series-copy strong{font-size:clamp(15px,1.4vw,20px);font-weight:800;line-height:1.2;overflow-wrap:anywhere}
 .sib-archive-series-copy small{font-size:13px;color:inherit;opacity:.82}
-.sib-archive-chevron{font-size:29px;color:#bb891a}
-.sib-archive-series-button.is-active .sib-archive-chevron{color:#fff}
+.sib-archive-chevron{display:grid;place-items:center;flex:0 0 23px;width:23px;color:#bb891a}
+.sib-archive-chevron svg{width:22px;height:22px;transform:rotate(-90deg)}
+.sib-archive-series-button.is-active .sib-archive-chevron{color:white}
 .sib-archive-lessons{min-width:0}
 .sib-archive-series-header{display:flex;align-items:center;flex-wrap:wrap;gap:15px}
-.sib-archive-series-header h3{margin:0;font-size:clamp(26px,3.2vw,48px);font-weight:850;line-height:1.1;letter-spacing:-.055em;background:linear-gradient(175deg,#174633,#002e20);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sib-archive-series-tag{padding:6px 14px;border:1px solid #cda44d;border-radius:999px;color:#7a5814;font-weight:700;font-size:12px}
+.sib-archive-series-header h3{margin:0;font-size:clamp(26px,3.2vw,48px);font-weight:850;letter-spacing:-.055em;background:linear-gradient(175deg,#174633,#002e20);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sib-archive-series-tag{padding:6px 14px;border:1px solid #cda44d;border-radius:999px;color:#7a5814;font-size:12px;font-weight:700}
 .sib-archive-series-summary{margin:12px 0 21px;color:#5b625c;font-size:15px}
-.sib-archive-recording-list{display:grid}
-.sib-archive-recording{display:flex;align-items:center;gap:15px;min-width:0;padding:13px 15px;border-bottom:1px solid #dfd1b9;border-radius:9px}
-.sib-archive-recording.is-active{background:linear-gradient(90deg,#e7eedf,#e9ecdf)}
+.sib-archive-recording-list{display:grid;min-width:0}
+.sib-archive-recording{display:flex;align-items:center;position:relative;isolation:isolate;gap:14px;min-width:0;padding:13px 15px;border-bottom:1px solid #dfd1b9;border-radius:9px;transition:background .2s}
+.sib-archive-recording:hover{background:#ebefe1b3}
+.sib-archive-recording.is-active{background:linear-gradient(90deg,#e7eddf,#e9eddf)}
+.sib-archive-recording-open{position:absolute;z-index:1;inset:0;width:100%;padding:0;border:0;border-radius:inherit;background:none;cursor:pointer}
+.sib-archive-play,.sib-archive-recording-actions{position:relative;z-index:2}
 .sib-archive-play{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border:2px solid #064932;border-radius:50%;background:transparent;color:#064932;cursor:pointer}
-.sib-archive-recording.is-active .sib-archive-play{background:#064932;color:#fff}
+.sib-archive-recording.is-active .sib-archive-play{background:#064932;color:white}
 .sib-archive-play svg{width:24px;height:24px}
 .sib-archive-number{font-size:16px;font-weight:750;color:#424642}
-.sib-archive-recording-info{min-width:0;flex:1}
-.sib-archive-recording-info h4{margin:0;font-size:clamp(15px,1.4vw,19px);font-weight:800;line-height:1.3;color:#101b16}
-.sib-archive-recording-info>span{display:block;margin-top:5px;font-size:12px;color:#60645f}
-.sib-archive-download{display:grid;place-items:center;flex:0 0 35px;width:35px;height:38px;border:0;background:transparent;color:#9b6d0e;cursor:pointer}
-.sib-archive-download svg{width:25px;height:25px}
-.sib-archive-description{margin-top:7px;color:#505a53;font-size:13px}
-.sib-archive-description summary{cursor:pointer;color:#7c601d}
-.sib-archive-description p{line-height:1.5}
+.sib-archive-recording-info{flex:1;min-width:0}
+.sib-archive-recording-info h4{margin:0;color:#101b16;font-size:clamp(15px,1.4vw,19px);font-weight:800;line-height:1.3;overflow-wrap:anywhere}
+.sib-archive-recording-info>span{display:block;margin-top:5px;color:#60645f;font-size:12px;line-height:1.4}
+.sib-archive-recording-actions{display:flex;align-items:center;gap:3px;flex:0 0 auto}
+.sib-archive-info,.sib-archive-download{display:grid;place-items:center;flex:0 0 38px;width:38px;height:39px;padding:7px;border:0;border-radius:12px;background:transparent;color:#976e12;cursor:pointer}
+.sib-archive-info:hover,.sib-archive-download:hover{background:#e5edde;color:#07533d}
+.sib-archive-info svg,.sib-archive-download svg{width:23px;height:23px}
 .sib-archive-status{padding:40px 0;text-align:center;color:#4b5b50}
+.sib-archive-status button{padding:10px 20px;border:1px solid #b49c61;border-radius:999px;background:white;color:#07533d;cursor:pointer}
 .sib-archive-error{padding:12px 16px;border:1px solid #caa5a5;border-radius:10px;color:#8a2a2a}
-.sib-archive-player{display:flex;align-items:center;gap:17px;margin-top:35px;padding:18px 24px;border:3px double #d9a43b;border-radius:25px;background:linear-gradient(120deg,#073f2d,#006747 60%,#003c2b);color:#fff;box-shadow:0 9px 24px rgba(5,61,38,.22)}
-.sib-archive-player-play{display:grid;place-items:center;flex:0 0 55px;width:55px;height:55px;border:0;border-radius:50%;background:#fff9e9;color:#075039;cursor:pointer}
-.sib-archive-player-play svg{width:30px;height:30px}
-.sib-archive-player-controls{flex:1;min-width:0}
-.sib-archive-player-controls strong{display:block;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px}
-.sib-archive-player-timeline{display:flex;align-items:center;gap:11px;font-size:13px}
-.sib-archive-player-timeline input{flex:1;min-width:30px;accent-color:#e5b94d}
-.sib-archive-player-timeline button,.sib-archive-rate,.sib-archive-player-close{border:1px solid rgba(255,255,255,.4);border-radius:9px;background:transparent;color:#fff;padding:7px 9px;cursor:pointer}
-.sib-archive-player-close{display:grid;place-items:center}
+.sib-archive-mobile-filter,.sib-archive-mobile-series-trigger,.sib-archive-lesson-tabs,.sib-archive-resume,.sib-archive-mobile-lessons-header{display:none}
+.sib-archive-all-complete{padding:18px 0;color:#58645a;text-align:center}
+
+/* Shared persistent player. */
+.sib-archive-player{position:sticky;bottom:12px;z-index:50;display:grid;grid-template-columns:minmax(160px,1fr) minmax(180px,1.25fr) auto;align-items:center;gap:20px;margin-top:32px;padding:17px 22px;border:3px double #d6a132;border-radius:24px;background:radial-gradient(circle at 85% 0,#0a91613d,transparent 50%),linear-gradient(115deg,#073e2b,#006646 56%,#00412f);color:#fffdf4;box-shadow:0 10px 27px #002f1d3d}
+.sib-archive-player-heading{display:flex;align-items:flex-start;gap:7px;min-width:0}
+.sib-archive-player-heading strong{display:-webkit-box;min-width:0;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;font-size:clamp(14px,1.4vw,18px);font-weight:800;line-height:1.3}
+.sib-archive-player-close{order:-1;display:grid;place-items:center;flex:0 0 24px;width:24px;height:26px;padding:2px;border:0;background:none;color:#d7e7d8;cursor:pointer}
 .sib-archive-player-close svg{width:20px;height:20px}
-@media(max-width:950px){.sib-archive-toolbar{align-items:stretch;flex-direction:column}.sib-archive-search{flex:auto;width:100%}.sib-archive-layout{grid-template-columns:1fr;gap:23px}.sib-archive-sidebar{padding-right:0;border-right:0}.sib-archive-series-nav{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px}.sib-archive-series-button{flex:0 0 min(260px,75vw)}.sib-archive-sidebar h3{margin-bottom:12px}}
-@media(max-width:600px){.sib-duruus-redesign{padding:55px 5% 75px}.sib-archive-heading{font-size:clamp(35px,9vw,54px)}.sib-archive-pill{font-size:14px;padding:9px 15px;min-height:41px}.sib-archive-pill.is-active{padding:7px 13px}.sib-archive-recording{gap:10px;padding:13px 5px}.sib-archive-play{width:36px;height:36px;flex-basis:36px}.sib-archive-number{font-size:13px}.sib-archive-recording-info h4{font-size:14px}.sib-archive-player{padding:13px;gap:9px;flex-wrap:wrap;border-radius:17px}.sib-archive-player-controls{flex-basis:calc(100% - 80px)}.sib-archive-player-timeline{gap:5px;font-size:11px}.sib-archive-player-timeline button{padding:5px}.sib-archive-rate{margin-left:auto}}
+.sib-archive-player-timeline{display:flex;align-items:center;gap:10px;min-width:0;white-space:nowrap;font-size:13px;font-variant-numeric:tabular-nums}
+.sib-archive-player-timeline input{flex:1;width:100%;min-width:24px;accent-color:#f0c457;cursor:pointer}
+.sib-archive-player-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px}
+.sib-archive-player-actions button{display:grid;place-items:center;flex-shrink:0;min-width:38px;min-height:38px;padding:3px;border:0;border-radius:50%;background:none;color:#fffdf4;cursor:pointer}
+.sib-archive-player-actions .sib-archive-rate{min-width:49px;min-height:37px;padding:6px 9px;border:1px solid #fbf4de;border-radius:11px;font-size:14px;font-weight:800}
+.sib-archive-player-skip svg{width:34px;height:34px}
+.sib-archive-player-actions .sib-archive-player-play{width:54px;height:54px;min-width:54px;min-height:54px;border-radius:50%;background:#fff9e9;color:#075039;box-shadow:0 4px 12px #0003}
+.sib-archive-player-play svg{width:27px;height:27px}
+.sib-archive-player-bookmark svg{width:27px;height:27px}
+.sib-archive-player-bookmark.is-active{color:#f3c552}
+.sib-archive-player button:focus-visible,.sib-duruus-archive button:focus-visible,.sib-archive-modal button:focus-visible{outline:3px solid #edb835;outline-offset:3px}
 
+/* Detail dialog displays the real description, not inline accordion content. */
+.sib-archive-modal-backdrop{position:fixed;inset:0;z-index:4000;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vw,36px);overflow-y:auto;background:#041810a6;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.sib-archive-modal{display:flex;flex-direction:column;position:relative;width:min(100%,780px);max-height:min(92dvh,910px);margin:auto;overflow:hidden;border:1px solid #d4a6499c;border-radius:26px;background:radial-gradient(ellipse at 50% 0,#fffef9,transparent),linear-gradient(165deg,#fffefa,#f8f4eb);color:#183327;box-shadow:0 30px 85px #001a1157}
+.sib-archive-modal-top{display:flex;flex:0 0 auto;align-items:center;justify-content:space-between;gap:12px;padding:22px clamp(22px,4vw,42px) 0}
+.sib-archive-modal-eyebrow{margin:0;color:#956f15;font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.sib-archive-modal-close{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border:1px solid #e2dfd5;border-radius:50%;background:#fffefa;color:#114935;cursor:pointer}
+.sib-archive-modal-close svg{width:21px;height:21px}
+.sib-archive-modal-content{min-height:0;padding:8px clamp(22px,4vw,42px) 28px;overflow-y:auto;overscroll-behavior:contain}
+.sib-archive-modal-series{display:inline-flex;align-items:center;gap:9px;margin:0 0 9px;color:#a07a22;font-size:13px;font-weight:750}
+.sib-archive-modal-series:before{content:"";width:20px;height:2px;background:#d8a129}
+.sib-archive-modal-content h3{margin:0;font-size:clamp(28px,4vw,49px);font-weight:850;line-height:1.12;letter-spacing:-.047em;background:linear-gradient(165deg,#173b2d,#005b40 67%,#11835b);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;overflow-wrap:anywhere}
+.sib-archive-modal-lesson{margin:11px 0 0;color:#606960;font-size:14px;font-weight:600}
+.sib-archive-modal-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:10px;margin-top:25px}
+.sib-archive-modal-meta>span{display:flex;flex-direction:column;gap:7px;min-width:0;padding:13px 15px;border:1px solid #e9e2d1;border-radius:13px;background:#ffffffb8;color:#123b2b;font-size:13px;font-weight:700;overflow-wrap:anywhere}
+.sib-archive-modal-meta strong{color:#807866;font-size:10px;font-weight:750;letter-spacing:.075em;text-transform:uppercase}
+.sib-archive-modal-description{margin-top:27px;padding-top:24px;border-top:1px solid #dfcead}
+.sib-archive-modal-description>h4{margin:0 0 15px;color:#0a4631;font-size:20px;font-weight:800}
+.sib-archive-modal-prose{color:#343e36;font-size:15px;line-height:1.8;overflow-wrap:anywhere}
+.sib-archive-modal-prose p,.sib-archive-modal-prose ul,.sib-archive-modal-prose ol{margin:0 0 16px}
+.sib-archive-modal-prose h4{margin:18px 0 7px;color:#0a4631;font-size:16px}
+.sib-archive-modal-prose strong{color:#0b3d2a;font-weight:750}
+.sib-archive-modal-prose ul,.sib-archive-modal-prose ol{padding-left:23px}
+.sib-archive-modal-prose li{margin-bottom:6px}
+.sib-archive-modal-prose li::marker{color:#ac8126}
+.sib-archive-modal-no-description{color:#667168;font-size:14px;line-height:1.6}
+.sib-archive-modal-playback{display:grid;gap:12px;flex:0 0 auto;padding:15px clamp(22px,4vw,42px);border-top:1px solid #e9dfcb;background:#f3f1e9}
+.sib-archive-modal-playback-progress{display:flex;align-items:center;gap:12px;color:#28503c;font-size:12px;font-variant-numeric:tabular-nums}
+.sib-archive-modal-playback-progress input{flex:1;min-width:0;accent-color:#05714e}
+.sib-archive-modal-playback-tools{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px}
+.sib-archive-modal-playback-tools button{padding:7px 11px;border:1px solid #cfbea0;border-radius:999px;background:#fffefa;color:#12523c;font-size:12px;font-weight:700;cursor:pointer}
+.sib-archive-modal-footer{display:flex;flex:0 0 auto;align-items:center;gap:12px;padding:19px clamp(22px,4vw,42px) 24px;border-top:1px solid #e7dec9;background:#fffdf7f0}
+.sib-archive-modal-listen,.sib-archive-modal-download{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:49px;padding:10px 20px;border:2px solid #cca03e;border-radius:999px;font-size:14px;font-weight:780;cursor:pointer}
+.sib-archive-modal-listen{background:linear-gradient(135deg,#075d43,#003f2e);color:white}
+.sib-archive-modal-download{border-color:#cfc5aa;background:#fffefa;color:#0b4834}
+.sib-archive-modal-listen svg,.sib-archive-modal-download svg{width:21px;height:21px}
+.sib-archive-modal-listen:disabled,.sib-archive-modal-download:disabled{opacity:.55;cursor:wait}
+.sib-archive-modal-audio-error{margin:0;padding:0 25px 16px;color:#933b2e;font-size:13px}
 
-/* Recording details: full row opens a separate, accessible information dialog. */
-.sib-duruus-redesign .sib-archive-recording {
-  position: relative;
-  isolation: isolate;
-  transition: background-color 180ms ease, box-shadow 180ms ease;
-}
-.sib-duruus-redesign .sib-archive-recording:hover {
-  background-color: rgba(235, 239, 225, .7);
-}
-.sib-duruus-redesign .sib-archive-recording.is-active {
-  background: linear-gradient(90deg, #e7eedf, #e9ecdf);
-}
-.sib-archive-recording-open {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  border-radius: inherit;
-  background: transparent;
-  cursor: pointer;
-}
-.sib-archive-recording-open:focus-visible {
-  outline: 3px solid #d8a129;
-  outline-offset: -3px;
-}
-.sib-archive-recording .sib-archive-play,
-.sib-archive-recording .sib-archive-recording-actions {
-  position: relative;
-  z-index: 2;
-}
-.sib-archive-recording-actions {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 4px;
-}
-.sib-archive-info,
-.sib-archive-download {
-  display: inline-grid;
-  place-items: center;
-  width: 41px;
-  height: 41px;
-  padding: 8px;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background: transparent;
-  color: #8b670e;
-  cursor: pointer;
-  transition: color 160ms ease, background 160ms ease, transform 160ms ease;
-}
-.sib-archive-info svg,
-.sib-archive-download svg {
-  width: 23px;
-  height: 23px;
-}
-.sib-archive-info:hover,
-.sib-archive-download:hover {
-  color: #07533d;
-  background: #e7ecdf;
-  transform: translateY(-1px);
-}
-.sib-archive-info:focus-visible,
-.sib-archive-download:focus-visible {
-  outline: 3px solid #d8a129;
-  outline-offset: 2px;
+/* Tablet: one clean column instead of a horizontal pile of series cards. */
+@media(max-width:950px){
+.sib-archive-toolbar{align-items:stretch;flex-direction:column}
+.sib-archive-search{flex:auto;width:100%}
+.sib-archive-layout{grid-template-columns:minmax(0,1fr);gap:23px}
+.sib-archive-sidebar{padding-right:0;border-right:0;border-bottom:1px solid #d7a946;padding-bottom:17px}
+.sib-archive-series-nav{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px}
+.sib-archive-series-button{flex:0 0 min(270px,75vw)}
+.sib-archive-player{grid-template-columns:minmax(120px,1fr) minmax(160px,1.25fr) auto;gap:9px;padding:12px}
+.sib-archive-player-actions{gap:4px}
 }
 
-/* Detail dialog is portaled to the document root, outside archive clipping. */
-.sib-archive-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 4000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(12px, 3vw, 36px);
-  overflow-y: auto;
-  background: rgba(4, 24, 16, .65);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  animation: sibArchiveBackdropIn 220ms ease both;
+/* Mobile: match the compact reference, preserving every real recording and action. */
+@media(max-width:800px){
+.sib-duruus-archive{padding:48px clamp(13px,4vw,32px) 78px}
+.sib-archive-intro{padding-bottom:17px}
+.sib-archive-eyebrow{margin-bottom:10px;padding-left:12px;border-left-width:3px;font-size:clamp(11px,2.4vw,15px)}
+.sib-archive-heading{font-size:clamp(38px,7.7vw,67px);line-height:.98;overflow-wrap:anywhere}
+.sib-archive-heading span{display:block;position:relative;width:fit-content;max-width:100%;padding-bottom:11px}
+.sib-archive-heading span:after{content:"";position:absolute;right:0;bottom:2px;width:54%;height:5px;border-radius:60%;background:linear-gradient(95deg,transparent,#e4a611 20% 85%,transparent);transform:rotate(-1.5deg)}
+.sib-archive-subtitle{margin-top:8px;font-size:clamp(15px,3.2vw,21px)}
+.sib-archive-toolbar{display:grid;position:relative;grid-template-columns:minmax(0,1fr) 54px;align-items:center;gap:10px;padding:8px 0 18px;border:0}
+.sib-archive-search{grid-column:1;grid-row:1;width:100%;min-width:0;height:55px}
+.sib-archive-search input{font-size:16px}
+.sib-archive-mobile-filter{display:grid;grid-column:2;grid-row:1;place-items:center;width:54px;height:54px;border:1px solid #bc9a55;border-radius:18px;background:#fffaf0;color:#064e37;cursor:pointer}
+.sib-archive-mobile-filter svg{width:28px;height:28px}
+.sib-archive-mobile-filter.is-active{background:#eaf2e8}
+.sib-archive-categories{display:none;position:absolute;z-index:7;top:calc(100% - 8px);left:0;right:0;padding:15px;border:1px solid #d9c89f;border-radius:20px;background:#fffdfa;box-shadow:0 17px 35px #17271b29}
+.sib-archive-categories.is-open{display:flex;flex-wrap:wrap;gap:9px}
+.sib-archive-pill{min-height:38px;padding:8px 15px;font-size:13px}
+.sib-archive-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:15px;padding-top:4px}
+.sib-archive-sidebar{padding:0 0 16px}
+.sib-archive-sidebar h3{margin:0 0 14px;font-size:clamp(23px,4.4vw,31px)}
+.sib-archive-mobile-series-trigger{display:flex;align-items:center;min-height:76px;padding:14px clamp(14px,3vw,24px);border-radius:20px}
+.sib-archive-mobile-series-trigger .sib-archive-series-copy strong{font-size:clamp(17px,3.5vw,24px)}
+.sib-archive-mobile-series-trigger .sib-archive-series-copy small{font-size:clamp(13px,2.8vw,17px)}
+.sib-archive-mobile-series-trigger .sib-archive-chevron{color:white}
+.sib-archive-mobile-series-trigger .sib-archive-chevron svg{transform:none;transition:transform .2s}
+.sib-archive-mobile-series-trigger .sib-archive-chevron.is-open svg{transform:rotate(180deg)}
+.sib-archive-series-nav{display:none;padding:11px 0 0}
+.sib-archive-series-nav.is-expanded{display:grid;grid-template-columns:1fr;gap:7px;overflow:visible}
+.sib-archive-series-button{flex:auto;width:100%;min-width:0;min-height:67px;border:1px solid #ddcfaf;border-radius:14px}
+.sib-archive-series-header,.sib-archive-series-summary{display:none}
+.sib-archive-lesson-tabs{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 0 15px;border-bottom:1px solid #d3a24a}
+.sib-archive-lesson-tab-options{display:flex;min-width:0;gap:9px}
+.sib-archive-lesson-tab-options button{min-height:46px;padding:9px 15px;font-size:clamp(13px,2.6vw,17px);white-space:nowrap}
+.sib-archive-sort{display:grid;place-items:center;flex:0 0 46px;width:46px;height:46px;border:1px solid #bda875;border-radius:15px;background:#fff9ed;color:#0b533b;cursor:pointer}
+.sib-archive-sort svg{width:25px;height:25px}
+.sib-archive-resume{display:flex;align-items:center;gap:11px;min-width:0;margin:16px 0 18px;padding:12px 15px 12px 17px;border-radius:17px;background:linear-gradient(110deg,#e6edde,#eaf0df)}
+.sib-archive-resume-copy{display:grid;gap:3px;flex:1;min-width:0}
+.sib-archive-resume-copy strong{font-size:20px;font-weight:840;color:#074c34}
+.sib-archive-resume-copy span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#435047;font-size:13px}
+.sib-archive-resume button{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border:2px solid #07523c;border-radius:50%;background:#fffefa;color:#07523c;cursor:pointer}
+.sib-archive-resume button svg{width:24px;height:24px}
+.sib-archive-mobile-lessons-header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 12px}
+.sib-archive-mobile-lessons-header h3{margin:0;color:#054630;font-size:clamp(24px,5vw,32px);font-weight:850}
+.sib-archive-mobile-lessons-header span{color:#49564d;font-size:14px;white-space:nowrap}
+.sib-archive-recording{display:grid;grid-template-columns:42px 28px minmax(0,1fr) 75px;gap:9px;align-items:center;min-height:77px;padding:12px 3px;border-radius:0}
+.sib-archive-recording.is-active{margin:0 -3px;padding:12px 6px;border-radius:16px}
+.sib-archive-play{width:41px;height:41px;flex-basis:auto}
+.sib-archive-number{font-size:15px;text-align:center}
+.sib-archive-recording-info h4{font-size:clamp(15px,3.4vw,20px);line-height:1.2}
+.sib-archive-recording-info>span{font-size:clamp(11px,2.65vw,14px)}
+.sib-archive-recording-actions{gap:1px}
+.sib-archive-info,.sib-archive-download{width:35px;height:39px;flex-basis:35px;padding:6px}
+.sib-archive-info svg,.sib-archive-download svg{width:22px;height:22px}
+.sib-archive-player{display:grid;grid-template-columns:minmax(0,1fr);gap:13px;margin-top:26px;padding:19px 17px 18px;border-radius:26px;bottom:max(8px,env(safe-area-inset-bottom))}
+.sib-archive-player-heading{display:flex;align-items:flex-start;justify-content:space-between}
+.sib-archive-player-heading strong{display:block;font-size:clamp(18px,3.9vw,23px)}
+.sib-archive-player-close{order:2}
+.sib-archive-player-timeline{width:100%;gap:9px;font-size:clamp(11px,2.5vw,14px)}
+.sib-archive-player-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));width:100%;place-items:center;gap:0}
+.sib-archive-player-actions button{justify-self:center;min-width:37px;min-height:42px}
+.sib-archive-player-actions .sib-archive-player-play{width:clamp(56px,12vw,72px);height:clamp(56px,12vw,72px);min-width:clamp(56px,12vw,72px);min-height:clamp(56px,12vw,72px)}
+.sib-archive-modal-backdrop{align-items:flex-end;padding:10px}
+.sib-archive-modal{width:100%;max-height:91dvh;margin:auto 0 0;border-radius:24px 24px 18px 18px}
+.sib-archive-modal-top{padding:18px 21px 0}
+.sib-archive-modal-content{padding:10px 21px 22px}
+.sib-archive-modal-meta{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px}
+.sib-archive-modal-meta>span{padding:11px 12px;font-size:12px}
+.sib-archive-modal-footer{padding:15px 19px 20px}
+.sib-archive-modal-listen,.sib-archive-modal-download{flex:1;padding-inline:10px;font-size:12px}
+.sib-archive-modal-playback{padding:13px 19px}
+.sib-archive-modal-playback-tools{justify-content:center}
 }
-.sib-archive-modal {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: min(100%, 780px);
-  max-height: min(92dvh, 910px);
-  margin: auto;
-  overflow: hidden;
-  border: 1px solid rgba(212, 166, 73, .55);
-  border-radius: clamp(20px, 2.6vw, 30px);
-  background:
-    radial-gradient(ellipse 80% 40% at 55% 0%, #fffef9, transparent),
-    linear-gradient(165deg, #fffefa, #f8f4eb);
-  color: #183327;
-  box-shadow: 0 30px 85px rgba(0, 26, 17, .34), inset 0 1px 0 #fff;
-  animation: sibArchiveModalIn 280ms cubic-bezier(.22, 1, .36, 1) both;
+@media(max-width:400px){
+.sib-duruus-archive{padding-left:13px;padding-right:13px}
+.sib-archive-heading{font-size:clamp(34px,9vw,40px)}
+.sib-archive-lesson-tab-options{gap:7px}
+.sib-archive-lesson-tab-options button{padding:8px 10px;font-size:12px}
+.sib-archive-sort{flex-basis:40px;width:40px;height:44px}
+.sib-archive-recording{grid-template-columns:36px 24px minmax(0,1fr) 68px;gap:6px}
+.sib-archive-play{width:35px;height:35px}
+.sib-archive-number{font-size:13px}
+.sib-archive-info,.sib-archive-download{flex-basis:32px;width:32px;height:36px;padding:5px}
+.sib-archive-book{flex-basis:41px;width:41px}
+.sib-archive-book svg{width:39px}
 }
-.sib-archive-modal-top {
-  display: flex;
-  flex: 0 0 auto;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-  padding: 22px clamp(22px, 4vw, 42px) 0;
-}
-.sib-archive-modal-eyebrow {
-  margin: 0;
-  color: #956f15;
-  font-family: var(--sib-font-main, Inter, sans-serif);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .17em;
-  text-transform: uppercase;
-}
-.sib-archive-modal-close {
-  display: grid;
-  place-items: center;
-  flex: 0 0 42px;
-  width: 42px;
-  height: 42px;
-  border: 1px solid #e2dfd5;
-  border-radius: 50%;
-  background: #fffefa;
-  color: #114935;
-  cursor: pointer;
-  transition: background .2s ease, transform .2s ease;
-}
-.sib-archive-modal-close:hover {
-  background: #e9efe6;
-  transform: rotate(90deg);
-}
-.sib-archive-modal-close svg { width: 21px; height: 21px; }
-.sib-archive-modal-content {
-  min-height: 0;
-  padding: 8px clamp(22px, 4vw, 42px) 30px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-.sib-archive-modal-series {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0 0 8px;
-  color: #a07a22;
-  font-size: 13px;
-  font-weight: 750;
-}
-.sib-archive-modal-series::before {
-  content: "";
-  width: 20px;
-  height: 2px;
-  border-radius: 99px;
-  background: #d8a129;
-}
-.sib-archive-modal-content h3 {
-  margin: 0;
-  font-family: var(--sib-font-main, Inter, sans-serif);
-  font-size: clamp(28px, 4vw, 49px);
-  font-weight: 850;
-  line-height: 1.12;
-  letter-spacing: -.047em;
-  color: #083b2a;
-  background: linear-gradient(165deg, #173b2d, #005b40 67%, #11835b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  overflow-wrap: anywhere;
-}
-.sib-archive-modal-lesson {
-  margin: 11px 0 0;
-  color: #606960;
-  font-size: 14px;
-  font-weight: 600;
-}
-.sib-archive-modal-meta {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
-  gap: 10px;
-  margin-top: 25px;
-}
-.sib-archive-modal-meta > span {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  min-width: 0;
-  padding: 14px 17px;
-  border: 1px solid #e9e2d1;
-  border-radius: 13px;
-  background: rgba(255, 255, 255, .72);
-  color: #123b2b;
-  font-size: 13px;
-  font-weight: 700;
-  overflow-wrap: anywhere;
-}
-.sib-archive-modal-meta strong {
-  color: #807866;
-  font-size: 10px;
-  font-weight: 750;
-  letter-spacing: .075em;
-  text-transform: uppercase;
-}
-.sib-archive-modal-description {
-  margin-top: 28px;
-  padding-top: 24px;
-  border-top: 1px solid #dfcead;
-}
-.sib-archive-modal-description > h4 {
-  margin: 0 0 15px;
-  color: #0a4631;
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -.02em;
-}
-.sib-archive-modal-prose {
-  color: #343e36;
-  font-family: var(--sib-font-main, Inter, sans-serif);
-  font-size: 15px;
-  font-weight: 450;
-  line-height: 1.85;
-  overflow-wrap: anywhere;
-}
-.sib-archive-modal-prose p,
-.sib-archive-modal-prose ul,
-.sib-archive-modal-prose ol {
-  margin: 0 0 17px;
-}
-.sib-archive-modal-prose p:last-child,
-.sib-archive-modal-prose ul:last-child,
-.sib-archive-modal-prose ol:last-child {
-  margin-bottom: 0;
-}
-.sib-archive-modal-prose h4 {
-  margin: 19px 0 7px;
-  font-size: 16px;
-  font-weight: 800;
-  color: #0a4631;
-}
-.sib-archive-modal-prose strong { color: #0b3d2a; font-weight: 750; }
-.sib-archive-modal-prose ul,
-.sib-archive-modal-prose ol { padding-left: 23px; }
-.sib-archive-modal-prose li { padding-left: 3px; margin-bottom: 7px; }
-.sib-archive-modal-prose li::marker { color: #ac8126; }
-.sib-archive-modal-no-description {
-  color: #667168;
-  font-size: 14px;
-  line-height: 1.7;
-}
-.sib-archive-modal-footer {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 12px;
-  padding: 20px clamp(22px, 4vw, 42px) 24px;
-  border-top: 1px solid #e7dec9;
-  background: rgba(255, 253, 247, .94);
-}
-.sib-archive-modal-listen,
-.sib-archive-modal-download {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 49px;
-  padding: 11px 22px;
-  border: 2px solid #cca03e;
-  border-radius: 999px;
-  font-family: var(--sib-font-main, Inter, sans-serif);
-  font-size: 14px;
-  font-weight: 780;
-  cursor: pointer;
-  transition: box-shadow .2s ease, transform .2s ease;
-}
-.sib-archive-modal-listen {
-  background: radial-gradient(ellipse at 35% 0%, #148d63, transparent 70%), linear-gradient(135deg, #075d43, #003f2e);
-  color: #fff;
-  box-shadow: 0 6px 13px rgba(0, 67, 42, .15);
-}
-.sib-archive-modal-download {
-  border-color: #cfc5aa;
-  background: #fffefa;
-  color: #0b4834;
-}
-.sib-archive-modal-listen svg,
-.sib-archive-modal-download svg { width: 21px; height: 21px; }
-.sib-archive-modal-listen:hover,
-.sib-archive-modal-download:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(0, 50, 30, .14);
-}
-.sib-archive-modal-listen:disabled,
-.sib-archive-modal-download:disabled { opacity: .55; cursor: wait; }
-.sib-archive-modal-close:focus-visible,
-.sib-archive-modal-listen:focus-visible,
-.sib-archive-modal-download:focus-visible {
-  outline: 3px solid #e6a92a;
-  outline-offset: 3px;
-}
-.sib-archive-modal-audio-error {
-  margin: 0;
-  padding: 0 42px 18px;
-  color: #933b2e;
-  font-size: 13px;
-}
-@keyframes sibArchiveBackdropIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes sibArchiveModalIn {
-  from { opacity: 0; transform: translateY(18px) scale(.975); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-@media (max-width: 600px) {
-  .sib-archive-recording-actions { gap: 0; }
-  .sib-archive-info,
-  .sib-archive-download { width: 35px; height: 38px; padding: 7px; }
-  .sib-archive-info svg,
-  .sib-archive-download svg { width: 21px; height: 21px; }
-  .sib-archive-modal-backdrop { padding: 10px; align-items: flex-end; }
-  .sib-archive-modal {
-    max-height: min(91dvh, 860px);
-    width: 100%;
-    margin: auto 0 0;
-    border-radius: 24px 24px 18px 18px;
-  }
-  .sib-archive-modal-top { padding: 18px 21px 0; }
-  .sib-archive-modal-content { padding: 10px 21px 23px; }
-  .sib-archive-modal-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 20px; }
-  .sib-archive-modal-meta > span { padding: 11px 12px; font-size: 12px; }
-  .sib-archive-modal-footer { padding: 15px 19px 20px; }
-  .sib-archive-modal-listen,
-  .sib-archive-modal-download { flex: 1; padding-inline: 10px; font-size: 12px; }
-  .sib-archive-modal-audio-error { padding-inline: 19px; }
-}
-@media (max-width: 370px) {
-  .sib-archive-modal-footer { flex-direction: column; align-items: stretch; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .sib-archive-modal-backdrop,
-  .sib-archive-modal,
-  .sib-archive-info,
-  .sib-archive-modal-close,
-  .sib-archive-modal-listen,
-  .sib-archive-modal-download { animation: none; transition: none; }
-}
-
-.sib-archive-modal-playback {
-  display: grid;
-  gap: 12px;
-  flex: 0 0 auto;
-  padding: 15px clamp(22px, 4vw, 42px);
-  border-top: 1px solid #e9dfcb;
-  background: #f3f1e9;
-}
-.sib-archive-modal-playback-progress {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  color: #28503c;
-}
-.sib-archive-modal-playback-progress input {
-  flex: 1;
-  min-width: 0;
-  accent-color: #05714e;
-  cursor: pointer;
-}
-.sib-archive-modal-playback-tools {
-  display: flex;
-  gap: 9px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-.sib-archive-modal-playback-tools button {
-  padding: 7px 11px;
-  border: 1px solid #cfbea0;
-  border-radius: 999px;
-  background: #fffefa;
-  color: #12523c;
-  font-family: var(--sib-font-main, Inter, sans-serif);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-.sib-archive-modal-playback-tools button:hover { background: #e5eddf; }
-.sib-archive-modal-playback-tools button:focus-visible {
-  outline: 3px solid #e6a92a;
-  outline-offset: 2px;
-}
-@media (max-width: 600px) {
-  .sib-archive-modal-playback { padding: 13px 19px; }
-  .sib-archive-modal-playback-progress { gap: 8px; }
-  .sib-archive-modal-playback-tools { justify-content: center; }
-}
-
-
-/* Reuse the exact open-book illustration shown in the Islam lernen hero CTA. */
-.sib-archive-book {
-  display: grid;
-  flex: 0 0 48px;
-  width: 48px;
-  height: 46px;
-  place-items: center;
-}
-.sib-archive-book svg {
-  display: block;
-  width: 46px;
-  height: 40px;
-}
-.sib-archive-mobile-series-trigger,
-.sib-archive-mobile-filter,
-.sib-archive-lesson-tabs,
-.sib-archive-resume,
-.sib-archive-mobile-lessons-header {
-  display: none;
-}
-.sib-archive-series-button.is-active {
-  border-color: #ebb33b;
-  background: radial-gradient(ellipse at 30% 0%, #088461, transparent 74%), linear-gradient(120deg, #03442f, #087052 62%, #00412f);
-  box-shadow: 0 0 0 2px #fff9e6, 0 0 0 4px #e6ac28, 0 7px 18px rgba(4, 64, 39, .15);
-}
-.sib-archive-chevron {
-  display: grid;
-  place-items: center;
-  flex: 0 0 24px;
-  width: 24px;
-}
-.sib-archive-chevron svg { width: 22px; height: 22px; transform: rotate(-90deg); }
-.sib-archive-recording.is-active {
-  background: linear-gradient(90deg, #e7eddf, #e9eddf);
-}
-
-/* The player is deliberately shared by desktop and mobile. */
-.sib-duruus-redesign .sib-archive-player {
-  position: sticky;
-  bottom: 12px;
-  z-index: 50;
-  display: grid;
-  grid-template-columns: minmax(160px, 1fr) minmax(180px, 1.25fr) auto;
-  align-items: center;
-  gap: 22px;
-  margin-top: 32px;
-  padding: 17px 22px;
-  border: 3px double #d6a132;
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at 85% 0%, rgba(10, 145, 97, .24), transparent 50%),
-    repeating-linear-gradient(45deg, transparent 0 26px, rgba(255,255,255,.018) 27px 28px),
-    linear-gradient(115deg, #073e2b, #006646 56%, #00412f);
-  box-shadow: 0 10px 27px rgba(0, 47, 29, .24);
-  color: #fffdf4;
-}
-.sib-archive-player-heading {
-  display: flex;
-  gap: 7px;
-  align-items: start;
-  min-width: 0;
-}
-.sib-archive-player-heading strong {
-  display: -webkit-box;
-  min-width: 0;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  font-size: clamp(14px, 1.4vw, 18px);
-  font-weight: 800;
-  line-height: 1.36;
-}
-.sib-archive-player-heading .sib-archive-player-close {
-  order: -1;
-  display: grid;
-  place-items: center;
-  flex: 0 0 24px;
-  width: 24px;
-  height: 26px;
-  padding: 2px;
-  border: 0;
-  background: none;
-  color: #d7e7d8;
-}
-.sib-duruus-redesign .sib-archive-player-timeline {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  gap: 11px;
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.sib-duruus-redesign .sib-archive-player-timeline input {
-  width: 100%;
-  min-width: 30px;
-  flex: 1;
-  accent-color: #f0c457;
-  cursor: pointer;
-}
-.sib-archive-player-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-}
-.sib-duruus-redesign .sib-archive-player-actions > button {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  min-width: 38px;
-  min-height: 38px;
-  padding: 4px;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: #fffdf4;
-  cursor: pointer;
-}
-.sib-duruus-redesign .sib-archive-player-actions .sib-archive-rate {
-  min-width: 50px;
-  min-height: 38px;
-  padding: 6px 9px;
-  border: 1px solid #fbf4de;
-  border-radius: 11px;
-  font-weight: 800;
-  font-size: 14px;
-}
-.sib-archive-player-skip svg { width: 34px; height: 34px; }
-.sib-duruus-redesign .sib-archive-player-actions .sib-archive-player-play {
-  width: 53px;
-  height: 53px;
-  min-width: 53px;
-  min-height: 53px;
-  border-radius: 50%;
-  background: #fff9e9;
-  color: #075039;
-  box-shadow: 0 4px 12px rgba(0,0,0,.18);
-}
-.sib-archive-player-bookmark svg { width: 27px; height: 27px; }
-.sib-archive-player-bookmark.is-active { color: #f3c552 !important; }
-.sib-archive-player-actions > button:focus-visible,
-.sib-archive-mobile-filter:focus-visible,
-.sib-archive-mobile-series-trigger:focus-visible,
-.sib-archive-lesson-tabs button:focus-visible,
-.sib-archive-resume button:focus-visible {
-  outline: 3px solid #edb835;
-  outline-offset: 3px;
-}
-
-@media (max-width: 1050px) {
-  .sib-duruus-redesign .sib-archive-player {
-    grid-template-columns: minmax(100px, .9fr) minmax(140px, 1.1fr) auto;
-    gap: 12px;
-    padding: 13px;
-  }
-  .sib-archive-player-actions { gap: 5px; }
-}
-
-@media (max-width: 800px) {
-  .sib-duruus-redesign {
-    padding: 48px clamp(14px, 4vw, 32px) 75px;
-  }
-  .sib-duruus-redesign .sib-duruus-archive-container { min-width: 0; }
-  .sib-archive-intro { padding: 0 0 19px; }
-  .sib-archive-eyebrow {
-    margin-bottom: 11px;
-    padding-left: 13px;
-    border-left-width: 3px;
-    font-size: clamp(11px, 2.4vw, 15px);
-    letter-spacing: .14em;
-  }
-  .sib-archive-heading {
-    font-size: clamp(38px, 7.7vw, 67px);
-    line-height: .98;
-    letter-spacing: -.052em;
-    overflow-wrap: anywhere;
-  }
-  .sib-archive-heading span {
-    display: block;
-    position: relative;
-    width: fit-content;
-    max-width: 100%;
-    padding-bottom: 12px;
-  }
-  .sib-archive-heading span::after {
-    content: "";
-    position: absolute;
-    bottom: 3px;
-    right: 0;
-    width: 54%;
-    height: 5px;
-    border-radius: 60% 40%;
-    background: linear-gradient(95deg, transparent, #e4a611 20%, #e4a611 80%, transparent);
-    transform: rotate(-1.6deg);
-  }
-  .sib-archive-subtitle {
-    margin-top: 8px;
-    font-size: clamp(15px, 3.2vw, 21px);
-  }
-  .sib-archive-toolbar {
-    position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 55px;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 0 18px;
-    border-bottom: 0;
-  }
-  .sib-duruus-redesign .sib-archive-search {
-    grid-column: 1;
-    grid-row: 1;
-    width: 100%;
-    min-width: 0;
-    height: 55px;
-    border-radius: 999px;
-  }
-  .sib-archive-search > svg { width: 25px; height: 25px; margin-left: 18px; }
-  .sib-archive-search input { font-size: 16px; padding-left: 13px; }
-  .sib-archive-mobile-filter {
-    display: grid;
-    grid-column: 2;
-    grid-row: 1;
-    place-items: center;
-    width: 55px;
-    height: 55px;
-    border: 1px solid #bc9a55;
-    border-radius: 19px;
-    background: #fffaf0;
-    color: #064e37;
-    box-shadow: 0 4px 11px rgba(41, 35, 21, .1);
-    cursor: pointer;
-  }
-  .sib-archive-mobile-filter.is-active { border-color: #046d4d; background: #eaf2e8; }
-  .sib-archive-mobile-filter svg { width: 27px; height: 27px; }
-  .sib-duruus-redesign .sib-archive-categories {
-    display: none;
-    position: absolute;
-    z-index: 7;
-    top: calc(100% - 10px);
-    left: 0;
-    right: 0;
-    padding: 15px;
-    border: 1px solid #d9c89f;
-    border-radius: 20px;
-    background: #fffdfa;
-    box-shadow: 0 17px 35px rgba(23, 39, 27, .16);
-  }
-  .sib-duruus-redesign .sib-archive-categories.is-open {
-    display: flex;
-    gap: 8px;
-  }
-  .sib-duruus-redesign .sib-archive-pill { font-size: 13px; }
-  .sib-duruus-redesign .sib-archive-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 18px;
-    padding-top: 6px;
-  }
-  .sib-duruus-redesign .sib-archive-sidebar {
-    min-width: 0;
-    padding: 0 0 16px;
-    border-right: 0;
-    border-bottom: 1px solid #d7a946;
-  }
-  .sib-archive-sidebar h3 {
-    margin: 0 0 14px;
-    font-size: clamp(23px, 4.4vw, 31px);
-    letter-spacing: -.04em;
-  }
-  .sib-archive-mobile-series-trigger {
-    display: flex;
-    width: 100%;
-    min-height: 76px;
-    align-items: center;
-    gap: 16px;
-    padding: 14px clamp(14px, 3vw, 24px);
-    border: 2px solid #e6a82a;
-    border-radius: 21px;
-    background: radial-gradient(ellipse at 30% 0%, #088461, transparent 76%), linear-gradient(125deg, #00452e, #047350 60%, #003f2d);
-    box-shadow: 0 0 0 2px #fff9ed, 0 0 0 4px #dfa52a, 0 7px 16px rgba(0, 65, 42, .18);
-    color: #fff;
-    text-align: left;
-    cursor: pointer;
-  }
-  .sib-archive-mobile-series-trigger .sib-archive-series-copy strong {
-    font-size: clamp(17px, 3.5vw, 24px);
-    font-weight: 830;
-  }
-  .sib-archive-mobile-series-trigger .sib-archive-series-copy small {
-    font-size: clamp(13px, 2.8vw, 17px);
-  }
-  .sib-archive-mobile-series-trigger .sib-archive-chevron { color: #fff; }
-  .sib-archive-mobile-series-trigger .sib-archive-chevron svg {
-    transform: rotate(0);
-    transition: transform .2s ease;
-  }
-  .sib-archive-mobile-series-trigger .sib-archive-chevron.is-open svg { transform: rotate(180deg); }
-  .sib-duruus-redesign .sib-archive-series-nav {
-    display: none;
-    padding: 12px 0 1px;
-  }
-  .sib-duruus-redesign .sib-archive-series-nav.is-expanded {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 7px;
-    overflow: visible;
-  }
-  .sib-duruus-redesign .sib-archive-series-button {
-    flex: auto;
-    width: 100%;
-    min-width: 0;
-    min-height: 67px;
-    border: 1px solid #ddcfaf;
-    border-radius: 14px;
-  }
-  .sib-duruus-redesign .sib-archive-series-button.is-active {
-    border-color: #e7ab35;
-  }
-  .sib-archive-series-button .sib-archive-chevron svg { transform: rotate(-90deg); }
-  .sib-duruus-redesign .sib-archive-series-header,
-  .sib-duruus-redesign .sib-archive-series-summary { display: none; }
-  .sib-archive-lesson-tabs {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: space-between;
-    padding: 0 0 15px;
-    border-bottom: 1px solid #d3a24a;
-  }
-  .sib-archive-lesson-tab-options {
-    display: flex;
-    min-width: 0;
-    gap: 9px;
-  }
-  .sib-archive-lesson-tab-options button {
-    min-height: 47px;
-    padding: 9px 16px;
-    border: 1px solid #bda875;
-    border-radius: 999px;
-    background: #fff9ed;
-    color: #154632;
-    font-size: clamp(13px, 2.6vw, 17px);
-    font-weight: 780;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-  .sib-archive-lesson-tab-options button.is-active {
-    border: 2px solid #dd9b1d;
-    background: linear-gradient(130deg, #006e4b, #004c36);
-    box-shadow: 0 0 0 2px #fffaf0, 0 0 0 3px #dfaa32, 0 4px 10px rgba(0, 72, 50, .18);
-    color: #fff;
-  }
-  .sib-archive-sort {
-    display: grid;
-    place-items: center;
-    flex: 0 0 47px;
-    width: 47px;
-    height: 47px;
-    border: 1px solid #bda875;
-    border-radius: 16px;
-    background: #fff9ed;
-    color: #0b533b;
-    cursor: pointer;
-  }
-  .sib-archive-sort svg { width: 24px; height: 24px; }
-  .sib-archive-resume {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    min-width: 0;
-    margin: 16px 0 19px;
-    padding: 13px 15px 13px 18px;
-    border-radius: 17px;
-    background: linear-gradient(105deg, #e6edde, #eaf0df);
-  }
-  .sib-archive-resume-copy { display: grid; flex: 1; min-width: 0; gap: 3px; }
-  .sib-archive-resume-copy strong {
-    font-size: 20px;
-    font-weight: 840;
-    color: #074c34;
-  }
-  .sib-archive-resume-copy span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: #435047;
-    font-size: 13px;
-  }
-  .sib-archive-resume button {
-    display: grid;
-    place-items: center;
-    flex: 0 0 42px;
-    width: 42px;
-    height: 42px;
-    border: 2px solid #07523c;
-    border-radius: 50%;
-    background: #fffefa;
-    color: #07523c;
-    cursor: pointer;
-  }
-  .sib-archive-resume button svg { width: 24px; height: 24px; }
-  .sib-archive-mobile-lessons-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 9px;
-    padding: 0 2px 12px;
-  }
-  .sib-archive-mobile-lessons-header h3 {
-    margin: 0;
-    color: #054630;
-    font-size: clamp(24px, 5vw, 32px);
-    font-weight: 850;
-    letter-spacing: -.045em;
-  }
-  .sib-archive-mobile-lessons-header span {
-    color: #49564d;
-    font-size: 14px;
-    white-space: nowrap;
-  }
-  .sib-duruus-redesign .sib-archive-recording-list { width: 100%; }
-  .sib-duruus-redesign .sib-archive-recording {
-    display: grid;
-    grid-template-columns: 44px 30px minmax(0, 1fr) 78px;
-    gap: 10px;
-    align-items: center;
-    min-height: 79px;
-    padding: 12px 3px;
-    border-bottom: 1px solid #ddc9a4;
-    border-radius: 0;
-  }
-  .sib-duruus-redesign .sib-archive-recording.is-active {
-    margin: 0 -4px;
-    padding: 12px 7px;
-    border-radius: 16px;
-  }
-  .sib-duruus-redesign .sib-archive-play {
-    width: 42px;
-    height: 42px;
-    flex-basis: auto;
-  }
-  .sib-archive-number { font-size: 15px; text-align: center; }
-  .sib-archive-recording-info h4 {
-    font-size: clamp(15px, 3.4vw, 20px);
-    font-weight: 840;
-    letter-spacing: -.02em;
-    line-height: 1.2;
-    overflow-wrap: anywhere;
-  }
-  .sib-archive-recording-info > span {
-    font-size: clamp(11px, 2.65vw, 14px);
-    line-height: 1.3;
-  }
-  .sib-archive-recording-actions { gap: 1px; }
-  .sib-archive-info,
-  .sib-archive-download { width: 36px; height: 41px; padding: 7px; }
-  .sib-archive-info svg,
-  .sib-archive-download svg { width: 22px; height: 22px; }
-  .sib-archive-all-complete {
-    padding: 20px 5px;
-    text-align: center;
-    color: #506353;
-    font-size: 14px;
-  }
-  .sib-duruus-redesign .sib-archive-player {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 13px;
-    margin: 26px 0 0;
-    padding: 19px 17px 18px;
-    border-radius: 27px;
-    bottom: max(8px, env(safe-area-inset-bottom));
-  }
-  .sib-archive-player-heading {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .sib-archive-player-heading strong {
-    display: block;
-    font-size: clamp(18px, 3.9vw, 23px);
-    line-height: 1.22;
-  }
-  .sib-archive-player-heading .sib-archive-player-close {
-    order: 2;
-    width: 24px;
-    height: 24px;
-    flex: 0 0 24px;
-  }
-  .sib-duruus-redesign .sib-archive-player-timeline {
-    display: flex;
-    width: 100%;
-    gap: 10px;
-    font-size: clamp(11px, 2.5vw, 14px);
-  }
-  .sib-archive-player-actions {
-    display: grid;
-    width: 100%;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    place-items: center;
-    gap: 0;
-  }
-  .sib-duruus-redesign .sib-archive-player-actions > button {
-    justify-self: center;
-    min-width: 37px;
-    min-height: 42px;
-  }
-  .sib-duruus-redesign .sib-archive-player-actions .sib-archive-player-play {
-    width: clamp(56px, 12vw, 72px);
-    height: clamp(56px, 12vw, 72px);
-    min-width: clamp(56px, 12vw, 72px);
-    min-height: clamp(56px, 12vw, 72px);
-  }
-  .sib-archive-player-skip svg { width: 35px; height: 35px; }
-  .sib-archive-player-bookmark svg { width: 29px; height: 29px; }
-}
-@media (max-width: 400px) {
-  .sib-duruus-redesign { padding-right: 13px; padding-left: 13px; }
-  .sib-archive-heading { font-size: clamp(34px, 9vw, 40px); }
-  .sib-archive-lesson-tab-options { gap: 7px; }
-  .sib-archive-lesson-tab-options button { padding: 8px 10px; font-size: 12px; }
-  .sib-archive-sort { flex-basis: 40px; width: 40px; height: 44px; }
-  .sib-duruus-redesign .sib-archive-recording {
-    grid-template-columns: 36px 24px minmax(0, 1fr) 68px;
-    gap: 6px;
-  }
-  .sib-duruus-redesign .sib-archive-play { width: 35px; height: 35px; }
-  .sib-archive-number { font-size: 13px; }
-  .sib-archive-info,
-  .sib-archive-download { width: 32px; height: 36px; padding: 5px; }
-  .sib-archive-book { flex-basis: 41px; width: 41px; }
-  .sib-archive-book svg { width: 39px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .sib-archive-mobile-series-trigger .sib-archive-chevron svg,
-  .sib-archive-player-actions button { transition: none; }
-}
+@media(max-width:370px){.sib-archive-modal-footer{flex-direction:column;align-items:stretch}}
+@media(prefers-reduced-motion:reduce){.sib-archive-pill,.sib-archive-series-button,.sib-archive-mobile-series-trigger svg{transition:none}}
