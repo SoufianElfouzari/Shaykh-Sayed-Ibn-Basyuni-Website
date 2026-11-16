@@ -16,25 +16,6 @@ import { useSsrData } from "../../../../SsrDataContext";
 
 import "./DuruusArchive.css";
 
-const sortOptions = [
-  {
-    value: "newest",
-    label: "Neueste zuerst",
-  },
-  {
-    value: "oldest",
-    label: "Älteste zuerst",
-  },
-  {
-    value: "series",
-    label: "Nach Unterrichtsreihe",
-  },
-  {
-    value: "title",
-    label: "Titel von A bis Z",
-  },
-];
-
 function SearchIcon() {
   return (
     <svg
@@ -152,40 +133,6 @@ function CloseIcon() {
         d="M17 7L7 17"
         stroke="currentColor"
         strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function EmptyIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect
-        x="5"
-        y="5"
-        width="14"
-        height="14"
-        rx="3"
-        stroke="currentColor"
-        strokeWidth="1.7"
-      />
-
-      <path
-        d="M9 10H15"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-      />
-
-      <path
-        d="M9 14H13"
-        stroke="currentColor"
-        strokeWidth="1.7"
         strokeLinecap="round"
       />
     </svg>
@@ -357,13 +304,6 @@ function DuruusArchive() {
     setActiveCategory,
   ] = useState("Alle");
 
-  const [
-    activeLanguage,
-    setActiveLanguage,
-  ] = useState("Alle");
-
-  const [sortBy, setSortBy] =
-    useState("newest");
   const [selectedSeries, setSelectedSeries] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
@@ -469,20 +409,6 @@ function DuruusArchive() {
     ];
   }, [recordings]);
 
-  const languages = useMemo(() => {
-    return [
-      "Alle",
-      ...new Set(
-        recordings
-          .map(
-            (recording) =>
-              recording.language,
-          )
-          .filter(Boolean),
-      ),
-    ];
-  }, [recordings]);
-
   const filteredRecordings =
     useMemo(() => {
       const normalizedSearch =
@@ -498,12 +424,6 @@ function DuruusArchive() {
                 "Alle" ||
               recording.category ===
                 activeCategory;
-
-            const languageMatches =
-              activeLanguage ===
-                "Alle" ||
-              recording.language ===
-                activeLanguage;
 
             const searchableContent =
               normalizeText(
@@ -523,67 +443,18 @@ function DuruusArchive() {
                 normalizedSearch,
               );
 
-            return (
-              categoryMatches &&
-              languageMatches &&
-              searchMatches
-            );
+            return categoryMatches && searchMatches;
           },
         );
 
       return [...results].sort(
-        (first, second) => {
-          if (sortBy === "oldest") {
-            return (
-              getDateTimestamp(
-                first.date,
-              ) -
-              getDateTimestamp(
-                second.date,
-              )
-            );
-          }
-
-          if (sortBy === "title") {
-            return first.title.localeCompare(
-              second.title,
-              "de",
-            );
-          }
-
-          if (sortBy === "series") {
-            const seriesResult =
-              first.series.localeCompare(
-                second.series,
-                "de",
-              );
-
-            if (seriesResult !== 0) {
-              return seriesResult;
-            }
-
-            return (
-              first.lessonNumber -
-              second.lessonNumber
-            );
-          }
-
-          return (
-            getDateTimestamp(
-              second.date,
-            ) -
-            getDateTimestamp(
-              first.date,
-            )
-          );
-        },
+        (first, second) =>
+          getDateTimestamp(second.date) - getDateTimestamp(first.date),
       );
     }, [
       recordings,
       searchTerm,
       activeCategory,
-      activeLanguage,
-      sortBy,
     ]);
 
   const groupedRecordings =
@@ -760,8 +631,6 @@ function DuruusArchive() {
   const resetFilters = () => {
     setSearchTerm("");
     setActiveCategory("Alle");
-    setActiveLanguage("Alle");
-    setSortBy("newest");
   };
 
   const startRecording =
