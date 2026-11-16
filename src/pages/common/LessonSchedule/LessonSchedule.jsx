@@ -29,6 +29,10 @@ function ArrowIcon() {
   );
 }
 
+function CalendarIcon() { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6M17 2v6M3 11h18"/></svg>; }
+function ClockIcon() { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg>; }
+function BookIcon() { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true"><path d="M12 6c-3-3-7-3-10-2v15c4-1 8 0 10 2 2-2 6-3 10-2V4c-3-1-7-1-10 2Zm0 0v15"/></svg>; }
+function InfoIcon() { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7v2"/></svg>; }
 function LessonSchedule() {
   const { lessons: serverLessons, __ssrPath } = useSsrData();
   const hasServerLessons = (__ssrPath === "/" || __ssrPath === "/durous") && Array.isArray(serverLessons);
@@ -63,7 +67,7 @@ function LessonSchedule() {
   }, [hasServerLessons]);
 
   return (
-    <section className="sib-schedule">
+    <section className="sib-schedule">\n      <div className="sib-schedule-mosque" aria-hidden="true" />
       <div className="sib-schedule-container">
         <header className="sib-schedule-header">
           <div>
@@ -72,7 +76,7 @@ function LessonSchedule() {
             </p>
 
             <h2 className="sib-schedule-title">
-              Islamische Unterrichte in Kassel
+              Islamische Unterrichte <span>in Kassel</span>
             </h2>
           </div>
 
@@ -127,7 +131,7 @@ function LessonSchedule() {
                     <span>{lesson.day}</span>
                   </div>
 
-                  <div className="sib-schedule-time">
+                  <div className="sib-schedule-time">\n                    <ClockIcon />
                     <span className="sib-schedule-mobile-label">
                       Uhrzeit
                     </span>
@@ -135,7 +139,7 @@ function LessonSchedule() {
                     <span>{lesson.time}</span>
                   </div>
 
-                  <div className="sib-schedule-subject">
+                  <div className="sib-schedule-subject">\n                    <BookIcon />
                     <span className="sib-schedule-mobile-label">
                       Unterricht
                     </span>
