@@ -967,23 +967,47 @@ function DuruusArchive() {
         {isLoadingRecordings ? <p className="sib-archive-status" role="status">Die Unterrichte werden geladen...</p> : errorMessage ? <p className="sib-archive-status" role="alert">{errorMessage}</p> : (
           <>
             <div className="sib-archive-toolbar">
-              <nav className="sib-archive-categories" aria-label="Unterrichtskategorien">
-                {categories.map((category) => <button key={category} type="button" className={activeCategory === category ? "sib-archive-pill is-active" : "sib-archive-pill"} aria-pressed={activeCategory === category} onClick={() => setActiveCategory(category)}>{category}</button>)}
+              <nav id="sib-archive-category-menu" className={filtersOpen ? "sib-archive-categories is-open" : "sib-archive-categories"} aria-label="Unterrichtskategorien">
+                {categories.map((category) => <button key={category} type="button" className={activeCategory === category ? "sib-archive-pill is-active" : "sib-archive-pill"} aria-pressed={activeCategory === category} onClick={() => { setActiveCategory(category); setFiltersOpen(false); setSelectedSeries(null); }}>{category}</button>)}
               </nav>
               <div className="sib-archive-search">
                 <SearchIcon />
-                <input type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Thema oder Unterricht suchen" aria-label="Unterricht suchen" />
+                <input type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Unterricht suchen" aria-label="Unterricht suchen" />
                 {searchTerm && <button type="button" aria-label="Suche löschen" onClick={() => setSearchTerm("")}><CloseIcon /></button>}
               </div>
+              <button
+                className={filtersOpen ? "sib-archive-mobile-filter is-active" : "sib-archive-mobile-filter"}
+                type="button"
+                aria-label="Unterrichtskategorien filtern"
+                aria-expanded={filtersOpen}
+                aria-controls="sib-archive-category-menu"
+                onClick={() => setFiltersOpen((value) => !value)}
+              >
+                <FilterIcon />
+              </button>
             </div>
             {audioErrorMessage && <p className="sib-archive-error" role="alert">{audioErrorMessage}</p>}
             {currentSeries ? (
               <div className="sib-archive-layout">
                 <div className="sib-archive-sidebar">
                   <h3>Unterrichtsreihen</h3>
-                  <div className="sib-archive-series-nav">
-                    {seriesList.map((group) => <button key={group.title} type="button" className={currentSeries.title === group.title ? "sib-archive-series-button is-active" : "sib-archive-series-button"} onClick={() => setSelectedSeries(group.title)} aria-pressed={currentSeries.title === group.title}>
-                      <span className="sib-archive-book" aria-hidden="true">▤</span>
+                  <button
+                    type="button"
+                    className="sib-archive-mobile-series-trigger"
+                    aria-expanded={mobileSeriesOpen}
+                    aria-controls="sib-archive-series-options"
+                    onClick={() => setMobileSeriesOpen((value) => !value)}
+                  >
+                    <span className="sib-archive-book"><BookIcon /></span>
+                    <span className="sib-archive-series-copy">
+                      <strong>{currentSeries.title}</strong>
+                      <small>{currentSeries.recordings.length} {currentSeries.recordings.length === 1 ? "Aufnahme" : "Aufnahmen"}</small>
+                    </span>
+                    <span className={mobileSeriesOpen ? "sib-archive-chevron is-open" : "sib-archive-chevron"}><ChevronIcon /></span>
+                  </button>
+                  <div id="sib-archive-series-options" className={mobileSeriesOpen ? "sib-archive-series-nav is-expanded" : "sib-archive-series-nav"}>
+                    {seriesList.map((group) => <button key={group.title} type="button" className={currentSeries.title === group.title ? "sib-archive-series-button is-active" : "sib-archive-series-button"} onClick={() => { setSelectedSeries(group.title); setMobileSeriesOpen(false); setLessonView("all"); }} aria-pressed={currentSeries.title === group.title}>
+                      <span className="sib-archive-book" aria-hidden="true"><BookIcon /></span>
                       <span className="sib-archive-series-copy"><strong>{group.title}</strong><small>{group.recordings.length} {group.recordings.length === 1 ? "Aufnahme" : "Aufnahmen"}</small></span>
                       <span aria-hidden="true" className="sib-archive-chevron">›</span>
                     </button>)}
@@ -995,8 +1019,33 @@ function DuruusArchive() {
                     <span className="sib-archive-series-tag">{currentSeries.category}</span>
                   </div>
                   <p className="sib-archive-series-summary">{currentSeries.recordings.length} {currentSeries.recordings.length === 1 ? "veröffentlichte Unterrichtseinheit" : "veröffentlichte Unterrichtseinheiten"}</p>
+                  <div className="sib-archive-lesson-tabs">
+                    <div className="sib-archive-lesson-tab-options" role="group" aria-label="Lektionen anzeigen">
+                      <button className={lessonView === "all" ? "is-active" : ""} type="button" aria-pressed={lessonView === "all"} onClick={() => setLessonView("all")}>Alle Lektionen</button>
+                      <button className={lessonView === "open" ? "is-active" : ""} type="button" aria-pressed={lessonView === "open"} onClick={() => setLessonView("open")}>Noch offen</button>
+                    </div>
+                    <button
+                      type="button"
+                      className="sib-archive-sort"
+                      aria-label={ascending ? "Lektionen absteigend sortieren" : "Lektionen aufsteigend sortieren"}
+                      title={ascending ? "Neueste Lektion zuerst" : "Erste Lektion zuerst"}
+                      onClick={() => setAscending((value) => !value)}
+                    ><SortIcon /></button>
+                  </div>
+                  {continueRecording && (
+                    <div className="sib-archive-resume">
+                      <div className="sib-archive-resume-copy">
+                        <strong>Weiterlernen</strong>
+                        <span>{continueRecording.title} · bei {formatClock(progressMap[String(continueRecording.id)]?.seconds || 0)} fortsetzen</span>
+                      </div>
+                      <button type="button" onClick={() => handleResume(continueRecording)} aria-label={`${continueRecording.title} fortsetzen`}><PlayIcon /></button>
+                    </div>
+                  )}
+                  <div className="sib-archive-mobile-lessons-header">
+                    <h3>Lektionen</h3><span>{seriesRecordings.length} {seriesRecordings.length === 1 ? "Aufnahme" : "Aufnahmen"}</span>
+                  </div>
                   <div className="sib-archive-recording-list">
-                    {[...currentSeries.recordings].sort((a,b) => (Number(a.lessonNumber) || 0) - (Number(b.lessonNumber) || 0)).map((recording) => {
+                    {seriesRecordings.map((recording) => {
                       const active = activeRecording?.id === recording.id;
                       return (
                         <article
@@ -1024,7 +1073,7 @@ function DuruusArchive() {
                           </span>
                           <div className="sib-archive-recording-info">
                             <h4>{recording.title}</h4>
-                            <span>{formatDate(recording.date)}{recording.duration ? ` · ${recording.duration}` : ""}</span>
+                            <span>{formatDate(recording.date)}{recording.duration ? ` · ${recording.duration}` : ""}{active && isPlaying ? " · Wird abgespielt" : ""}</span>
                           </div>
                           <div className="sib-archive-recording-actions">
                             <button
@@ -1051,20 +1100,56 @@ function DuruusArchive() {
                       );
                     })}
                   </div>
+                  {seriesRecordings.length === 0 && lessonView === "open" && (
+                    <p className="sib-archive-all-complete">Alle Lektionen dieser Reihe wurden bereits angehört.</p>
+                  )}
                 </div>
               </div>
             ) : <div className="sib-archive-status"><h3>{recordings.length ? "Keine passenden Aufnahmen" : "Noch keine Unterrichte veröffentlicht"}</h3><p>{recordings.length ? "Versuche einen anderen Suchbegriff oder eine andere Kategorie." : "Neue Aufnahmen erscheinen hier, sobald sie veröffentlicht wurden."}</p>{recordings.length > 0 && <button type="button" onClick={resetFilters}>Filter zurücksetzen</button>}</div>}
           </>
         )}
-        {activeRecording && <div className="sib-archive-player">
-          <button type="button" className="sib-archive-player-play" onClick={() => toggleRecording(activeRecording)} aria-label={isPlaying ? "Pausieren" : "Abspielen"} disabled={!audioUrl || isLoadingAudio}>{isPlaying ? <PauseIcon /> : <PlayIcon />}</button>
-          <div className="sib-archive-player-controls">
-            <strong>{activeRecording.title}</strong>
-            <div className="sib-archive-player-timeline"><button type="button" onClick={() => seekBy(-15)} aria-label="15 Sekunden zurück">↶15</button><span>{formatClock(currentTime)}</span><input aria-label="Wiedergabeposition" type="range" min="0" max={audioDuration || 1} value={Math.min(currentTime, audioDuration || 1)} onChange={(event) => { if(audioRef.current) audioRef.current.currentTime = Number(event.target.value); setCurrentTime(Number(event.target.value)); }} /><span>{formatClock(audioDuration)}</span><button type="button" onClick={() => seekBy(15)} aria-label="15 Sekunden vor">15↷</button></div>
+        {activeRecording && <div className="sib-archive-player" aria-label="Audioplayer">
+          <div className="sib-archive-player-heading">
+            <strong>{String(activeRecording.lessonNumber || "").padStart(2, "0")} {activeRecording.title}</strong>
+            <button type="button" className="sib-archive-player-close" onClick={closePlayer} aria-label="Audio-Player schließen"><CloseIcon /></button>
           </div>
-          <button type="button" className="sib-archive-rate" onClick={changeRate} aria-label="Wiedergabegeschwindigkeit ändern">{playbackRate}x</button>
-          <button type="button" className="sib-archive-player-close" onClick={closePlayer} aria-label="Player schließen"><CloseIcon /></button>
-          <audio ref={audioRef} src={audioUrl || undefined} preload="metadata" onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)} onLoadedMetadata={(event) => {setAudioDuration(event.currentTarget.duration || 0);event.currentTarget.playbackRate=playbackRate;}} onDurationChange={(event) => setAudioDuration(event.currentTarget.duration || 0)} />
+          <div className="sib-archive-player-timeline">
+            <span>{formatClock(currentTime)}</span>
+            <input
+              aria-label="Wiedergabeposition"
+              type="range"
+              min="0"
+              max={audioDuration || 1}
+              value={Math.min(currentTime, audioDuration || 1)}
+              onChange={(event) => {
+                const time = Number(event.target.value);
+                if (audioRef.current) audioRef.current.currentTime = time;
+                setCurrentTime(time);
+              }}
+            />
+            <span>{formatClock(audioDuration || Number(activeRecording.durationSeconds) || 0)}</span>
+          </div>
+          <div className="sib-archive-player-actions">
+            <button type="button" className="sib-archive-rate" onClick={changeRate} aria-label="Wiedergabegeschwindigkeit ändern">{playbackRate}x</button>
+            <button type="button" className="sib-archive-player-skip" onClick={() => seekBy(-15)} aria-label="15 Sekunden zurück"><SkipIcon /></button>
+            <button type="button" className="sib-archive-player-play" onClick={() => toggleRecording(activeRecording)} aria-label={isPlaying ? "Pausieren" : "Abspielen"} disabled={!audioUrl || isLoadingAudio}>{isPlaying ? <PauseIcon /> : <PlayIcon />}</button>
+            <button type="button" className="sib-archive-player-skip" onClick={() => seekBy(15)} aria-label="15 Sekunden vor"><SkipIcon forward /></button>
+            <button
+              type="button"
+              className={bookmarks.includes(String(activeRecording.id)) ? "sib-archive-player-bookmark is-active" : "sib-archive-player-bookmark"}
+              onClick={() => toggleBookmark(activeRecording.id)}
+              aria-label={bookmarks.includes(String(activeRecording.id)) ? "Lesezeichen entfernen" : "Lesezeichen setzen"}
+              aria-pressed={bookmarks.includes(String(activeRecording.id))}
+            ><BookmarkIcon filled={bookmarks.includes(String(activeRecording.id))} /></button>
+          </div>
+          <audio
+            ref={audioRef}
+            src={audioUrl || undefined}
+            preload="metadata"
+            onTimeUpdate={(event) => handleTimeUpdate(event.currentTarget)}
+            onLoadedMetadata={(event) => handleMetadata(event.currentTarget)}
+            onDurationChange={(event) => setAudioDuration(Number.isFinite(event.currentTarget.duration) ? event.currentTarget.duration : 0)}
+          />
         </div>}
       </div>
     </section>
