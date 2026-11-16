@@ -976,3 +976,10 @@
     grid-template-columns: 35px minmax(0, 1fr);
   }
 }
+
+/* Show three latest articles on mobile; keep all six on larger screens. */
+@media (max-width: 680px) {
+  .sib-articles-layout > .sib-articles-secondary:nth-child(n + 4) {
+    display: none;
+  }
+}
