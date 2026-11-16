@@ -304,6 +304,10 @@ function DuruusArchive() {
 
   const [sortBy, setSortBy] =
     useState("newest");
+  const [selectedSeries, setSelectedSeries] = useState(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+  const [playbackRate, setPlaybackRate] = useState(1);
 
   const [
     activeRecording,
@@ -630,6 +634,25 @@ function DuruusArchive() {
     audio.load();
   }, [audioUrl]);
 
+  const seriesList = Object.values(groupedRecordings);
+  const currentSeries = seriesList.find((group) => group.title === selectedSeries) || seriesList[0] || null;
+  const formatClock = (seconds) => {
+    if (!Number.isFinite(seconds)) return "0:00";
+    const total = Math.floor(seconds);
+    const hours = Math.floor(total / 3600);
+    const minutes = Math.floor((total % 3600) / 60);
+    const secs = String(total % 60).padStart(2, "0");
+    return hours ? `${hours}:${String(minutes).padStart(2, "0")}:${secs}` : `${minutes}:${secs}`;
+  };
+  const seekBy = (seconds) => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = Math.max(0, Math.min(audioRef.current.duration || 0, audioRef.current.currentTime + seconds));
+  };
+  const changeRate = () => {
+    const next = playbackRate === 1 ? 1.25 : playbackRate === 1.25 ? 1.5 : playbackRate === 1.5 ? 2 : 1;
+    setPlaybackRate(next);
+    if (audioRef.current) audioRef.current.playbackRate = next;
+  };
   const resetFilters = () => {
     setSearchTerm("");
     setActiveCategory("Alle");
@@ -801,593 +824,71 @@ function DuruusArchive() {
   };
 
   return (
-    <section
-      className="sib-duruus-archive"
-      id="unterrichtsarchiv"
-      aria-labelledby="sib-duruus-archive-title"
-    >
+    <section className="sib-duruus-archive sib-duruus-redesign" id="unterrichtsarchiv" aria-labelledby="sib-duruus-archive-title">
       <div className="sib-duruus-archive-container">
-        <header className="sib-duruus-archive-header">
-          <div className="sib-duruus-archive-label-row">
-            <span
-              className="sib-duruus-archive-label-line"
-              aria-hidden="true"
-            ></span>
-
-            <p className="sib-duruus-archive-label">
-              Durous und Audioarchiv
-            </p>
-          </div>
-
-          <div className="sib-duruus-archive-header-content">
-            <h2
-              id="sib-duruus-archive-title"
-              className="sib-duruus-archive-title"
-            >
-              Audioaufnahmen
-              <span>
-                und Unterrichtsreihen.
-              </span>
-            </h2>
-
-            <p className="sib-duruus-archive-description">
-              Suche nach veröffentlichten Durous und
-              islamischen Unterrichten. Filtere die Aufnahmen
-              nach Thema, Sprache oder Unterrichtsreihe.
-            </p>
-          </div>
+        <header className="sib-archive-intro">
+          <p className="sib-archive-eyebrow">Islamisches Wissen</p>
+          <h2 id="sib-duruus-archive-title" className="sib-archive-heading">Unterricht &amp; <span>Audioarchiv</span></h2>
+          <p className="sib-archive-subtitle">Unterrichtsreihen und Aufnahmen von Dr. Shaykh Sayed Ibn Basyuni</p>
         </header>
-
-        {isLoadingRecordings && (
-          <div
-            className="sib-duruus-archive-empty"
-            aria-live="polite"
-          >
-            <span aria-hidden="true">
-              <EmptyIcon />
-            </span>
-
-            <h3>
-              Durous werden geladen
-            </h3>
-
-            <p>
-              Die veröffentlichten Aufnahmen
-              werden aus Supabase geladen.
-            </p>
-          </div>
-        )}
-
-        {!isLoadingRecordings &&
-          errorMessage && (
-            <div
-              className="sib-duruus-archive-empty"
-              role="alert"
-            >
-              <span aria-hidden="true">
-                <EmptyIcon />
-              </span>
-
-              <h3>
-                Durous konnten nicht geladen
-                werden
-              </h3>
-
-              <p>{errorMessage}</p>
-            </div>
-          )}
-
-        {!isLoadingRecordings &&
-          !errorMessage && (
-            <>
-              <div className="sib-duruus-archive-controls">
-                <div className="sib-duruus-archive-search">
-                  <span
-                    className="sib-duruus-archive-search-icon"
-                    aria-hidden="true"
-                  >
-                    <SearchIcon />
-                  </span>
-
-                  <input
-                    type="search"
-                    value={searchTerm}
-                    onChange={(event) =>
-                      setSearchTerm(
-                        event.target.value,
-                      )
-                    }
-                    placeholder="Unterricht oder Thema suchen"
-                    aria-label="Unterrichtsarchiv durchsuchen"
-                  />
-
-                  {searchTerm && (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setSearchTerm("")
-                      }
-                      aria-label="Suchbegriff löschen"
-                    >
-                      <CloseIcon />
-                    </button>
-                  )}
-                </div>
-
-                <div className="sib-duruus-archive-control">
-                  <label htmlFor="archive-language">
-                    Sprache
-                  </label>
-
-                  <select
-                    id="archive-language"
-                    value={activeLanguage}
-                    onChange={(event) =>
-                      setActiveLanguage(
-                        event.target.value,
-                      )
-                    }
-                  >
-                    {languages.map(
-                      (language) => (
-                        <option
-                          key={language}
-                          value={language}
-                        >
-                          {language}
-                        </option>
-                      ),
-                    )}
-                  </select>
-                </div>
-
-                <div className="sib-duruus-archive-control">
-                  <label htmlFor="archive-sort">
-                    Sortierung
-                  </label>
-
-                  <select
-                    id="archive-sort"
-                    value={sortBy}
-                    onChange={(event) =>
-                      setSortBy(
-                        event.target.value,
-                      )
-                    }
-                  >
-                    {sortOptions.map(
-                      (option) => (
-                        <option
-                          key={
-                            option.value
-                          }
-                          value={
-                            option.value
-                          }
-                        >
-                          {option.label}
-                        </option>
-                      ),
-                    )}
-                  </select>
-                </div>
-              </div>
-
-              <nav
-                className="sib-duruus-archive-categories"
-                aria-label="Unterrichtskategorien"
-              >
-                {categories.map(
-                  (category) => {
-                    const count =
-                      category === "Alle"
-                        ? recordings.length
-                        : recordings.filter(
-                            (
-                              recording,
-                            ) =>
-                              recording.category ===
-                              category,
-                          ).length;
-
-                    return (
-                      <button
-                        key={category}
-                        type="button"
-                        className={
-                          activeCategory ===
-                          category
-                            ? "sib-duruus-archive-category sib-duruus-archive-category-active"
-                            : "sib-duruus-archive-category"
-                        }
-                        onClick={() =>
-                          setActiveCategory(
-                            category,
-                          )
-                        }
-                      >
-                        <span>
-                          {category}
-                        </span>
-
-                        <span className="sib-duruus-archive-category-count">
-                          {count}
-                        </span>
-                      </button>
-                    );
-                  },
-                )}
+        {isLoadingRecordings ? <p className="sib-archive-status" role="status">Die Unterrichte werden geladen...</p> : errorMessage ? <p className="sib-archive-status" role="alert">{errorMessage}</p> : (
+          <>
+            <div className="sib-archive-toolbar">
+              <nav className="sib-archive-categories" aria-label="Unterrichtskategorien">
+                {categories.map((category) => <button key={category} type="button" className={activeCategory === category ? "sib-archive-pill is-active" : "sib-archive-pill"} aria-pressed={activeCategory === category} onClick={() => setActiveCategory(category)}>{category}</button>)}
               </nav>
-
-              <div className="sib-duruus-archive-result-info">
-                <p>
-                  <span className="sib-duruus-archive-result-count">
-                    {filteredRecordings.length}
-                  </span>{" "}
-                  {filteredRecordings.length ===
-                  1
-                    ? "Aufnahme"
-                    : "Aufnahmen"}{" "}
-                  gefunden
-                </p>
-
-                {(searchTerm ||
-                  activeCategory !==
-                    "Alle" ||
-                  activeLanguage !==
-                    "Alle") && (
-                  <button
-                    type="button"
-                    onClick={resetFilters}
-                  >
-                    Filter zurücksetzen
-                  </button>
-                )}
+              <div className="sib-archive-search">
+                <SearchIcon />
+                <input type="search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Thema oder Unterricht suchen" aria-label="Unterricht suchen" />
+                {searchTerm && <button type="button" aria-label="Suche löschen" onClick={() => setSearchTerm("")}><CloseIcon /></button>}
               </div>
-
-              {audioErrorMessage && (
-                <div
-                  role="alert"
-                  style={{
-                    marginBottom: "22px",
-                    padding: "14px 18px",
-                    border:
-                      "1px solid rgba(180, 45, 45, 0.2)",
-                    borderRadius: "10px",
-                    background:
-                      "rgba(180, 45, 45, 0.05)",
-                    color: "#8f2525",
-                    fontSize: "14px",
-                  }}
-                >
-                  {audioErrorMessage}
-                </div>
-              )}
-
-              {filteredRecordings.length >
-              0 ? (
-                <div className="sib-duruus-series-list">
-                  {Object.values(
-                    groupedRecordings,
-                  ).map(
-                    (
-                      group,
-                      groupIndex,
-                    ) => (
-                      <section
-                        key={group.title}
-                        className="sib-duruus-series"
-                        style={{
-                          "--sib-series-index":
-                            groupIndex,
-                        }}
-                      >
-                        <header className="sib-duruus-series-header">
-                          <div>
-                            <p className="sib-duruus-series-category">
-                              {
-                                group.category
-                              }
-                            </p>
-
-                            <h3>
-                              {group.title}
-                            </h3>
-                          </div>
-
-                          <p className="sib-duruus-series-count">
-                            {
-                              group
-                                .recordings
-                                .length
-                            }{" "}
-                            {group
-                              .recordings
-                              .length === 1
-                              ? "Unterricht"
-                              : "Unterrichte"}
-                          </p>
-                        </header>
-
-                        <div className="sib-duruus-series-lessons">
-                          {group.recordings.map(
-                            (
-                              recording,
-                            ) => {
-                              const isActive =
-                                activeRecording?.id ===
-                                recording.id;
-
-                              const isLoadingThisAudio =
-                                isLoadingAudio &&
-                                isActive;
-
-                              const isDownloading =
-                                downloadingRecordingId ===
-                                recording.id;
-
-                              return (
-                                <article
-                                  key={
-                                    recording.id
-                                  }
-                                  id={`aufnahme-${recording.id}`}
-                                  className={`sib-duruus-lesson ${
-                                    isActive
-                                      ? "sib-duruus-lesson-active"
-                                      : ""
-                                  }`}
-                                >
-                                  <button
-                                    type="button"
-                                    className="sib-duruus-lesson-play"
-                                    disabled={
-                                      isLoadingAudio
-                                    }
-                                    onClick={() =>
-                                      toggleRecording(
-                                        recording,
-                                      )
-                                    }
-                                    aria-label={
-                                      isActive &&
-                                      isPlaying
-                                        ? `${recording.title} pausieren`
-                                        : `${recording.title} abspielen`
-                                    }
-                                  >
-                                    {isLoadingThisAudio ? (
-                                      <span>
-                                        ...
-                                      </span>
-                                    ) : isActive &&
-                                      isPlaying ? (
-                                      <PauseIcon />
-                                    ) : (
-                                      <PlayIcon />
-                                    )}
-                                  </button>
-
-                                  <div className="sib-duruus-lesson-content">
-                                    <div className="sib-duruus-lesson-top">
-                                      <p className="sib-duruus-lesson-number">
-                                        Unterricht{" "}
-                                        {String(
-                                          recording.lessonNumber,
-                                        ).padStart(
-                                          2,
-                                          "0",
-                                        )}
-                                      </p>
-
-                                      <time
-                                        dateTime={
-                                          recording.date ||
-                                          undefined
-                                        }
-                                      >
-                                        {formatDate(
-                                          recording.date,
-                                        )}
-                                      </time>
-                                    </div>
-
-                                    <h4>
-                                      {
-                                        recording.title
-                                      }
-                                    </h4>
-
-                                    {recording.description && (
-                                      <LessonDescription description={recording.description} />
-                                    )}
-
-                                    <a
-                                      className="sib-duruus-lesson-permalink"
-                                      href={`/durous#aufnahme-${encodeURIComponent(String(recording.id))}`}
-                                      style={{ display: "inline-block", marginTop: "8px", fontSize: "0.82rem", textDecoration: "underline", textUnderlineOffset: "3px" }}
-                                      aria-label={`Direktlink zum Unterricht: ${recording.title}`}
-                                    >
-                                      Direktlink zum Unterricht
-                                    </a>
-
-                                    <div className="sib-duruus-lesson-meta">
-                                      <span>
-                                        {
-                                          recording.language
-                                        }
-                                      </span>
-
-                                      <span
-                                        aria-hidden="true"
-                                      ></span>
-
-                                      <span>
-                                        {
-                                          recording.duration
-                                        }
-                                      </span>
-                                    </div>
-                                  </div>
-
-                                  <div className="sib-duruus-lesson-actions">
-                                    <button
-                                      type="button"
-                                      className="sib-duruus-lesson-listen"
-                                      disabled={
-                                        isLoadingAudio
-                                      }
-                                      onClick={() =>
-                                        toggleRecording(
-                                          recording,
-                                        )
-                                      }
-                                    >
-                                      {isLoadingThisAudio
-                                        ? "Wird geladen..."
-                                        : isActive &&
-                                            isPlaying
-                                          ? "Pausieren"
-                                          : "Anhören"}
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      className="sib-duruus-lesson-download"
-                                      disabled={
-                                        isDownloading
-                                      }
-                                      onClick={() =>
-                                        handleDownload(
-                                          recording,
-                                        )
-                                      }
-                                      aria-label={`${recording.title} herunterladen`}
-                                    >
-                                      {isDownloading ? (
-                                        <span>
-                                          ...
-                                        </span>
-                                      ) : (
-                                        <DownloadIcon />
-                                      )}
-                                    </button>
-                                  </div>
-                                </article>
-                              );
-                            },
-                          )}
-                        </div>
-                      </section>
-                    ),
-                  )}
-                </div>
-              ) : (
-                <div className="sib-duruus-archive-empty">
-                  <span aria-hidden="true">
-                    <EmptyIcon />
-                  </span>
-
-                  <h3>
-                    {recordings.length === 0
-                      ? "Noch keine Durous veröffentlicht"
-                      : "Keine Aufnahmen gefunden"}
-                  </h3>
-
-                  <p>
-                    {recordings.length === 0
-                      ? "Das Unterrichtsarchiv wird derzeit aufgebaut. Sobald Aufnahmen veröffentlicht werden, erscheinen sie hier."
-                      : "Für die Suche oder Filterauswahl sind derzeit keine passenden Durous vorhanden."}
-                  </p>
-
-                  {recordings.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={resetFilters}
-                    >
-                      Alle Aufnahmen anzeigen
-                    </button>
-                  )}
-                </div>
-              )}
-            </>
-          )}
-      </div>
-
-      {activeRecording && (
-        <div className="sib-duruus-player">
-          <div className="sib-duruus-player-container">
-            <button
-              type="button"
-              className="sib-duruus-player-main-control"
-              disabled={
-                isLoadingAudio ||
-                !audioUrl
-              }
-              onClick={() =>
-                toggleRecording(
-                  activeRecording,
-                )
-              }
-              aria-label={
-                isPlaying
-                  ? "Aufnahme pausieren"
-                  : "Aufnahme abspielen"
-              }
-            >
-              {isLoadingAudio ? (
-                <span>...</span>
-              ) : isPlaying ? (
-                <PauseIcon />
-              ) : (
-                <PlayIcon />
-              )}
-            </button>
-
-            <div className="sib-duruus-player-information">
-              <span>
-                {activeRecording.series}
-              </span>
-
-              <span className="sib-duruus-player-recording-title">
-                {activeRecording.title}
-              </span>
             </div>
-
-            {audioUrl ? (
-              <audio
-                ref={audioRef}
-                src={audioUrl}
-                controls
-                preload="metadata"
-              >
-                Dein Browser unterstützt
-                keine Audiowiedergabe.
-              </audio>
-            ) : (
-              <div
-                style={{
-                  flex: 1,
-                  fontSize: "13px",
-                  color:
-                    "rgba(255, 255, 255, 0.7)",
-                }}
-              >
-                Aufnahme wird geladen...
+            {audioErrorMessage && <p className="sib-archive-error" role="alert">{audioErrorMessage}</p>}
+            {currentSeries ? (
+              <div className="sib-archive-layout">
+                <div className="sib-archive-sidebar">
+                  <h3>Unterrichtsreihen</h3>
+                  <div className="sib-archive-series-nav">
+                    {seriesList.map((group) => <button key={group.title} type="button" className={currentSeries.title === group.title ? "sib-archive-series-button is-active" : "sib-archive-series-button"} onClick={() => setSelectedSeries(group.title)} aria-pressed={currentSeries.title === group.title}>
+                      <span className="sib-archive-book" aria-hidden="true">▤</span>
+                      <span className="sib-archive-series-copy"><strong>{group.title}</strong><small>{group.recordings.length} {group.recordings.length === 1 ? "Aufnahme" : "Aufnahmen"}</small></span>
+                      <span aria-hidden="true" className="sib-archive-chevron">›</span>
+                    </button>)}
+                  </div>
+                </div>
+                <div className="sib-archive-lessons">
+                  <div className="sib-archive-series-header">
+                    <h3>{currentSeries.title}</h3>
+                    <span className="sib-archive-series-tag">{currentSeries.category}</span>
+                  </div>
+                  <p className="sib-archive-series-summary">{currentSeries.recordings.length} {currentSeries.recordings.length === 1 ? "veröffentlichte Unterrichtseinheit" : "veröffentlichte Unterrichtseinheiten"}</p>
+                  <div className="sib-archive-recording-list">
+                    {[...currentSeries.recordings].sort((a,b) => (Number(a.lessonNumber) || 0) - (Number(b.lessonNumber) || 0)).map((recording) => {
+                      const active = activeRecording?.id === recording.id;
+                      return <article className={active ? "sib-archive-recording is-active" : "sib-archive-recording"} key={recording.id} id={`aufnahme-${recording.id}`}>
+                        <button type="button" className="sib-archive-play" disabled={isLoadingAudio} onClick={() => toggleRecording(recording)} aria-label={active && isPlaying ? `${recording.title} pausieren` : `${recording.title} abspielen`}>{active && isPlaying ? <PauseIcon /> : <PlayIcon />}</button>
+                        <span className="sib-archive-number">{String(recording.lessonNumber || "").padStart(2, "0")}</span>
+                        <div className="sib-archive-recording-info"><h4>{recording.title}</h4><span>{formatDate(recording.date)}{recording.duration ? ` · ${recording.duration}` : ""}</span>{recording.description && <details className="sib-archive-description"><summary>Beschreibung</summary><DescriptionText text={recording.description} /></details>}</div>
+                        <button type="button" className="sib-archive-download" onClick={() => handleDownload(recording)} disabled={downloadingRecordingId === recording.id} aria-label={`${recording.title} herunterladen`}><DownloadIcon /></button>
+                      </article>;
+                    })}
+                  </div>
+                </div>
               </div>
-            )}
-
-            <button
-              type="button"
-              className="sib-duruus-player-close"
-              onClick={closePlayer}
-              aria-label="Audio-Player schließen"
-            >
-              <CloseIcon />
-            </button>
+            ) : <div className="sib-archive-status"><h3>{recordings.length ? "Keine passenden Aufnahmen" : "Noch keine Unterrichte veröffentlicht"}</h3><p>{recordings.length ? "Versuche einen anderen Suchbegriff oder eine andere Kategorie." : "Neue Aufnahmen erscheinen hier, sobald sie veröffentlicht wurden."}</p>{recordings.length > 0 && <button type="button" onClick={resetFilters}>Filter zurücksetzen</button>}</div>}
+          </>
+        )}
+        {activeRecording && <div className="sib-archive-player">
+          <button type="button" className="sib-archive-player-play" onClick={() => toggleRecording(activeRecording)} aria-label={isPlaying ? "Pausieren" : "Abspielen"} disabled={!audioUrl || isLoadingAudio}>{isPlaying ? <PauseIcon /> : <PlayIcon />}</button>
+          <div className="sib-archive-player-controls">
+            <strong>{activeRecording.title}</strong>
+            <div className="sib-archive-player-timeline"><button type="button" onClick={() => seekBy(-15)} aria-label="15 Sekunden zurück">↶15</button><span>{formatClock(currentTime)}</span><input aria-label="Wiedergabeposition" type="range" min="0" max={audioDuration || 1} value={Math.min(currentTime, audioDuration || 1)} onChange={(event) => { if(audioRef.current) audioRef.current.currentTime = Number(event.target.value); setCurrentTime(Number(event.target.value)); }} /><span>{formatClock(audioDuration)}</span><button type="button" onClick={() => seekBy(15)} aria-label="15 Sekunden vor">15↷</button></div>
           </div>
-        </div>
-      )}
+          <button type="button" className="sib-archive-rate" onClick={changeRate} aria-label="Wiedergabegeschwindigkeit ändern">{playbackRate}x</button>
+          <button type="button" className="sib-archive-player-close" onClick={closePlayer} aria-label="Player schließen"><CloseIcon /></button>
+          <audio ref={audioRef} src={audioUrl || undefined} preload="metadata" onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)} onLoadedMetadata={(event) => {setAudioDuration(event.currentTarget.duration || 0);event.currentTarget.playbackRate=playbackRate;}} onDurationChange={(event) => setAudioDuration(event.currentTarget.duration || 0)} />
+        </div>}
+      </div>
     </section>
   );
 }
