@@ -101,6 +101,44 @@ test("recording details open from the entire row and the info button", async ({ 
   await expect(dialog).toHaveCount(0);
 });
 
+test("audio archive mobile layout fits narrow screens and uses the hero book artwork", async ({ page }) => {
+  for (const width of [320, 375, 430, 768]) {
+    await page.setViewportSize({ width, height: 850 });
+    await page.goto("/durous");
+
+    const archive = page.locator("#unterrichtsarchiv");
+    await expect(archive.getByRole("heading", { name: "Unterricht & Audioarchiv" })).toBeVisible();
+    await expect(archive.getByRole("button", { name: /Durus al|Fiqh/i }).first()).toBeVisible();
+    await expect(archive.locator(".sib-archive-mobile-series-trigger")).toBeVisible();
+    await expect(archive.locator(".sib-archive-mobile-series-trigger svg path[d^='M37.7 16.1']")).toHaveCount(1);
+    await expect(archive.getByRole("button", { name: "Unterrichtskategorien filtern" })).toBeVisible();
+    await expect(archive.locator(".sib-archive-recording")).toHaveCount(1);
+
+    const layoutOverflow = await archive.evaluate((element) => element.scrollWidth - element.clientWidth);
+    expect(layoutOverflow).toBeLessThanOrEqual(2);
+
+    await archive.getByRole("button", { name: "Unterrichtskategorien filtern" }).click();
+    await expect(archive.getByRole("navigation", { name: "Unterrichtskategorien" })).toBeVisible();
+    await archive.getByRole("button", { name: "Fiqh", exact: true }).click();
+    await expect(archive.getByRole("navigation", { name: "Unterrichtskategorien" })).toBeHidden();
+    await archive.getByRole("button", { name: "Noch offen" }).click();
+    await expect(archive.locator(".sib-archive-recording")).toHaveCount(1);
+  }
+});
+
+test("audio archive offers real saved listening progress only when present", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem("sib-duruus-progress-v1", JSON.stringify({
+      "fixture-dars": { seconds: 187, duration: 1500, complete: false, updatedAt: Date.now() },
+    }));
+  });
+  await page.setViewportSize({ width: 375, height: 850 });
+  await page.goto("/durous");
+  await expect(page.locator(".sib-archive-resume")).toContainText("bei 3:07 fortsetzen");
+  await page.getByRole("button", { name: "Noch offen" }).click();
+  await expect(page.locator(".sib-archive-recording")).toHaveCount(1);
+});
+
 test("archive page parameters keep canonical URL and reject nonexistent pages", async ({ page }) => {
   const first = await page.goto("/artikel?page=1");
   expect(first.status()).toBe(200);
