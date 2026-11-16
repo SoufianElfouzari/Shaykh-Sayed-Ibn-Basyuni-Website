@@ -1499,3 +1499,31 @@
 @media (max-width: 380px) {
   .sib-mobile-menu { right: 14px; width: calc(100% - 28px); }
 }
+
+/* Mobile Fatwa action shares the exact SVG icon treatment of the header CTA. */
+.sib-mobile-fatwa-cta .sib-fatwa-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  color: #e9b634;
+}
+.sib-mobile-fatwa-cta .sib-fatwa-icon svg {
+  display: block;
+  width: 29px;
+  height: 29px;
+}
+.sib-mobile-fatwa-cta .sib-fatwa-arrow {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  margin-left: auto;
+  color: #fff;
+}
+.sib-mobile-fatwa-cta .sib-fatwa-arrow svg {
+  width: 23px;
+  height: 23px;
+}
