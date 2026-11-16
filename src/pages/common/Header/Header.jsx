@@ -9,7 +9,7 @@ import "./Header.css";
 const navigationItems = [
   {
     label: "Startseite",
-    mobileLabel: "Start",
+    mobileLabel: "Startseite",
     path: "/",
   },
   {
@@ -18,17 +18,17 @@ const navigationItems = [
     path: "/shaykh",
   },
   {
-    label: "Durus",
+    label: "Unterrichte",
     mobileLabel: "Audio und Unterrichte",
     path: "/durous",
   },
   {
-    label: "Veröffentlichungen",
+    label: "Artikel",
     mobileLabel: "Artikel lesen",
     path: "/artikel",
   },
   {
-    label: "Fatwa-Fragen",
+    label: "Fatwa anfragen",
     mobileLabel: "Fatwa anfragen",
     path: "/kontakt?anliegen=fatwa",
   },
@@ -70,20 +70,6 @@ function Header() {
     const frame = window.requestAnimationFrame(() => setIsMenuOpen(false));
     return () => window.cancelAnimationFrame(frame);
   }, [location.pathname]);
-
-  useEffect(() => {
-    const previousOverflow =
-      document.body.style.overflow;
-
-    document.body.style.overflow = isMenuOpen
-      ? "hidden"
-      : "";
-
-    return () => {
-      document.body.style.overflow =
-        previousOverflow;
-    };
-  }, [isMenuOpen]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -253,6 +239,7 @@ function Header() {
             : ""
         }`}
         aria-hidden={!isMenuOpen}
+        inert={!isMenuOpen}
       >
         <div className="sib-mobile-menu-header">
           <Link
@@ -335,15 +322,6 @@ function Header() {
         </nav>
 
         <Link to="/kontakt?anliegen=fatwa#kontaktformular" className="sib-mobile-fatwa-cta" onClick={closeMenu}>Fatwa anfragen <span aria-hidden="true">→</span></Link>
-        <div className="sib-mobile-menu-footer">
-
-
-          <p>
-            Durous, Veröffentlichungen und
-            Informationen von Dr. Shaykh Sayed Ibn
-            Basyuni.
-          </p>
-        </div>
       </aside>
     </>
   );
