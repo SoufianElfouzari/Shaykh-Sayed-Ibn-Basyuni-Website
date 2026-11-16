@@ -225,3 +225,24 @@
 }
 @media(max-width:370px){.sib-archive-modal-footer{flex-direction:column;align-items:stretch}}
 @media(prefers-reduced-motion:reduce){.sib-archive-pill,.sib-archive-series-button,.sib-archive-mobile-series-trigger svg{transition:none}}
+
+/* Match the horizontal gutters and content width of Latest Articles. */
+.sib-duruus-archive {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.sib-duruus-archive-container {
+  max-width: var(--sib-container-width, 1460px);
+}
+@media (max-width: 720px) {
+  .sib-duruus-archive {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media (max-width: 430px) {
+  .sib-duruus-archive {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
