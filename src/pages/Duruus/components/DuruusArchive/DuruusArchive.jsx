@@ -1010,7 +1010,7 @@ function DuruusArchive() {
                     <span className={mobileSeriesOpen ? "sib-archive-chevron is-open" : "sib-archive-chevron"}><ChevronIcon /></span>
                   </button>
                   <div id="sib-archive-series-options" className={mobileSeriesOpen ? "sib-archive-series-nav is-expanded" : "sib-archive-series-nav"}>
-                    {seriesList.map((group) => <button key={group.title} type="button" className={currentSeries.title === group.title ? "sib-archive-series-button is-active" : "sib-archive-series-button"} onClick={() => { setSelectedSeries(group.title); setMobileSeriesOpen(false); setLessonView("all"); }} aria-pressed={currentSeries.title === group.title}>
+                    {seriesList.filter((group) => group.title !== currentSeries.title).map((group) => <button key={group.title} type="button" className={currentSeries.title === group.title ? "sib-archive-series-button is-active" : "sib-archive-series-button"} onClick={() => { setSelectedSeries(group.title); setMobileSeriesOpen(false); setLessonView("all"); }} aria-pressed={currentSeries.title === group.title}>
                       <span className="sib-archive-book" aria-hidden="true"><BookIcon /></span>
                       <span className="sib-archive-series-copy"><strong>{group.title}</strong><small>{group.recordings.length} {group.recordings.length === 1 ? "Aufnahme" : "Aufnahmen"}</small></span>
                       <span aria-hidden="true" className="sib-archive-chevron">›</span>
