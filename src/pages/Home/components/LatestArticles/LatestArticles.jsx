@@ -351,14 +351,15 @@ function LatestArticles() {
                   <div className="sib-articles-secondary-top">
                     <span className="sib-articles-category">{article.category || "Artikel"}</span>
                     <time className="sib-articles-date" dateTime={article.publishedAt || undefined}>
+                      <span className="sib-articles-calendar-icon" aria-hidden="true">▣</span>
                       {formatDate(article.publishedAt)}
                     </time>
                   </div>
                   <h3>{article.title}</h3>
                   {article.excerpt && <p>{article.excerpt}</p>}
                   <div className="sib-articles-card-footer">
-                    <span>{formatReadingTime(article.readingTime)}</span>
-                    <span className="sib-articles-secondary-arrow"><ArrowIcon /></span>
+                    <span className="sib-articles-read-link">Lesen <ArrowIcon /></span>
+                    <span className="sib-articles-secondary-arrow"><DocumentIcon /></span>
                   </div>
                 </div>
               </Link>
