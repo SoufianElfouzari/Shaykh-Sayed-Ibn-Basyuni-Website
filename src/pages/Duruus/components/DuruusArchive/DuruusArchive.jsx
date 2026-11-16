@@ -1088,6 +1088,31 @@ function DuruusArchive() {
                 : <p className="sib-archive-modal-no-description">Zu dieser Aufnahme wurde noch keine Beschreibung veröffentlicht.</p>}
             </div>
           </div>
+          {activeRecording?.id === detailRecording.id && audioUrl && (
+            <div className="sib-archive-modal-playback" aria-label="Wiedergabesteuerung">
+              <div className="sib-archive-modal-playback-progress">
+                <span>{formatClock(currentTime)}</span>
+                <input
+                  type="range"
+                  aria-label="Wiedergabeposition ändern"
+                  min="0"
+                  max={audioDuration || 1}
+                  value={Math.min(currentTime, audioDuration || 1)}
+                  onChange={(event) => {
+                    const time = Number(event.target.value);
+                    if (audioRef.current) audioRef.current.currentTime = time;
+                    setCurrentTime(time);
+                  }}
+                />
+                <span>{formatClock(audioDuration)}</span>
+              </div>
+              <div className="sib-archive-modal-playback-tools">
+                <button type="button" onClick={() => seekBy(-15)} aria-label="15 Sekunden zurückspulen">15 Sek. zurück</button>
+                <button type="button" onClick={() => seekBy(15)} aria-label="15 Sekunden vorspulen">15 Sek. vor</button>
+                <button type="button" onClick={changeRate} aria-label="Wiedergabegeschwindigkeit ändern">{playbackRate}x</button>
+              </div>
+            </div>
+          )}
           <div className="sib-archive-modal-footer">
             <button
               type="button"
