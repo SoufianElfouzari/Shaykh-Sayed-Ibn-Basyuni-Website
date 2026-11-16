@@ -124,7 +124,7 @@ function Header() {
           isScrolled
             ? " sib-header-scrolled"
             : ""
-        }`}
+        }${isMenuOpen ? " sib-header-menu-expanded" : ""}`}
       >
         <div className="sib-header-container">
           <Link
