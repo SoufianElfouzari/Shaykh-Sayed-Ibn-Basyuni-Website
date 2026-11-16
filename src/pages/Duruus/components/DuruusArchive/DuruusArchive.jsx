@@ -15,6 +15,7 @@ import {
 import { useSsrData } from "../../../../SsrDataContext";
 
 import "./DuruusArchive.css";
+import BookIcon from "../../../common/BookIcon.jsx";
 
 function SearchIcon() {
   return (
@@ -137,6 +138,58 @@ function CloseIcon() {
       />
     </svg>
   );
+}
+
+function FilterIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M3 5h18l-7 8v5.5l-4 2V13L3 5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ChevronIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function SortIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M7 19V5m0 0-4 4m4-4 4 4M17 5v14m0 0-4-4m4 4 4-4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function BookmarkIcon({ filled = false }) {
+  return (
+    <svg viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} aria-hidden="true">
+      <path d="M6 3.5h12v17l-6-4.5-6 4.5v-17Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function SkipIcon({ forward = false }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <path d={forward ? "M20.5 6.5A11 11 0 1 0 26 16" : "M11.5 6.5A11 11 0 1 1 6 16"} stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+      <path d={forward ? "M20 2v7h7" : "M12 2v7H5"} stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" />
+      <text x="16" y="21" textAnchor="middle" fontSize="10" fontWeight="800" fill="currentColor">15</text>
+    </svg>
+  );
+}
+
+function readLocalSetting(key, fallback) {
+  if (typeof window === "undefined") return fallback;
+  try {
+    const data = JSON.parse(window.localStorage.getItem(key) || "null");
+    return data && typeof data === "object" ? data : fallback;
+  } catch {
+    return fallback;
+  }
 }
 
 function formatDate(value) {
@@ -289,6 +342,8 @@ function DescriptionText({ text }) {
 function DuruusArchive() {
   const { duruus: initialDuruus } = useSsrData();
   const audioRef = useRef(null);
+  const pendingResumeRef = useRef(null);
+  const savedPositionRef = useRef(0);
   const detailModalRef = useRef(null);
   const detailCloseRef = useRef(null);
   const [detailRecording, setDetailRecording] = useState(null);
@@ -305,6 +360,12 @@ function DuruusArchive() {
   ] = useState("Alle");
 
   const [selectedSeries, setSelectedSeries] = useState(null);
+  const [mobileSeriesOpen, setMobileSeriesOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [lessonView, setLessonView] = useState("all");
+  const [ascending, setAscending] = useState(true);
+  const [progressMap, setProgressMap] = useState({});
+  const [bookmarks, setBookmarks] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1);
@@ -344,6 +405,48 @@ function DuruusArchive() {
     audioErrorMessage,
     setAudioErrorMessage,
   ] = useState("");
+
+  useEffect(() => {
+    setProgressMap(readLocalSetting("sib-duruus-progress-v1", {}));
+    const storedBookmarks = readLocalSetting("sib-duruus-bookmarks-v1", []);
+    setBookmarks(Array.isArray(storedBookmarks) ? storedBookmarks : []);
+  }, []);
+
+  const rememberProgress = (recordingId, position, duration, complete = false) => {
+    if (!recordingId) return;
+    setProgressMap((previous) => {
+      const next = {
+        ...previous,
+        [String(recordingId)]: {
+          seconds: position,
+          duration,
+          complete,
+          updatedAt: Date.now(),
+        },
+      };
+      try {
+        window.localStorage.setItem("sib-duruus-progress-v1", JSON.stringify(next));
+      } catch {
+        // Playback remains functional when storage is disabled.
+      }
+      return next;
+    });
+  };
+
+  const toggleBookmark = (recordingId) => {
+    setBookmarks((previous) => {
+      const id = String(recordingId);
+      const next = previous.includes(id)
+        ? previous.filter((item) => item !== id)
+        : [...previous, id];
+      try {
+        window.localStorage.setItem("sib-duruus-bookmarks-v1", JSON.stringify(next));
+      } catch {
+        // A bookmark still works within this session.
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (Array.isArray(initialDuruus)) return undefined;
@@ -499,6 +602,9 @@ function DuruusArchive() {
 
     const handleEnded = () => {
       setIsPlaying(false);
+      if (activeRecording) {
+        rememberProgress(activeRecording.id, audio.duration || 0, audio.duration || 0, true);
+      }
     };
 
     const handleError = () => {
@@ -611,6 +717,20 @@ function DuruusArchive() {
 
   const seriesList = Object.values(groupedRecordings);
   const currentSeries = seriesList.find((group) => group.title === selectedSeries) || seriesList[0] || null;
+  const seriesRecordings = currentSeries
+    ? [...currentSeries.recordings]
+        .filter((recording) => lessonView !== "open" || !progressMap[String(recording.id)]?.complete)
+        .sort((first, second) => (ascending ? 1 : -1) *
+          ((Number(first.lessonNumber) || 0) - (Number(second.lessonNumber) || 0)))
+    : [];
+  const continueRecording = currentSeries?.recordings
+    .filter((recording) => {
+      const progress = progressMap[String(recording.id)];
+      return progress && progress.seconds > 10 && !progress.complete;
+    })
+    .sort((first, second) =>
+      (progressMap[String(second.id)]?.updatedAt || 0) - (progressMap[String(first.id)]?.updatedAt || 0))[0];
+
   const formatClock = (seconds) => {
     if (!Number.isFinite(seconds)) return "0:00";
     const total = Math.floor(seconds);
@@ -631,6 +751,8 @@ function DuruusArchive() {
   const resetFilters = () => {
     setSearchTerm("");
     setActiveCategory("Alle");
+    setLessonView("all");
+    setFiltersOpen(false);
   };
 
   const startRecording =
@@ -647,6 +769,9 @@ function DuruusArchive() {
         setActiveRecording(
           recording,
         );
+        savedPositionRef.current = 0;
+        setCurrentTime(0);
+        setAudioDuration(0);
 
         setAudioUrl(
           signedAudioUrl,
@@ -742,6 +867,39 @@ function DuruusArchive() {
       );
     };
 
+  const handleResume = async (recording) => {
+    const position = Number(progressMap[String(recording.id)]?.seconds) || 0;
+    if (!position) return;
+    if (activeRecording?.id === recording.id && audioRef.current) {
+      audioRef.current.currentTime = Math.min(position, audioRef.current.duration || position);
+      if (audioRef.current.paused) {
+        try { await audioRef.current.play(); } catch { /* Autoplay may require another click. */ }
+      }
+      return;
+    }
+    pendingResumeRef.current = position;
+    await toggleRecording(recording);
+  };
+
+  const handleTimeUpdate = (audio) => {
+    const time = Number(audio.currentTime) || 0;
+    setCurrentTime(time);
+    if (!activeRecording || time < 1) return;
+    if (Math.abs(time - savedPositionRef.current) < 5) return;
+    savedPositionRef.current = time;
+    rememberProgress(activeRecording.id, time, Number.isFinite(audio.duration) ? audio.duration : 0);
+  };
+
+  const handleMetadata = (audio) => {
+    setAudioDuration(Number.isFinite(audio.duration) ? audio.duration : 0);
+    audio.playbackRate = playbackRate;
+    if (pendingResumeRef.current !== null) {
+      audio.currentTime = Math.min(pendingResumeRef.current, Math.max(0, (audio.duration || pendingResumeRef.current) - 1));
+      setCurrentTime(audio.currentTime);
+      pendingResumeRef.current = null;
+    }
+  };
+
   const handleDownload =
     async (recording) => {
       if (
@@ -790,6 +948,7 @@ function DuruusArchive() {
     }
 
     setActiveRecording(null);
+    pendingResumeRef.current = null;
     setAudioUrl("");
     setIsPlaying(false);
     setIsLoadingAudio(false);
