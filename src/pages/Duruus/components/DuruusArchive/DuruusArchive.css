@@ -1241,3 +1241,69 @@
     grid-row: 2;
   }
 }
+
+/* Audio library redesign: shares the home hero's deep-green gradient typography. */
+.sib-duruus-redesign{padding:clamp(65px,7vw,108px) 4% 95px;background:radial-gradient(ellipse at 50% 0%,#fffdfa,#faf7f0 72%,#fffefa);color:#152a21}
+.sib-duruus-redesign .sib-duruus-archive-container{max-width:1500px}
+.sib-archive-intro{position:relative;padding:0 0 25px}
+.sib-archive-eyebrow{margin:0 0 12px;padding-left:17px;border-left:4px solid #dca123;color:#193d2c;font-weight:850;letter-spacing:.18em;text-transform:uppercase;font-size:clamp(12px,1.25vw,17px)}
+.sib-archive-heading{margin:0;font-family:var(--sib-font-main,Inter,sans-serif);font-size:clamp(39px,5.7vw,82px);font-weight:850;line-height:1.05;letter-spacing:-.055em;color:#103729;background:linear-gradient(175deg,#193b30 0%,#06261d 65%,#0b4531);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sib-archive-heading span{background:linear-gradient(160deg,#0b7955,#079866 44%,#005b40);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 6px 6px rgba(12,128,80,.12))}
+.sib-archive-subtitle{margin:13px 0 0;color:#50534f;font-size:clamp(16px,1.8vw,24px);line-height:1.5}
+.sib-archive-toolbar{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:15px 0 27px;border-bottom:1px solid #d4a649}
+.sib-archive-categories{display:flex;flex-wrap:wrap;gap:10px}
+.sib-archive-pill{padding:11px 23px;min-height:47px;border:1px solid #b4a88d;border-radius:999px;background:linear-gradient(180deg,#fffdf8,#f5efe4);color:#12402e;font:750 16px var(--sib-font-main,Inter,sans-serif);cursor:pointer;box-shadow:0 4px 8px rgba(41,34,14,.07);transition:transform .2s,box-shadow .2s}
+.sib-archive-pill:hover{transform:translateY(-2px)}
+.sib-archive-pill.is-active{border:3px double #eab42b;padding:9px 21px;background:linear-gradient(145deg,#007c55,#004b35);color:#fff;box-shadow:0 5px 11px rgba(6,69,44,.2)}
+.sib-archive-search{position:relative;display:flex;align-items:center;flex:0 1 460px;min-width:240px;height:51px;border:1px solid #b6ae9f;border-radius:999px;background:#fffdf9;box-shadow:0 4px 9px rgba(30,37,22,.07)}
+.sib-archive-search>svg{width:23px;height:23px;margin-left:19px;flex-shrink:0;color:#07523b}
+.sib-archive-search input{width:100%;min-width:0;padding:0 15px;border:0;outline:0;background:transparent;color:#172b22;font:400 16px var(--sib-font-main,Inter,sans-serif)}
+.sib-archive-search button{display:grid;place-items:center;margin-right:10px;width:30px;height:30px;border:0;background:transparent;color:#214636;cursor:pointer}
+.sib-archive-search button svg{width:18px;height:18px}
+.sib-archive-layout{display:grid;grid-template-columns:minmax(240px,30%) minmax(0,1fr);gap:28px;padding-top:29px}
+.sib-archive-sidebar{border-right:1px solid #d5b36b;padding-right:23px}
+.sib-archive-sidebar h3{margin:0 0 21px;font-size:clamp(23px,2.6vw,34px);font-weight:830;letter-spacing:-.045em;color:#073d2a}
+.sib-archive-series-nav{display:grid;gap:7px}
+.sib-archive-series-button{display:flex;align-items:center;gap:15px;width:100%;padding:15px 16px;border:1px solid transparent;border-bottom-color:#e1d4bd;border-radius:12px;background:transparent;text-align:left;color:#123a2a;cursor:pointer;transition:background .2s,transform .2s}
+.sib-archive-series-button:hover{background:#f0eee5}
+.sib-archive-series-button.is-active{border:2px solid #e1a62a;background:linear-gradient(120deg,#004a34,#087352 65%,#00452f);color:#fff;box-shadow:0 5px 12px rgba(2,68,44,.17)}
+.sib-archive-book{font-size:34px;line-height:1;color:#c99829}
+.sib-archive-series-copy{display:grid;gap:4px;min-width:0;flex:1}
+.sib-archive-series-copy strong{font-size:clamp(15px,1.4vw,20px);font-weight:800;line-height:1.2}
+.sib-archive-series-copy small{font-size:13px;color:inherit;opacity:.82}
+.sib-archive-chevron{font-size:29px;color:#bb891a}
+.sib-archive-series-button.is-active .sib-archive-chevron{color:#fff}
+.sib-archive-lessons{min-width:0}
+.sib-archive-series-header{display:flex;align-items:center;flex-wrap:wrap;gap:15px}
+.sib-archive-series-header h3{margin:0;font-size:clamp(26px,3.2vw,48px);font-weight:850;line-height:1.1;letter-spacing:-.055em;background:linear-gradient(175deg,#174633,#002e20);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sib-archive-series-tag{padding:6px 14px;border:1px solid #cda44d;border-radius:999px;color:#7a5814;font-weight:700;font-size:12px}
+.sib-archive-series-summary{margin:12px 0 21px;color:#5b625c;font-size:15px}
+.sib-archive-recording-list{display:grid}
+.sib-archive-recording{display:flex;align-items:center;gap:15px;min-width:0;padding:13px 15px;border-bottom:1px solid #dfd1b9;border-radius:9px}
+.sib-archive-recording.is-active{background:linear-gradient(90deg,#e7eedf,#e9ecdf)}
+.sib-archive-play{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border:2px solid #064932;border-radius:50%;background:transparent;color:#064932;cursor:pointer}
+.sib-archive-recording.is-active .sib-archive-play{background:#064932;color:#fff}
+.sib-archive-play svg{width:24px;height:24px}
+.sib-archive-number{font-size:16px;font-weight:750;color:#424642}
+.sib-archive-recording-info{min-width:0;flex:1}
+.sib-archive-recording-info h4{margin:0;font-size:clamp(15px,1.4vw,19px);font-weight:800;line-height:1.3;color:#101b16}
+.sib-archive-recording-info>span{display:block;margin-top:5px;font-size:12px;color:#60645f}
+.sib-archive-download{display:grid;place-items:center;flex:0 0 35px;width:35px;height:38px;border:0;background:transparent;color:#9b6d0e;cursor:pointer}
+.sib-archive-download svg{width:25px;height:25px}
+.sib-archive-description{margin-top:7px;color:#505a53;font-size:13px}
+.sib-archive-description summary{cursor:pointer;color:#7c601d}
+.sib-archive-description p{line-height:1.5}
+.sib-archive-status{padding:40px 0;text-align:center;color:#4b5b50}
+.sib-archive-error{padding:12px 16px;border:1px solid #caa5a5;border-radius:10px;color:#8a2a2a}
+.sib-archive-player{display:flex;align-items:center;gap:17px;margin-top:35px;padding:18px 24px;border:3px double #d9a43b;border-radius:25px;background:linear-gradient(120deg,#073f2d,#006747 60%,#003c2b);color:#fff;box-shadow:0 9px 24px rgba(5,61,38,.22)}
+.sib-archive-player-play{display:grid;place-items:center;flex:0 0 55px;width:55px;height:55px;border:0;border-radius:50%;background:#fff9e9;color:#075039;cursor:pointer}
+.sib-archive-player-play svg{width:30px;height:30px}
+.sib-archive-player-controls{flex:1;min-width:0}
+.sib-archive-player-controls strong{display:block;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px}
+.sib-archive-player-timeline{display:flex;align-items:center;gap:11px;font-size:13px}
+.sib-archive-player-timeline input{flex:1;min-width:30px;accent-color:#e5b94d}
+.sib-archive-player-timeline button,.sib-archive-rate,.sib-archive-player-close{border:1px solid rgba(255,255,255,.4);border-radius:9px;background:transparent;color:#fff;padding:7px 9px;cursor:pointer}
+.sib-archive-player-close{display:grid;place-items:center}
+.sib-archive-player-close svg{width:20px;height:20px}
+@media(max-width:950px){.sib-archive-toolbar{align-items:stretch;flex-direction:column}.sib-archive-search{flex:auto;width:100%}.sib-archive-layout{grid-template-columns:1fr;gap:23px}.sib-archive-sidebar{padding-right:0;border-right:0}.sib-archive-series-nav{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px}.sib-archive-series-button{flex:0 0 min(260px,75vw)}.sib-archive-sidebar h3{margin-bottom:12px}}
+@media(max-width:600px){.sib-duruus-redesign{padding:55px 5% 75px}.sib-archive-heading{font-size:clamp(35px,9vw,54px)}.sib-archive-pill{font-size:14px;padding:9px 15px;min-height:41px}.sib-archive-pill.is-active{padding:7px 13px}.sib-archive-recording{gap:10px;padding:13px 5px}.sib-archive-play{width:36px;height:36px;flex-basis:36px}.sib-archive-number{font-size:13px}.sib-archive-recording-info h4{font-size:14px}.sib-archive-player{padding:13px;gap:9px;flex-wrap:wrap;border-radius:17px}.sib-archive-player-controls{flex-basis:calc(100% - 80px)}.sib-archive-player-timeline{gap:5px;font-size:11px}.sib-archive-player-timeline button{padding:5px}.sib-archive-rate{margin-left:auto}}
