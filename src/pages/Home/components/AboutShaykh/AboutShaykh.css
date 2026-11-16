@@ -401,3 +401,182 @@
     transform: none;
   }
 }
+
+/* Reference-aligned Shaykh section: matching site typography, logo and cards. */
+.sib-about {
+  padding: 65px 5% 95px;
+  background: radial-gradient(ellipse at 60% 0%, #fffefa 0%, #faf7f0 85%);
+  color: #182a2b;
+}
+.sib-about-container {
+  grid-template-columns: minmax(0, .78fr) minmax(0, 1.72fr);
+  gap: clamp(30px, 3.2vw, 52px);
+  max-width: var(--sib-container-width, 1460px);
+}
+.sib-about-decoration { opacity: .35; }
+.sib-about-mosque {
+  position: absolute;
+  top: 12px;
+  right: 0;
+  width: min(38vw, 560px);
+  height: 245px;
+  background: url("/assets/masjid-texture.png") center bottom / contain no-repeat;
+  opacity: .3;
+  pointer-events: none;
+  z-index: -1;
+}
+.sib-about-label {
+  gap: 12px;
+  margin: 0 0 15px;
+  color: #183c35;
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+}
+.sib-about-label::before {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 25px;
+  flex: 0 0 5px;
+  background: #efb437;
+  border-radius: 6px;
+}
+.sib-about-title {
+  max-width: 520px;
+  color: #0b3329;
+  font-family: var(--sib-font-main, Inter, Arial, sans-serif);
+  font-size: clamp(38px, 4.3vw, 66px);
+  font-weight: 850;
+  line-height: 1.03;
+  letter-spacing: -.055em;
+}
+.sib-about-title span { color: #078a64; }
+.sib-about-title-underline {
+  width: min(85%, 340px);
+  margin-top: 16px;
+  border-top: 4px solid #efb437;
+}
+.sib-about-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 23px 0 0;
+  max-width: 400px;
+}
+.sib-about-brand-image {
+  width: min(100%, 330px);
+  height: 210px;
+  flex: none;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  object-fit: contain;
+}
+.sib-about-brand figcaption {
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  border: 0;
+  text-align: center;
+  color: #203330;
+  font-size: 16px;
+}
+.sib-about-brand figcaption strong {
+  color: #00543e;
+  font-size: 22px;
+  font-weight: 850;
+}
+.sib-about-link {
+  justify-content: center;
+  gap: 22px;
+  width: min(100%, 400px);
+  min-height: 60px;
+  margin-top: 23px;
+  border: 3px solid #eab333;
+  border-radius: 999px;
+  background: linear-gradient(155deg, #078462, #004b36);
+  box-shadow: 0 0 0 3px #fff9e9, 0 10px 19px #004b3625;
+  font-size: 16px;
+  font-weight: 800;
+}
+.sib-about-content {
+  padding-left: clamp(24px, 2.6vw, 44px);
+  border-left: 2px solid #dca82f;
+}
+.sib-about-description p {
+  font-size: clamp(15px, 1.12vw, 18px);
+  line-height: 1.46;
+}
+.sib-about-description p + p { margin-top: 17px; }
+.sib-about-overview {
+  gap: 14px;
+  margin-top: 24px;
+}
+.sib-about-overview-item {
+  align-items: center;
+  gap: 16px;
+  min-height: 115px;
+  padding: 16px;
+  border: 1px solid #e8ddca;
+  border-radius: 21px;
+  background: #fffdf9e8;
+  box-shadow: 0 7px 17px #44371d0c;
+}
+.sib-about-overview-icon {
+  width: 67px;
+  height: 67px;
+  flex-basis: 67px;
+  background: #f9f4e8;
+  color: #006448;
+  border-radius: 17px;
+}
+.sib-about-overview-icon svg { width: 39px; height: 39px; }
+.sib-about-overview-item > div {
+  border-left: 1px solid #d7a944;
+  padding-left: 16px;
+}
+.sib-about-overview-label {
+  margin-bottom: 5px;
+  font-size: clamp(18px, 1.5vw, 24px);
+  font-weight: 850;
+}
+.sib-about-overview-value {
+  font-size: clamp(13px, 1.05vw, 17px);
+  line-height: 1.4;
+}
+.sib-about-bottom-wave {
+  left: -5%;
+  bottom: -155px;
+  width: 110%;
+  height: 190px;
+  border-top: 6px solid #e7b64b;
+  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+  transform: none;
+}
+@media (max-width: 1050px) {
+  .sib-about-container { grid-template-columns: 1fr; gap: 30px; }
+  .sib-about-content { border-left: 0; padding-left: 0; }
+  .sib-about-heading { max-width: 100%; }
+  .sib-about-brand { margin-inline: auto; }
+  .sib-about-link { display: flex; margin-inline: auto; }
+  .sib-about-mosque { opacity: .14; width: 65vw; }
+}
+@media (max-width: 680px) {
+  .sib-about { padding: 50px 20px 85px; }
+  .sib-about-label { font-size: 11px; margin-bottom: 14px; }
+  .sib-about-title { font-size: clamp(35px, 8.3vw, 48px); }
+  .sib-about-brand-image { height: 160px; }
+  .sib-about-brand figcaption strong { font-size: 18px; }
+  .sib-about-link { min-height: 54px; font-size: 14px; }
+  .sib-about-description p { font-size: 15px; line-height: 1.6; }
+  .sib-about-overview { grid-template-columns: 1fr; }
+  .sib-about-overview-item { min-height: 95px; padding: 14px; }
+  .sib-about-overview-icon { width: 52px; height: 52px; flex-basis: 52px; }
+  .sib-about-overview-icon svg { width: 30px; height: 30px; }
+  .sib-about-overview-label { font-size: 19px; }
+  .sib-about-overview-value { font-size: 14px; }
+  .sib-about-bottom-wave { bottom: -170px; }
+}
