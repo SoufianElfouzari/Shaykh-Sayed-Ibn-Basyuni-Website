@@ -322,105 +322,6 @@
   transform: translateX(0);
 }
 
-.sib-mobile-menu-header {
-  padding-bottom: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  border-bottom: 1px solid
-    rgba(255, 255, 255, 0.13);
-}
-
-.sib-mobile-brand {
-  min-width: 0;
-  display: inline-flex;
-  align-items: stretch;
-  gap: 13px;
-  color: inherit;
-  text-decoration: none;
-}
-
-.sib-mobile-brand-line {
-  width: 3px;
-  min-height: 44px;
-  flex: 0 0 3px;
-  border-radius: 999px;
-  background: var(--sib-color-accent);
-}
-
-.sib-mobile-brand-copy {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-}
-
-.sib-mobile-brand-name {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-family: var(--sib-font-main);
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.sib-mobile-brand-title {
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.sib-mobile-brand-person {
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 750;
-  letter-spacing: -0.55px;
-}
-
-.sib-mobile-brand-meta {
-  color: rgba(255, 255, 255, 0.46);
-  font-family: var(--sib-font-main);
-  font-size: 8px;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-}
-
-.sib-mobile-menu-close {
-  position: relative;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  padding: 0;
-  border: 1px solid
-    rgba(255, 255, 255, 0.18);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  cursor: pointer;
-}
-
-.sib-mobile-menu-close span {
-  position: absolute;
-  top: 20px;
-  left: 10px;
-  width: 20px;
-  height: 1.5px;
-  border-radius: 999px;
-  background: currentColor;
-}
-
-.sib-mobile-menu-close span:first-child {
-  transform: rotate(45deg);
-}
-
-.sib-mobile-menu-close span:last-child {
-  transform: rotate(-45deg);
-}
-
 .sib-mobile-navigation {
   padding: 40px 0;
   display: flex;
@@ -482,40 +383,6 @@
 .sib-mobile-nav-link-active svg {
   color: var(--sib-color-accent);
   opacity: 1;
-}
-
-.sib-mobile-menu-footer {
-  margin-top: auto;
-  padding-top: 25px;
-  border-top: 1px solid
-    rgba(255, 255, 255, 0.13);
-}
-
-.sib-mobile-search-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 11px;
-  color: #ffffff;
-  font-family: var(--sib-font-main);
-  font-size: 13px;
-  line-height: 1;
-  font-weight: 650;
-  text-decoration: none;
-}
-
-.sib-mobile-search-link svg {
-  width: 19px;
-  height: 19px;
-  color: var(--sib-color-accent);
-}
-
-.sib-mobile-menu-footer p {
-  max-width: 340px;
-  margin: 20px 0 0;
-  color: rgba(255, 255, 255, 0.46);
-  font-family: var(--sib-font-main);
-  font-size: 12px;
-  line-height: 1.7;
 }
 
 .sib-header a:focus-visible,
@@ -635,16 +502,6 @@
     padding: 24px 20px;
   }
 
-  .sib-mobile-brand-name {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
-  }
-
-  .sib-mobile-brand-person {
-    font-size: 15px;
-  }
-
   .sib-mobile-nav-link {
     min-height: 65px;
   }
@@ -662,16 +519,6 @@
   }
 
   .sib-header-search {
-    display: none;
-  }
-
-  .sib-mobile-brand-person {
-    max-width: 185px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .sib-mobile-brand-meta {
     display: none;
   }
 }
@@ -1338,20 +1185,6 @@
   transform: translateY(0) scale(1);
   pointer-events: auto;
 }
-.sib-mobile-menu-header {
-  padding-bottom: 15px;
-  gap: 10px;
-  border-bottom: 1px solid #e9e8df;
-}
-.sib-mobile-brand-title {color:#5d6760}
-.sib-mobile-brand-person {color:#064b37}
-.sib-mobile-brand-meta {color:#67726b}
-.sib-mobile-menu-close {
-  border: 0;
-  border-radius: 50%;
-  background: #07533d;
-  color: #fff;
-}
 .sib-mobile-navigation {padding: 15px 0 12px;gap:4px}
 .sib-mobile-nav-link,
 .sib-mobile-nav-link:first-child {
@@ -1431,25 +1264,6 @@
 .sib-mobile-fatwa-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 9px 20px rgba(4,72,46,.25);
-}
-.sib-mobile-fatwa-symbol {
-  display: grid;
-  place-items: center;
-  width: 25px;
-  height: 25px;
-  flex: 0 0 25px;
-  border: 2px solid #f1c54e;
-  border-radius: 50%;
-  color: #f1c54e;
-  font-size: 17px;
-  font-weight: 800;
-  line-height: 1;
-}
-.sib-mobile-fatwa-arrow {
-  margin-left: auto;
-  color: #fff;
-  font-size: 23px;
-  line-height: 1;
 }
 @media (max-width: 600px) {
   .sib-mobile-menu {
