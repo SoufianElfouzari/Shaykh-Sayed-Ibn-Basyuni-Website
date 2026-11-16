@@ -10,7 +10,7 @@ const overviewItems = [
   {
     label: "Tätigkeiten",
     value: "Imam, Khatib, Lehrer, Forscher und Autor wissenschaftlicher Arbeiten.",
-    icon: "layers",
+    icon: "work",
   },
   {
     label: "Studium",
@@ -20,7 +20,7 @@ const overviewItems = [
   {
     label: "Wirkungsort",
     value: "Imam der Al Huda Moschee des Islamischen Zentrums Kassel.",
-    icon: "location",
+    icon: "mosque",
   },
 ];
 
@@ -44,13 +44,16 @@ function InfoIcon({ name }) {
   const icons = {
     language: (
       <>
-        <circle cx="12" cy="12" r="9" />
-        <path d="M3 12h18M12 3c-3 3-3 15 0 18m0-18c3 3 3 15 0 18M5 7.5h14M5 16.5h14" />
+        <rect x="2" y="3" width="13" height="14" rx="2" />
+        <path d="M5 8h7M8.5 5v2m-3 6c3-1 5-3 6-5m-6 0c1 3 3 5 6 6" />
+        <rect x="11" y="11" width="11" height="10" rx="2" />
+        <path d="m14 18 2.5-5 2.5 5m-4.1-1.5h3.2" />
       </>
     ),
-    layers: (
+    work: (
       <>
-        <path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5" />
+        <rect x="3" y="7" width="18" height="14" rx="2" />
+        <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13c5 3 13 3 18 0m-9 0v3" />
       </>
     ),
     study: (
@@ -58,10 +61,10 @@ function InfoIcon({ name }) {
         <path d="m2 9 10-5 10 5-10 5L2 9Zm4 3v5c4 3 8 3 12 0v-5m4-3v8" />
       </>
     ),
-    location: (
+    mosque: (
       <>
-        <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" />
-        <circle cx="12" cy="10" r="2.5" />
+        <path d="M3 21V11l4-3 5-5 5 5 4 3v10H3Zm5 0v-6a4 4 0 0 1 8 0v6M2 21h20" />
+        <path d="M12 3V1m-1 1h2" />
       </>
     ),
   };
@@ -77,11 +80,12 @@ function AboutShaykh() {
   return (
     <section className="sib-about" aria-labelledby="sib-about-title">
       <div className="sib-about-decoration" aria-hidden="true" />
+      <div className="sib-about-mosque" aria-hidden="true" />
       <div className="sib-about-container">
         <div className="sib-about-heading">
           <p className="sib-about-label">
             <span>Über den Shaykh</span>
-            <span className="sib-about-label-line" aria-hidden="true" />
+
           </p>
 
           <h2 className="sib-about-title" id="sib-about-title">
@@ -108,7 +112,6 @@ function AboutShaykh() {
           </figure>
 
           <Link to="/shaykh" className="sib-about-link">
-            <BookIcon />
             <span>Ausführliche Biografie lesen</span>
             <ArrowIcon />
           </Link>
