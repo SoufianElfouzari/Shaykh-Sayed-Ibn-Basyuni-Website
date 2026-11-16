@@ -1461,3 +1461,41 @@
 @media (max-width: 380px) {
   .sib-mobile-menu { right: 9px; }
 }
+
+/* Unified mobile header and dropdown: one continuous surface, no second card. */
+@media (max-width: 1360px) {
+  .sib-header-menu-expanded { z-index: 1100; }
+  .sib-header-menu-expanded .sib-header-container {
+    border-radius: 28px 28px 0 0;
+    background: #fffefa;
+    border-bottom-color: transparent;
+    box-shadow: 0 0 0 1px rgba(25, 65, 43, .08);
+  }
+  .sib-mobile-menu {
+    top: 100px;
+    right: 4%;
+    width: min(var(--sib-container-width), 92%);
+    max-width: none;
+    padding: 14px 24px 22px;
+    border: 1px solid rgba(25, 65, 43, .08);
+    border-top: 0;
+    border-radius: 0 0 28px 28px;
+    background: #fffefa;
+    box-shadow: 0 22px 40px rgba(15, 46, 30, .16);
+  }
+}
+@media (max-width: 760px) {
+  .sib-header-menu-expanded .sib-header-container {
+    border-radius: 23px 23px 0 0;
+  }
+  .sib-mobile-menu {
+    top: 83px;
+    right: 14px;
+    width: calc(100% - 28px);
+    padding: 10px 17px 18px;
+    border-radius: 0 0 23px 23px;
+  }
+}
+@media (max-width: 380px) {
+  .sib-mobile-menu { right: 14px; width: calc(100% - 28px); }
+}
