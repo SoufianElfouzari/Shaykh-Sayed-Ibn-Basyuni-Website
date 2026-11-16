@@ -16,11 +16,6 @@ function Home() {
       <Header />
       <main>
         <Hero />
-        <nav className="sib-home-paths" aria-label="Wichtige Bereiche">
-          <Link to="/durous"><span>01 / Lernen</span><strong>Islam lernen</strong><small>Unterrichte und Aufnahmen entdecken</small><span aria-hidden="true">↗</span></Link>
-          <Link to="/kontakt?anliegen=fatwa#kontaktformular"><span>02 / Fragen</span><strong>Fatwa anfragen</strong><small>Eine islamische Frage einreichen</small><span aria-hidden="true">↗</span></Link>
-          <Link to="/artikel"><span>03 / Lesen</span><strong>Artikel lesen</strong><small>Islamische Wissenschaften vertiefen</small><span aria-hidden="true">↗</span></Link>
-        </nav>
         <DuruusArchive />
         <section className="sib-home-fatwa" aria-labelledby="sib-home-fatwa-title">
           <div>
