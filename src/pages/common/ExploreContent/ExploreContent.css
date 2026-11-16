@@ -1,28 +1,36 @@
-.sib-explore { padding: clamp(48px, 6vw, 88px) 20px; background: #f5f4ef; color: #153e35; }
-.sib-explore-inner { max-width: 1120px; margin: 0 auto; }
-.sib-explore-kicker { margin: 0 0 12px; color: #8c7044; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-.sib-explore h2 { font-size: clamp(24px, 3.5vw, 39px); line-height: 1.2; margin: 0 0 12px; font-weight: 650; }
-.sib-explore-intro { max-width: 630px; margin: 0 0 28px; font-size: 15px; line-height: 1.75; color: #52665d; }
-.sib-explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 14px; }
-.sib-explore-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 118px; padding: 23px; background: #fff; border: 1px solid #dedfd7; border-radius: 13px; color: #153e35; text-decoration: none; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
-.sib-explore-card:hover { border-color: #b29a6d; box-shadow: 0 10px 26px rgba(20, 50, 39, .08); transform: translateY(-2px); }
-.sib-explore-card:focus-visible { outline: 3px solid #9a7b46; outline-offset: 3px; }
-.sib-explore-card-text { display: flex; flex-direction: column; gap: 8px; }
-.sib-explore-card strong { font-size: 16px; font-weight: 650; }
-.sib-explore-card-text > span { color: #617168; font-size: 12px; line-height: 1.5; }
-.sib-explore-card svg { width: 20px; height: 20px; flex-shrink: 0; color: #96794b; }
-@media (prefers-reduced-motion: reduce) { .sib-explore-card { transition: none; } .sib-explore-card:hover { transform: none; } }
-
-.sib-explore-resources {
-  margin: 24px 0 0;
-  color: #52665d;
-  font-size: 13px;
-  line-height: 1.75;
-}
-.sib-explore-resources a {
-  color: #0d604c;
-  font-weight: 650;
-  text-underline-offset: 3px;
-}
-.sib-explore-resources a:hover { color: #084c3c; }
-.sib-explore-resources a:focus-visible { outline: 2px solid #9a7b46; outline-offset: 3px; }
+.sib-explore{position:relative;isolation:isolate;overflow:hidden;padding:70px 5% 115px;background:radial-gradient(ellipse at 46% 20%,#fffefa,#faf7f0 78%);color:#103c30;font-family:var(--sib-font-main,Inter,Arial,sans-serif)}
+.sib-explore-inner{position:relative;z-index:1;width:100%;max-width:1460px;margin:auto}
+.sib-explore-mosque{position:absolute;z-index:-1;right:0;top:-45px;width:51%;height:340px;background:url("/assets/masjid-texture.png") center bottom/contain no-repeat;opacity:.4;pointer-events:none}
+.sib-explore-heading{position:relative;max-width:900px;margin-bottom:46px}
+.sib-explore-kicker{display:flex;align-items:center;gap:14px;margin:0 0 20px;color:#103c30;font-size:18px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}
+.sib-explore-kicker:before{content:"";width:8px;height:34px;border-radius:6px;background:#f3bb41}
+.sib-explore h2{max-width:850px;margin:0 0 23px;color:#0b3027;font-size:clamp(38px,5vw,75px);font-weight:850;line-height:1.04;letter-spacing:-.055em}
+.sib-explore h2 span{display:block;width:fit-content;position:relative;color:#078a64}
+.sib-explore h2 span:after{content:"";position:absolute;bottom:-15px;left:0;width:100%;height:6px;border-radius:50%;background:#efb73d;transform:rotate(-1deg)}
+.sib-explore-intro{max-width:760px;margin:33px 0 0;color:#48534f;font-size:clamp(17px,1.7vw,24px);line-height:1.5}
+.sib-explore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.sib-explore-card{display:flex;align-items:center;gap:20px;position:relative;min-width:0;min-height:175px;padding:26px 26px;border:1px solid #e5dac8;border-radius:23px;background:linear-gradient(145deg,#fffefa,#faf7f0);box-shadow:0 9px 24px #483b2310;color:#0c4837;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.sib-explore-card:hover{transform:translateY(-4px);box-shadow:0 16px 30px #23463120}
+.sib-explore-card--featured{border:3px solid #edb836;background:radial-gradient(circle at 20% 15%,#098361,#00543d 72%);color:white;box-shadow:0 0 0 3px #fff7e5,0 0 0 4px #e8b53a}
+.sib-explore-card-icon{display:grid;place-items:center;flex:0 0 76px;width:76px;height:76px;border-radius:19px;background:#f9f3e5;color:#006d4b}
+.sib-explore-card--featured .sib-explore-card-icon{background:#05865e;color:#f3c34c}
+.sib-explore-card-icon svg{width:46px;height:46px}
+.sib-explore-card-text{display:flex;flex-direction:column;gap:12px;min-width:0;padding-right:20px}
+.sib-explore-card strong{font-size:clamp(17px,1.8vw,27px);font-weight:850;line-height:1.2;letter-spacing:-.035em}
+.sib-explore-card-text>span{font-size:clamp(13px,1.3vw,19px);line-height:1.4;color:#43534c}
+.sib-explore-card--featured .sib-explore-card-text>span{color:#fff}
+.sib-explore-card-arrow{display:grid;place-items:center;position:absolute;right:22px;bottom:20px;width:44px;height:44px;border:1.5px solid #005d42;border-radius:50%;color:#005d42}
+.sib-explore-card--featured .sib-explore-card-arrow{border:2px solid #f4bc36;color:white}
+.sib-explore-card-arrow svg{width:23px;height:23px}
+.sib-explore-resources{display:flex;align-items:center;justify-content:space-around;gap:20px;max-width:1320px;margin:40px auto 0;padding:14px 28px;border:1px solid #e6dac5;border-radius:999px;background:#fffdf8;box-shadow:0 8px 24px #483b2310}
+.sib-explore-resources-heading{display:flex;align-items:center;gap:18px;font-size:clamp(15px,1.6vw,23px);white-space:nowrap}
+.sib-explore-resources-book{width:48px;height:45px;color:#e9b33c}.sib-explore-resources-book svg{width:100%;height:100%}
+.sib-explore-resources-divider{height:45px;width:1px;background:#d8a02c}
+.sib-explore-resources a{display:flex;align-items:center;justify-content:center;gap:13px;min-height:58px;padding:9px 22px;border:1px solid #e6d9bd;border-radius:999px;background:#fbf8ef;color:#064c36;text-decoration:none;font-size:clamp(13px,1.3vw,18px);font-weight:750;box-shadow:0 4px 9px #4c412218}
+.sib-explore-resources a svg{width:30px;height:30px;flex-shrink:0}.sib-explore-resources a svg:last-child{width:20px;height:20px}
+.sib-explore-bottom-wave{position:absolute;left:0;bottom:-1px;width:100%;height:92px}
+.sib-explore-card:focus-visible,.sib-explore-resources a:focus-visible{outline:3px solid #b58a28;outline-offset:4px}
+@media(max-width:1050px){.sib-explore-grid{gap:12px}.sib-explore-card{padding:18px;gap:12px;min-height:155px}.sib-explore-card-icon{width:52px;height:52px;flex-basis:52px}.sib-explore-card-icon svg{width:32px;height:32px}.sib-explore-card-arrow{right:12px;bottom:12px;width:32px;height:32px}.sib-explore-resources{flex-wrap:wrap;border-radius:30px}.sib-explore-resources-heading{width:100%;justify-content:center}.sib-explore-resources-divider{display:none}}
+@media(max-width:720px){.sib-explore{padding:58px 20px 100px}.sib-explore-mosque{width:90%;height:220px;top:0;right:-25%;opacity:.16}.sib-explore-heading{margin-bottom:28px}.sib-explore-kicker{font-size:12px;gap:10px;margin-bottom:16px}.sib-explore-kicker:before{height:23px;width:5px}.sib-explore h2{font-size:clamp(34px,8.2vw,52px)}.sib-explore-intro{font-size:15px;margin-top:28px}.sib-explore-grid{grid-template-columns:1fr;gap:14px}.sib-explore-card{min-height:120px;padding:18px 58px 18px 16px;border-radius:18px}.sib-explore-card strong{font-size:19px}.sib-explore-card-text>span{font-size:13px}.sib-explore-resources{display:grid;grid-template-columns:1fr;gap:12px;padding:18px;border-radius:24px;margin-top:30px}.sib-explore-resources-heading{font-size:17px}.sib-explore-resources a{width:100%;min-height:52px}.sib-explore-bottom-wave{height:55px}}
+@media(max-width:400px){.sib-explore{padding-left:14px;padding-right:14px}.sib-explore-card-icon{flex-basis:45px;width:45px;height:45px}.sib-explore-card-icon svg{width:29px;height:29px}}
+@media(prefers-reduced-motion:reduce){.sib-explore-card{transition:none}.sib-explore-card:hover{transform:none}}
