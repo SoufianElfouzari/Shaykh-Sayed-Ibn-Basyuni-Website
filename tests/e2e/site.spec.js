@@ -111,16 +111,21 @@ test("audio archive mobile layout fits narrow screens and uses the hero book art
     await expect(archive.getByRole("button", { name: /Durus al|Fiqh/i }).first()).toBeVisible();
     await expect(archive.locator(".sib-archive-mobile-series-trigger")).toBeVisible();
     await expect(archive.locator(".sib-archive-mobile-series-trigger svg path[d^='M37.7 16.1']")).toHaveCount(1);
-    await expect(archive.getByRole("button", { name: "Unterrichtskategorien filtern" })).toBeVisible();
+    await expect(archive.getByRole("navigation", { name: "Unterrichtskategorien" })).toBeVisible();
+    await expect(archive.getByRole("button", { name: "Alle", exact: true })).toBeVisible();
+    await expect(archive.getByRole("button", { name: "Fiqh", exact: true })).toBeVisible();
     await expect(archive.locator(".sib-archive-recording")).toHaveCount(1);
 
     const layoutOverflow = await archive.evaluate((element) => element.scrollWidth - element.clientWidth);
     expect(layoutOverflow).toBeLessThanOrEqual(2);
 
-    await archive.getByRole("button", { name: "Unterrichtskategorien filtern" }).click();
-    await expect(archive.getByRole("navigation", { name: "Unterrichtskategorien" })).toBeVisible();
+    const selector = archive.locator(".sib-archive-mobile-series-trigger");
+    await selector.click();
+    await expect(archive.locator(".sib-archive-series-nav")).toBeVisible();
+    await expect(archive.locator(".sib-archive-series-nav .sib-archive-series-button.is-active")).toBeHidden();
+    await selector.click();
     await archive.getByRole("button", { name: "Fiqh", exact: true }).click();
-    await expect(archive.getByRole("navigation", { name: "Unterrichtskategorien" })).toBeHidden();
+    await expect(archive.getByRole("navigation", { name: "Unterrichtskategorien" })).toBeVisible();
     await archive.getByRole("button", { name: "Noch offen" }).click();
     await expect(archive.locator(".sib-archive-recording")).toHaveCount(1);
   }
