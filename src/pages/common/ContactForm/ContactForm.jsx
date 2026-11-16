@@ -328,7 +328,7 @@ function ContactForm({ headingLevel = 2 }) {
                   placeholder={homeFatwa ? "z. B. ahmad@example.de" : "name@beispiel.de"}
                   autoComplete="email"
                   required
-                />
+                /></div>
               </div>
 
               <div
