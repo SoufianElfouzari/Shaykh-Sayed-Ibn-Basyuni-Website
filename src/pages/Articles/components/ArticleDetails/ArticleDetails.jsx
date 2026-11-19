@@ -911,6 +911,19 @@ function ArticleDetails() {
                 )}
               </nav>
 
+              {relatedArticles.length > 0 && (
+                <div className="sib-article-details-sidebar-related">
+                  <p className="sib-article-details-sidebar-label">Weitere Artikel</p>
+                  <div className="sib-article-details-sidebar-related-list">
+                    {relatedArticles.slice(0, 3).map((related) => (
+                      <Link key={related.slug} to={`/artikel/${related.slug}`}>
+                        {related.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="sib-article-details-sidebar-actions">
                 <button
                   type="button"
