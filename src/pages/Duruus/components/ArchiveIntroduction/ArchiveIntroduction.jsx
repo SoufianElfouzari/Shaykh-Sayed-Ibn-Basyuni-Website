@@ -128,11 +128,11 @@ function ArchiveIntroduction() {
             <nav className="sib-archive-introduction-related" aria-label="Weitere Inhalte entdecken">
               <Link to="/shaykh" className="sib-archive-introduction-related-link">
                 <span>Mehr über den Shaykh</span>
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true">↑</span>
               </Link>
               <Link to="/artikel" className="sib-archive-introduction-related-link">
                 <span>Islamische Artikel lesen</span>
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true">↑</span>
               </Link>
             </nav>
           </div>
