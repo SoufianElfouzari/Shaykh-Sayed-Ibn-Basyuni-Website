@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./ArchiveIntroduction.css";
 import "../../../Home/components/Hero/Hero.css";
 
-function ArrowDownIcon() {
+function ArrowUpIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -12,14 +12,14 @@ function ArrowDownIcon() {
       aria-hidden="true"
     >
       <path
-        d="M12 5V19"
+        d="M12 19V5"
         stroke="currentColor"
         strokeWidth="1.7"
         strokeLinecap="round"
       />
 
       <path
-        d="M7 14L12 19L17 14"
+        d="M7 10L12 5L17 10"
         stroke="currentColor"
         strokeWidth="1.7"
         strokeLinecap="round"
@@ -166,7 +166,7 @@ function ArchiveIntroduction() {
               className="sib-archive-introduction-link-icon sib-home-hero-action-arrow"
               aria-hidden="true"
             >
-              <ArrowDownIcon />
+              <ArrowUpIcon />
             </span>
           </a>
         </footer>
