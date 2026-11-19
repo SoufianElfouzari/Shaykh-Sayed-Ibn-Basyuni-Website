@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 import {
   getPublishedArticles,
+  getArticleCategories,
 } from "../../../../supabase/articleService";
 import { useSsrData } from "../../../../SsrDataContext";
 
@@ -193,6 +194,7 @@ function ArticlesOverview() {
   // dataset to retain full-text search and accurate reading-time sorting.
   const archiveArticles = __ssrPath === "/artikel" ? initialArticles : undefined;
   const [articles, setArticles] = useState(archiveArticles || []);
+  const [managedCategories, setManagedCategories] = useState([]);
   const [fullArchiveLoaded, setFullArchiveLoaded] = useState(false);
   const archiveRequestStarted = useRef(false);
 
@@ -264,16 +266,26 @@ function ArticlesOverview() {
     return () => window.cancelAnimationFrame(frame);
   }, [archiveArticles, loadArticles]);
 
+  useEffect(() => {
+    let isCurrent = true;
+    getArticleCategories()
+      .then((items) => {
+        if (isCurrent) setManagedCategories(items);
+      })
+      .catch((error) => {
+        // Keep the archive usable if category settings are temporarily unavailable.
+        console.error("Artikelkategorien konnten nicht geladen werden:", error);
+      });
+    return () => { isCurrent = false; };
+  }, []);
+
   const categories = useMemo(() => {
-    return [
-      "Alle",
-      ...new Set(
-        articles.map(
-          (article) => article.category,
-        ),
-      ),
-    ];
-  }, [articles]);
+    const values = new Set([
+      ...managedCategories,
+      ...articles.map((article) => article.category),
+    ].filter(Boolean));
+    return ["Alle", ...[...values].sort((a, b) => a.localeCompare(b, "de"))];
+  }, [articles, managedCategories]);
 
   const languages = useMemo(() => {
     return [
@@ -606,9 +618,13 @@ function ArticlesOverview() {
                         {category}
                       </span>
 
-                      <strong>
-                        {categoryCount}
-                      </strong>
+                      {(!paginationActive || category === "Alle") && (
+                        <strong>
+                          {category === "Alle" && paginationActive
+                            ? archivePagination.total
+                            : categoryCount}
+                        </strong>
+                      )}
                     </button>
                   );
                 },
