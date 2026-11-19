@@ -283,3 +283,14 @@
   -webkit-text-stroke: 0;
   box-shadow: none;
 }
+
+/* Force truly dark digits even if shared typography sets text fill or opacity. */
+.sib-notices-banner .sib-notices-banner-item .sib-notices-banner-index {
+  color: #00291e !important;
+  -webkit-text-fill-color: #00291e !important;
+  opacity: 1 !important;
+  filter: none;
+  background-image: none;
+  border: 0;
+  -webkit-text-stroke: 0;
+}
