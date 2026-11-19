@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./OfficialChannels.css";
+import "../../Home/components/Hero/Hero.css";
 
 function VerifiedIcon() {
   return (
@@ -150,6 +151,7 @@ function OfficialChannels() {
         className="sib-official-channels-decoration"
         aria-hidden="true"
       >
+        <span className="sib-official-channels-masjid" />
         <span className="sib-official-channels-line sib-official-channels-line-one" />
 
         <span className="sib-official-channels-line sib-official-channels-line-two" />
@@ -194,20 +196,19 @@ function OfficialChannels() {
             </span>
 
             <p>
-              Wissenschaftliche Beiträge und veröffentlichte
-              Artikel des Shaykhs finden Sie bereits im
-              Artikelbereich dieser Website.
+              Islamische Artikel zu Fiqh, Aqidah und weiteren Themen
+              kannst du bereits auf dieser Website lesen.
             </p>
           </div>
 
           <Link
             to="/artikel"
-            className="sib-official-channels-button"
+            className="sib-official-channels-button sib-home-hero-action sib-home-hero-action-primary"
           >
-            <span>Zu den Artikeln</span>
+            <span className="sib-home-hero-action-label">Artikel entdecken</span>
 
             <span
-              className="sib-official-channels-button-icon"
+              className="sib-official-channels-button-icon sib-home-hero-action-arrow"
               aria-hidden="true"
             >
               <ArrowIcon />
