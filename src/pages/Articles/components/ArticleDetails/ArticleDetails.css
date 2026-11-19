@@ -1886,3 +1886,17 @@
     font-size: 17px;
   }
 }
+
+/* Keep the distance between sections, but bring each section's text closer to its heading. */
+.sib-article-details-content .sib-article-details-section > div {
+  margin-top: 9px;
+}
+.sib-article-details-content .sib-article-details-section > div > :first-child {
+  margin-top: 0;
+}
+.sib-article-details-content .sib-article-details-section header {
+  padding-bottom: 7px;
+}
+@media (max-width: 700px) {
+  .sib-article-details-content .sib-article-details-section > div { margin-top: 8px; }
+}
