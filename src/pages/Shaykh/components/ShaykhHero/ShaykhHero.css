@@ -322,35 +322,3 @@
 .sib-shaykh-page-hero .sib-shaykh-page-hero-photo {
   height: 86%;
 }
-
-/* Portrait refinement: slightly smaller green arch, more prominent Shaykh. */
-.sib-shaykh-page-hero .sib-shaykh-page-hero-arch {
-  inset: 3% 6% 0;
-}
-.sib-shaykh-page-hero .sib-shaykh-page-hero-photo {
-  height: 96%;
-  width: 112%;
-  max-width: none;
-}
-@media (max-width: 760px) {
-  .sib-shaykh-page-hero .sib-shaykh-page-hero-arch {
-    inset: 3% 6% 0;
-  }
-  .sib-shaykh-page-hero .sib-shaykh-page-hero-photo {
-    height: 94%;
-    width: 110%;
-  }
-}
-
-/* Larger Shaykh portrait without changing the golden arch dimensions. */
-.sib-shaykh-page-hero .sib-shaykh-page-hero-photo {
-  height: 108%;
-  width: 122%;
-  bottom: -2px;
-}
-@media (max-width: 760px) {
-  .sib-shaykh-page-hero .sib-shaykh-page-hero-photo {
-    height: 105%;
-    width: 118%;
-  }
-}
