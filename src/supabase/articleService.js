@@ -50,6 +50,20 @@ export async function getPublishedArticleSummaries() {
 }
 
 
+// Categories managed in the Flutter admin settings, available to the public
+// archive regardless of which articles are present on its current SSR page.
+export async function getArticleCategories() {
+  const { data, error } = await supabase
+    .from("article_categories")
+    .select("name")
+    .order("name", { ascending: true });
+
+  if (error) throw error;
+  return (data || [])
+    .map((row) => typeof row.name === "string" ? row.name.trim() : "")
+    .filter(Boolean);
+}
+
 export const ARTICLE_PAGE_SIZE = 12;
 
 // Only lightweight, published metadata is transferred for each indexable archive
