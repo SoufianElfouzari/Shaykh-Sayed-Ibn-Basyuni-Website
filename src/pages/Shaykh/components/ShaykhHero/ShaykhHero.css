@@ -267,3 +267,22 @@
     opacity: .45;
   }
 }
+
+/* Give the biography hero the same full first-screen presence as the home hero. */
+.shaykh > main > .sib-shaykh-page-hero.sib-home-hero {
+  min-height: max(775px, 100svh);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: clamp(70px, 7vw, 112px);
+}
+.shaykh > main > .sib-shaykh-page-hero .sib-shaykh-page-hero-highlights {
+  margin-top: clamp(24px, 3.5vw, 54px);
+}
+@media (max-width: 760px) {
+  .shaykh > main > .sib-shaykh-page-hero.sib-home-hero {
+    min-height: 100svh;
+    justify-content: flex-start;
+    padding-bottom: 65px;
+  }
+}
