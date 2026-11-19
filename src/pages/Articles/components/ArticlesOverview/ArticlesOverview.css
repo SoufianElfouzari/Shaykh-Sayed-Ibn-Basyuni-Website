@@ -1340,3 +1340,157 @@
   .sib-article-card-action { width: auto; flex-shrink: 0; }
   .sib-article-card-footer strong { max-width: 135px; }
 }
+
+
+/* Editorial archive refinement: clear hierarchy, restrained surfaces, accessible actions. */
+.sib-articles-overview {
+  background: #f8f7f2;
+}
+.sib-articles-overview-decoration { opacity: .22; pointer-events: none; }
+.sib-articles-overview-header {
+  grid-template-columns: minmax(0,1fr) minmax(260px,390px);
+  align-items: end;
+  padding-bottom: 35px;
+  border-bottom: 1px solid #dedbd0;
+}
+.sib-articles-overview-heading h2 {
+  max-width: 780px;
+  font-size: clamp(38px,4vw,58px);
+  font-weight: 720;
+  line-height: 1.12;
+  letter-spacing: -.045em;
+}
+.sib-articles-overview-description { color: #48564e; line-height: 1.75; }
+.sib-articles-overview-controls {
+  margin-top: 32px;
+  border: 1px solid #e2e1d8;
+  border-radius: 16px;
+  box-shadow: none;
+  background: #fff;
+}
+.sib-articles-overview-search input,
+.sib-articles-overview-control select {
+  background: #fdfdfb;
+  border: 1px solid #d9dfd8;
+  color: #183a2d;
+}
+.sib-articles-overview-category {
+  background: #fff;
+  border: 1px solid #d9dfd8;
+  color: #254f3e;
+  box-shadow: none;
+  transition: background-color .18s,border-color .18s,color .18s;
+}
+.sib-articles-overview-category:hover { transform: none; background: #f1f6f0; }
+.sib-articles-overview-category-active,
+.sib-articles-overview-category-active:hover {
+  background: #11553d;
+  border-color: #11553d;
+  color: white;
+  box-shadow: none;
+}
+.sib-articles-overview-results { border-top: 0; }
+.sib-articles-overview-grid { gap: 20px; }
+.sib-article-card,
+.sib-article-card-featured {
+  border: 1px solid #e1e4dc;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(21,48,34,.035);
+}
+.sib-article-card:hover {
+  transform: translateY(-3px);
+  border-color: #a8bcae;
+  box-shadow: 0 12px 30px rgba(21,48,34,.085);
+}
+.sib-article-card-top {
+  min-height: 0;
+  padding: 22px 23px 0;
+  background: transparent;
+  border: 0;
+}
+.sib-article-card-category {
+  display: inline-flex;
+  width: fit-content;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #edf4ed;
+  color: #17573e;
+  font-size: 11px;
+  letter-spacing: .035em;
+}
+.sib-article-card-featured-label {
+  background: #f8f1dc;
+  border-color: #eee0b5;
+  color: #755b1f;
+}
+.sib-article-card-content { padding: 18px 23px 22px; }
+.sib-article-card-meta { gap: 9px; }
+.sib-article-card-meta time,.sib-article-card-meta p { color: #69736d; font-size: 12px; }
+.sib-article-card-content h3 {
+  margin-top: 13px;
+  color: #142f25;
+  font-size: clamp(22px,1.85vw,28px);
+  line-height: 1.27;
+  font-weight: 730;
+  letter-spacing: -.035em;
+  overflow-wrap: anywhere;
+}
+.sib-article-card-excerpt {
+  margin-top: 12px;
+  color: #58645d;
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-line-clamp: 3;
+}
+.sib-article-card-tags { margin-top: 16px; }
+.sib-article-card-tags span { background: #f6f7f3; border-color: #e7e9e2; }
+.sib-article-card-footer {
+  min-height: 68px;
+  padding: 13px 23px;
+  background: transparent;
+  border-top: 1px solid #edf0e9;
+}
+.sib-article-card-footer > div > span { color: #7b857e; }
+.sib-article-card-footer strong { color: #254336; }
+.sib-article-card-action {
+  min-height: 38px;
+  padding: 0;
+  gap: 9px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #0d6546;
+  font-size: 13px;
+  font-weight: 750;
+}
+.sib-article-card-action-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border-radius: 50%;
+  background: #eaf3ec;
+  color: #0d6546;
+}
+.sib-article-card:hover .sib-article-card-action-icon { transform: translateX(3px); }
+.sib-articles-overview-load-more button {
+  background: #11553d;
+  border: 1px solid #11553d;
+  border-radius: 12px;
+  box-shadow: none;
+}
+@media (max-width:1050px) {
+  .sib-articles-overview-header { grid-template-columns: 1fr; }
+}
+@media (max-width:700px) {
+  .sib-articles-overview-header { padding-bottom: 24px; }
+  .sib-articles-overview-controls { margin-top: 24px; }
+  .sib-article-card-top { padding: 19px 20px 0; flex-direction: row; align-items: center; }
+  .sib-article-card-content { padding: 17px 20px 20px; }
+  .sib-article-card-content h3 { font-size: 24px; }
+  .sib-article-card-footer { padding: 13px 20px; flex-direction: row; align-items: center; }
+}
+@media(max-width:380px) {
+  .sib-article-card-footer { flex-wrap: wrap; }
+  .sib-article-card-footer strong { max-width: 180px; }
+}
