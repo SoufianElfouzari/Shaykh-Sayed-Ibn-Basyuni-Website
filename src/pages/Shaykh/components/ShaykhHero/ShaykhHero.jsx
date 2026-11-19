@@ -62,7 +62,7 @@ function ShaykhHero() {
           seine Forschung und seine islamischen Unterrichte in Kassel.
         </p>
         <div className="sib-home-hero-actions">
-          <a className="sib-home-hero-action sib-home-hero-action-primary" href="#biografie">
+          <a className="sib-home-hero-action sib-home-hero-action-primary" href="#kurzbiografie">
             <span className="sib-home-hero-action-icon" aria-hidden="true"><BookIcon /></span>
             <span className="sib-home-hero-action-label">Biografie entdecken</span>
             <span className="sib-home-hero-action-arrow" aria-hidden="true"><ArrowIcon /></span>
