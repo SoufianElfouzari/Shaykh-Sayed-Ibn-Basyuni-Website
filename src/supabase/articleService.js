@@ -104,7 +104,7 @@ export async function getPublishedArticlePage(requestedPage = 1) {
 export async function getPublishedArticles() {
   const { data, error } = await supabase
     .from("articles")
-    .select("*")
+    .select("id,slug,title,excerpt,contentHtml,coverImageUrl,status,publishedAt,updated_at,author,category,language,featured,tags")
     .eq("status", "published")
     .order("publishedAt", { ascending: false, nullsFirst: false })
     .range(0, 999);
@@ -117,7 +117,7 @@ export async function getPublishedArticleBySlug(slug) {
   if (!String(slug || "").trim()) return null;
   const { data, error } = await supabase
     .from("articles")
-    .select("*")
+    .select("id,slug,title,excerpt,contentHtml,coverImageUrl,status,publishedAt,updated_at,author,category,language,featured,tags")
     .eq("slug", String(slug).trim())
     .eq("status", "published")
     .maybeSingle();
