@@ -1921,3 +1921,27 @@
 @media (max-width: 700px) {
   .sib-article-details-content .sib-article-details-section > div { margin-top: 4px; }
 }
+
+/* Editor HTML may contain blank paragraphs or line breaks immediately after a heading.
+   Remove those invisible blocks instead of repeatedly adjusting the outer section gap. */
+.sib-article-details-content .sib-article-details-section > div {
+  margin-block-start: 0 !important;
+  padding-block-start: 0 !important;
+  display: block;
+}
+.sib-article-details-content .sib-article-details-section > div > p:empty,
+.sib-article-details-content .sib-article-details-section > div > p:has(> br:only-child),
+.sib-article-details-content .sib-article-details-section > div > div:empty,
+.sib-article-details-content .sib-article-details-section > div > div:has(> br:only-child) {
+  display: none !important;
+}
+.sib-article-details-content .sib-article-details-section > div > p:first-of-type,
+.sib-article-details-content .sib-article-details-section > div > div:first-child,
+.sib-article-details-content .sib-article-details-section > div > blockquote:first-child {
+  margin-block-start: 0 !important;
+  padding-block-start: 0;
+}
+.sib-article-details-content .sib-article-details-section > header {
+  padding-bottom: 5px;
+  margin-bottom: 7px;
+}
