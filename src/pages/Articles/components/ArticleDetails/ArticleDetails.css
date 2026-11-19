@@ -1900,3 +1900,24 @@
 @media (max-width: 700px) {
   .sib-article-details-content .sib-article-details-section > div { margin-top: 8px; }
 }
+
+/* Tight heading-to-first-paragraph spacing, including HTML imported from the editor. */
+.sib-article-details-content .sib-article-details-section > header {
+  margin: 0;
+  padding-bottom: 5px;
+}
+.sib-article-details-content .sib-article-details-section > div {
+  margin: 4px 0 0;
+  padding: 0;
+  display: flow-root;
+}
+.sib-article-details-content .sib-article-details-section > div > :first-child,
+.sib-article-details-content .sib-article-details-section > div > :first-child > :first-child {
+  margin-top: 0 !important;
+}
+.sib-article-details-content .sib-article-details-section > div > p:first-child {
+  margin-block-start: 0 !important;
+}
+@media (max-width: 700px) {
+  .sib-article-details-content .sib-article-details-section > div { margin-top: 4px; }
+}
