@@ -1729,3 +1729,41 @@
   .sib-article-details-introduction p { font-size: 16px; line-height: 1.75; }
   .sib-article-details-section header :is(h2,h3,h4,h5,h6) { font-size: 23px; }
 }
+
+/* Comfortable long-form article reading: larger type and balanced rhythm. */
+.sib-article-details-content .sib-article-details-section > div p,
+.sib-article-details-content .sib-article-details-introduction p {
+  font-size: 20px;
+  line-height: 1.72;
+  letter-spacing: -.01em;
+  margin-bottom: 16px;
+}
+.sib-article-details-content .sib-article-details-section > div li,
+.sib-article-details-content .sib-article-details-introduction li {
+  font-size: 20px;
+  line-height: 1.72;
+}
+.sib-article-details-content .sib-article-details-section > div > :last-child,
+.sib-article-details-content .sib-article-details-introduction > :last-child {
+  margin-bottom: 0;
+}
+.sib-article-details-content .sib-article-details-section header :is(h2,h3,h4,h5,h6) {
+  font-size: clamp(26px, 2.2vw, 33px);
+  line-height: 1.3;
+}
+.sib-article-details-content .sib-article-details-section header h3 {
+  font-size: clamp(23px, 1.9vw, 28px);
+}
+.sib-article-details-content .sib-article-details-sections { gap: 35px; }
+@media (max-width: 700px) {
+  .sib-article-details-content .sib-article-details-section > div p,
+  .sib-article-details-content .sib-article-details-introduction p,
+  .sib-article-details-content .sib-article-details-section > div li,
+  .sib-article-details-content .sib-article-details-introduction li {
+    font-size: 18px;
+    line-height: 1.7;
+  }
+  .sib-article-details-content .sib-article-details-section header :is(h2,h3,h4,h5,h6) {
+    font-size: 25px;
+  }
+}
