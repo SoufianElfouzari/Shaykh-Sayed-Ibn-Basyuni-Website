@@ -116,20 +116,25 @@ function ArchiveIntroduction() {
 
           <div className="sib-archive-introduction-text">
             <p>
-              Die Aufnahmen werden nach Themen und Reihen
-              eingeordnet, damit zusammengehörende Unterrichte
-              leichter gefunden und in der richtigen Reihenfolge
-              angehört werden können.
+              Die Aufnahmen sind übersichtlich nach Themen und
+              Unterrichtsreihen geordnet. So kannst du zusammengehörende
+              Durous finden und in der richtigen Reihenfolge anhören.
             </p>
-
             <p>
-              Neben Unterrichtsreihen können auch einzelne
-              Durous im Archiv erscheinen. Neue Aufnahmen werden
-              nach ihrer Veröffentlichung ergänzt. Erfahre mehr
-              über den <Link to="/shaykh">Shaykh und seinen
-              wissenschaftlichen Werdegang</Link> oder lies die
-              <Link to="/artikel"> schriftlichen Fachbeiträge</Link>.
+              Neben vollständigen Unterrichtsreihen findest du auch
+              einzelne Vorträge. Neue Aufnahmen werden regelmäßig
+              im Archiv ergänzt.
             </p>
+            <nav className="sib-archive-introduction-related" aria-label="Weitere Inhalte entdecken">
+              <Link to="/shaykh" className="sib-archive-introduction-related-link">
+                <span>Mehr über den Shaykh</span>
+                <span aria-hidden="true">↗</span>
+              </Link>
+              <Link to="/artikel" className="sib-archive-introduction-related-link">
+                <span>Islamische Artikel lesen</span>
+                <span aria-hidden="true">↗</span>
+              </Link>
+            </nav>
           </div>
         </div>
 
