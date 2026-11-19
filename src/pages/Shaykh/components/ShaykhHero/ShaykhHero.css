@@ -286,3 +286,18 @@
     padding-bottom: 65px;
   }
 }
+
+/* Fix: one clean, solid green interior, with no offset duplicate arch. */
+.sib-shaykh-page-hero-arch {
+  background: linear-gradient(130deg, #f4cb4b, #d29b22 60%, #e8b838);
+}
+.sib-shaykh-page-hero-arch-inner {
+  inset: 12px 12px 0;
+  clip-path: none;
+  background: #006449;
+  border-radius: 48% 48% 0 0 / 22% 22% 0 0;
+}
+.sib-shaykh-page-hero-arch-inner::after {
+  display: none;
+  content: none;
+}
