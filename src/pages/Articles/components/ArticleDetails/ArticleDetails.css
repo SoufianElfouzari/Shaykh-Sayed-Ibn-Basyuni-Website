@@ -1923,3 +1923,56 @@
   .sib-article-details-content .sib-article-details-section { padding-top: 15px; }
   .sib-article-details-content .sib-article-details-section > header { margin-bottom: 7px; }
 }
+
+/* Flutter editor code blocks are displayed as centered scripture/quotation panels. */
+.sib-article-details-content :is(.sib-article-details-introduction, .sib-article-details-section > div) pre {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 16px 0;
+  padding: clamp(19px, 3vw, 30px);
+  overflow-x: auto;
+  border: 1px solid #d7e3d9;
+  border-inline-start: 4px solid #176a4e;
+  border-radius: 12px;
+  background: #f0f5ef;
+  color: #123e2e;
+  text-align: center;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  font-size: clamp(19px, 1.9vw, 23px);
+  font-weight: 650;
+  line-height: 1.8;
+}
+.sib-article-details-content :is(.sib-article-details-introduction, .sib-article-details-section > div) pre code {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  white-space: inherit;
+  overflow-wrap: inherit;
+}
+.sib-article-details-content :is(.sib-article-details-introduction, .sib-article-details-section > div) pre :is(p,span,strong,em) {
+  font-size: inherit;
+  line-height: inherit;
+}
+.sib-article-details-content .sib-article-details-section > div > p {
+  margin-top: 0;
+  margin-bottom: 11px;
+}
+.sib-article-details-content .sib-article-details-section > div > p + pre,
+.sib-article-details-content .sib-article-details-section > div > pre + p {
+  margin-top: 12px;
+}
+@media(max-width:700px) {
+  .sib-article-details-content :is(.sib-article-details-introduction, .sib-article-details-section > div) pre {
+    padding: 18px 14px;
+    font-size: 19px;
+    line-height: 1.75;
+  }
+}
