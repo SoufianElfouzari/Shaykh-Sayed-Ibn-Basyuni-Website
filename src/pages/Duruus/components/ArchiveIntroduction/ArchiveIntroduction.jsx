@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./ArchiveIntroduction.css";
+import "../../../Home/components/Hero/Hero.css";
 
 function ArrowDownIcon() {
   return (
@@ -152,12 +153,12 @@ function ArchiveIntroduction() {
 
           <a
             href="#unterrichtsarchiv"
-            className="sib-archive-introduction-link"
+            className="sib-archive-introduction-link sib-home-hero-action sib-home-hero-action-primary"
           >
-            <span>Zum Unterrichtsarchiv</span>
+            <span className="sib-home-hero-action-label">Zum Unterrichtsarchiv</span>
 
             <span
-              className="sib-archive-introduction-link-icon"
+              className="sib-archive-introduction-link-icon sib-home-hero-action-arrow"
               aria-hidden="true"
             >
               <ArrowDownIcon />
