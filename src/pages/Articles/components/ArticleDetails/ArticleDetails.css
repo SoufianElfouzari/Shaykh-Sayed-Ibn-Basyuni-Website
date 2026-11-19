@@ -1767,3 +1767,89 @@
     font-size: 25px;
   }
 }
+
+/* Reader typography and mobile-first article flow. */
+.sib-article-details-mobile-toc { display: none; }
+.sib-article-details-content .sib-article-details-section > div p,
+.sib-article-details-content .sib-article-details-introduction p,
+.sib-article-details-content .sib-article-details-section > div li,
+.sib-article-details-content .sib-article-details-introduction li {
+  font-size: 22px;
+  line-height: 1.7;
+}
+@media (max-width: 700px) {
+  .sib-article-details-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .sib-article-details-mobile-toc {
+    display: block;
+    order: 0;
+    width: 100%;
+    margin: 0 0 18px;
+    border: 1px solid #d9e1d8;
+    border-radius: 12px;
+    background: #f7f8f3;
+    overflow: hidden;
+  }
+  .sib-article-details-mobile-toc summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    color: #0b4c3a;
+    font-size: 15px;
+    font-weight: 750;
+    cursor: pointer;
+    list-style: none;
+  }
+  .sib-article-details-mobile-toc summary::-webkit-details-marker { display: none; }
+  .sib-article-details-mobile-toc[open] summary span { transform: rotate(180deg); }
+  .sib-article-details-mobile-toc nav {
+    display: flex;
+    flex-direction: column;
+    max-height: 240px;
+    overflow-y: auto;
+    padding: 5px 14px 12px;
+    border-top: 1px solid #d9e1d8;
+  }
+  .sib-article-details-mobile-toc nav a {
+    padding: 10px 2px;
+    border-bottom: 1px solid #e5e9e2;
+    color: #214e40;
+    font-size: 14px;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+  .sib-article-details-mobile-toc nav a:last-child { border-bottom: 0; }
+  .sib-article-details-mobile-toc nav a:focus-visible { outline: 2px solid #0d6a52; outline-offset: 2px; }
+  .sib-article-details-content {
+    order: 1;
+    width: 100%;
+    max-width: none;
+  }
+  .sib-article-details-sidebar {
+    order: 2;
+    width: 100%;
+    margin-top: 35px;
+    padding-top: 24px;
+    border-top: 1px solid #dfe3dc;
+  }
+  .sib-article-details-sidebar-inner { position: static; }
+  .sib-article-details-sidebar-inner > .sib-article-details-sidebar-label,
+  .sib-article-details-sidebar-inner > nav { display: none; }
+  .sib-article-details-sidebar-related { margin-top: 0; padding-top: 0; border-top: 0; }
+  .sib-article-details-sidebar-actions { margin-top: 22px; }
+  .sib-article-details-content .sib-article-details-section > div p,
+  .sib-article-details-content .sib-article-details-introduction p,
+  .sib-article-details-content .sib-article-details-section > div li,
+  .sib-article-details-content .sib-article-details-introduction li {
+    font-size: 20px;
+    line-height: 1.68;
+  }
+}
+@media print {
+  .sib-article-details-mobile-toc { display: none; }
+}
