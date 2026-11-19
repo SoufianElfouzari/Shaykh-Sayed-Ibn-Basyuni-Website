@@ -963,6 +963,15 @@ function ArticleDetails() {
             </div>
           </aside>
 
+          <details className="sib-article-details-mobile-toc">
+            <summary>Inhalt des Artikels <span aria-hidden="true">⌄</span></summary>
+            <nav aria-label="Artikelinhalt mobil">
+              {tableOfContents.map((entry) => (
+                <a key={entry.id} href={`#${entry.id}`}>{entry.title}</a>
+              ))}
+            </nav>
+          </details>
+
           <article className="sib-article-details-content">
             {articleContent
               .introductionHtml && (
