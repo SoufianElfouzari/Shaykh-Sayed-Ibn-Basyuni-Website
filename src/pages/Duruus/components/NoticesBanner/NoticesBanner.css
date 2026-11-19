@@ -221,3 +221,31 @@
 @media (prefers-reduced-motion: reduce) {
   .sib-notices-banner { animation: none; }
 }
+
+/* Compact proportions for the notices section */
+.sib-notices-banner { padding: clamp(22px, 2.3vw, 36px); border-radius: 26px; }
+.sib-notices-banner-header { padding-bottom: 20px; }
+.sib-notices-banner-heading h2 { font-size: clamp(25px, 2.65vw, 40px); }
+.sib-notices-banner-heading p { margin-bottom: 8px; font-size: clamp(10px, .9vw, 13px); }
+.sib-notices-banner-status { min-height: 64px; }
+.sib-notices-banner-item { padding-top: 22px; padding-bottom: 22px; grid-template-columns: clamp(54px, 5.6vw, 76px) minmax(0, 1fr) auto; column-gap: clamp(14px, 2vw, 26px); }
+.sib-notices-banner-icon { width: clamp(54px, 5.6vw, 76px); border-radius: 16px; }
+.sib-notices-banner-content { padding-left: clamp(14px, 1.7vw, 24px); }
+.sib-notices-banner-content h3 { font-size: clamp(20px, 1.75vw, 28px); }
+.sib-notices-banner-content > p { font-size: clamp(13px, 1vw, 16px); line-height: 1.5; margin-top: 7px; }
+.sib-notices-banner-meta { margin-bottom: 9px; }
+@media (max-width: 700px) {
+  .sib-notices-banner { padding: 23px 16px; }
+  .sib-notices-banner-heading h2 { font-size: clamp(25px, 5.5vw, 37px); }
+  .sib-notices-banner-item { grid-template-columns: 46px minmax(0, 1fr) 32px; padding: 18px 12px; column-gap: 10px; margin-top: 14px; }
+  .sib-notices-banner-icon { width: 46px; border-radius: 12px; }
+  .sib-notices-banner-content { padding-left: 10px; }
+  .sib-notices-banner-content h3 { font-size: clamp(18px, 4vw, 24px); }
+  .sib-notices-banner-content > p { font-size: 13px; }
+}
+@media (max-width: 420px) {
+  .sib-notices-banner-item { grid-template-columns: 38px minmax(0, 1fr) 27px; padding: 15px 8px; column-gap: 7px; }
+  .sib-notices-banner-icon { width: 38px; }
+  .sib-notices-banner-content { padding-left: 8px; }
+  .sib-notices-banner-index { min-width: 27px; }
+}
