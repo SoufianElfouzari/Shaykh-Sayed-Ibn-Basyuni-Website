@@ -890,7 +890,7 @@ function ArticleDetails() {
 
               <nav aria-label="Artikelinhalt">
                 {tableOfContents.map(
-                  (entry, index) => (
+                  (entry) => (
                     <a
                       key={entry.id}
                       href={`#${entry.id}`}
@@ -901,14 +901,7 @@ function ArticleDetails() {
                           : ""
                       }
                     >
-                      <span>
-                        {String(
-                          index + 1,
-                        ).padStart(
-                          2,
-                          "0",
-                        )}
-                      </span>
+                      
 
                       <strong>
                         {entry.title}
@@ -973,21 +966,14 @@ function ArticleDetails() {
 
             <div className="sib-article-details-sections">
               {articleContent.sections.map(
-                (section, index) => (
+                (section) => (
                   <section
                     key={section.id}
                     id={section.id}
                     className="sib-article-details-section"
                   >
                     <header>
-                      <span>
-                        {String(
-                          index + 1,
-                        ).padStart(
-                          2,
-                          "0",
-                        )}
-                      </span>
+                      
 
                       {createElement(`h${section.level || 2}`, null, section.title)}
                     </header>
