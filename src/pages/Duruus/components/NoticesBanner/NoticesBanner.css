@@ -249,3 +249,28 @@
   .sib-notices-banner-content { padding-left: 8px; }
   .sib-notices-banner-index { min-width: 27px; }
 }
+
+/* Reduce the outer notice panel footprint without shrinking its content typography. */
+.sib-notices-banner-section { padding-top: 22px; padding-bottom: 22px; }
+.sib-notices-banner {
+  max-width: min(85%, 1240px);
+  padding: clamp(20px, 2vw, 30px);
+}
+.sib-notices-banner-decoration {
+  background-image: url("/assets/ornament-right.png");
+  opacity: .9;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.sib-notices-banner-index {
+  color: #063f31;
+  background: #f4c96c;
+  border: 1px solid #bd8b23;
+  font-weight: 900;
+  text-shadow: none;
+  box-shadow: 0 1px 4px rgba(64, 44, 9, .12);
+}
+@media (max-width: 700px) {
+  .sib-notices-banner { max-width: 100%; padding: 20px 14px; }
+  .sib-notices-banner-section { padding-left: 20px; padding-right: 20px; }
+}
