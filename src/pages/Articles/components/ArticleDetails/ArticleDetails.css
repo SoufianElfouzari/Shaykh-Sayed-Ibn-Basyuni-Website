@@ -1853,3 +1853,36 @@
 @media print {
   .sib-article-details-mobile-toc { display: none; }
 }
+
+/* Harmonize body text with the quote typography, keeping quotes distinct. */
+.sib-article-details-content .sib-article-details-section > div p,
+.sib-article-details-content .sib-article-details-introduction p,
+.sib-article-details-content .sib-article-details-section > div li,
+.sib-article-details-content .sib-article-details-introduction li {
+  font-size: 18px;
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+.sib-article-details-content .sib-article-details-section > div blockquote,
+.sib-article-details-content .sib-article-details-introduction blockquote {
+  font-size: 18px;
+  line-height: 1.55;
+}
+.sib-article-details-content .sib-article-details-section > div blockquote p,
+.sib-article-details-content .sib-article-details-introduction blockquote p {
+  font-size: inherit;
+  line-height: inherit;
+}
+@media (max-width: 700px) {
+  .sib-article-details-content .sib-article-details-section > div p,
+  .sib-article-details-content .sib-article-details-introduction p,
+  .sib-article-details-content .sib-article-details-section > div li,
+  .sib-article-details-content .sib-article-details-introduction li {
+    font-size: 17px;
+    line-height: 1.72;
+  }
+  .sib-article-details-content .sib-article-details-section > div blockquote,
+  .sib-article-details-content .sib-article-details-introduction blockquote {
+    font-size: 17px;
+  }
+}
