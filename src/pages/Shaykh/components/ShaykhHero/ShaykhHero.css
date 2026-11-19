@@ -1,43 +1,227 @@
-/* The biography hero shares the homepage's artwork, typography and buttons.
-   Keep only biography-specific responsive adjustments here. */
-.sib-shaykh-page-hero {
-  min-height: 700px;
+/* Biography hero: shared homepage ornament, lantern and typography with a portrait split layout. */
+.sib-shaykh-page-hero.sib-home-hero {
+  min-height: 0;
+  padding: 52px 5% 34px;
 }
-.sib-shaykh-page-hero .sib-shaykh-page-hero-container {
-  max-width: 1160px;
+.sib-shaykh-page-hero-container {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  align-items: center;
+  gap: clamp(25px, 3.2vw, 70px);
+  width: min(1190px, 100%);
+  margin: 0 auto;
+}
+.sib-shaykh-page-hero-copy {
+  min-width: 0;
+  text-align: left;
+}
+.sib-shaykh-page-hero .sib-shaykh-page-hero-label {
+  margin: 0;
+  padding: 9px 15px;
+  font-size: clamp(12px, 1vw, 15px);
+}
+.sib-shaykh-page-hero .sib-shaykh-page-hero-label .sib-home-hero-label-icon {
+  color: #d5a028;
 }
 .sib-shaykh-page-hero .sib-shaykh-page-hero-title {
-  max-width: none;
+  margin: 23px 0 0;
+  text-align: left;
+  font-size: clamp(50px, 5vw, 76px);
+}
+.sib-shaykh-page-hero .sib-shaykh-page-hero-title .sib-home-hero-title-main,
+.sib-shaykh-page-hero .sib-shaykh-page-hero-title .sib-shaykh-page-hero-name {
+  margin-left: 0;
+  margin-right: 0;
+}
+.sib-shaykh-page-hero .sib-shaykh-page-hero-title .sib-home-hero-title-main {
+  font-size: clamp(49px, 4.7vw, 75px);
 }
 .sib-shaykh-page-hero .sib-shaykh-page-hero-name {
-  font-size: clamp(32px, 5.15vw, 79px);
+  font-size: clamp(35px, 3.9vw, 59px);
+  white-space: nowrap;
+  padding-bottom: 13px;
 }
 .sib-shaykh-page-hero .sib-shaykh-page-hero-name::after {
-  left: 62%;
+  display: none;
+}
+.sib-shaykh-page-hero .sib-shaykh-page-hero-divider {
+  width: 100%;
+  max-width: 570px;
+  margin: 11px 0 0;
 }
 .sib-shaykh-page-hero .sib-shaykh-page-hero-description {
-  max-width: 850px;
+  max-width: 590px;
+  margin: 24px 0 0;
+  text-align: left;
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.55;
 }
-@media (max-width: 900px) {
-  .sib-shaykh-page-hero {
-    min-height: unset;
-  }
-  .sib-shaykh-page-hero .sib-shaykh-page-hero-name {
-    font-size: clamp(28px, 5.6vw, 50px);
-  }
+.sib-shaykh-page-hero .sib-shaykh-page-hero-actions {
+  justify-content: flex-start;
+  width: 100%;
+  margin: 24px 0 0;
+  gap: 13px;
 }
-@media (max-width: 600px) {
-  .sib-shaykh-page-hero .sib-shaykh-page-hero-name {
-    font-size: clamp(23px, 6.1vw, 36px);
-    white-space: normal;
-    text-wrap: balance;
-  }
-  .sib-shaykh-page-hero .sib-shaykh-page-hero-description {
-    max-width: 440px;
-  }
+.sib-shaykh-page-hero .sib-shaykh-page-hero-actions .sib-home-hero-action {
+  flex: 0 1 auto;
+  width: auto;
+  min-width: 0;
+  min-height: 62px;
+  padding: 8px 13px;
+  grid-template-columns: 34px minmax(0, 1fr) 23px;
+  gap: 8px;
+  font-size: clamp(13px, 1.04vw, 16px);
 }
-@media (max-width: 360px) {
-  .sib-shaykh-page-hero .sib-shaykh-page-hero-name {
-    font-size: 6vw;
-  }
+.sib-shaykh-page-hero .sib-shaykh-page-hero-actions .sib-home-hero-action-icon svg {
+  width: 31px;
+  height: 31px;
+}
+.sib-shaykh-page-hero .sib-shaykh-page-hero-actions .sib-home-hero-action-arrow svg {
+  width: 21px;
+  height: 21px;
+}
+.sib-shaykh-page-hero-portrait {
+  position: relative;
+  align-self: end;
+  width: 100%;
+  height: clamp(385px, 31vw, 490px);
+  isolation: isolate;
+}
+.sib-shaykh-page-hero-arch {
+  position: absolute;
+  inset: 0 2% 0 2%;
+  overflow: hidden;
+  background: linear-gradient(130deg, #d6a12a, #f6d15c 25%, #a86f0d 75%, #e6b53b);
+  clip-path: polygon(0 100%,0 45%,1% 39%,5% 34%,13% 29%,18% 26%,20% 19%,25% 12%,37% 6%,45% 0,50% -1%,55% 0,63% 6%,75% 12%,80% 19%,82% 26%,87% 29%,95% 34%,99% 39%,100% 45%,100% 100%);
+  filter: drop-shadow(0 8px 12px rgba(29, 65, 45, .15));
+}
+.sib-shaykh-page-hero-arch-inner {
+  position: absolute;
+  inset: 13px 12px 0;
+  background: radial-gradient(circle at 50% 38%, #087d5b, #00553e 70%, #003e31);
+  clip-path: inherit;
+}
+.sib-shaykh-page-hero-arch-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .13;
+  background: url("/assets/ornament-texture.png") center / 650px auto;
+  mix-blend-mode: screen;
+}
+.sib-shaykh-page-hero-photo {
+  position: absolute;
+  z-index: 2;
+  bottom: -2px;
+  left: 50%;
+  width: 100%;
+  height: 93%;
+  object-fit: contain;
+  object-position: bottom center;
+  transform: translateX(-50%);
+}
+.sib-shaykh-page-hero-clouds {
+  position: absolute;
+  z-index: 3;
+  left: -8%;
+  right: -8%;
+  bottom: -12px;
+  height: 95px;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 23% 35% at 12% 77%, #fbfaf6 20%, transparent 100%),
+    radial-gradient(ellipse 30% 58% at 34% 75%, #fbfaf6 30%, transparent 100%),
+    radial-gradient(ellipse 30% 55% at 66% 80%, #fbfaf6 27%, transparent 100%),
+    radial-gradient(ellipse 27% 45% at 90% 74%, #fbfaf6 28%, transparent 100%),
+    linear-gradient(to bottom, transparent 8%, #fbfaf6 95%);
+  filter: blur(7px);
+}
+.sib-shaykh-page-hero-highlights {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: min(1250px, 100%);
+  margin: 14px auto 0;
+  gap: 0;
+}
+.sib-shaykh-page-hero-highlight {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  padding: 0 18px;
+  text-align: left;
+}
+.sib-shaykh-page-hero-highlight + .sib-shaykh-page-hero-highlight {
+  border-left: 1px solid rgba(144,132,105,.22);
+}
+.sib-shaykh-page-hero-highlight-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 35px;
+  width: 35px;
+  height: 35px;
+  color: #d4a024;
+}
+.sib-shaykh-page-hero-highlight-icon svg {
+  display: block;
+  width: 34px;
+  height: 34px;
+}
+.sib-shaykh-page-hero-highlight strong,
+.sib-shaykh-page-hero-highlight small {
+  display: block;
+  line-height: 1.35;
+}
+.sib-shaykh-page-hero-highlight strong {
+  color: #064b36;
+  font-size: clamp(13px, 1.05vw, 17px);
+  font-weight: 800;
+}
+.sib-shaykh-page-hero-highlight small {
+  color: #575d58;
+  font-size: clamp(11px, .85vw, 13px);
+}
+@media (max-width: 1050px) {
+  .sib-shaykh-page-hero.sib-home-hero { padding-top: 58px; }
+  .sib-shaykh-page-hero-container { gap: 15px; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-name { font-size: clamp(31px, 4vw, 47px); }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-actions { flex-wrap: wrap; }
+  .sib-shaykh-page-hero-portrait { height: 390px; }
+  .sib-shaykh-page-hero-highlight { padding: 0 10px; gap: 8px; }
+}
+@media (max-width: 760px) {
+  .sib-shaykh-page-hero.sib-home-hero { padding: 38px 20px 44px; }
+  .sib-shaykh-page-hero-container { grid-template-columns: 1fr; gap: 18px; }
+  .sib-shaykh-page-hero-copy { text-align: center; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-label { margin: 0 auto; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-title { text-align: center; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-title .sib-home-hero-title-main,
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-title .sib-shaykh-page-hero-name { margin-left: auto; margin-right: auto; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-title .sib-home-hero-title-main { font-size: clamp(44px, 9vw, 65px); }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-name { font-size: clamp(27px, 6.3vw, 46px); white-space: normal; text-wrap: balance; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-divider { margin: 9px auto 0; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-description { margin: 20px auto 0; text-align: center; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-actions { justify-content: center; margin: 23px auto 0; }
+  .sib-shaykh-page-hero-portrait { width: min(430px, 100%); height: clamp(330px, 90vw, 430px); margin: 0 auto; }
+  .sib-shaykh-page-hero-highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 0; margin-top: 22px; }
+  .sib-shaykh-page-hero-highlight:nth-child(3) { border-left: 0; }
+}
+@media (max-width: 460px) {
+  .sib-shaykh-page-hero.sib-home-hero { padding-inline: 15px; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-title { margin-top: 24px; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-title .sib-home-hero-title-main { font-size: 43px; }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-name { font-size: clamp(23px, 6.3vw, 30px); }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-actions { flex-direction: column; align-items: stretch; width: min(350px, 100%); }
+  .sib-shaykh-page-hero .sib-shaykh-page-hero-actions .sib-home-hero-action { width: 100%; max-width: none; flex: none; }
+  .sib-shaykh-page-hero-portrait { height: 340px; }
+  .sib-shaykh-page-hero-highlights { gap: 18px 0; }
+  .sib-shaykh-page-hero-highlight { padding: 0 6px; gap: 7px; }
+  .sib-shaykh-page-hero-highlight-icon { flex-basis: 26px; width: 26px; height: 26px; }
+  .sib-shaykh-page-hero-highlight-icon svg { width: 25px; height: 25px; }
+  .sib-shaykh-page-hero-highlight strong { font-size: 12px; }
+  .sib-shaykh-page-hero-highlight small { font-size: 10px; }
 }
