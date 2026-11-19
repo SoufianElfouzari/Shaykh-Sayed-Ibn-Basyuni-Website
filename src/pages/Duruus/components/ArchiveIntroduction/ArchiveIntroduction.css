@@ -1,188 +1,185 @@
 
-@keyframes sibArchiveIntroductionReveal {
-  from { opacity: 0; transform: translateY(22px); }
+@keyframes sibArchiveReveal {
+  from { opacity: 0; transform: translateY(26px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .sib-archive-introduction {
   position: relative;
   isolation: isolate;
-  width: 100%;
-  padding: clamp(40px, 5vw, 76px) 5%;
   overflow: hidden;
-  background: var(--sib-color-background, #f5f4ef);
-  color: #19352e;
+  width: 100%;
+  padding: clamp(85px, 9vw, 145px) 5%;
+  background: linear-gradient(140deg, #07523f 0%, #064535 55%, #033b2e 100%);
+  color: #fff;
 }
 .sib-archive-introduction-decoration {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  pointer-events: none;
+  z-index: -1;
   overflow: hidden;
+  pointer-events: none;
 }
-.sib-archive-introduction-decoration::after {
-  content: "";
+.sib-archive-introduction-background-word {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: min(40%, 440px);
-  height: 260px;
-  background: url("/assets/ornament-right.png") top right / contain no-repeat;
-  opacity: .3;
+  top: 4%;
+  right: -2%;
+  font: 850 clamp(110px, 20vw, 300px)/1 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  letter-spacing: -.08em;
+  color: rgba(255,255,255,.035);
+  text-transform: uppercase;
 }
-.sib-archive-introduction-background-word,
-.sib-archive-introduction-circle,
-.sib-archive-introduction-line { display: none; }
+.sib-archive-introduction-circle {
+  position: absolute;
+  width: 640px;
+  height: 640px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 50%;
+}
+.sib-archive-introduction-circle-one { top: -320px; left: -330px; }
+.sib-archive-introduction-circle-two { right: -340px; bottom: -380px; }
+.sib-archive-introduction-line {
+  position: absolute;
+  top: 53%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255,255,255,.055);
+}
 .sib-archive-introduction-container {
   position: relative;
-  max-width: 1180px;
-  margin: auto;
-  padding: clamp(28px, 3.4vw, 52px);
-  border: 1px solid #e9ddc6;
-  border-radius: 30px;
-  background: #fffdfa;
-  box-shadow: 0 16px 38px rgba(20, 47, 39, .08);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .sib-archive-introduction-header,
 .sib-archive-introduction-content,
-.sib-archive-introduction-footer { opacity: 1; transform: none; }
+.sib-archive-introduction-footer { opacity: 1; }
 .sib-archive-introduction-visible .sib-archive-introduction-header,
 .sib-archive-introduction-visible .sib-archive-introduction-content,
 .sib-archive-introduction-visible .sib-archive-introduction-footer {
-  animation: sibArchiveIntroductionReveal .65s ease-out both;
+  animation: sibArchiveReveal .7s ease-out both;
 }
-.sib-archive-introduction-label-row { display: flex; align-items: center; gap: 12px; }
+.sib-archive-introduction-label-row { display: flex; align-items: center; gap: 15px; }
 .sib-archive-introduction-label-line {
   width: 4px;
   height: 30px;
-  flex: 0 0 4px;
   border-radius: 4px;
-  background: #e5a600;
+  background: #e8b33b;
 }
 .sib-archive-introduction-label {
   margin: 0;
-  color: #07523f;
-  font: 800 12px/1.3 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  color: #f0d58c;
+  font: 800 13px/1.3 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
   letter-spacing: .12em;
   text-transform: uppercase;
 }
 .sib-archive-introduction-title {
-  max-width: 950px;
-  margin: 18px 0 0;
-  color: #064a39;
-  font-family: var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
-  font-size: clamp(31px, 3.5vw, 53px);
-  line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: -.045em;
+  max-width: 1050px;
+  margin: 28px 0 0;
+  font: 850 clamp(48px, 5.4vw, 82px)/1.06 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  letter-spacing: -.055em;
+  color: #fff;
   text-wrap: balance;
 }
-.sib-archive-introduction-title span { display: block; color: #087456; font-weight: 800; }
+.sib-archive-introduction-title span { display: block; color: #f0d58c; }
 .sib-archive-introduction-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(22px, 4vw, 58px);
-  margin-top: 28px;
-  padding: 27px 0;
-  border-top: 1px solid #eee4d4;
-  border-bottom: 1px solid #eee4d4;
+  grid-template-columns: 1.1fr .9fr;
+  gap: clamp(45px, 7vw, 100px);
+  margin-top: 66px;
+  padding: 48px 0 54px;
+  border-top: 1px solid rgba(255,255,255,.2);
+  border-bottom: 1px solid rgba(255,255,255,.2);
 }
 .sib-archive-introduction-lead {
   margin: 0;
-  color: #113d32;
-  font-family: var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
-  font-size: clamp(18px, 1.7vw, 24px);
-  font-weight: 650;
-  line-height: 1.5;
+  color: #fff;
+  font: 650 clamp(24px, 2.4vw, 35px)/1.42 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
   letter-spacing: -.025em;
 }
-.sib-archive-introduction-text { display: grid; gap: 13px; }
+.sib-archive-introduction-text { display: grid; gap: 23px; align-content: start; }
 .sib-archive-introduction-text p {
   margin: 0;
-  color: #2c413b;
-  font: 450 clamp(14px, 1vw, 16px)/1.65 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  color: rgba(255,255,255,.86);
+  font: 450 16px/1.8 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
 }
 .sib-archive-introduction-text a {
-  color: #076348;
-  font-weight: 750;
+  color: #f0d58c;
+  font-weight: 700;
   text-decoration: underline;
-  text-decoration-color: #dba727;
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
 }
 .sib-archive-introduction-footer {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 22px;
-  padding-top: 24px;
+  justify-content: space-between;
+  gap: 32px;
+  padding-top: 37px;
 }
 .sib-archive-introduction-features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 23px;
+  flex: 1;
 }
-.sib-archive-introduction-feature {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 10px 13px;
-  border: 1px solid #eee2ca;
-  border-radius: 13px;
-  background: #fcf7ed;
-}
+.sib-archive-introduction-feature { display: flex; align-items: center; gap: 12px; }
 .sib-archive-introduction-feature span {
-  color: #063f31;
-  font-size: 13px;
+  color: #f0d58c;
+  font-size: 14px;
   font-weight: 900;
 }
 .sib-archive-introduction-feature p {
   margin: 0;
-  color: #194438;
-  font: 700 12px/1.35 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+  color: #fff;
+  font: 650 13px/1.45 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
 }
-.sib-archive-introduction-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  flex-shrink: 0;
-  padding: 9px 10px 9px 17px;
-  border: 1px solid #07523f;
-  border-radius: 13px;
-  background: #07523f;
-  color: white;
-  font: 750 13px/1.2 var(--sib-font-main, Inter, "Segoe UI", Arial, sans-serif);
+.sib-archive-introduction .sib-archive-introduction-link.sib-home-hero-action {
+  display: grid;
+  flex: 0 0 auto;
+  width: 330px;
+  max-width: 100%;
+  min-height: 73px;
+  grid-template-columns: minmax(0, 1fr) 35px;
+  gap: 12px;
+  padding: 10px 18px;
+  font-size: 16px;
   text-decoration: none;
-  transition: background .2s, transform .2s;
 }
-.sib-archive-introduction-link:hover { background: #087456; transform: translateY(-2px); }
-.sib-archive-introduction-link-icon {
-  display: inline-flex;
+.sib-archive-introduction-link .sib-home-hero-action-label {
+  padding: 0;
+  border-left: 0;
   justify-content: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: rgba(255,255,255,.16);
 }
-.sib-archive-introduction-link-icon svg { width: 17px; height: 17px; }
-.sib-archive-introduction-link:focus-visible,
-.sib-archive-introduction-text a:focus-visible { outline: 3px solid #e5a600; outline-offset: 3px; }
-@media (max-width: 900px) {
-  .sib-archive-introduction-content { grid-template-columns: 1fr; gap: 20px; }
-  .sib-archive-introduction-footer { align-items: flex-start; flex-direction: column; }
+.sib-archive-introduction-link .sib-home-hero-action-arrow {
+  display: flex;
+  width: 35px;
+  height: 35px;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid rgba(244,226,158,.24);
+  background: transparent;
+  border-radius: 0;
 }
-@media (max-width: 600px) {
-  .sib-archive-introduction { padding: 28px 16px; }
-  .sib-archive-introduction-container { padding: 25px 18px; border-radius: 24px; }
-  .sib-archive-introduction-title { font-size: clamp(28px, 7vw, 39px); }
-  .sib-archive-introduction-lead { font-size: 18px; }
-  .sib-archive-introduction-content { margin-top: 22px; padding: 22px 0; }
-  .sib-archive-introduction-features { flex-direction: column; align-items: stretch; width: 100%; }
-  .sib-archive-introduction-feature { width: 100%; }
-  .sib-archive-introduction-link { width: 100%; justify-content: space-between; }
+.sib-archive-introduction-link .sib-home-hero-action-arrow svg {
+  width: 24px;
+  height: 24px;
+}
+.sib-archive-introduction-text a:focus-visible { outline: 3px solid #f0d58c; outline-offset: 4px; }
+@media (max-width: 950px) {
+  .sib-archive-introduction { padding: 95px 5%; }
+  .sib-archive-introduction-content { grid-template-columns: 1fr; gap: 28px; }
+  .sib-archive-introduction-footer { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 650px) {
+  .sib-archive-introduction { padding: 78px 20px 88px; }
+  .sib-archive-introduction-title { font-size: clamp(38px, 10vw, 56px); }
+  .sib-archive-introduction-content { margin-top: 42px; padding: 34px 0; }
+  .sib-archive-introduction-lead { font-size: 23px; }
+  .sib-archive-introduction-text p { font-size: 15px; }
+  .sib-archive-introduction-features { grid-template-columns: 1fr; gap: 16px; }
+  .sib-archive-introduction .sib-archive-introduction-link.sib-home-hero-action { width: min(100%, 340px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .sib-archive-introduction-visible .sib-archive-introduction-header,
   .sib-archive-introduction-visible .sib-archive-introduction-content,
   .sib-archive-introduction-visible .sib-archive-introduction-footer { animation: none; }
-  .sib-archive-introduction-link { transition: none; }
 }
