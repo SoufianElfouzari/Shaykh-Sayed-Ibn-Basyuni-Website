@@ -1655,3 +1655,59 @@
   .sib-article-details-page { padding: 25px 0; }
   .sib-article-details-section > div p { color: #000; }
 }
+
+
+/* Tighter long-form reading rhythm. The editor HTML stays untouched. */
+.sib-article-details-section > div {
+  display: block;
+  margin-top: 14px;
+}
+.sib-article-details-section > div > p,
+.sib-article-details-introduction > p {
+  margin: 0 0 10px;
+  line-height: 1.7;
+}
+.sib-article-details-section > div > p + p {
+  margin-top: 0;
+}
+.sib-article-details-section > div > :last-child,
+.sib-article-details-introduction > :last-child {
+  margin-bottom: 0;
+}
+.sib-article-details-sections { gap: 28px; }
+.sib-article-details-section header { padding-bottom: 9px; }
+.sib-article-details-section > div :is(ul,ol) { margin-top: 9px; margin-bottom: 12px; }
+.sib-article-details-section > div blockquote { margin: 13px 0; }
+.sib-article-details-sidebar-related {
+  margin-top: 27px;
+  padding-top: 19px;
+  border-top: 1px solid #dedfd7;
+}
+.sib-article-details-sidebar-related-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+}
+.sib-article-details-sidebar-related-list a {
+  display: block;
+  padding: 12px 0;
+  border-bottom: 1px solid #e7e5dc;
+  color: #174d3f;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 650;
+  text-decoration: none;
+}
+.sib-article-details-sidebar-related-list a:hover {
+  color: #0d6a52;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.sib-article-details-sidebar-related-list a:focus-visible {
+  outline: 2px solid #0d6a52;
+  outline-offset: 3px;
+}
+@media (max-width: 700px) {
+  .sib-article-details-section > div > p { margin-bottom: 10px; line-height: 1.72; }
+  .sib-article-details-sections { gap: 25px; }
+}
