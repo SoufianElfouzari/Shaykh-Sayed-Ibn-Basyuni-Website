@@ -1887,61 +1887,39 @@
   }
 }
 
-/* Keep the distance between sections, but bring each section's text closer to its heading. */
+/* Section separators belong ABOVE the next heading, never below it.
+   A compact heading-to-body rhythm is independent of the gap between sections. */
+.sib-article-details-content .sib-article-details-sections {
+  gap: 34px;
+}
+.sib-article-details-content .sib-article-details-section {
+  border-top: 1px solid #dce2d9;
+  padding-top: 17px;
+}
+.sib-article-details-content .sib-article-details-section > header {
+  display: block;
+  border: 0;
+  border-bottom: 0;
+  padding: 0;
+  margin: 0 0 8px;
+}
 .sib-article-details-content .sib-article-details-section > div {
-  margin-top: 9px;
+  display: flow-root;
+  margin: 0;
+  padding: 0;
+  gap: 0;
 }
 .sib-article-details-content .sib-article-details-section > div > :first-child {
-  margin-top: 0;
-}
-.sib-article-details-content .sib-article-details-section header {
-  padding-bottom: 7px;
-}
-@media (max-width: 700px) {
-  .sib-article-details-content .sib-article-details-section > div { margin-top: 8px; }
-}
-
-/* Tight heading-to-first-paragraph spacing, including HTML imported from the editor. */
-.sib-article-details-content .sib-article-details-section > header {
-  margin: 0;
-  padding-bottom: 5px;
-}
-.sib-article-details-content .sib-article-details-section > div {
-  margin: 4px 0 0;
-  padding: 0;
-  display: flow-root;
-}
-.sib-article-details-content .sib-article-details-section > div > :first-child,
-.sib-article-details-content .sib-article-details-section > div > :first-child > :first-child {
   margin-top: 0 !important;
-}
-.sib-article-details-content .sib-article-details-section > div > p:first-child {
-  margin-block-start: 0 !important;
-}
-@media (max-width: 700px) {
-  .sib-article-details-content .sib-article-details-section > div { margin-top: 4px; }
-}
-
-/* Editor HTML may contain blank paragraphs or line breaks immediately after a heading.
-   Remove those invisible blocks instead of repeatedly adjusting the outer section gap. */
-.sib-article-details-content .sib-article-details-section > div {
-  margin-block-start: 0 !important;
-  padding-block-start: 0 !important;
-  display: block;
 }
 .sib-article-details-content .sib-article-details-section > div > p:empty,
 .sib-article-details-content .sib-article-details-section > div > p:has(> br:only-child),
 .sib-article-details-content .sib-article-details-section > div > div:empty,
 .sib-article-details-content .sib-article-details-section > div > div:has(> br:only-child) {
-  display: none !important;
+  display: none;
 }
-.sib-article-details-content .sib-article-details-section > div > p:first-of-type,
-.sib-article-details-content .sib-article-details-section > div > div:first-child,
-.sib-article-details-content .sib-article-details-section > div > blockquote:first-child {
-  margin-block-start: 0 !important;
-  padding-block-start: 0;
-}
-.sib-article-details-content .sib-article-details-section > header {
-  padding-bottom: 5px;
-  margin-bottom: 7px;
+@media (max-width: 700px) {
+  .sib-article-details-content .sib-article-details-sections { gap: 29px; }
+  .sib-article-details-content .sib-article-details-section { padding-top: 15px; }
+  .sib-article-details-content .sib-article-details-section > header { margin-bottom: 7px; }
 }
