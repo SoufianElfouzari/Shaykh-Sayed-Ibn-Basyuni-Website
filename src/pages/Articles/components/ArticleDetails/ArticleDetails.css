@@ -1711,3 +1711,21 @@
   .sib-article-details-section > div > p { margin-bottom: 10px; line-height: 1.72; }
   .sib-article-details-sections { gap: 25px; }
 }
+
+/* Slightly larger reader typography, without restoring excessive spacing. */
+.sib-article-details-section > div p,
+.sib-article-details-introduction p {
+  font-size: 17px;
+  line-height: 1.75;
+}
+.sib-article-details-section header :is(h2,h3,h4,h5,h6) {
+  font-size: clamp(23px, 2vw, 30px);
+}
+.sib-article-details-section header h3 { font-size: clamp(21px, 1.8vw, 26px); }
+.sib-article-details-sidebar nav a strong,
+.sib-article-details-sidebar-related-list a { font-size: 14px; }
+@media (max-width: 700px) {
+  .sib-article-details-section > div p,
+  .sib-article-details-introduction p { font-size: 16px; line-height: 1.75; }
+  .sib-article-details-section header :is(h2,h3,h4,h5,h6) { font-size: 23px; }
+}
