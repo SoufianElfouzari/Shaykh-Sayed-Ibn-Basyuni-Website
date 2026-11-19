@@ -982,3 +982,21 @@
     padding-left: 0;
   }
 }
+
+/* Seamless rounded transition from the biography hero, matching the
+   gold-trimmed "Über den Shaykh" reference. */
+.shaykh > main > .sib-short-biography {
+  position: relative;
+  z-index: 5;
+  margin-top: -1px;
+  border-top: 5px solid #e3b33c;
+  border-radius: clamp(28px, 3vw, 48px) clamp(28px, 3vw, 48px) 0 0;
+  background-color: #064d3c;
+  box-shadow: 0 -12px 35px rgba(20, 49, 38, .08);
+}
+@media (max-width: 650px) {
+  .shaykh > main > .sib-short-biography {
+    border-top-width: 4px;
+    border-radius: 28px 28px 0 0;
+  }
+}
