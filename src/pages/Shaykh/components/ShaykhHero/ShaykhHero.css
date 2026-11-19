@@ -225,3 +225,45 @@
   .sib-shaykh-page-hero-highlight strong { font-size: 12px; }
   .sib-shaykh-page-hero-highlight small { font-size: 10px; }
 }
+
+/* Match the homepage header overlay: artwork begins at the top of the viewport,
+   but all real hero content starts safely below the floating navigation. */
+.shaykh > .sib-header,
+.shaykh > .sib-header.sib-header-scrolled {
+  margin-bottom: calc(-1 * var(--sib-header-height));
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.shaykh > main > .sib-shaykh-page-hero.sib-home-hero {
+  padding-top: calc(var(--sib-header-height) + 54px);
+}
+.shaykh > main > .sib-shaykh-page-hero .sib-home-hero-decoration::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: 0;
+  width: clamp(270px, 32vw, 480px);
+  height: clamp(220px, 26vw, 380px);
+  background: url("/assets/masjid-texture.png") left bottom / contain no-repeat;
+  opacity: .65;
+  pointer-events: none;
+}
+@media (max-width: 1050px) {
+  .shaykh > main > .sib-shaykh-page-hero.sib-home-hero {
+    padding-top: calc(var(--sib-header-height) + 58px);
+  }
+}
+@media (max-width: 760px) {
+  .shaykh > main > .sib-shaykh-page-hero.sib-home-hero {
+    padding-top: calc(var(--sib-header-height) + 38px);
+  }
+}
+@media (max-width: 460px) {
+  .shaykh > main > .sib-shaykh-page-hero .sib-home-hero-decoration::after {
+    width: 250px;
+    height: 220px;
+    opacity: .45;
+  }
+}
