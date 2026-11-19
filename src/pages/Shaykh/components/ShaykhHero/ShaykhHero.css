@@ -301,3 +301,24 @@
   display: none;
   content: none;
 }
+
+/* Final portrait frame: one continuous, smooth, gold-stroked mosque arch.
+   SVG replaces the conflicting polygon and rounded inner background. */
+.sib-shaykh-page-hero .sib-shaykh-page-hero-arch {
+  overflow: visible;
+  clip-path: none;
+  background: none;
+  filter: none;
+}
+.sib-shaykh-page-hero .sib-shaykh-page-hero-arch-shape {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 8px 12px rgba(29,65,45,.12));
+}
+.sib-shaykh-page-hero .sib-shaykh-page-hero-photo {
+  height: 86%;
+}
