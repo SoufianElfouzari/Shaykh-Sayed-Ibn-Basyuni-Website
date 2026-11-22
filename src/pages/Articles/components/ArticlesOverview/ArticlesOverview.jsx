@@ -670,6 +670,29 @@ function ArticlesOverview() {
                             index,
                         }}
                       >
+                        <details className="sib-article-mobile-details">
+                          <summary className="sib-article-mobile-summary">
+                            <span className="sib-article-mobile-summary-main">
+                              <span className="sib-article-mobile-category">{article.category}</span>
+                              <span className="sib-article-mobile-title">{article.title}</span>
+                            </span>
+                            <span className="sib-article-mobile-chevron" aria-hidden="true">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="m6 9 6 6 6-6" />
+                              </svg>
+                            </span>
+                          </summary>
+                          <div className="sib-article-mobile-expanded">
+                            <div className="sib-article-mobile-meta">
+                              <time dateTime={article.publishedAt || undefined}>{formatDate(article.publishedAt)}</time>
+                              {article.readingTime ? <span>{article.readingTime} Min. Lesezeit</span> : null}
+                            </div>
+                            {article.excerpt ? <p>{article.excerpt}</p> : null}
+                            <Link className="sib-article-mobile-read" to={`/artikel/${article.slug}`}>
+                              Artikel lesen <ArrowIcon />
+                            </Link>
+                          </div>
+                        </details>
                         <Link
                           to={`/artikel/${article.slug}`}
                           className="sib-article-card-link"
