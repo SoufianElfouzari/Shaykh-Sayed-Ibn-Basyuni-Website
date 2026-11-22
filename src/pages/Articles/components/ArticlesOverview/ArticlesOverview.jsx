@@ -438,20 +438,16 @@ function ArticlesOverview() {
             <div className="sib-articles-overview-label-row">
               <span className="sib-articles-overview-label-line"></span>
 
-              <p>Artikelarchiv</p>
+              <p>Islamische Wissensbibliothek</p>
             </div>
 
-            <h2 id="sib-articles-overview-title">
-              Islamisches Wissen
-              <span>in Artikeln entdecken.</span>
-            </h2>
+            <h1 id="sib-articles-overview-title">
+              Wissensbibliothek
+            </h1>
           </div>
 
           <p className="sib-articles-overview-description">
-            Lies die veröffentlichten Artikel und wissenschaftlichen
-            Beiträge zu islamischen Themen. Informiere dich auch
-            über die <Link to="/durous">islamischen Unterrichte</Link>
-            {" "}und die <Link to="/shaykh">Biografie des Shaykhs</Link>.
+            Entdecke die veröffentlichten islamischen Artikel von Dr. Shaykh Sayed Ibn Basyuni. Suche nach einem Thema oder wähle eine Kategorie.
           </p>
         </header>
 
