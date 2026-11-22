@@ -1854,3 +1854,126 @@
   }
   .articles .sib-article-card-content h3 { font-size: 15px; }
 }
+
+
+/* Article directory: show ten short, expandable entries on narrow screens. */
+.sib-article-mobile-details { display: none; }
+@media (max-width: 720px) {
+  .articles .sib-articles-overview {
+    padding-top: calc(var(--sib-header-height, 94px) + 8px);
+  }
+  .articles .sib-articles-overview-header { padding-bottom: 8px; }
+  .articles .sib-articles-overview-heading h1 { margin-top: 4px; font-size: 25px; }
+  .articles .sib-articles-overview-description { margin-top: 3px; font-size: 11px; line-height: 1.35; }
+  .articles .sib-articles-overview-controls { gap: 6px; }
+  .articles .sib-articles-overview-search input { height: 38px; }
+  .articles .sib-articles-overview-control label { font-size: 9px; }
+  .articles .sib-articles-overview-control select { height: 32px; }
+  .articles .sib-articles-overview-categories { margin-top: 6px; padding-bottom: 6px; }
+  .articles .sib-articles-overview-category { min-height: 30px; font-size: 10px; }
+  .articles .sib-articles-overview-results { padding: 5px 0 7px; }
+  .articles .sib-articles-overview-grid { gap: 5px; }
+  .articles .sib-article-card {
+    border-radius: 10px;
+    overflow: visible;
+    transition: none;
+  }
+  .articles .sib-article-card:hover { transform: none; box-shadow: none; }
+  .articles .sib-article-card > .sib-article-card-link { display: none; }
+  .articles .sib-article-mobile-details { display: block; }
+  .articles .sib-article-mobile-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 49px;
+    padding: 7px 10px 7px 12px;
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .articles .sib-article-mobile-summary::-webkit-details-marker { display: none; }
+  .articles .sib-article-mobile-summary::marker { content: ""; }
+  .articles .sib-article-mobile-summary-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    min-width: 0;
+    flex: 1;
+  }
+  .articles .sib-article-mobile-category {
+    color: #127253;
+    font-size: 9px;
+    font-weight: 750;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: .035em;
+  }
+  .articles .sib-article-mobile-title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    color: #143b2c;
+    font-size: 12px;
+    font-weight: 720;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+  .articles .sib-article-mobile-chevron {
+    display: grid;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    place-items: center;
+    border-radius: 7px;
+    background: #eff5ee;
+    color: #12583e;
+    transition: transform .18s ease;
+  }
+  .articles .sib-article-mobile-chevron svg { width: 15px; height: 15px; }
+  .articles .sib-article-mobile-details[open] .sib-article-mobile-chevron { transform: rotate(180deg); }
+  .articles .sib-article-mobile-expanded {
+    padding: 9px 12px 11px;
+    border-top: 1px solid #e7ece5;
+    background: #fbfdf9;
+    border-radius: 0 0 10px 10px;
+  }
+  .articles .sib-article-mobile-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #68776c;
+    font-size: 10px;
+  }
+  .articles .sib-article-mobile-expanded p {
+    margin: 7px 0 10px;
+    color: #475c4e;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .articles .sib-article-mobile-read {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 30px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: #09563e;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .articles .sib-article-mobile-read svg { width: 14px; height: 14px; }
+  .articles .sib-article-mobile-summary:focus-visible,
+  .articles .sib-article-mobile-read:focus-visible {
+    outline: 2px solid #c39c45;
+    outline-offset: 2px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .articles .sib-article-mobile-chevron { transition: none; }
+}
