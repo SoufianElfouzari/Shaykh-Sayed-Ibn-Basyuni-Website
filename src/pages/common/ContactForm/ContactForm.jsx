@@ -79,7 +79,7 @@ function ContactForm({ headingLevel = 2 }) {
   // The same Fatwa design is used on the homepage and the dedicated contact page.
   const homeFatwa = true;
   const location = useLocation();
-  const isFatwaRequest = new URLSearchParams(location.search).get("anliegen") === "fatwa";
+  const isFatwaRequest = location.hash === "#fatwa" || new URLSearchParams(location.search).get("anliegen") === "fatwa";
   const sectionRef = useRef(null);
 
   const [formData, setFormData] = useState(() => ({ ...initialFormData, subject: isFatwaRequest ? "fatwa" : "" }));
@@ -196,7 +196,7 @@ function ContactForm({ headingLevel = 2 }) {
     <section
       ref={sectionRef}
       className={`sib-contact-form ${homeFatwa ? "sib-contact-form--home-fatwa" : ""}`}
-      id="kontaktformular"
+      id={isFatwaRequest ? "fatwa" : "kontaktformular"}
     >
       <div
         className="sib-contact-form-decoration"
