@@ -107,7 +107,7 @@ function AboutShaykh() {
             />
             <figcaption>
               Offizielle Website des Lehrers
-              <strong>Dr. Shaykh Sayed Ibn Basyuni</strong>
+              <span className="sib-about-name">Dr. Shaykh Sayed Ibn Basyuni</span>
             </figcaption>
           </figure>
 
@@ -120,7 +120,7 @@ function AboutShaykh() {
         <div className="sib-about-content">
           <div className="sib-about-description">
             <p>
-              <strong>Dr. Shaykh Sayed Ibn Basyuni</strong> stammt aus dem
+              <span className="sib-about-name">Dr. Shaykh Sayed Ibn Basyuni</span> stammt aus dem
               Gouvernement Gharbeyya in Ägypten. Bereits im Alter von fünf
               Jahren begann er den Besuch eines Kuttab und vollendete im
               Alter von elf Jahren das vollständige Auswendiglernen des
