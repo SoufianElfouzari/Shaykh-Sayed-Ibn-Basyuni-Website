@@ -8,27 +8,27 @@ const footerNavigation = [
     to: "/",
   },
   {
-    label: "Biografie des Shaykhs",
+    label: "Biografie",
     to: "/shaykh",
   },
   {
-    label: "Audio-Unterrichtsarchiv",
+    label: "Unterrichtsarchiv",
     to: "/durous",
   },
   {
-    label: "Artikel und Veröffentlichungen",
+    label: "Artikel",
     to: "/artikel",
   },
   {
-    label: "Kontakt und Anfragen",
+    label: "Kontakt",
     to: "/kontakt",
   },
 ];
 
 const footerContentLinks = [
-  { label: "Artikel zu Glauben und Fiqh", to: "/artikel" },
-  { label: "Fiqh- und Hadith-Unterricht", to: "/durous" },
-  { label: "Biografie und Lehrtätigkeit", to: "/shaykh" },
+  { label: "Fiqh-Artikel", to: "/artikel" },
+  { label: "Fiqh und Hadith", to: "/durous" },
+  { label: "Der Shaykh", to: "/shaykh" },
 ];
 
 function ArrowIcon() {
