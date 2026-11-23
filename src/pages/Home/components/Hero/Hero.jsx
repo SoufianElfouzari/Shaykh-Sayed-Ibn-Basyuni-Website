@@ -85,7 +85,7 @@ function Hero() {
             <MosqueBadgeIcon />
           </span>
           <span>
-            Offizielle Website von <strong>Dr. Shaykh Sayed Ibn Basyuni</strong>
+            Offizielle Website von <span className="sib-home-hero-label-name">Dr. Shaykh Sayed Ibn Basyuni</span>
           </span>
         </p>
 
