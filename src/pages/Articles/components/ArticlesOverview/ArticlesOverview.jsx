@@ -207,8 +207,8 @@ function ArticlesOverview() {
   ] = useState("Alle");
 
   const [
-    activeLanguage,
-    setActiveLanguage,
+    activeAuthor,
+    setActiveAuthor,
   ] = useState("Alle");
 
   const [sortBy, setSortBy] =
@@ -287,16 +287,10 @@ function ArticlesOverview() {
     return ["Alle", ...[...values].sort((a, b) => a.localeCompare(b, "de"))];
   }, [articles, managedCategories]);
 
-  const languages = useMemo(() => {
-    return [
-      "Alle",
-      ...new Set(
-        articles.map(
-          (article) => article.language,
-        ),
-      ),
-    ];
-  }, [articles]);
+  const authors = useMemo(() => [
+    "Alle",
+    ...new Set(articles.map((article) => article.author).filter(Boolean)),
+  ].sort((a, b) => a === "Alle" ? -1 : b === "Alle" ? 1 : a.localeCompare(b, "de")), [articles]);
 
   const filteredArticles = useMemo(() => {
     const normalizedSearch = normalizeText(
@@ -310,10 +304,9 @@ function ArticlesOverview() {
           article.category ===
             activeCategory;
 
-        const languageMatches =
-          activeLanguage === "Alle" ||
-          article.language ===
-            activeLanguage;
+        const authorMatches =
+          activeAuthor === "Alle" ||
+          article.author === activeAuthor;
 
         const searchableContent =
           normalizeText(
@@ -336,7 +329,7 @@ function ArticlesOverview() {
 
         return (
           categoryMatches &&
-          languageMatches &&
+          authorMatches &&
           searchMatches
         );
       });
@@ -387,7 +380,7 @@ function ArticlesOverview() {
     articles,
     searchTerm,
     activeCategory,
-    activeLanguage,
+    activeAuthor,
     sortBy,
   ]);
 
@@ -401,18 +394,18 @@ function ArticlesOverview() {
   const activeFilterCount = [
     searchTerm.trim().length > 0,
     activeCategory !== "Alle",
-    activeLanguage !== "Alle",
+    activeAuthor !== "Alle",
   ].filter(Boolean).length;
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => setVisibleCount(12));
     return () => window.cancelAnimationFrame(frame);
-  }, [searchTerm, activeCategory, activeLanguage, sortBy]);
+  }, [searchTerm, activeCategory, activeAuthor, sortBy]);
 
   const resetFilters = () => {
     setSearchTerm("");
     setActiveCategory("Alle");
-    setActiveLanguage("Alle");
+    setActiveAuthor("Alle");
     setSortBy("newest");
   };
 
@@ -528,25 +521,25 @@ function ArticlesOverview() {
               </div>
 
               <div className="sib-articles-overview-control">
-                <label htmlFor="article-language">
-                  Sprache
+                <label htmlFor="article-author">
+                  Autor
                 </label>
 
                 <select
-                  id="article-language"
-                  value={activeLanguage}
+                  id="article-author"
+                  value={activeAuthor}
                   onChange={(event) => {
                     activateFullArchive();
-                    setActiveLanguage(event.target.value);
+                    setActiveAuthor(event.target.value);
                   }}
                 >
-                  {languages.map(
-                    (language) => (
+                  {authors.map(
+                    (author) => (
                       <option
-                        key={language}
-                        value={language}
+                        key={author}
+                        value={author}
                       >
-                        {language}
+                        {author}
                       </option>
                     ),
                   )}
