@@ -27,7 +27,7 @@ const mapArticle = (row) => {
     readingTime: Object.hasOwn(row, "contentHtml")
       ? Math.max(1, Math.ceil(contentText.split(/\s+/).filter(Boolean).length / 200))
       : null,
-    author: row.author || "Redaktion Shaykh Sayed",
+    author: typeof row.author === "string" && row.author.trim() ? row.author.trim() : "Redaktion Shaykh Sayed",
     category: row.category || "Artikel",
     language: row.language || "Deutsch",
     featured: Boolean(row.featured),
