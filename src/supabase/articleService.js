@@ -50,6 +50,14 @@ export async function getPublishedArticleSummaries() {
 }
 
 
+// Authors managed in Flutter settings, in the saved display order.
+export async function getArticleAuthors() {
+  const { data, error } = await supabase.from('article_authors')
+    .select('name,position').order('position').order('name');
+  if (error) throw error;
+  return (data || []).map((row) => String(row.name || '').trim()).filter(Boolean);
+}
+
 // Categories managed in the Flutter admin settings, available to the public
 // archive regardless of which articles are present on its current SSR page.
 export async function getArticleCategories() {
