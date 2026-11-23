@@ -113,7 +113,7 @@
   line-height: 1.5;
 }
 
-.sib-about-brand figcaption strong {
+.sib-about-brand figcaption .sib-about-name {
   font-weight: 500;
 }
 
@@ -177,7 +177,7 @@
   margin-top: 25px;
 }
 
-.sib-about-description strong {
+.sib-about-description .sib-about-name {
   color: #064a35;
   font-weight: 800;
 }
@@ -469,7 +469,7 @@
   color: #203330;
   font-size: 16px;
 }
-.sib-about-brand figcaption strong {
+.sib-about-brand figcaption .sib-about-name {
   color: #00543e;
   font-size: 22px;
   font-weight: 850;
@@ -546,7 +546,7 @@
   .sib-about-label { font-size: 11px; margin-bottom: 14px; }
   .sib-about-title { font-size: clamp(35px, 8.3vw, 48px); }
   .sib-about-brand-image { height: 160px; }
-  .sib-about-brand figcaption strong { font-size: 18px; }
+  .sib-about-brand figcaption .sib-about-name { font-size: 18px; }
   .sib-about-link { min-height: 54px; font-size: 14px; }
   .sib-about-description p { font-size: 15px; line-height: 1.6; }
   .sib-about-overview { grid-template-columns: 1fr; }
