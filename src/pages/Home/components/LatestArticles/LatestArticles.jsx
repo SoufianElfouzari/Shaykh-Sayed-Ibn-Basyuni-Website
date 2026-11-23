@@ -355,7 +355,7 @@ function LatestArticles() {
                       {formatDate(article.publishedAt)}
                     </time>
                   </div>
-                  <h3>{article.title}</h3>
+                  <p className="sib-articles-card-title">{article.title}</p>
                   {article.excerpt && <p>{article.excerpt}</p>}
                   <div className="sib-articles-card-footer">
                     <span className="sib-articles-read-link">Lesen <ArrowIcon /></span>
