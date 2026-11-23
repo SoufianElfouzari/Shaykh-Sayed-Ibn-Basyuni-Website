@@ -389,7 +389,7 @@
   white-space: nowrap;
 }
 
-.sib-articles-secondary h3 {
+.sib-articles-secondary .sib-articles-card-title {
   margin: 19px 0 0;
   color: var(--sib-color-primary-dark, #0f2924);
   font-family:
@@ -536,7 +536,7 @@
     border-radius: 19px;
   }
 
-  .sib-articles-secondary h3 {
+  .sib-articles-secondary .sib-articles-card-title {
     font-size: 23px;
   }
 
@@ -595,7 +595,7 @@
 .sib-articles-layout .sib-articles-secondary:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(15,41,36,.07); }
 .sib-articles-layout .sib-articles-secondary-content { height: 100%; display: flex; flex-direction: column; }
 .sib-articles-layout .sib-articles-secondary-top { flex-wrap: wrap; gap: 8px 16px; }
-.sib-articles-layout .sib-articles-secondary h3 { margin-top: 16px; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.28; overflow-wrap: anywhere; }
+.sib-articles-layout .sib-articles-secondary .sib-articles-card-title { margin-top: 16px; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.28; overflow-wrap: anywhere; }
 .sib-articles-layout .sib-articles-secondary p { margin-top: 12px; font-size: 13px; line-height: 1.6; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
 .sib-articles-card-footer { margin-top: auto; padding-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--sib-color-text-muted, #626b65); font-size: 11px; font-weight: 600; }
 .sib-articles-card-footer .sib-articles-secondary-arrow { width: 34px; height: 34px; flex: 0 0 34px; }
@@ -610,7 +610,7 @@
   .sib-articles-header { margin-bottom: 24px; }
   .sib-articles-layout { grid-template-columns: 1fr; gap: 12px; }
   .sib-articles-layout .sib-articles-secondary { padding: 22px; }
-  .sib-articles-layout .sib-articles-secondary h3 { font-size: 20px; }
+  .sib-articles-layout .sib-articles-secondary .sib-articles-card-title { font-size: 20px; }
 }
 
 /* Heading aligned with the homepage hero and teaching archive. */
@@ -807,7 +807,7 @@
   white-space: nowrap;
 }
 .sib-articles-calendar-icon { color: #aa7d21; font-size: 12px; line-height: 1; }
-.sib-articles-layout .sib-articles-secondary h3 {
+.sib-articles-layout .sib-articles-secondary .sib-articles-card-title {
   margin-top: 11px;
   color: #063e32;
   font-size: clamp(17px, 1.38vw, 21px);
@@ -856,7 +856,7 @@
 @media (max-width: 680px) {
   .sib-articles-layout { grid-template-columns: 1fr; gap: 12px; }
   .sib-articles-layout .sib-articles-secondary { min-height: 180px; padding: 17px 18px; }
-  .sib-articles-layout .sib-articles-secondary h3 { font-size: 19px; }
+  .sib-articles-layout .sib-articles-secondary .sib-articles-card-title { font-size: 19px; }
   .sib-articles-layout .sib-articles-secondary-top { flex-wrap: wrap; }
 }
 
@@ -997,7 +997,7 @@
     padding: 5px 13px;
   }
   .sib-articles-layout .sib-articles-date { font-size: 12px; }
-  .sib-articles-layout .sib-articles-secondary h3 {
+  .sib-articles-layout .sib-articles-secondary .sib-articles-card-title {
     margin-top: 15px;
     font-size: clamp(19px, 1.55vw, 25px);
     line-height: 1.22;
