@@ -447,7 +447,7 @@ function ArticlesOverview() {
           </div>
 
           <p className="sib-articles-overview-description">
-            Entdecke die veröffentlichten islamischen Artikel von Dr. Shaykh Sayed Ibn Basyuni. Suche nach einem Thema oder wähle eine Kategorie.
+            Entdecke islamische Artikel in unserer Wissensbibliothek. Suche nach einem Thema oder wähle eine Kategorie.
           </p>
         </header>
 
@@ -686,6 +686,7 @@ function ArticlesOverview() {
                             <div className="sib-article-mobile-meta">
                               <time dateTime={article.publishedAt || undefined}>{formatDate(article.publishedAt)}</time>
                               {article.readingTime ? <span>{article.readingTime} Min. Lesezeit</span> : null}
+                              <span>Von {article.author}</span>
                             </div>
                             {article.excerpt ? <p>{article.excerpt}</p> : null}
                             <Link className="sib-article-mobile-read" to={`/artikel/${article.slug}`}>
