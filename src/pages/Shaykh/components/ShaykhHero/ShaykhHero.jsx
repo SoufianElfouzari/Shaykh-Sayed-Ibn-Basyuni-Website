@@ -68,7 +68,7 @@ function ShaykhHero() {
         <div className="sib-shaykh-page-hero-portrait" aria-hidden="true">
           <div className="sib-shaykh-page-hero-arch">
             <svg className="sib-shaykh-page-hero-arch-shape" viewBox="0 0 500 540" preserveAspectRatio="none" aria-hidden="true"><path d="M 13 540 L 13 235 Q 13 187 56 167 Q 78 156 110 155 Q 117 115 156 95 Q 215 64 250 16 Q 285 64 344 95 Q 383 115 390 155 Q 422 156 444 167 Q 487 187 487 235 L 487 540 Z" fill="#006448" stroke="#DDAA29" strokeWidth="13" strokeLinejoin="round" /></svg>
-            <img src="/assets/shaykh.png" alt="" className="sib-shaykh-page-hero-photo" loading="eager" decoding="async" />
+            <img src="/assets/shaykh.png" alt="Porträt von Dr. Shaykh Sayed Ibn Basyuni" className="sib-shaykh-page-hero-photo" loading="eager" decoding="async" />
           </div>
           <div className="sib-shaykh-page-hero-clouds" />
         </div>
