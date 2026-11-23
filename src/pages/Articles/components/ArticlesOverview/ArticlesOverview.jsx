@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import {
   getPublishedArticles,
   getArticleCategories,
+  getArticleAuthors,
 } from "../../../../supabase/articleService";
 import { useSsrData } from "../../../../SsrDataContext";
 
@@ -27,6 +28,10 @@ const sortOptions = [
   {
     value: "title",
     label: "Titel von A bis Z",
+  },
+  {
+    value: "author",
+    label: "Autor von A bis Z",
   },
   {
     value: "reading-time",
@@ -195,6 +200,7 @@ function ArticlesOverview() {
   const archiveArticles = __ssrPath === "/artikel" ? initialArticles : undefined;
   const [articles, setArticles] = useState(archiveArticles || []);
   const [managedCategories, setManagedCategories] = useState([]);
+  const [managedAuthors, setManagedAuthors] = useState([]);
   const [fullArchiveLoaded, setFullArchiveLoaded] = useState(false);
   const archiveRequestStarted = useRef(false);
 
@@ -279,6 +285,14 @@ function ArticlesOverview() {
     return () => { isCurrent = false; };
   }, []);
 
+  useEffect(() => {
+    let current = true;
+    getArticleAuthors()
+      .then((names) => { if (current) setManagedAuthors(names); })
+      .catch((error) => console.error('Artikelautoren konnten nicht geladen werden:', error));
+    return () => { current = false; };
+  }, []);
+
   const categories = useMemo(() => {
     const values = new Set([
       ...managedCategories,
@@ -289,8 +303,8 @@ function ArticlesOverview() {
 
   const authors = useMemo(() => [
     "Alle",
-    ...new Set(articles.map((article) => article.author).filter(Boolean)),
-  ].sort((a, b) => a === "Alle" ? -1 : b === "Alle" ? 1 : a.localeCompare(b, "de")), [articles]);
+    ...new Set([...managedAuthors, ...articles.map((article) => article.author).filter(Boolean)]),
+  ], [articles, managedAuthors]);
 
   const filteredArticles = useMemo(() => {
     const normalizedSearch = normalizeText(
@@ -348,6 +362,10 @@ function ArticlesOverview() {
               secondArticle.publishedAt,
             )
           );
+        }
+
+        if (sortBy === "author") {
+          return firstArticle.author.localeCompare(secondArticle.author, "de");
         }
 
         if (sortBy === "title") {
