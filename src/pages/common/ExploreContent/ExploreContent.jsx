@@ -9,14 +9,14 @@ const contentByPage = {
     links: [
       { to: "/artikel", title: "Fiqh und Usul al-Fiqh", detail: "Wissenschaftliche Beiträge und Erklärungen" },
       { to: "/durous", title: "Aqidah und Hadith", detail: "Islamische Unterrichte und Aufnahmen" },
-      { to: "/shaykh", title: "Deinen Lehrer kennenlernen", detail: "Biografie und wissenschaftliche Tätigkeit" },
+      { to: "/shaykh", title: "Der Shaykh", detail: "Biografie und wissenschaftliche Tätigkeit" },
     ],
   },
   shaykh: {
     heading: "Die Unterrichte kennenlernen",
     description: "Entdecke die wissenschaftlichen Inhalte und Unterrichtsangebote.",
     links: [
-      { to: "/durous", title: "Aufzeichnungen der Unterrichte", detail: "Aufzeichnungen und Unterrichtsreihen" },
+      { to: "/durous", title: "Unterrichtsaufnahmen", detail: "Aufzeichnungen und Unterrichtsreihen" },
       { to: "/artikel", title: "Islamische Fachartikel", detail: "Artikel zu islamischen Themen" },
     ],
   },
@@ -25,14 +25,14 @@ const contentByPage = {
     description: "Ergänzend zu den Unterrichten findest du schriftliche Beiträge und Informationen zum Lehrer.",
     links: [
       { to: "/artikel", title: "Artikel zum Islam", detail: "Islamische Themen schriftlich vertiefen" },
-      { to: "/shaykh", title: "Wissenschaftlicher Werdegang", detail: "Biografie und wissenschaftlicher Werdegang" },
+      { to: "/shaykh", title: "Werdegang", detail: "Biografie und wissenschaftlicher Werdegang" },
     ],
   },
   articles: {
     heading: "Weitere Lernmöglichkeiten",
     description: "Neben den Artikeln stehen auch Unterrichtsaufnahmen und Informationen zu den Unterrichten bereit.",
     links: [
-      { to: "/durous", title: "Audio-Unterrichte und Reihen", detail: "Durous und Unterrichtsreihen" },
+      { to: "/durous", title: "Audio-Unterrichte", detail: "Durous und Unterrichtsreihen" },
       { to: "/shaykh", title: "Biografie des Verfassers", detail: "Werdegang und Lehrtätigkeit" },
     ],
   },
@@ -41,7 +41,7 @@ const contentByPage = {
     description: "Du kannst direkt zu den veröffentlichten Inhalten oder den Unterrichtsinformationen wechseln.",
     links: [
       { to: "/artikel", title: "Islamische Veröffentlichungen", detail: "Schriftliche Veröffentlichungen" },
-      { to: "/durous", title: "Unterrichtstermine und Aufnahmen", detail: "Aufnahmen und Termine" },
+      { to: "/durous", title: "Unterrichtstermine", detail: "Aufnahmen und Termine" },
     ],
   },
 };
