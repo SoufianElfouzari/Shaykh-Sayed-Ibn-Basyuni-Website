@@ -123,7 +123,7 @@ function Hero() {
 
           <Link
             className="sib-home-hero-action sib-home-hero-action-secondary"
-            to="/kontakt?anliegen=fatwa#kontaktformular"
+            to="/kontakt#fatwa"
           >
             <span className="sib-home-hero-action-icon" aria-hidden="true">
               <FatwaIcon />
